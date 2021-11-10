@@ -1,10 +1,13 @@
 # Customizable NFT Backend
 
-To run backend, run:
+To run backend, execute one of the following commands:
+
+1. To have the project rerun upon detected changed (facilitates development):
 ```
-nodemon
+npm run dev
 ```
-or
+
+2. To have the project build (creating a dist/ folder) and use node to run it:
 ```
-node backend/src/server.ts
+npm run deploy
 ```
