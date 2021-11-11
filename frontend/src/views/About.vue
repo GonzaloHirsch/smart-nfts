@@ -1,7 +1,3 @@
-<script setup>
-import ButtonRepo from '@/components/ButtonRepo.vue'
-</script>
-
 <template>
   <div class="bg-gray-50">
     <div
@@ -27,3 +23,10 @@ import ButtonRepo from '@/components/ButtonRepo.vue'
     </div>
   </div>
 </template>
+
+<script setup>
+import ButtonRepo from '@/components/ButtonRepo.vue'
+import { useMeta } from 'vue-meta'
+
+useMeta({ title: 'About', description: "This is the about page to our project" })
+</script>

@@ -4,6 +4,7 @@ import App from './App.vue'
 import { routes } from './routes.js'
 import { createRouter, createWebHistory } from 'vue-router'
 import { createI18n } from 'vue-i18n'
+import { createMetaManager } from 'vue-meta'
 import locales from '@/locales';
 
 const app = createApp(App)
@@ -19,6 +20,9 @@ const i18n = createI18n({
   messages: locales
 })
 
+const meta = createMetaManager();
+
 app.use(router)
 app.use(i18n)
+app.use(meta)
 app.mount('#app')
