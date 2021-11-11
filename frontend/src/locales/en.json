@@ -1,5 +1,15 @@
 {
+    "app": {
+        "name": "Easy NFTs"
+    },
     "home": {
-        "title": "Home"
+        "title": "Home",
+        "hero": {
+            "subtitle": "Create your <strong>custom NFT</strong> in just <strong>minutes</strong>"
+        }
+    },
+    "nav": {
+        "create": "Create",
+        "interact": "Interact"
     }
 }

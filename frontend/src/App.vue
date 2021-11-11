@@ -7,17 +7,8 @@
       content ? `${content}` : `SITE_DESCRIPTION`
     }}</template>
   </metainfo>
-  <div>
-    <header class="bg-white shadow" v-if="$route.meta.title">
-      <div class="px-sm py-sm mx-auto sm:px-md lg:px-xl">
-        <h1
-          @click="counter = 0"
-          class="text-h2 font-bold leading-tight text-typography_secondary"
-        >
-          {{ $route.meta.title }} / {{ counter }}
-        </h1>
-      </div>
-    </header>
+  <div class="relative" ref="app">
+    <v-navbar ref="navbar" />
     <main>
       <router-view />
     </main>
@@ -26,13 +17,31 @@
 
 <script setup>
 import { useMeta } from "vue-meta";
-import { ref } from "vue";
+import { ref, computed, watch, provide } from "vue";
+import { useResizeObserver } from "@vueuse/core";
+
+import { NAV_HEIGHT } from "@/js/constants.js";
+
+// Components
+import vNavbar from "@/components/navbar.vue";
 
 let counter = ref(0);
 setInterval(() => {
   counter.value++;
 }, 1000);
 
+const app = ref(null);
+const navbar = ref(null);
+const navbarHeight = ref(undefined);
+provide(
+  NAV_HEIGHT,
+  navbarHeight
+);
+useResizeObserver(app, (_) => {
+  navbarHeight.value = navbar.value?.$el.clientHeight;
+});
+
+// Meta
 useMeta({
   title: "",
   description: "",
