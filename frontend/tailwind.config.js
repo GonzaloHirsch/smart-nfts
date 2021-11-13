@@ -5,6 +5,11 @@ module.exports = {
   content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
   theme: {
     extend: {
+      backgroundImage: {
+        custom_gradient_1: "url('@/assets/images/bg-gradient-1.svg')",
+        custom_gradient_2: "url('@/assets/images/bg-gradient-2.svg')",
+        custom_gradient_3: "url('@/assets/images/bg-gradient-3.svg')",
+      },
       colors: {
         brand_primary: "#002CCC",
         brand_secondary: "#a000cc",
