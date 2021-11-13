@@ -9,8 +9,8 @@
       <QuestionMarkCircleIcon class="h-8 w-8 ml-xs" />
     </a>
   </v-hero>
-  <v-section :fullHeight="true">
-    <h2>Buttons</h2>
+  <v-section :fullHeight="true" class="bg-light">
+    <h2 class="text-center">Buttons</h2>
     <div class="flex mt-8 lg:flex-shrink-0 lg:mt-0">
       <div class="inline-flex rounded-md shadow">
         <v-button format="primary" href="/about" target="_blank" aria="Go to about page" :external="false" text="Go to About" />
@@ -26,11 +26,53 @@
       </div>
     </div>
   </v-section>
+  <v-section :fullHeight="true" class="bg-white">
+    <h2 class="text-center">Accordions</h2>
+    <div class="flex mt-8 mx-auto w-6/12 flex-col">
+    <v-accordion title="Accordion Component" format="light">
+      <template #header>
+        <v-button format="primary" href="/about" target="_blank" aria="Go to about page" :external="false" text="Go to About" />
+      </template>
+      <template #content>
+      <p>THIS IS MY CONTENT</p>
+      <p>THIS IS MY CONTENT</p>
+      <p>THIS IS MY CONTENT</p>
+      </template>
+    </v-accordion>
+    <v-accordion title="Accordion Component" format="white">
+      <template #content>
+      <p>THIS IS MY CONTENT</p>
+      <p>THIS IS MY CONTENT</p>
+      <p>THIS IS MY CONTENT</p>
+      </template>
+    </v-accordion>
+    <v-accordion title="Accordion Component" format="primary">
+      <template #content>
+      <p>THIS IS MY CONTENT</p>
+      <p>THIS IS MY CONTENT</p>
+      <p>THIS IS MY CONTENT</p>
+      </template>
+    </v-accordion>
+    <v-accordion title="Accordion Component">
+      <template #content>
+      <p>THIS IS MY CONTENT</p>
+      <p>THIS IS MY CONTENT</p>
+      <p>THIS IS MY CONTENT</p>
+      </template>
+    </v-accordion>
+    <v-accordion title="Accordion Component NO CONTENT">
+    </v-accordion>
+    </div>
+    <div class="flex mt-8 lg:flex-shrink-0 lg:mt-0 bg-brand_primary">
+        
+    </div>
+  </v-section>
 </template>
 
 <script setup>
 // Components
 import vButton from '@/components/button.vue';
+import vAccordion from '@/components/accordion.vue';
 import vHero from '@/components/hero.vue';
 import vSection from '@/components/section.vue';
 import { QuestionMarkCircleIcon } from '@heroicons/vue/solid';
