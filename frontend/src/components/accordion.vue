@@ -32,7 +32,7 @@
 
 <script setup>
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue';
-import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/vue/solid';
+import { ChevronUpIcon } from '@heroicons/vue/solid';
 
 const props = defineProps({
   title: {

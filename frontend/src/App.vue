@@ -10,7 +10,7 @@
     <template v-slot:twitter(card)="{ twitter }">{{ twitter.card }}</template>
   </metainfo>
   <div class="relative" ref="app">
-    <v-navbar ref="navbar" />
+    <v-navbar ref="navbar"/>
     <main>
       <router-view />
     </main>
@@ -28,11 +28,6 @@ import { NAV_HEIGHT } from '@/js/constants.js';
 // Components
 import vNavbar from '@/components/static/navbar.vue';
 import vFooter from '@/components/static/footer.vue';
-
-let counter = ref(0);
-setInterval(() => {
-  counter.value++;
-}, 1000);
 
 const app = ref(null);
 const navbar = ref(null);

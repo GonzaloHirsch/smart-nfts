@@ -9,6 +9,7 @@
       <QuestionMarkCircleIcon class="h-8 w-8 ml-xs" />
     </a>
   </v-hero>
+
   <v-section :fullHeight="true" class="bg-light">
     <h2 class="text-center">Buttons</h2>
     <div class="flex mt-8 lg:flex-shrink-0 lg:mt-0">
@@ -26,6 +27,7 @@
       </div>
     </div>
   </v-section>
+
   <v-section :fullHeight="true" class="bg-white">
     <h2 class="text-center">Accordions</h2>
     <div class="flex mt-8 mx-auto w-6/12 flex-col">
@@ -63,8 +65,7 @@
     <v-accordion title="Accordion Component NO CONTENT">
     </v-accordion>
     </div>
-    <div class="flex mt-8 lg:flex-shrink-0 lg:mt-0 bg-brand_primary">
-        
+    <div class="flex mt-8 lg:flex-shrink-0 lg:mt-0">
     </div>
   </v-section>
 </template>
