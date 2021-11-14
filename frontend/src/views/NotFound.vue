@@ -1,7 +1,15 @@
 <template>
-  <header class="bg-white shadow">
-    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-      <h1 class="text-3xl font-bold leading-tight text-gray-900">Not Found</h1>
-    </div>
-  </header>
+  <v-hero :full-height="true" class="bg-custom_gradient_1 bg-cover" title="404.hero.title" subtitle="404.hero.subtitle">
+    <template #buttons>
+      <v-button format="secondary" href="/" target="_self" aria="Go to back to homepage" :external="false" :white="true" text="GO BACK TO HOME" />
+    </template>
+  </v-hero>
 </template>
+
+<script setup>
+import vButton from '@/components/button.vue';
+import vHero from '@/components/hero.vue';
+import { useMeta } from 'vue-meta';
+
+useMeta({ title: '404', description: "The page you are looking for doesn't exist" });
+</script>

@@ -1,0 +1,25 @@
+{
+    "app": {
+        "name": "Easy NFTs"
+    },
+    "home": {
+        "title": "Home",
+        "hero": {
+            "subtitle": "Create your <strong>custom NFT</strong> in just <strong>minutes</strong>"
+        }
+    },
+    "footer": {
+        "made": "Made by",
+        "location": "Proyecto Final - Instituto Tecnológico de Buenos Aires (ITBA)"
+    },
+    "nav": {
+        "create": "Create",
+        "interact": "Interact"
+    },
+    "404": {
+        "hero": {
+            "title": "404 - Not Found",
+            "subtitle": "We couldn't find the page you were looking for, go back home and start over."
+        }
+    }
+}

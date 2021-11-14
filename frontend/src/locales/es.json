@@ -1,0 +1,12 @@
+{
+    "app": {
+        "name": "Easy NFTs"
+    },
+    "home": {
+        "title": "Casa"
+    },
+    "nav": {
+        "create": "Crear",
+        "interact": "Interactuar"
+    }
+}
