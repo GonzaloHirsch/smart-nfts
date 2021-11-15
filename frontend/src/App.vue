@@ -2,12 +2,6 @@
   <metainfo>
     <template v-slot:title="{ content }">{{ content ? `${content} | SITE_NAME` : `SITE_NAME` }}</template>
     <template v-slot:description="{ content }">{{ content ? `${content}` : `SITE_DESCRIPTION` }}</template>
-    <template v-slot:script="{ content }">{{ content }}</template>
-    <template v-slot:og(title)="{ og }">{{ og.title }}</template>
-    <template v-slot:og(description)="{ og }">{{ og.description }}</template>
-    <template v-slot:og(image)="{ og }">{{ og.image }}</template>
-    <template v-slot:og(url)="{ og }">{{ og.url }}</template>
-    <template v-slot:twitter(card)="{ twitter }">{{ twitter.card }}</template>
   </metainfo>
   <div class="relative" ref="app">
     <v-navbar ref="navbar"/>
@@ -41,9 +35,6 @@ useResizeObserver(app, (_) => {
 useMeta({
   title: '',
   description: '',
-  htmlAttrs: { amp: true },
-  twitter: {
-    card: "summary"
-  }
+  htmlAttrs: { amp: true }
 });
 </script>

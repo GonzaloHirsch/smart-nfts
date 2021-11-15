@@ -3,21 +3,40 @@
 @import 'tailwindcss/utilities';
 
 h1 {
-  @apply text-h1 font-highlight;
-}
-h2 {
   @apply text-h2 font-highlight;
 }
-h3 {
+h2 {
   @apply text-h3 font-highlight;
 }
-h4 {
+h3 {
   @apply text-h4 font-highlight;
 }
-h5 {
+h4 {
   @apply text-h5 font-highlight;
 }
+h5 {
+  @apply text-body_xl font-highlight;
+}
 p,
-span {
+span,
+a {
   @apply text-base font-text;
+}
+
+@screen md {
+  h1 {
+    @apply text-h1;
+  }
+  h2 {
+    @apply text-h2;
+  }
+  h3 {
+    @apply text-h3;
+  }
+  h4 {
+    @apply text-h4;
+  }
+  h5 {
+    @apply text-h5;
+  }
 }
