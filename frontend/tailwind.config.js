@@ -23,8 +23,8 @@ module.exports = {
       },
       fontFamily: {
         sans: ['"Inter var"', ...defaultTheme.fontFamily.sans],
-        text: ['Inter var'],
-        highlight: ['Open Sans']
+        text: ['Open Sans'],
+        highlight: ['Inter var']
       },
       fontSize: {
         body_xs: "0.75rem",

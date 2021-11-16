@@ -2,15 +2,21 @@
     "app": {
         "name": "Easy NFTs"
     },
-    "home": {
-        "title": "Home",
+    "create": {
         "hero": {
-            "subtitle": "Create your <strong>custom NFT</strong> in just <strong>minutes</strong>"
+            "title": "Create an NFT",
+            "subtitle": "Create a <strong>new NFT</strong> or continue the creation of an <strong>existing contract</strong>"
         }
     },
     "footer": {
         "made": "Made by",
         "location": "Proyecto Final - Instituto Tecnológico de Buenos Aires (ITBA)"
+    },
+    "home": {
+        "title": "Home",
+        "hero": {
+            "subtitle": "Create your <strong>custom NFT</strong> in just <strong>minutes</strong>"
+        }
     },
     "nav": {
         "create": "Create",

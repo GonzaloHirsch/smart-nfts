@@ -1,48 +1,51 @@
 <template>
   <Disclosure v-slot="{ open }">
     <DisclosureButton
-      :class="[
-        props.format === 'light' ? 'accordion--button-light' : '',
-        props.format === 'white' ? 'accordion--button-white' : '',
-        props.format === 'primary' ? 'accordion--button-primary' : '',
-        'flex justify-between w-full px-base py-sm text-left rounded-md outline-none'
-      ]"
+      :class="[formats.button, 'flex justify-between w-full px-base py-sm text-left rounded-md outline-none', props.class]"
       style="z-index: 2"
     >
-      <div class="flex flex-row items-center">
-        <span class="mr-sm">{{ props.title }}</span>
+      <div class="flex flex-row items-center h-full">
+        <span class="mr-sm text-body_xl">{{ props.title }}</span>
         <slot name="header" />
       </div>
       <ChevronUpIcon v-if="$slots.content" :class="open ? 'transform rotate-180' : ''" class="w-8 h-8" />
     </DisclosureButton>
-    <DisclosurePanel
-      v-if="$slots.content"
-      :class="[
-        props.format === 'light' ? 'accordion--content-light' : '',
-        props.format === 'white' ? 'accordion--content-white' : '',
-        props.format === 'primary' ? 'accordion--content-primary' : '',
-        'px-base py-sm rounded-md -mt-xs'
-      ]"
-      style="z-index: 1"
+    <transition
+      enter-active-class="transition duration-250 ease-out"
+      enter-from-class="transform -translate-y-xl"
+      enter-to-class="transform"
+      leave-active-class="transition duration-250 ease-out"
+      leave-from-class="transform"
+      leave-to-class="transform -translate-y-xl"
     >
-      <slot name="content" />
-    </DisclosurePanel>
+      <DisclosurePanel v-if="$slots.content" :class="[formats.content, 'px-base py-sm rounded-md transform -translate-y-xs']" style="z-index: 1">
+        <slot name="content" />
+      </DisclosurePanel>
+    </transition>
   </Disclosure>
 </template>
 
 <script setup>
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue';
-import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/vue/solid';
+import { ChevronUpIcon } from '@heroicons/vue/solid';
+import { computed, ref } from 'vue';
 
 const props = defineProps({
   title: {
     type: String,
     required: true
   },
+  class: {
+    type: String
+  },
   format: {
     type: String,
     default: 'light'
   }
+});
+
+const formats = computed(() => {
+  return { content: `accordion--content-${props.format}`, button: `accordion--button-${props.format}` };
 });
 </script>
 

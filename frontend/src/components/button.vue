@@ -50,6 +50,9 @@ const buttonFormat = computed(() => (props.white ? `button--${props.format}-whit
 .button {
   @apply rounded px-sm py-xs transition duration-200 cursor-pointer;
 }
+.button a, .button span{
+  @apply text-h5;
+}
 
 /* PRIMARY FORMAT */
 .button--primary {
@@ -91,5 +94,19 @@ const buttonFormat = computed(() => (props.white ? `button--${props.format}-whit
 }
 .button--tertiary-white:hover {
   @apply text-brand_tertiary bg-white;
+}
+
+/* DANGER FORMAT */
+.button--danger {
+  @apply border-2 border-error text-error bg-transparent;
+}
+.button--danger:hover {
+  @apply bg-error text-white;
+}
+.button--danger-white {
+  @apply border-2 border-white text-white bg-transparent;
+}
+.button--danger-white:hover {
+  @apply text-error bg-white;
 }
 </style>
