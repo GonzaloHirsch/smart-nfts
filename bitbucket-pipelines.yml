@@ -36,11 +36,11 @@ pipelines:
               - npm run build
             artifacts:
               - dist/**
-            condition:
-              changesets:
-                  includePaths:
+            # condition:
+              # changesets:
+                  # includePaths:
                     # any changes in frontend directory
-                    - "frontend/**"
+                    # - "frontend/**"
         - step:
             name: Security Scan
             script:
@@ -53,7 +53,7 @@ pipelines:
           clone:
             enabled: false
           script:
-            - cd frontend
+            - ls
             # sync your files to S3
             - pipe: atlassian/aws-s3-deploy:1.1.0
               variables:
@@ -69,8 +69,8 @@ pipelines:
                 AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
                 AWS_DEFAULT_REGION: $AWS_DEFAULT_REGION
                 DISTRIBUTION_ID: $AWS_DISTRIBUTION_ID
-          condition:
-              changesets:
-                  includePaths:
+          # condition:
+              # changesets:
+                  # includePaths:
                     # any changes in frontend directory
-                    - "frontend/**"
+                    # - "frontend/**"
