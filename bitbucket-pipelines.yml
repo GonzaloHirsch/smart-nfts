@@ -53,6 +53,7 @@ pipelines:
           clone:
             enabled: false
           script:
+            - cd frontend
             # sync your files to S3
             - pipe: atlassian/aws-s3-deploy:1.1.0
               variables:
