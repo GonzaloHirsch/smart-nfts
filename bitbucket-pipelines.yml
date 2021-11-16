@@ -34,6 +34,7 @@ pipelines:
               - cd frontend
               - npm install
               - npm run build
+              - ls dist/
             artifacts:
               - dist/**
             # condition:
@@ -53,7 +54,10 @@ pipelines:
           clone:
             enabled: false
           script:
-            - echo $PWD
+            - pwd
+            - ls
+            - cd frontend/
+            - ls
             # sync your files to S3
             - pipe: atlassian/aws-s3-deploy:1.1.0
               variables:
