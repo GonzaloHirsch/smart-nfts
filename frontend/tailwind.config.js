@@ -22,7 +22,6 @@ module.exports = {
         success: "#66D972"
       },
       fontFamily: {
-        sans: ['"Inter var"', ...defaultTheme.fontFamily.sans],
         text: ['Open Sans'],
         highlight: ['Inter var']
       },

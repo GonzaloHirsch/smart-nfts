@@ -20,5 +20,5 @@ const props = defineProps({
 });
 
 const navHeight = inject(NAV_HEIGHT);
-const sectionStyle = computed(() => props.fullHeight ? {height: `calc(100vh - ${navHeight.value}px)`} : {});
+const sectionStyle = computed(() => props.fullHeight ? (navHeight.value ? {height: `calc(100vh - ${navHeight.value}px)`} : {height: `100vh`}) : {});
 </script>
