@@ -17,7 +17,7 @@ pipelines:
   default:
     - parallel:
       - step:
-          name: Install
+          name: Install Frontend Dependencies
           caches:
             - node
           script:
@@ -27,7 +27,7 @@ pipelines:
     master:
       - parallel:
         - step:
-            name: Install and Build
+            name: Install and Build Frontend
             caches:
               - node
             script:
@@ -48,12 +48,12 @@ pipelines:
               # See more security tools at https://bitbucket.org/product/features/pipelines/integrations?&category=security
               - pipe: atlassian/git-secrets-scan:0.5.1
       - step:
-          name: Deploy to Production
+          name: Deploy Frontend to Production
           deployment: Production
           clone:
             enabled: false
           script:
-            - ls
+            - echo $PWD
             # sync your files to S3
             - pipe: atlassian/aws-s3-deploy:1.1.0
               variables:
