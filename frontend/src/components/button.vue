@@ -48,10 +48,10 @@ const buttonFormat = computed(() => (props.white ? `button--${props.format}-whit
 
 <style scoped>
 .button {
-  @apply rounded px-sm py-xs transition duration-200 cursor-pointer;
+  @apply rounded transition duration-200 cursor-pointer inline-flex;
 }
 .button a, .button span{
-  @apply text-h5;
+  @apply text-h5 px-sm py-sm;
 }
 
 /* PRIMARY FORMAT */

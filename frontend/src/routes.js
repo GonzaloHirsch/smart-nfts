@@ -1,5 +1,6 @@
 // Code Splitting for routes
-const Home = () => import('./views/Home.vue');
+// Not split Home for less layout shift ==> Better experience
+import Home from './views/Home.vue';
 const Create = () => import('./views/Create.vue');
 const Components = () => import('./views/Components.vue');
 const ContractEditor = () => import('./views/ContractEditor.vue');
