@@ -25,7 +25,13 @@
     "404": {
         "hero": {
             "title": "404 - Not Found",
-            "subtitle": "We couldn't find the page you were looking for, go back home and start over."
+            "subtitle": "We couldn't find the page you were looking for, please go back home and start over."
+        }
+    },
+    "500": {
+        "hero": {
+            "title": "500 - Internal Error",
+            "subtitle": "There was an internal error, please go back home and start over."
         }
     }
 }

@@ -1,35 +1,82 @@
-# This is an example Starter pipeline configuration
-# Use a skeleton to build, test and deploy using manual and parallel steps
-# -----
-# You can specify a custom docker image from Docker Hub as your build environment.
+#  Template React Deploy
 
-image: atlassian/default-image:3
+#  This template allows you to deploy your React app to an AWS S3 bucket and invalidate the old AWS Cloudfront distribution.
+#  The workflow allows running tests, code linting and security scans on feature branches (as well as master).
+#  The react app will be validated, deployed to S3 and trigger an AWS Cloudfront distribution invalidation to refresh the CDN caches after the code is merged to master.
+
+# Prerequisites: $AWS_ACCESS_KEY_ID, $AWS_SECRET_ACCESS_KEY setup in the Deployment variables.
+# For advanced cases, please, follow examples from the pipe's:
+# README https://bitbucket.org/atlassian/aws-s3-deploy/src/master/README.md
+# README https://bitbucket.org/atlassian/aws-cloudfront-invalidate/src/master/README.md
+
+image: node:16
+
+# Workflow Configuration
 
 pipelines:
   default:
     - parallel:
       - step:
-          name: 'Build and Test'
+          name: Install Frontend Dependencies
+          caches:
+            - node
           script:
-            - echo "Your build and test goes here..."
+            - cd frontend
+            - npm install
+          condition:
+              changesets:
+                  includePaths:
+                    # any changes in frontend directory
+                    - "frontend/**"
+  branches:
+    master:
+      - parallel:
+        - step:
+            name: Install and Build Frontend
+            caches:
+              - node
+            script:
+              - cd frontend
+              - npm install
+              - npm run build
+              - ls dist/
+            artifacts:
+              - frontend/dist/**
+            condition:
+              changesets:
+                  includePaths:
+                    # any changes in frontend directory
+                    - "frontend/**"
+        - step:
+            name: Security Scan
+            script:
+              # Run a security scan for sensitive data.
+              # See more security tools at https://bitbucket.org/product/features/pipelines/integrations?&category=security
+              - pipe: atlassian/git-secrets-scan:0.5.1
       - step:
-          name: 'Lint'
+          name: Deploy Frontend to Production
+          deployment: Production
+          clone:
+            enabled: false
           script:
-            - echo "Your linting goes here..."
-      - step:
-          name: 'Security scan'
-          script:
-            - echo "Your security scan goes here..."
-
-    # The following deployment steps will be executed for each pipeline run. To configure your steps and conditionally deploy see https://support.atlassian.com/bitbucket-cloud/docs/configure-bitbucket-pipelinesyml/
-    - step:
-        name: 'Deployment to Staging'
-        deployment: staging
-        script:
-          - echo "Your deployment to staging script goes here..."
-    - step:
-        name: 'Deployment to Production'
-        deployment: production
-        trigger: 'manual'
-        script:
-          - echo "Your deployment to production script goes here..."
+            # sync your files to S3
+            - pipe: atlassian/aws-s3-deploy:1.1.0
+              variables:
+                AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+                AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+                AWS_DEFAULT_REGION: $AWS_DEFAULT_REGION
+                S3_BUCKET: $AWS_BUKET_NAME
+                CACHE_CONTROL: 'max-age=31536000'
+                LOCAL_PATH: 'frontend/dist'
+            # triggering a distribution invalidation to refresh the CDN caches
+            - pipe: atlassian/aws-cloudfront-invalidate:0.6.0
+              variables:
+                AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+                AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+                AWS_DEFAULT_REGION: $AWS_DEFAULT_REGION
+                DISTRIBUTION_ID: $AWS_DISTRIBUTION_ID
+          condition:
+              changesets:
+                  includePaths:
+                    # any changes in frontend directory
+                    - "frontend/**"

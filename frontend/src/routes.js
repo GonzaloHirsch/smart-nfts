@@ -1,10 +1,12 @@
 // Code Splitting for routes
-const Home = () => import('./views/Home.vue');
+// Not split Home for less layout shift ==> Better experience
+import Home from './views/Home.vue';
 const Create = () => import('./views/Create.vue');
 const Components = () => import('./views/Components.vue');
 const ContractEditor = () => import('./views/ContractEditor.vue');
 const Interact = () => import('./views/Interact.vue');
 const NotFound = () => import('./views/NotFound.vue');
+const ServerError = () => import('./views/ServerError.vue');
 
 /** @type {import('vue-router').RouterOptions['routes']} */
 export const routes = [
@@ -28,6 +30,11 @@ export const routes = [
     path: '/components',
     meta: { title: 'Components' },
     component: Components,
+  },
+  {
+    path: '/500',
+    meta: { title: '500' },
+    component: ServerError,
   },
   { path: '/:path(.*)', component: NotFound },
 ]

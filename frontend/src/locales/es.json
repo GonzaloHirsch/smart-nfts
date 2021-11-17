@@ -2,11 +2,36 @@
     "app": {
         "name": "Easy NFTs"
     },
+    "create": {
+        "hero": {
+            "title": "Crear un NFT",
+            "subtitle": "Crear un <strong>nuevo NFT</strong> o continuar la creación de un <strong>contrato existente</strong>"
+        }
+    },
+    "footer": {
+        "made": "Hecho por",
+        "location": "Proyecto Final - Instituto Tecnológico de Buenos Aires (ITBA)"
+    },
     "home": {
-        "title": "Casa"
+        "title": "Página Principal",
+        "hero": {
+            "subtitle": "Crear tu <strong>NFT personalizado</strong> en simplemente <strong>minutos</strong>"
+        }
     },
     "nav": {
         "create": "Crear",
         "interact": "Interactuar"
+    },
+    "404": {
+        "hero": {
+            "title": "404 - No Encontrado",
+            "subtitle": "No pudimos encontrar la página que estás buscando, por favor volvé a la página principal e intentalo de nuevo."
+        }
+    },
+    "500": {
+        "hero": {
+            "title": "500 - Error Interno",
+            "subtitle": "Hubo un error interno, por favor volvé a la página principal e intentalo de nuevo."
+        }
     }
 }
