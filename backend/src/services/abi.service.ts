@@ -1,5 +1,5 @@
 import { METHOD_TYPE } from "../constants/contract.constants";
-import { IAbi, IAbiMethod } from "../interfaces/abi.interface";
+import { IAbi } from "../interfaces/abi.interface";
 
 class AbiService {
 
