@@ -1,14 +1,15 @@
 
 import express, { Application } from 'express';
-import bodyParser from 'body-parser';
-// import cors from 'cors';
+import * as dotenv from "dotenv";
+import helmet from "helmet";
+import rateLimit from 'express-rate-limit';
+
+// Custom middlewares;
 import ErrorHandlerMiddleware from './middlewares/errorHandler.middleware';
 
-import * as dotenv from "dotenv";
-import Helmet from "helmet";
+// Routes
 import { HealthRoutes } from './routes/health.routes';
-
-import rateLimit from 'express-rate-limit';
+import { ContractRoutes } from './routes/contract.routes';
 
 
 class App {
@@ -28,10 +29,13 @@ class App {
 	private setConfig() {
 
 		dotenv.config();
+		// Helps you secure app by setting various HTTP headers
+		this.app.use(helmet());
+		// Recognize the incoming Request Object as a JSON Object
+		this.app.use(express.json({ limit: '50mb' }));
+		// Recognize the incoming Request Object as strings or arrays
+		this.app.use(express.urlencoded({ limit: '50mb' }));
 		
-		this.app.use(Helmet());
-		this.app.use(bodyParser.json({ limit: '50mb' }));
-		this.app.use(bodyParser.urlencoded({ limit: '50mb', extended:true}));
 		// this.app.use(cors());
 		// this.app.set('trust proxy', 1);
 		
@@ -50,9 +54,9 @@ class App {
 	private routes(){
 
 		this.app.use('/', new HealthRoutes().router);
+		this.app.use('/contract', new ContractRoutes().router);
 
 	}
-	
 	
 }
 
