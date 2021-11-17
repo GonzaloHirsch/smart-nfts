@@ -22,8 +22,8 @@ module.exports = {
         success: "#66D972"
       },
       fontFamily: {
-        text: ['Open Sans'],
-        highlight: ['Inter var']
+        text: ['Open Sans', 'Helvetiva'],
+        highlight: ['Inter', 'Helvetiva']
       },
       fontSize: {
         body_xs: "0.75rem",
