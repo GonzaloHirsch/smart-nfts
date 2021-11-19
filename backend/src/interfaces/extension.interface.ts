@@ -3,15 +3,11 @@ import { EXTENSIONS } from "../constants/extension.constants";
 import { IParameter } from "./general.interface";
 
 export interface IContractExtension {
-
-    // Class variables
-    extension: EXTENSIONS;
-    variables: IExtensionVariable[];
-    methods: IExtensionMethod[];
-
-    // Class methods
-    getExtensionVariables(): IExtensionVariable[];
-    getExtensionMethods(): IExtensionMethod[];
+    // Static methods
+    getExtensionOZImport(): string;                 // import from open zeppling
+    getExtensionName(): EXTENSIONS;                 // Name of extension (ex: ERC721URIStorage)
+    getExtensionVariables(): IExtensionVariable[];  // Necessary class variables
+    getExtensionMethods(): IExtensionMethod[];      // Methods to implement with extension
 }
 
 export interface IExtensionVariable extends IParameter {
