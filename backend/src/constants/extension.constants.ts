@@ -1,0 +1,5 @@
+
+export enum EXTENSIONS {
+    ERC721 = 'ERC721',
+    ERC721_URI_STORAGE = 'ERC721URIStorage'
+}
