@@ -1,5 +1,6 @@
-import { EXTENSIONS } from "../constants/contract.constants";
+import { EXTENSIONS, PARAMETER_TYPE, STATE_MUTABILITY, VISIBILITY } from "../constants/contract.constants";
 import { IContractExtension, IContractLibrary, IContractMethod, IContractVariable } from "../interfaces/contract.interface";
+import {staticImplements} from '../helpers/global.helper';
 
 @staticImplements<IContractExtension>()
 export abstract class ERC721 {
@@ -11,13 +12,30 @@ export abstract class ERC721 {
         return EXTENSIONS.ERC721;
     }
     public static getExtensionLibs(): IContractLibrary[] {
-        return [];
+        return [{
+            name: 'Counter.Counters',
+            for: 'Counters'
+        }];
     }
     public static getExtensionVariables(): IContractVariable[] {
-        return [];
+        return [{
+            type: PARAMETER_TYPE.ADDRESS,
+            visibility: VISIBILITY.PRIVATE,
+            name: '_tokenId'
+        }];
     }
     public static getExtensionMethods(): IContractMethod[] {
-        return [];
+        return [{
+            name: 'hello',
+            params: [{
+                name: 'to',
+                type: PARAMETER_TYPE.ADDRESS
+            }],
+            mandatory: true,
+            content: ['this is the first line;\n', 'this is the second line;\n'],
+            visibility: VISIBILITY.EXTERNAL,
+            stateMutability: STATE_MUTABILITY.NONPAYABLE
+        }];
     }
     
 }

@@ -18,9 +18,12 @@ export const getContractStarter = (name: string, extensions: EXTENSIONS[]): stri
 }
 
 export const getContractContent = (content: string): string => {
-    return `{` + newLine() +
-        content.split(newLine()).map(line => indexContent(line)).join(newLine()) +
-        `}`;
+    const indexedContent = content
+        .split(newLine())
+        .map(line => indexContent(line))
+        .join(newLine());
+
+    return `{` + newLine() + indexedContent + newLine() + `}`;
 }
 
 export const getConstructor = (name: string, symbol: string): string => {
@@ -28,7 +31,11 @@ export const getConstructor = (name: string, symbol: string): string => {
 }
 
 export const getLibrary = (library: IContractLibrary): string => {
-    return `using ${library.name} for ${library.for}`;
+    return `using ${library.name} for ${library.for};` + newLine();
+}
+
+export const getImport = (imp: string): string => {
+    return `import ${imp};` + newLine();
 }
 
 //**********************************//
@@ -36,7 +43,7 @@ export const getLibrary = (library: IContractLibrary): string => {
 //**********************************//
 
 export const getGlobalVariable = (variable: IContractVariable): string => {
-    return `${variable.type} ${variable.visibility} ${variable.name}` + newLine();
+    return `${variable.type} ${variable.visibility} ${variable.name};` + newLine();
 }
 
 //**********************************//

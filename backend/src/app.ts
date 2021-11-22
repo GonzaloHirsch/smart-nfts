@@ -34,7 +34,7 @@ class App {
 		// Recognize the incoming Request Object as a JSON Object
 		this.app.use(express.json({ limit: '50mb' }));
 		// Recognize the incoming Request Object as strings or arrays
-		this.app.use(express.urlencoded({ limit: '50mb' }));
+		this.app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 		
 		// this.app.use(cors());
 		// this.app.set('trust proxy', 1);

@@ -23,10 +23,8 @@ export interface IContractExtension {
 }
 
 export interface IContractLibrary {
-    [hash: string] : {
-        name: string,   
-        for: string
-    }
+    name: string,   
+    for: string
 }
 
 export interface IContractVariable extends IParameter {
@@ -35,9 +33,7 @@ export interface IContractVariable extends IParameter {
 
 export interface IContractMethod {
     name: string;
-    params: {
-        [hash: string] : IParameter
-    };
+    params: IParameter[];
     mandatory: boolean;
     content: string[];
     visibility?: VISIBILITY;

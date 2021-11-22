@@ -22,7 +22,8 @@ class TemplateService {
     }
 
     generateImports = (imports: string[]) => {
-        return Template.newLine() + imports.join(Template.newLine());
+        return Template.newLine() + 
+            imports.map(i => Template.getImport(i)).join(Template.newLine());
     }
 
     generateContractContent = (contract: IContract): string => {
@@ -46,13 +47,21 @@ class TemplateService {
     }
 
     generateLibraries = (libraries: IContractLibrary[]): string => {
-        return libraries.map(lib => Template.getLibrary(lib))
-            .join(Template.newLine());
+        return this.arrayTemplateWrapper(
+            libraries,
+            libraries.map(lib => Template.getLibrary(lib)).join('')
+        );
     }
 
     generateVariables = (variables: IContractVariable[]): string => {
-        return Template.newLine() +
-            variables.map(v => this.generateVariable(v)).join(Template.newLine());
+        const varsContent = variables
+            .map(v => this.generateVariable(v))
+            .join(Template.newLine());
+
+        return this.arrayTemplateWrapper(
+            variables,
+            Template.newLine() + varsContent
+        );
     }
 
     generateVariable = (variable: IContractVariable): string => {
@@ -60,12 +69,18 @@ class TemplateService {
     }
 
     generateMethods = (methods: IContractMethod[]): string => {
-        return Template.newLine() +
-            methods.map(method => this.generateMethod(method)).join(Template.newLine());
+        const methodsContent = methods
+            .map(method => this.generateMethod(method))
+            .join(Template.newLine());
+
+        return this.arrayTemplateWrapper(
+            methods,
+            methodsContent
+        );
     }
 
     generateMethod = (method: IContractMethod): string => {
-        const params = Object.values(method.params)
+        const params = method.params
             .map(param => `${param.type} ${param.name}`)
             .join(', ');
         
@@ -75,6 +90,11 @@ class TemplateService {
             Template.getFunctionContent(method.content);
     }
 
+    private arrayTemplateWrapper = (array: any[], defaultContent: string): string => {
+        return array.length == 0
+            ? ''
+            : defaultContent;
+    }
 
 }
 
