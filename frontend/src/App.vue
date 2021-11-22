@@ -4,8 +4,9 @@
     <template v-slot:description="{ content }">{{ content ? `${content}` : `SITE_DESCRIPTION` }}</template>
   </metainfo>
   <div class="relative" ref="app">
-    <v-navbar ref="navbar"/>
-    <main>
+    <a class="skip-to-content-link" aria-label="Skip to main content" href="#main">Skip to content</a>
+    <v-navbar ref="navbar" />
+    <main id="main">
       <router-view />
     </main>
     <v-footer />
@@ -38,3 +39,18 @@ useMeta({
   htmlAttrs: { amp: true }
 });
 </script>
+
+<style>
+.skip-to-content-link {
+  @apply bg-white text-brand_primary rounded-b-md border-2 border-brand_primary z-50 px-sm py-xs font-text mx-auto w-max;
+  left: 0;
+  right: 0;
+  position: absolute;
+  transform: translateY(-100%);
+  transition: transform 0.3s;
+}
+
+.skip-to-content-link:focus {
+  transform: translateY(0%);
+}
+</style>

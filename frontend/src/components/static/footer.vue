@@ -1,8 +1,8 @@
 <template>
-  <footer class="p-xs flex flex-col items-center bg-brand_secondary">
+  <footer id="footer" class="p-xs flex flex-col items-center bg-brand_secondary">
     <div class="flex flex-col items-center justify-center py-md text-typography_primary">
       <router-link to="/" class="text-h2 font-semibold mb-xl">{{ $t('app.name') }}</router-link>
-      <nav role="nav" class="flex flex-row justify-between items-center">
+      <nav class="flex flex-row justify-between items-center" aria-labelledby="footer">
         <ul class="flex flex-row list-none">
           <li>
             <router-link to="/create" class="text-h5 font-medium mr-md">{{ $t('nav.create') }}</router-link>

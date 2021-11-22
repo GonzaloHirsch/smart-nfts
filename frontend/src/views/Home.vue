@@ -13,7 +13,7 @@
       />
       <v-button format="secondary" href="/interact" target="_self" aria="Go to interact page" :external="false" :white="true" text="INTERACT" />
     </template>
-    <a href="#explained" class="text-typography_primary text-center mt-xl text-body_xl flex flex-row items-center justify-center">
+    <a href="#explained" class="text-typography_primary text-center mt-xl text-body_xl flex flex-row items-center justify-center" aria-label="Learn more about the possible options you have">
       Learn More
       <QuestionMarkCircleIcon class="h-8 w-8 ml-xs" />
     </a>

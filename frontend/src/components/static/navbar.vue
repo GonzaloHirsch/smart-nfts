@@ -1,6 +1,6 @@
 <template>
-  <header class="sticky top-0 left-0 px-sm md:px-base lg:px-xl py-sm bg-white w-full shadow z-10">
-    <nav role="nav" class="flex flex-row justify-between items-center">
+  <header id="header" class="sticky top-0 left-0 px-sm md:px-base lg:px-xl py-sm bg-white w-full shadow z-10">
+    <nav class="flex flex-row justify-between items-center" aria-labelledby="header">
       <router-link to="/" class="text-h5 text-brand_primary font-semibold">{{ $t('app.name') }}</router-link>
       <ul class="flex flex-row list-none">
         <li>
