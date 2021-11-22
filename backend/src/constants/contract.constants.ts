@@ -1,3 +1,4 @@
+export const SOLIDITY_VERSION = '0.8.2';
 
 export enum STATE_MUTABILITY {
     PURE = 'pure',

@@ -7,9 +7,9 @@ import TemplateService from '../services/template.service';
 
 export class ContractController {
 
-    public start: RequestHandler = async (req, res, next) => {
+    public example: RequestHandler = async (req, res, next) => {
 
-        const c = new CustomContract(
+        const contract = new CustomContract(
             ERC721.getExtensionOZImports(),
             'MyToken',
             'PF',
@@ -19,16 +19,16 @@ export class ContractController {
             ERC721.getExtensionMethods()
         );
 
-        const cString = TemplateService.getInstance().generateContract(c);
+        const contractString = TemplateService.getInstance().generateContract(contract);
 
-        fs.writeFile("/tmp/test", cString, function(err) {
+        fs.writeFile("/tmp/test", contractString, function(err) {
             if(err) {
                 return console.log(err);
             }
             console.log("The file was saved!");
         }); 
 
-        res.status(200).send({contract: cString}); 
+        res.status(200).send({contract: contractString}); 
     }
 
     public getContractById: RequestHandler = async (req, res, next) => {

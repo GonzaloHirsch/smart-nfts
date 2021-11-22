@@ -19,6 +19,10 @@ export const arrayWrapper = (array: any[], defaultContent: string): string => {
 //*********CONTRACT TEMPLATE********//
 //**********************************//
 
+export const getSolidityVersion = (version: string): string => {
+    return `pragma solidity ^${version}` + newLine();
+}
+
 export const getContractStarter = (name: string, extensions: EXTENSIONS[]): string => {
     return `contract ${name} is ${extensions.join(', ')}` + newLine();
 }

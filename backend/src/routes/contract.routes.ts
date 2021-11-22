@@ -20,7 +20,7 @@ export class ContractRoutes {
 
         this.router.use(cors());
 
-        this.router.get('/', this.controller.start);
+        this.router.get('/example', this.controller.example);
     }
 
 

@@ -1,5 +1,6 @@
 import { IContract, IContractLibrary, IContractMethod, IContractVariable } from "../interfaces/contract.interface";
 import * as Template from '../helpers/template.helper';
+import { SOLIDITY_VERSION } from "../constants/contract.constants";
 
 class TemplateService {
 
@@ -16,12 +17,16 @@ class TemplateService {
     }
 
     generateContract = (contract: IContract): string => {
-        // missing pragma solidity version
-        return this.generateImports(contract.getImports()) +
+        return this.generateSolidityVersion() +
+            this.generateImports(contract.getImports()) +
             this.generateContractContent(contract);
     }
 
-    generateImports = (imports: string[]) => {
+    generateSolidityVersion = (): string => {
+        return Template.getSolidityVersion(SOLIDITY_VERSION);
+    }
+
+    generateImports = (imports: string[]): string => {
         return Template.newLine() + 
             imports.map(i => Template.getImport(i)).join(Template.newLine());
     }
