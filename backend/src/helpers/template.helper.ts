@@ -45,7 +45,7 @@ export const getLibrary = (library: IContractLibrary): string => {
 }
 
 export const getImport = (imp: string): string => {
-    return `import ${imp};` + newLine();
+    return `import "${imp}";` + newLine();
 }
 
 //**********************************//
