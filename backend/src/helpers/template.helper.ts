@@ -1,5 +1,5 @@
-import { EXTENSIONS } from "../constants/extension.constants";
-import { IContractLibrary } from "../interfaces/contract.interface";
+import { EXTENSIONS } from "../constants/contract.constants";
+import { IContractLibrary, IContractVariable } from "../interfaces/contract.interface";
 
 export const newLine = (): string => {
     return '\n';
@@ -9,39 +9,35 @@ export const indexContent = (content: string): string => {
     return `\t${content}`;
 }
 
-const spacingWrapper = (content: string): string => {
-    return newLine() + content + newLine();
-}
-
 //**********************************//
 //*********CONTRACT TEMPLATE********//
 //**********************************//
 
-export const getImports = (imports: string[]): string => {
-    return spacingWrapper(imports.join(newLine()));
+export const getContractStarter = (name: string, extensions: EXTENSIONS[]): string => {
+    return `contract ${name} is ${extensions.join(', ')}` + newLine();
 }
 
-export const getContractStarter = (name: string, extensions: EXTENSIONS[]): string => {
-    return spacingWrapper(
-        `contract ${name} is ${extensions.join(', ')}`
-    );
+export const getContractContent = (content: string): string => {
+    return `{` + newLine() +
+        content.split(newLine()).map(line => indexContent(line)).join(newLine()) +
+        `}`;
 }
 
 export const getConstructor = (name: string, symbol: string): string => {
-    return spacingWrapper( 
-        `constructor() ERC721("${name}", "${symbol}") {}`
-    );
+    return `constructor() ERC721("${name}", "${symbol}") {}`+ newLine();
 }
 
-export const getLibraries = (libraries: IContractLibrary[]): string => {
-    return Object.values(libraries)
-        .map(lib => `using ${lib.name} for ${lib.for}`)
-        .join(newLine())
+export const getLibrary = (library: IContractLibrary): string => {
+    return `using ${library.name} for ${library.for}`;
 }
 
 //**********************************//
 //*****GLOBAL VARIABLE TEMPLATE*****//
 //**********************************//
+
+export const getGlobalVariable = (variable: IContractVariable): string => {
+    return `${variable.type} ${variable.visibility} ${variable.name}` + newLine();
+}
 
 //**********************************//
 //********FUNCTION TEMPLATES********//
@@ -54,9 +50,7 @@ const getNullableDetail = (detail?: string): string => {
 }
 
 export const getFunctionStarter = (name: string, params: string): string => {
-    return spacingWrapper(
-        `function ${name}(${params})`
-    );
+    return `function ${name}(${params})` + newLine();
 }
 
 export const getFunctionDetails = (details: (string | undefined)[]): string => {

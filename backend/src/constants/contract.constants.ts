@@ -22,3 +22,8 @@ export enum VISIBILITY {
     PRIVATE = 'private',   // only inside the contract that defines the function
     PUBLIC = 'public',     // any contract and account can call
 }
+
+export enum EXTENSIONS {
+    ERC721 = 'ERC721',
+    ERC721_URI_STORAGE = 'ERC721URIStorage'
+}

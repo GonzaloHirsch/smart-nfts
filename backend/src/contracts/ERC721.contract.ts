@@ -1,4 +1,4 @@
-import { EXTENSIONS } from "../constants/extension.constants";
+import { EXTENSIONS } from "../constants/contract.constants";
 import { IContractExtension, IContractLibrary, IContractMethod, IContractVariable } from "../interfaces/contract.interface";
 
 @staticImplements<IContractExtension>()

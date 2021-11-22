@@ -1,4 +1,4 @@
-import { EXTENSIONS } from "../constants/extension.constants";
+import { EXTENSIONS } from "../constants/contract.constants";
 
 class CreationService {
 

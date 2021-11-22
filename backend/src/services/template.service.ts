@@ -1,4 +1,4 @@
-import { IContract, IContractMethod } from "../interfaces/contract.interface";
+import { IContract, IContractLibrary, IContractMethod, IContractVariable } from "../interfaces/contract.interface";
 import * as Template from '../helpers/template.helper';
 
 class TemplateService {
@@ -17,9 +17,51 @@ class TemplateService {
 
     generateContract = (contract: IContract): string => {
         // missing pragma solidity version
-        return Template.getImports(contract.getImports()) +
+        return this.generateImports(contract.getImports()) +
+            this.generateContractContent(contract);
+    }
+
+    generateImports = (imports: string[]) => {
+        return Template.newLine() + imports.join(Template.newLine());
+    }
+
+    generateContractContent = (contract: IContract): string => {
+        // Content inside the contract declaration
+        const contractContent = [
+            this.generateLibraries(contract.getLibraries()),
+            this.generateVariables(contract.getVariables()),
+            this.generateConstructor(contract),
+            this.generateMethods(contract.getMethods())
+        ];
+
+        return Template.newLine() +
             Template.getContractStarter(contract.getName(), contract.getExtensions()) +
-            Template.getLibraries(contract.getLibraries());
+            Template.getContractContent(
+                contractContent.join('')
+            );
+    }
+
+    generateConstructor = (contract: IContract): string => {
+        return Template.newLine() + Template.getConstructor(contract.getName(), contract.getSymbol());
+    }
+
+    generateLibraries = (libraries: IContractLibrary[]): string => {
+        return libraries.map(lib => Template.getLibrary(lib))
+            .join(Template.newLine());
+    }
+
+    generateVariables = (variables: IContractVariable[]): string => {
+        return Template.newLine() +
+            variables.map(v => this.generateVariable(v)).join(Template.newLine());
+    }
+
+    generateVariable = (variable: IContractVariable): string => {
+        return Template.getGlobalVariable(variable);
+    }
+
+    generateMethods = (methods: IContractMethod[]): string => {
+        return Template.newLine() +
+            methods.map(method => this.generateMethod(method)).join(Template.newLine());
     }
 
     generateMethod = (method: IContractMethod): string => {
@@ -30,8 +72,7 @@ class TemplateService {
         return Template.newLine() +
             Template.getFunctionStarter(method.name, params) +
             Template.getFunctionDetails([method.visibility, method.options, method.stateMutability]) +
-            Template.getFunctionContent(method.content) +
-            Template.newLine();
+            Template.getFunctionContent(method.content);
     }
 
 
