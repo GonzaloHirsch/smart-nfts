@@ -47,7 +47,7 @@ class TemplateService {
     }
 
     generateLibraries = (libraries: IContractLibrary[]): string => {
-        return this.arrayTemplateWrapper(
+        return Template.arrayWrapper(
             libraries,
             libraries.map(lib => Template.getLibrary(lib)).join('')
         );
@@ -58,7 +58,7 @@ class TemplateService {
             .map(v => this.generateVariable(v))
             .join(Template.newLine());
 
-        return this.arrayTemplateWrapper(
+        return Template.arrayWrapper(
             variables,
             Template.newLine() + varsContent
         );
@@ -73,7 +73,7 @@ class TemplateService {
             .map(method => this.generateMethod(method))
             .join(Template.newLine());
 
-        return this.arrayTemplateWrapper(
+        return Template.arrayWrapper(
             methods,
             methodsContent
         );
@@ -89,13 +89,6 @@ class TemplateService {
             Template.getFunctionDetails([method.visibility, method.options, method.stateMutability]) +
             Template.getFunctionContent(method.content);
     }
-
-    private arrayTemplateWrapper = (array: any[], defaultContent: string): string => {
-        return array.length == 0
-            ? ''
-            : defaultContent;
-    }
-
 }
 
 export default TemplateService;

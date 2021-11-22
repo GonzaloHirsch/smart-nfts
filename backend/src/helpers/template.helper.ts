@@ -9,6 +9,12 @@ export const indexContent = (content: string): string => {
     return `\t${content}`;
 }
 
+export const arrayWrapper = (array: any[], defaultContent: string): string => {
+    return array.length == 0
+        ? ''
+        : defaultContent;
+}
+
 //**********************************//
 //*********CONTRACT TEMPLATE********//
 //**********************************//
