@@ -12,7 +12,8 @@ export enum METHOD_TYPE {
 }
 
 export enum PARAMETER_TYPE {
-    ADDRESS = 'address'
+    ADDRESS = 'address',
+    STRING_MEMORY = 'string memory'
 }
 
 export enum VISIBILITY {
