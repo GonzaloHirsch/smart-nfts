@@ -1,6 +1,6 @@
 <template>
   <metainfo>
-    <template v-slot:title="{ content }">{{ content ? `${content} | SITE_NAME` : `SITE_NAME` }}</template>
+    <template v-slot:title="{ content }">{{ content ? `${content} | Smart NFTs` : `Smart NFTs` }}</template>
     <template v-slot:description="{ content }">{{ content ? `${content}` : `SITE_DESCRIPTION` }}</template>
   </metainfo>
   <div class="relative" ref="app">

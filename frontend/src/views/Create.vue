@@ -10,7 +10,7 @@
         class="mr-sm md:mr-md lg:mr-xl"
         @click="createNewContract"
       />
-      <v-button format="secondary" href="/interact" target="_self" aria="Continue with an existing contract" :external="false" :white="true" text="EXISTING" />
+      <v-button format="secondary" aria="Continue with an existing contract" :external="false" :white="true" text="EXISTING" @click="createNewContract" />
     </template>
   </v-hero>
 </template>
