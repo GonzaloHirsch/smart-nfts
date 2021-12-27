@@ -74,6 +74,16 @@ export const getFunctionDetails = (details: (string | undefined)[]): string => {
     return details.map(detail => getNullableDetail(detail)).join('');
 }
 
+export const getFunctionOverrides = (overrides?: EXTENSIONS[]): string => {
+    if (overrides == null) {
+        return '';
+    }
+    const overrideString = overrides.length > 0 
+        ? `(${overrides.join(', ')})`
+        : '';
+    return indexContent(`overrides${overrideString}\n`);
+}
+
 export const getFunctionContent = (content: string[]): string => {
     return `{` + newLine() +
         content.map(line => indexContent(line)).join('') +

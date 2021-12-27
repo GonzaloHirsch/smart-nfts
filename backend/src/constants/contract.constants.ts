@@ -14,7 +14,8 @@ export enum METHOD_TYPE {
 
 export enum PARAMETER_TYPE {
     ADDRESS = 'address',
-    STRING_MEMORY = 'string memory'
+    STRING_MEMORY = 'string memory',
+    UINT256 = 'uint256',
 }
 
 export enum VISIBILITY {
@@ -26,5 +27,8 @@ export enum VISIBILITY {
 
 export enum EXTENSIONS {
     ERC721 = 'ERC721',
-    ERC721_URI_STORAGE = 'ERC721URIStorage'
+    ERC721_URI_STORAGE = 'ERC721URIStorage',
+    ERC721_BURNABLE = 'ERC721Burnable',
+    ERC721_ENUMERABLE = 'ERC721Enumerable',
+    PAUSABLE = 'Pausable',
 }

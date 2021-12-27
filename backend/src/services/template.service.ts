@@ -92,6 +92,7 @@ class TemplateService {
         return Template.newLine() +
             Template.getFunctionStarter(method.name, params) +
             Template.getFunctionDetails([method.visibility, method.options, method.stateMutability]) +
+            Template.getFunctionOverrides(method.overrides) +
             Template.getFunctionContent(method.content);
     }
 }

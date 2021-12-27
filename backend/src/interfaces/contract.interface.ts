@@ -39,6 +39,6 @@ export interface IContractMethod {
     visibility?: VISIBILITY;
     options?: string;
     stateMutability?: STATE_MUTABILITY;
-    overrides?: EXTENSIONS[];
+    overrides?: EXTENSIONS[]; // Only override if the extension is included
     returns?: string
 }

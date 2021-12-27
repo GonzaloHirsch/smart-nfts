@@ -3,6 +3,7 @@ import fs from 'fs';
 import { EXTENSIONS } from '../constants/contract.constants';
 import { CustomContract } from '../contracts/custom.contract';
 import { ERC721 } from '../contracts/ERC721.contract';
+import { Pausable } from '../contracts/Pausable.contract';
 import TemplateService from '../services/template.service';
 
 export class ContractController {
@@ -10,13 +11,13 @@ export class ContractController {
     public example: RequestHandler = async (req, res, next) => {
 
         const contract = new CustomContract(
-            ERC721.getExtensionOZImports(),
+            Pausable.getExtensionOZImports(),
             'MyToken',
             'PF',
-            [EXTENSIONS.ERC721],
-            ERC721.getExtensionLibs(),
-            ERC721.getExtensionVariables(),
-            ERC721.getExtensionMethods()
+            [EXTENSIONS.PAUSABLE],
+            Pausable.getExtensionLibs(),
+            Pausable.getExtensionVariables(),
+            Pausable.getExtensionMethods()
         );
 
         const contractString = TemplateService.getInstance().generateContract(contract);
