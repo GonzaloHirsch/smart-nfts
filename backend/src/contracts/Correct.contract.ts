@@ -3,13 +3,13 @@ import { IContractExtension, IContractLibrary, IContractMethod, IContractVariabl
 import {staticImplements} from '../helpers/global.helper';
 
 @staticImplements<IContractExtension>()
-export abstract class Pausable {
+export abstract class Correct {
     
     public static getExtensionOZImports(): string[] {
-        return ["./node_modules/@openzeppelin/contracts/security/Pausable.sol"];
+        return ["./node_modules/@openzeppelin/contracts/token/ERC721/ERC721.sol", "./node_modules/@openzeppelin/contracts/access/Ownable.sol", './node_modules/@openzeppelin/contracts/security/Pausable.sol'];
     }
     public static getExtensionName(): EXTENSIONS {
-        return EXTENSIONS.PAUSABLE;
+        return EXTENSIONS.CORRECT;
     }
     public static getExtensionLibs(): IContractLibrary[] {
         return [];
@@ -32,7 +32,7 @@ export abstract class Pausable {
                 params: [],
                 mandatory: true,
                 content: ['_unpause();\n'],
-                visibility: VISIBILITY.EXTERNAL,
+                visibility: VISIBILITY.PUBLIC,
                 options: 'onlyOwner'
             },
             {
@@ -55,7 +55,7 @@ export abstract class Pausable {
                 content: ['super._beforeTokenTransfer(from, to, tokenId);\n'],
                 visibility: VISIBILITY.INTERNAL,
                 options: 'whenNotPaused',
-                overrides: [EXTENSIONS.ERC721, EXTENSIONS.ERC721_ENUMERABLE]
+                overrides: []
             }
         ];
     }    

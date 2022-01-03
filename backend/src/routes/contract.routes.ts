@@ -21,6 +21,7 @@ export class ContractRoutes {
         this.router.use(cors());
 
         this.router.get('/example', this.controller.example);
+        this.router.get('/compile', this.controller.compile);
     }
 
 

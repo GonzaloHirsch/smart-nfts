@@ -20,11 +20,15 @@ export const arrayWrapper = (array: any[], defaultContent: string): string => {
 //**********************************//
 
 export const getSolidityVersion = (version: string): string => {
-    return `pragma solidity ^${version}` + newLine();
+    return `pragma solidity ^${version};` + newLine();
+}
+
+export const getContractLicense = (license: string): string => {
+    return `// SPDX-License-Identifier: ${license}` + newLine();
 }
 
 export const getContractStarter = (name: string, extensions: EXTENSIONS[]): string => {
-    return `contract ${name} is ${extensions.join(', ')}` + newLine();
+    return `contract ${name} is ERC721${extensions.length > 0 ? ',' : ''} ${extensions.join(', ')}` + newLine();
 }
 
 export const getContractContent = (content: string): string => {
@@ -81,7 +85,7 @@ export const getFunctionOverrides = (overrides?: EXTENSIONS[]): string => {
     const overrideString = overrides.length > 0 
         ? `(${overrides.join(', ')})`
         : '';
-    return indexContent(`overrides${overrideString}\n`);
+    return indexContent(`override${overrideString}\n`);
 }
 
 export const getFunctionContent = (content: string[]): string => {

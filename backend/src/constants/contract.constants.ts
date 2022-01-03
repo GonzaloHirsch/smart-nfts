@@ -1,4 +1,5 @@
 export const SOLIDITY_VERSION = '0.8.2';
+export const CONTRACT_LICENSE = 'MIT';
 
 export enum STATE_MUTABILITY {
     PURE = 'pure',
@@ -31,4 +32,5 @@ export enum EXTENSIONS {
     ERC721_BURNABLE = 'ERC721Burnable',
     ERC721_ENUMERABLE = 'ERC721Enumerable',
     PAUSABLE = 'Pausable',
+    CORRECT = 'Pausable, Ownable'
 }

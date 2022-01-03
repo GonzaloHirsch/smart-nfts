@@ -1,6 +1,6 @@
 import { IContract, IContractLibrary, IContractMethod, IContractVariable } from "../interfaces/contract.interface";
 import * as Template from '../helpers/template.helper';
-import { SOLIDITY_VERSION } from "../constants/contract.constants";
+import { SOLIDITY_VERSION, CONTRACT_LICENSE } from "../constants/contract.constants";
 
 class TemplateService {
 
@@ -17,13 +17,18 @@ class TemplateService {
     }
 
     generateContract = (contract: IContract): string => {
-        return this.generateSolidityVersion() +
+        return this.generateContractLicense() + 
+            this.generateSolidityVersion() +
             this.generateImports(contract.getImports()) +
             this.generateContractContent(contract);
     }
 
     generateSolidityVersion = (): string => {
         return Template.getSolidityVersion(SOLIDITY_VERSION);
+    }
+    
+    generateContractLicense = (): string => {
+        return Template.getContractLicense(CONTRACT_LICENSE);
     }
 
     generateImports = (imports: string[]): string => {
