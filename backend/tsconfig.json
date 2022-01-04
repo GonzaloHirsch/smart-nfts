@@ -31,7 +31,7 @@
        "./node_modules/@types"
     ],
     "paths": {
-      "*": [ "src/@custom_types/*"]
+      "*": [ "./src/@custom_types/*"]
     }
   },
 
