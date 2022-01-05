@@ -1,4 +1,5 @@
 import { EXTENSIONS } from "../constants/contract.constants";
+import { IContractExtension } from "../interfaces/contract.interface";
 
 class CreationService {
 

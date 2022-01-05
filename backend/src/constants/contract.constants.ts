@@ -1,5 +1,16 @@
+import { ERC721 } from "../contracts/ERC721.contract";
+import { Burnable } from "../contracts/Burnable.contract";
+import { Pausable } from "../contracts/Pausable.contract";
+import { IContractExtension } from "../interfaces/contract.interface";
+
 export const SOLIDITY_VERSION = '0.8.2';
 export const CONTRACT_LICENSE = 'MIT';
+
+export const EXTENSION_MAP: Map<string, IContractExtension> = new Map([
+    ['ERC721', ERC721], 
+    ['Burnable', Burnable],
+    ['Pausable', Pausable],    
+]);
 
 export enum STATE_MUTABILITY {
     PURE = 'pure',

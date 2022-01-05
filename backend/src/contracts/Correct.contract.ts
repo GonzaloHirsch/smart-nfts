@@ -59,4 +59,7 @@ export abstract class Correct {
             }
         ];
     }    
+    public static getParentExtension(): EXTENSIONS | null {
+        return null;
+    }    
 }

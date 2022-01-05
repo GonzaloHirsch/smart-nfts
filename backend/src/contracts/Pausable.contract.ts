@@ -59,4 +59,7 @@ export abstract class Pausable {
             }
         ];
     }    
+    public static getParentExtension(): EXTENSIONS | null {
+        return null;
+    }    
 }

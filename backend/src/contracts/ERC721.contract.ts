@@ -37,5 +37,7 @@ export abstract class ERC721 {
             stateMutability: STATE_MUTABILITY.NONPAYABLE
         }];
     }
-    
+    public static getParentExtension(): EXTENSIONS | null {
+        return null;
+    }    
 }

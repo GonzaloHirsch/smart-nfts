@@ -17,9 +17,10 @@ export interface IContractExtension {
     // Static methods
     getExtensionOZImports(): string[];             // import from open zeppling
     getExtensionName(): EXTENSIONS;                // Name of extension (ex: ERC721URIStorage)
-    getExtensionLibs(): IContractLibrary[];         // For including a library within a contract in solidity.
+    getExtensionLibs(): IContractLibrary[];        // For including a library within a contract in solidity.
     getExtensionVariables(): IContractVariable[];  // Necessary class variables
     getExtensionMethods(): IContractMethod[];      // Methods to implement with extension
+    getParentExtension(): EXTENSIONS | null;       // If extension is adding upon or overriding a parent extension. 
 }
 
 export interface IContractLibrary {

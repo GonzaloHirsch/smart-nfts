@@ -20,5 +20,7 @@ export abstract class Burnable {
     public static getExtensionMethods(): IContractMethod[] {
         return [];
     }
-    
+    public static getParentExtension(): EXTENSIONS | null {
+        return null;
+    }    
 }
