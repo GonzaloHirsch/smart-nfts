@@ -1,0 +1,50 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This is the API definition for the Smart NFTs final proyect.",
+    "version": "1.0.0",
+    "title": "Smart NFTs API",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "email": "ghirsch@itba.edu.ar"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host": "api.smart-nfts.gonzalohirsch.com",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "/contracts",
+      "description": "/contracts endpoint"
+    }
+  ],
+  "schemes": [
+    "https",
+    "http"
+  ],
+  "paths": {
+    "/contracts/example": {
+      "get": {
+        "tags": ["/contracts"],
+        "summary": "Get a sample contract",
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "contract": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
