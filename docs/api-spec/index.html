@@ -2,79 +2,94 @@
 <!-- Tutorial for this https://medium.com/nirman-tech-blog/swagger-ui-for-aws-api-gateway-endpoints-a667f25f5a4b -->
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <title>Swagger UI</title>
-    <link rel="stylesheet" type="text/css" href="./swagger-ui.css" >
-    <link rel="icon" type="image/png" href="./favicon-32x32.png" sizes="32x32" />
-    <style>
-      html
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Smart NFTs API | Petrikovich & Hirsch</title>
+  <!-- Opengraph -->
+  <meta property="og:title" content="Smart NFTs | Petrikovich & Hirsch" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://api-docs.smart-nfts.gonzalohirsch.com/" />
+  <meta property="og:image" content="https://og-image.vercel.app/SmartNFTs%20API" />
+  <meta property="og:description"
+    content="API for Smart NFTs, a capstone project by Florencia Petrikovich and Gonzalo Hirsch. Create, deploy, and test a custom NFT contract in just minutes." />
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary" />
+  <!-- Schema -->
+  <script type="application/ld+json">
       {
-        box-sizing: border-box;
-        overflow: -moz-scrollbars-vertical;
-        overflow-y: scroll;
+        "@context": "http://schema.org",
+        "@type": "WebSite",
+          "name": "Smart NFTs API",
+          "url": "https://api-docs.smart-nfts.gonzalohirsch.com/",
       }
-
-      *,
-      *:before,
-      *:after
+      </script>
+  <script type="application/ld+json">
       {
-        box-sizing: inherit;
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "url": "https://api-docs.smart-nfts.gonzalohirsch.com/",
+        "logo": "https://og-image.vercel.app/SmartNFTs%20API"
       }
+      </script>
+  <link rel="stylesheet" type="text/css" href="./swagger-ui.css" />
+  <link rel="icon" type="image/png" href="./favicon-32x32.png" sizes="32x32" />
+  <style>
+    html {
+      box-sizing: border-box;
+      overflow: -moz-scrollbars-vertical;
+      overflow-y: scroll;
+    }
 
-      body
-      {
-        margin:0;
-        background: #fafafa;
-      }
-    </style>
-  </head>
+    *,
+    *:before,
+    *:after {
+      box-sizing: inherit;
+    }
 
-  <body>
-    <div id="swagger-ui"></div>
+    body {
+      margin: 0;
+      background: #fafafa;
+    }
+  </style>
+</head>
 
-    <script src="./swagger-ui-bundle.js"> </script>
-    <script src="./swagger-ui-standalone-preset.js"> </script>
-   
-    
-    <script>
+<body>
+  <div id="swagger-ui"></div>
 
-    window.onload = function() {
+  <script src="./swagger-ui-bundle.js"></script>
+  <script src="./swagger-ui-standalone-preset.js"></script>
+
+  <script>
+    window.onload = function () {
       // Begin Swagger UI call region
       var allText;
-      function readTextFile(file){
+      function readTextFile(file) {
         var rawFile = new XMLHttpRequest();
-        rawFile.open("GET", file, false);
-        rawFile.onreadystatechange = function ()
-        {
-          if(rawFile.readyState === 4)
-            {
-                if(rawFile.status === 200 || rawFile.status == 0)
-                {
-                    allText= rawFile.responseText;
-                }
+        rawFile.open('GET', file, false);
+        rawFile.onreadystatechange = function () {
+          if (rawFile.readyState === 4) {
+            if (rawFile.status === 200 || rawFile.status == 0) {
+              allText = rawFile.responseText;
             }
-      }
+          }
+        };
         rawFile.send(null);
       }
-      readTextFile("./docs-list.json") 
+      readTextFile('./docs-list.json');
       const ui = SwaggerUIBundle({
-        urls:JSON.parse(allText),
+        urls: JSON.parse(allText),
         dom_id: '#swagger-ui',
         deepLinking: true,
-        presets: [
-          SwaggerUIBundle.presets.apis,
-          SwaggerUIStandalonePreset
-        ],
-        plugins: [
-          SwaggerUIBundle.plugins.DownloadUrl
-        ],
-        layout: "StandaloneLayout"
-      })
+        presets: [SwaggerUIBundle.presets.apis, SwaggerUIStandalonePreset],
+        plugins: [SwaggerUIBundle.plugins.DownloadUrl],
+        layout: 'StandaloneLayout'
+      });
       // End Swagger UI call region
 
-      window.ui = ui
-    }
+      window.ui = ui;
+    };
   </script>
-  </body>
+</body>
+
 </html>
