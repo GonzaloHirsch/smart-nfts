@@ -40,3 +40,103 @@ a {
     @apply text-h5;
   }
 }
+
+/* Highlight JS Theme */
+/*!
+  Theme: StackOverflow Dark
+  Description: Dark theme as used on stackoverflow.com
+  Author: stackoverflow.com
+  Maintainer: @Hirse
+  Website: https://github.com/StackExchange/Stacks
+  License: MIT
+  Updated: 2021-05-15
+
+  Updated for @stackoverflow/stacks v0.64.0
+  Code Blocks: /blob/v0.64.0/lib/css/components/_stacks-code-blocks.less
+  Colors: /blob/v0.64.0/lib/css/exports/_stacks-constants-colors.less
+*/
+pre code.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 1em;
+}
+code.hljs {
+  padding: 3px 5px;
+}
+.hljs {
+  @apply text-white bg-slate-800;
+}
+.hljs-subst {
+  @apply text-white;
+}
+.hljs-comment {
+  @apply text-gray-400;
+}
+.hljs-attr,
+.hljs-doctag,
+.hljs-keyword,
+.hljs-meta .hljs-keyword,
+.hljs-section,
+.hljs-selector-tag {
+  @apply text-purple-400;
+}
+.hljs-attribute {
+  /* color: #c59bc1; */
+  @apply text-pink-400;
+}
+.hljs-name,
+.hljs-number,
+.hljs-quote,
+.hljs-selector-id,
+.hljs-template-tag,
+.hljs-type {
+  /* color: #f08d49; */
+  @apply text-blue-400;
+}
+.hljs-selector-class {
+  @apply text-purple-400;
+}
+.hljs-link,
+.hljs-regexp,
+.hljs-selector-attr,
+.hljs-string,
+.hljs-symbol,
+.hljs-template-variable,
+.hljs-variable {
+  /* color: #b5bd68; */
+  @apply text-green-400;
+}
+.hljs-meta,
+.hljs-selector-pseudo {
+  /* color: #88aece; */
+  @apply text-purple-400;
+}
+.hljs-built_in,
+.hljs-literal,
+.hljs-title {
+  /* color: #f08d49; */
+  @apply text-blue-400;
+}
+.hljs-bullet,
+.hljs-code {
+  /* color: #ccc; */
+  @apply text-gray-400;
+}
+.hljs-meta .hljs-string {
+  /* color: #b5bd68; */
+  @apply text-green-400;
+}
+.hljs-deletion {
+  /* color: #de7176; */
+  @apply text-red-400;
+}
+.hljs-addition {
+  /* color: #76c490; */
+  @apply text-yellow-400;
+}
+.hljs-emphasis {
+  font-style: italic;
+}
+.hljs-strong {
+  font-weight: 700;
+}
