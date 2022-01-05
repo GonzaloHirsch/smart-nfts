@@ -14,20 +14,6 @@ image: node:16
 # Workflow Configuration
 
 pipelines:
-  default:
-    - parallel:
-      - step:
-          name: Install Frontend Dependencies
-          caches:
-            - node
-          script:
-            - cd frontend
-            - npm install
-          condition:
-              changesets:
-                  includePaths:
-                    # any changes in frontend directory
-                    - "frontend/**"
   branches:
     master:
       - parallel:
@@ -55,7 +41,6 @@ pipelines:
               - pipe: atlassian/git-secrets-scan:0.5.1
       - step:
           name: Deploy Frontend to Production
-          deployment: Production
           clone:
             enabled: false
           script:
@@ -82,7 +67,6 @@ pipelines:
                     - "frontend/**"
       - step:
           name: Deploy Docs to Production
-          deployment: Production
           clone:
             enabled: false
           script:
