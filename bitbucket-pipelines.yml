@@ -66,6 +66,17 @@ pipelines:
                     # any changes in frontend directory
                     - "frontend/**"
       - step:
+            name: Export docs artifacts
+            script:
+              - ls docs/api-spec/
+            artifacts:
+              - docs/api-spec/**
+            condition:
+              changesets:
+                  includePaths:
+                    # any changes in api docs directory
+                    - "docs/api-spec/**"
+      - step:
           name: Deploy Docs to Production
           clone:
             enabled: false
@@ -89,5 +100,5 @@ pipelines:
           condition:
               changesets:
                   includePaths:
-                    # any changes in frontend directory
+                    # any changes in api docs directory
                     - "docs/api-spec/**"
