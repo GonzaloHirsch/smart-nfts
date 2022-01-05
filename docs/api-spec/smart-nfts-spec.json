@@ -28,9 +28,13 @@
   "paths": {
     "/contracts/example": {
       "get": {
-        "tags": ["/contracts"],
+        "tags": [
+          "/contracts"
+        ],
         "summary": "Get a sample contract",
-        "produces": ["application/json"],
+        "produces": [
+          "application/json"
+        ],
         "responses": {
           "200": {
             "description": "Successful operation",
