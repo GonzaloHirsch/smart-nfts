@@ -44,7 +44,7 @@ export class ContractController {
             Correct.getExtensionVariables(),
             Correct.getExtensionMethods()
         );
-
+        
         const contractString = TemplateService.getInstance().generateContract(contract);
         compileContract(contractString);
         

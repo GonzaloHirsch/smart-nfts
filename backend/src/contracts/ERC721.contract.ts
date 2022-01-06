@@ -6,7 +6,7 @@ import {staticImplements} from '../helpers/global.helper';
 export abstract class ERC721 {
     
     public static getExtensionOZImports(): string[] {
-        return ["./node_modules/@openzeppelin/contracts/token/ERC721/ERC721.sol"];
+        return ["@openzeppelin/contracts/token/ERC721/ERC721.sol"];
     }
     public static getExtensionName(): EXTENSIONS {
         return EXTENSIONS.ERC721;

@@ -6,7 +6,7 @@ import {staticImplements} from '../helpers/global.helper';
 export abstract class Correct {
     
     public static getExtensionOZImports(): string[] {
-        return ["./node_modules/@openzeppelin/contracts/token/ERC721/ERC721.sol", "./node_modules/@openzeppelin/contracts/access/Ownable.sol", './node_modules/@openzeppelin/contracts/security/Pausable.sol'];
+        return ["@openzeppelin/contracts/token/ERC721/ERC721.sol", "@openzeppelin/contracts/access/Ownable.sol", '@openzeppelin/contracts/security/Pausable.sol'];
     }
     public static getExtensionName(): EXTENSIONS {
         return EXTENSIONS.CORRECT;
