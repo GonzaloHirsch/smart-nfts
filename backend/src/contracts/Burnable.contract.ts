@@ -9,7 +9,7 @@ export abstract class Burnable {
         return ["@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol"];
     }
     public static getExtensionName(): EXTENSIONS {
-        return EXTENSIONS.ERC721_BURNABLE;
+        return EXTENSIONS.ERC721Burnable;
     }
     public static getExtensionLibs(): IContractLibrary[] {
         return [];

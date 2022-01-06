@@ -22,6 +22,8 @@ export class ContractRoutes {
 
         this.router.get('/example', this.controller.example);
         this.router.get('/compile', this.controller.compile);
+
+        this.router.post('/', this.controller.generateContract);
     }
 
 

@@ -28,7 +28,8 @@ export const getContractLicense = (license: string): string => {
 }
 
 export const getContractStarter = (name: string, extensions: EXTENSIONS[]): string => {
-    return `contract ${name} is ERC721${extensions.length > 0 ? ',' : ''} ${extensions.join(', ')}` + newLine();
+    const filteredExtensions = extensions.filter(ext => ext !== EXTENSIONS.ERC721);
+    return `contract ${name} is ERC721${filteredExtensions.length > 0 ? ',' : ''} ${filteredExtensions.join(', ')}` + newLine();
 }
 
 export const getContractContent = (content: string): string => {

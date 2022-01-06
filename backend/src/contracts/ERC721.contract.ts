@@ -13,8 +13,8 @@ export abstract class ERC721 {
     }
     public static getExtensionLibs(): IContractLibrary[] {
         return [{
-            name: 'Counter.Counters',
-            for: 'Counters'
+            name: 'Counters',
+            for: 'Counter.Counters'
         }];
     }
     public static getExtensionVariables(): IContractVariable[] {

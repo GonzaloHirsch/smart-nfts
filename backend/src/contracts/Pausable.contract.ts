@@ -9,7 +9,7 @@ export abstract class Pausable {
         return ["@openzeppelin/contracts/security/Pausable.sol"];
     }
     public static getExtensionName(): EXTENSIONS {
-        return EXTENSIONS.PAUSABLE;
+        return EXTENSIONS.Pausable;
     }
     public static getExtensionLibs(): IContractLibrary[] {
         return [];
@@ -55,7 +55,7 @@ export abstract class Pausable {
                 content: ['super._beforeTokenTransfer(from, to, tokenId);\n'],
                 visibility: VISIBILITY.INTERNAL,
                 options: 'whenNotPaused',
-                overrides: [EXTENSIONS.ERC721, EXTENSIONS.ERC721_ENUMERABLE]
+                overrides: [EXTENSIONS.ERC721, EXTENSIONS.ERC721Enumerable]
             }
         ];
     }    

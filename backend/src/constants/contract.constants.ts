@@ -39,9 +39,9 @@ export enum VISIBILITY {
 
 export enum EXTENSIONS {
     ERC721 = 'ERC721',
-    ERC721_URI_STORAGE = 'ERC721URIStorage',
-    ERC721_BURNABLE = 'ERC721Burnable',
-    ERC721_ENUMERABLE = 'ERC721Enumerable',
-    PAUSABLE = 'Pausable',
+    ERC721URIStorage = 'ERC721URIStorage',
+    ERC721Burnable = 'ERC721Burnable',
+    ERC721Enumerable = 'ERC721Enumerable',
+    Pausable = 'Pausable',
     CORRECT = 'Pausable, Ownable'
 }

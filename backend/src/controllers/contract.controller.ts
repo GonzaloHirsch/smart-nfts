@@ -7,8 +7,17 @@ import { Pausable } from '../contracts/Pausable.contract';
 import { Correct } from '../contracts/Correct.contract';
 import { compileContract } from '../helpers/compiler.helper';
 import TemplateService from '../services/template.service';
+import CreationService from '../services/creation.service';
+import { enumHasKeys } from '../helpers/collection.helper';
+import GenericException from '../exceptions/generic.exception';
 
 export class ContractController {
+
+    private creationService: CreationService;
+
+    constructor() {
+        this.creationService = CreationService.getInstance();
+    }
 
     public example: RequestHandler = async (req, res, next) => {
 
@@ -16,7 +25,7 @@ export class ContractController {
             Pausable.getExtensionOZImports(),
             'MyToken',
             'PF',
-            [EXTENSIONS.PAUSABLE],
+            [EXTENSIONS.Pausable],
             Pausable.getExtensionLibs(),
             Pausable.getExtensionVariables(),
             Pausable.getExtensionMethods()
@@ -59,8 +68,27 @@ export class ContractController {
         res.status(200).send({message: "Bienvenido a Proyecto Final. Por Gonzalo Hirsch y Florencia Petrikovich :)"}); 
     }
 
-    public createContract: RequestHandler = async (req, res, next) => {
-        res.status(200).send({message: "Bienvenido a Proyecto Final. Por Gonzalo Hirsch y Florencia Petrikovich :)"}); 
+    public generateContract: RequestHandler = async (req, res, next) => {
+        const name = req.body.name as string;
+        const symbol = req.body.symbol as string; 
+        const extensions = req.body.extensions as string[]; 
+
+        console.log(extensions);
+
+        if (!name || !symbol || !extensions || !enumHasKeys(EXTENSIONS, extensions)) {
+            // TODO error handling
+            next(new GenericException({internalStatus: '', status: 400, message: 'bad params'}))
+            return;
+        }
+
+        try {
+
+            res.status(200).send({contract: this.creationService.genContract(name, symbol, extensions as EXTENSIONS[])});
+
+        } catch (err) {
+            next(err);
+        }
+    
     }
 
     public deployContract: RequestHandler = async (req, res, next) => {
