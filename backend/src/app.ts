@@ -54,8 +54,7 @@ class App {
 	private routes(){
 
 		this.app.use('/', new HealthRoutes().router);
-		this.app.use('/contract', new ContractRoutes().router);
-
+		this.app.use('/contracts', new ContractRoutes().router);
 	}
 	
 }

@@ -8,29 +8,11 @@
   <v-section :noPadding="true" class="bg-typography_primary">
     <div class="flex flex-row">
       <div class="flex flex-col w-6/12 bg-light rounded-r-2xl pt-sm pb-base px-md">
-        <h2 class="text-center text-brand_primary">Features</h2>
-        <div class="divide-y divide-typography_secondary">
-          <div class="form--section">
-            <h5 class="form--title">Contract Name <QuestionMarkCircleIcon class="form--title-icon" /></h5>
-          </div>
-          <div class="form--section">
-            <h5 class="form--title">Permissions <QuestionMarkCircleIcon class="form--title-icon" /></h5>
-          </div>
-          <div class="form--section">
-            <h5 class="form--title">Creation <QuestionMarkCircleIcon class="form--title-icon" /></h5>
-          </div>
-          <div class="form--section">
-            <h5 class="form--title">Metadata <QuestionMarkCircleIcon class="form--title-icon" /></h5>
-          </div>
-        </div>
-        <!-- ACTIONS -->
-        <div class="flex flex-row items-center justify-center">
-          <v-button format="primary" aria="Create a new NFT" :external="false" :white="false" text="SAVE" @click="showModal"/>
-          <v-button format="primary" aria="Create a new NFT" :external="false" :white="false" text="DEPLOY" class="mx-sm" @click="showModal"/>
-          <v-button format="primary" aria="Create a new NFT" :external="false" :white="false" text="DOWNLOAD" @click="showModal"/>
-        </div>
+        <v-editor />
       </div>
-      <div class="flex flex-col items-center justify-center w-6/12">RESULT</div>
+      <div class="flex w-6/12 p-sm">
+        <v-code-viewer class="flex flex-col w-full" :code="contract" />
+      </div>
     </div>
   </v-section>
 
@@ -74,6 +56,8 @@
 <script setup>
 // Components
 import vButton from '@/components/button.vue';
+import vCodeViewer from '@/components/codeViewer.vue';
+import vEditor from '@/components/editor.vue';
 import vModal from '@/components/modal.vue';
 import vSection from '@/components/section.vue';
 import { QuestionMarkCircleIcon } from '@heroicons/vue/solid';
@@ -81,19 +65,27 @@ import { QuestionMarkCircleIcon } from '@heroicons/vue/solid';
 import { useRoute } from 'vue-router';
 const route = useRoute();
 
-import {ref} from 'vue';
+import { ref } from 'vue';
 const isOpen = ref(false);
 const showModal = () => {
   isOpen.value = !isOpen.value;
-}
+};
 const handleModalClose = () => {
   isOpen.value = false;
-}
+};
 
 import { useMeta } from 'vue-meta';
 useMeta({
   title: 'Contract Editor',
   description: 'This is the homepage to our project'
+});
+
+import { useApi } from '@/plugins/api';
+const api = useApi();
+
+const contract = ref(undefined);
+api.loadContract().then((res) => {
+  contract.value = res;
 });
 </script>
 

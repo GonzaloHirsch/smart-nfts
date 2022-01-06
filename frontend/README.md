@@ -16,6 +16,6 @@ npm i
 npm run build
 ```
 
-## Producción
+## Producción
 
 Al hacer un commit que afecte a la carpeta `frontend`, automaticamente se hace un deploy a S3 e invalidación del CDN.
