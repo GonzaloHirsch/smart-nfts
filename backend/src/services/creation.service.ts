@@ -2,7 +2,7 @@ import { EXTENSIONS, EXTENSION_MAP, REQUIRE_KEYWORD } from "../constants/contrac
 import { CustomContract } from "../contracts/custom.contract";
 import GenericException from "../exceptions/generic.exception";
 import { flattenArray, getSortFn } from "../helpers/collection.helper";
-import { getMergedMethodStateMutability, getMergedMethodVisibility } from "../helpers/creation.helper";
+import { getExtensionAdditions, getMergedMethodStateMutability, getMergedMethodVisibility } from "../helpers/creation.helper";
 import { hashString } from "../helpers/string.helper";
 import { IContractExtension, IContractLibrary, IContractMethod, IContractVariable } from "../interfaces/contract.interface";
 import { IParameter } from "../interfaces/general.interface";
@@ -27,7 +27,10 @@ class CreationService {
     }
 
     genContract = (name: string, symbol: string, extensions: EXTENSIONS[]) : string => {
-
+        // Always add the base ERC721 extension
+        extensions.unshift(EXTENSIONS.ERC721);
+        
+        // Fetch the extension classes
         const classExtensions = extensions.map(extensionName => {
             if (!EXTENSION_MAP.has(extensionName)) {
                 throw new Error('missing extension in map');
@@ -35,6 +38,9 @@ class CreationService {
             }
             return EXTENSION_MAP.get(extensionName) as IContractExtension;
         });
+
+        extensions = getExtensionAdditions(extensions);
+        console.log(extensions)
 
         const contract = new CustomContract(
             this.genContractImports(classExtensions),

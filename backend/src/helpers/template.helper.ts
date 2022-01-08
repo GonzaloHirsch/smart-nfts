@@ -1,4 +1,4 @@
-import { EXTENSIONS } from "../constants/contract.constants";
+import { EXTENSIONS, FINAL_EXTENSIONS } from "../constants/contract.constants";
 import { IContractLibrary, IContractVariable } from "../interfaces/contract.interface";
 
 export const newLine = (): string => {
@@ -27,8 +27,8 @@ export const getContractLicense = (license: string): string => {
     return `// SPDX-License-Identifier: ${license}` + newLine();
 }
 
-export const getContractStarter = (name: string, extensions: EXTENSIONS[]): string => {
-    const filteredExtensions = extensions.filter(ext => ext !== EXTENSIONS.ERC721);
+export const getContractStarter = (name: string, extensions: FINAL_EXTENSIONS[]): string => {
+    const filteredExtensions = extensions.filter(ext => ext !== FINAL_EXTENSIONS.ERC721);
     return `contract ${name} is ERC721${filteredExtensions.length > 0 ? ',' : ''} ${filteredExtensions.join(', ')}` + newLine();
 }
 
@@ -50,7 +50,7 @@ export const getLibrary = (library: IContractLibrary): string => {
 }
 
 export const getImport = (imp: string): string => {
-    return `import "${imp}";` + newLine();
+    return `import "${imp}";`;
 }
 
 //**********************************//

@@ -84,7 +84,16 @@ export class ContractController {
 
         try {
 
-            res.status(200).send({contract: this.creationService.genContract(name, symbol, extensions as EXTENSIONS[])});
+            
+            const contractString = this.creationService.genContract(name, symbol, extensions as EXTENSIONS[]);
+
+            fs.writeFile("/tmp/test", contractString, function(err) {
+                if(err) {
+                    return console.log(err);
+                }
+                console.log("The file was saved!");
+            }); 
+            res.status(200).send({contract: contractString});
 
         } catch (err) {
             next(err);

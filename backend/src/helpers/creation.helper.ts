@@ -1,4 +1,4 @@
-import { STATE_MUTABILITY, VISIBILITY } from "../constants/contract.constants";
+import { EXTENSIONS, STATE_MUTABILITY, VISIBILITY } from "../constants/contract.constants";
 
 export const getMergedMethodVisibility = (visibilities: (VISIBILITY | undefined)[]): VISIBILITY => {
     // The default visibility is public
@@ -24,4 +24,11 @@ export const getMergedMethodStateMutability = (mutabilities: (STATE_MUTABILITY |
     else if (mutabilities.includes(STATE_MUTABILITY.VIEW)) return STATE_MUTABILITY.VIEW;
     // Does not modify or read from the state
     else return STATE_MUTABILITY.PURE;
+}
+
+export const getExtensionAdditions = (extensions: EXTENSIONS[]): EXTENSIONS[] => {
+    if (extensions.includes(EXTENSIONS.Mintable) || extensions.includes(EXTENSIONS.Pausable)) {
+        extensions.push(EXTENSIONS.Ownable);
+    }
+    return extensions;
 }
