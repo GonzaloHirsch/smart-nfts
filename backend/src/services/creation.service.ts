@@ -1,7 +1,8 @@
 import { EXTENSIONS, EXTENSION_MAP } from "../constants/contract.constants";
 import { CustomContract } from "../contracts/custom.contract";
+import GenericException from "../exceptions/generic.exception";
 import { hashString } from "../helpers/string.helper";
-import { IContractLibrary, IContractMethod, IContractVariable } from "../interfaces/contract.interface";
+import { IContractExtension, IContractLibrary, IContractMethod, IContractVariable } from "../interfaces/contract.interface";
 import TemplateService from "./template.service";
 
 class CreationService {
@@ -24,49 +25,58 @@ class CreationService {
 
     genContract = (name: string, symbol: string, extensions: EXTENSIONS[]) : string => {
 
+        let classExtensions = extensions.map(extensionName => EXTENSION_MAP.get(extensionName));
+
+        if (classExtensions.some(classExt => classExt == undefined)) {
+            throw new Error('missing extension in map');
+            // TODO ERROR HANDLING
+        }
+
+        classExtensions = classExtensions as IContractExtension[];
+
         const contract = new CustomContract(
-            this.genContractImports(extensions),
+            this.genContractImports(classExtensions),
             name,
             symbol,
             extensions,
-            this.genContractLibraries(extensions),
-            this.genContractVariables(extensions),
-            this.genContractMethods(extensions)
+            this.genContractLibraries(classExtensions),
+            this.genContractVariables(classExtensions),
+            this.genContractMethods(classExtensions)
         );
 
         return TemplateService.getInstance().generateContract(contract);
     };
 
-    private genContractVariables = (extensions: EXTENSIONS[]): IContractVariable[] => {
+    private genContractVariables = (extensions:IContractExtension[]): IContractVariable[] => {
 
         return this.genUniqueExtensionList<IContractVariable>(
             extensions, 
-            (extension) => EXTENSION_MAP.get(extension)?.getExtensionVariables(),
+            (extension) => extension.getExtensionVariables(),
             (variable) => variable.name
         );
     };
 
-    private genContractLibraries = (extensions: EXTENSIONS[]): IContractLibrary[] => {
+    private genContractLibraries = (extensions: IContractExtension[]): IContractLibrary[] => {
 
         return this.genUniqueExtensionList<IContractLibrary>(
             extensions, 
-            (extension) => EXTENSION_MAP.get(extension)?.getExtensionLibs(),
+            (extension) => extension.getExtensionLibs(),
             (lib) => lib.name
         );
     };
 
-    private genContractImports = (extensions: EXTENSIONS[]): string[] => {
+    private genContractImports = (extensions: IContractExtension[]): string[] => {
 
         return this.genUniqueExtensionList<string>(
             extensions, 
-            (extension) => EXTENSION_MAP.get(extension)?.getExtensionOZImports(),
+            (extension) => extension.getExtensionOZImports(),
             (i) => i
         );
     };
 
     private genUniqueExtensionList = <T>(
-        extensions: EXTENSIONS[], 
-        listGetter: (ext: EXTENSIONS) => T[] | undefined,
+        extensions: IContractExtension[], 
+        listGetter: (ext: IContractExtension) => T[],
         getHashableField: (element: T) => string
     ): T[] => {
         // HashMap to check naming is unique
@@ -74,7 +84,7 @@ class CreationService {
 
         extensions.forEach(extension => {
             // Fetch the variables of the extension
-            const list = listGetter(extension) ?? [];
+            const list = listGetter(extension);
             // Add to the hash map to ensure no repeating variables
             list.forEach(element => {
                 // Calculate the hash of the variable name, since this should not be repeated
@@ -95,10 +105,10 @@ class CreationService {
     }
 
     //***********************************//
-    //************ METHODS **************//
+    //******** CONTRACT METHODS *********//
     //***********************************//
 
-    private genContractMethods = (extensions: EXTENSIONS[]): IContractMethod[] => {
+    private genContractMethods = (extensions: IContractExtension[]): IContractMethod[] => {
         return [];
     };
 }
