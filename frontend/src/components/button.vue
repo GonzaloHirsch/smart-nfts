@@ -1,5 +1,5 @@
 <template>
-  <button :class="[buttonFormat, 'button']">
+  <button :class="[buttonFormat, 'button']" type="button">
     <template v-if="props.external">
       <a :href="props.href" :target="props.target" :aria-label="props.aria">{{ props.text }}</a>
     </template>
@@ -17,7 +17,8 @@ import { computed } from 'vue';
 
 const props = defineProps({
   href: {
-    type: String
+    type: String,
+    default: undefined
   },
   target: {
     type: String,

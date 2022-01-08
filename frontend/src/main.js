@@ -1,11 +1,14 @@
-import { createApp } from 'vue'
-import './tailwind.css'
-import App from './App.vue'
-import { routes } from './routes.js'
-import { createRouter, createWebHistory } from 'vue-router'
-import { createI18n } from 'vue-i18n'
-import { createMetaManager } from 'vue-meta'
+import { createApp } from 'vue';
+import './tailwind.css';
+import App from './App.vue';
+import { routes } from './routes.js';
+import { createRouter, createWebHistory } from 'vue-router';
+import { createI18n } from 'vue-i18n';
+import { createMetaManager } from 'vue-meta';
 import locales from '@/locales';
+
+// Custom plugins
+import {apiPlugin} from './plugins/api';
 
 const app = createApp(App)
 
@@ -22,7 +25,8 @@ const i18n = createI18n({
 
 const meta = createMetaManager();
 
-app.use(router)
-app.use(i18n)
-app.use(meta)
-app.mount('#app')
+app.use(router);
+app.use(i18n);
+app.use(meta);
+app.use(apiPlugin);
+app.mount('#app');

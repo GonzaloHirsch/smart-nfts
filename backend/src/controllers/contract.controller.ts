@@ -7,6 +7,7 @@ import { Pausable } from '../contracts/Pausable.contract';
 import { Correct } from '../contracts/Correct.contract';
 import { compileContract } from '../helpers/compiler.helper';
 import TemplateService from '../services/template.service';
+import HttpExection from '../exceptions/http.exception';
 import CreationService from '../services/creation.service';
 import { enumHasKeys } from '../helpers/collection.helper';
 import GenericException from '../exceptions/generic.exception';
@@ -89,6 +90,28 @@ export class ContractController {
             next(err);
         }
     
+    }
+    
+    public editContract: RequestHandler = async (req, res, next) => {
+        if (req.params.contractId.trim().length === 0) {
+            throw new HttpExection(400, 'BadRequest', 'Invalid contract id');
+        }
+        console.log(req.params.contractId)
+        console.log(req.body);
+        
+        const contract = new CustomContract(
+            Pausable.getExtensionOZImports(),
+            'MyToken',
+            'PF',
+            [EXTENSIONS.PAUSABLE],
+            Pausable.getExtensionLibs(),
+            Pausable.getExtensionVariables(),
+            Pausable.getExtensionMethods()
+        );
+
+        const contractString = TemplateService.getInstance().generateContract(contract);
+
+        res.status(200).send({contract: contractString}); 
     }
 
     public deployContract: RequestHandler = async (req, res, next) => {
