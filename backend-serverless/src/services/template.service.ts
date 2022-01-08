@@ -6,7 +6,7 @@ class TemplateService {
 
     private static instance: TemplateService;
 
-    static getInstance = (): TemplateService => {
+    static getInstance = () => {
 
         if (!TemplateService.instance) {
             TemplateService.instance = new TemplateService();
@@ -31,7 +31,8 @@ class TemplateService {
 
     generateImports = (imports: string[]): string => {
         return Template.newLine() + 
-            imports.map(i => Template.getImport(i)).join(Template.newLine());
+            imports.map(i => Template.getImport(i)).join(Template.newLine()) +
+            Template.newLine();
     }
 
     generateContractContent = (contract: IContract): string => {
@@ -44,7 +45,7 @@ class TemplateService {
         ];
 
         return Template.newLine() +
-            Template.getContractStarter(contract.getName(), contract.getExtensions()) +
+            Template.getContractStarter(contract.getName(), contract.getFinalExtensions()) +
             Template.getContractContent(
                 contractContent.join('')
             );

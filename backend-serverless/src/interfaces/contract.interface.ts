@@ -1,4 +1,4 @@
-import { STATE_MUTABILITY, VISIBILITY } from "../constants/contract.constants";
+import { FINAL_EXTENSIONS, STATE_MUTABILITY, VISIBILITY } from "../constants/contract.constants";
 import { EXTENSIONS } from "../constants/contract.constants";
 import { IParameter } from "./general.interface";
 
@@ -6,6 +6,7 @@ export interface IContract {
     // Getters
     getImports(): string[];  
     getExtensions(): EXTENSIONS[];            
+    getFinalExtensions(): FINAL_EXTENSIONS[];            
     getName(): string;
     getSymbol(): string;     
     getLibraries(): IContractLibrary[];                 

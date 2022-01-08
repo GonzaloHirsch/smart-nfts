@@ -5,7 +5,7 @@ class AbiService {
 
     private static instance: AbiService;
 
-    static getInstance = (): AbiService => {
+    static getInstance = () => {
 
         if (!AbiService.instance) {
             AbiService.instance = new AbiService();

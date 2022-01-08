@@ -1,5 +1,5 @@
 
-export const hashString = (str: string): number => {
+export const hashString = (str: string) => {
     let hash = 0, i, chr;
     if (str.length === 0) return hash;
     for (i = 0; i < str.length; i++) {

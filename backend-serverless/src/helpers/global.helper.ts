@@ -1,5 +1,5 @@
 
 // Allows implementation of static methods in interfaces
-export const staticImplements = <T>(): <U extends T>(constructor: U) => void => {
+export const staticImplements = <T>() => {
     return <U extends T>(constructor: U) => {constructor};
 }
