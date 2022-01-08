@@ -103,7 +103,7 @@ export class ContractController {
             Pausable.getExtensionOZImports(),
             'MyToken',
             'PF',
-            [EXTENSIONS.PAUSABLE],
+            [EXTENSIONS.Pausable],
             Pausable.getExtensionLibs(),
             Pausable.getExtensionVariables(),
             Pausable.getExtensionMethods()

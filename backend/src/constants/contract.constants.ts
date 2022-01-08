@@ -45,3 +45,5 @@ export enum EXTENSIONS {
     Pausable = 'Pausable',
     CORRECT = 'Pausable, Ownable'
 }
+
+export const REQUIRE_KEYWORD = 'require';

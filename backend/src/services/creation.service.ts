@@ -1,8 +1,11 @@
-import { EXTENSIONS, EXTENSION_MAP } from "../constants/contract.constants";
+import { EXTENSIONS, EXTENSION_MAP, REQUIRE_KEYWORD } from "../constants/contract.constants";
 import { CustomContract } from "../contracts/custom.contract";
 import GenericException from "../exceptions/generic.exception";
+import { flattenArray, getSortFn } from "../helpers/collection.helper";
+import { getMergedMethodStateMutability, getMergedMethodVisibility } from "../helpers/creation.helper";
 import { hashString } from "../helpers/string.helper";
 import { IContractExtension, IContractLibrary, IContractMethod, IContractVariable } from "../interfaces/contract.interface";
+import { IParameter } from "../interfaces/general.interface";
 import TemplateService from "./template.service";
 
 class CreationService {
@@ -25,14 +28,13 @@ class CreationService {
 
     genContract = (name: string, symbol: string, extensions: EXTENSIONS[]) : string => {
 
-        let classExtensions = extensions.map(extensionName => EXTENSION_MAP.get(extensionName));
-
-        if (classExtensions.some(classExt => classExt == undefined)) {
-            throw new Error('missing extension in map');
-            // TODO ERROR HANDLING
-        }
-
-        classExtensions = classExtensions as IContractExtension[];
+        const classExtensions = extensions.map(extensionName => {
+            if (!EXTENSION_MAP.has(extensionName)) {
+                throw new Error('missing extension in map');
+                // TODO ERROR HANDLING
+            }
+            return EXTENSION_MAP.get(extensionName) as IContractExtension;
+        });
 
         const contract = new CustomContract(
             this.genContractImports(classExtensions),
@@ -109,7 +111,75 @@ class CreationService {
     //***********************************//
 
     private genContractMethods = (extensions: IContractExtension[]): IContractMethod[] => {
-        return [];
+        
+        const methodHashMap: {[hash: number]: IContractMethod[]} = {};
+
+        // Get parent extensions from the extensions
+        const parentExtensions = extensions
+            .map(e => e.getParentExtension())
+            .filter(parent => parent !== null);
+
+        // Filter out all parent extension with a child extension present and fetch all methods
+        const methods = flattenArray<IContractMethod>(
+            extensions
+                .filter(e => !parentExtensions.includes(e.getExtensionName()))
+                .map(e => e.getExtensionMethods())
+        );
+        
+        // Seperate the methods by name, if two extensions have the same method, we must merge them
+        methods.forEach(method => {
+            const hash = hashString(method.name);
+
+            if (methodHashMap[hash] == null) {
+                methodHashMap[hash] = [method];
+            } else {
+                methodHashMap[hash] = methodHashMap[hash].concat(method);
+            }
+        });
+        
+        // Merge the repeating methods into one and return them
+        return Object.keys(methodHashMap)
+            .map(methodHash => this.genMergedContractMethod(methodHashMap[parseInt(methodHash)]))
+            .filter(method => method != null) as IContractMethod[];
+    };
+
+    private genMergedContractMethod = (methods: IContractMethod[]): IContractMethod | null => {
+        // If no method is mandatory, the necessary extention to add this method is missing
+        if (!methods.some(m => m.mandatory)) {
+            return null;
+        }
+        // If there is only one method, then no need to merge it with anything
+        if (methods.length === 1) {
+            return methods[0];
+        }
+        // Mandatory methods hold the base of the method so give priority to these
+        methods.sort(getSortFn<IContractMethod>((m) => m.mandatory));
+
+        const methodName = methods[0].name;
+        const paramsHashMap: {[hash: number]: IParameter} = {};
+        const content: string[] = flattenArray<string>(methods.map(m => m.content));
+
+        // Sort the content of the array to bring the requires to the top
+        content.sort(getSortFn<string>((c) => c.includes(REQUIRE_KEYWORD)));
+
+        // Get all the unique parameters
+        methods.forEach(m => {
+            m.params.forEach(param => {
+                const hash = hashString(param.name);
+                if (paramsHashMap[hash] == null) {
+                    paramsHashMap[hash] = param;
+                } 
+            });
+        });
+        
+        return {
+            name: methodName,
+            params: Object.values(paramsHashMap),
+            mandatory: true,
+            content: content,
+            visibility: getMergedMethodVisibility(methods.map(m => m.visibility)),
+            stateMutability: getMergedMethodStateMutability(methods.map(m => m.stateMutability))
+        };
     };
 }
 
