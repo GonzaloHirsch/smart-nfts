@@ -1,0 +1,55 @@
+service: pf--smart-nfts--backend
+frameworkVersion: '2 || 3'
+
+package:
+  individually: true
+
+plugins:
+  - serverless-webpack
+  - serverless-offline
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  lambdaHashingVersion: '20201221'
+  httpApi:
+    cors: true
+
+custom:
+  serverless-offline:
+    noPrependStageInUrl: true
+  webpack:
+    includeModules: false # Node modules configuration for packaging
+    packager: 'npm' # Packager that will be used to package your external modules
+
+functions:
+  getHealthcheck:
+    handler: src/handlers/health/healthcheck.handler
+    events:
+      - http:
+          path: /
+          method: get
+  getCompiledContract:
+    handler: src/handlers/contracts/getCompiledContract.handler
+    events:
+      - http:
+          path: /contracts/compile
+          method: get
+  getExampleContract:
+    handler: src/handlers/contracts/getExampleContract.handler
+    events:
+      - http:
+          path: /contracts/example
+          method: get
+  postCreateContract:
+    handler: src/handlers/contracts/postCreateContract.handler
+    events:
+      - http:
+          path: /contracts
+          method: post
+  putUpdateContract:
+    handler: src/handlers/contracts/putUpdateContract.handler
+    events:
+      - http:
+          path: /contracts/{contractId}
+          method: put
