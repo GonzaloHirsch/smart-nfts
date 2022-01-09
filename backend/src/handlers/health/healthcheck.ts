@@ -1,6 +1,7 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
+import { errorHandler } from '../../middleware/errorHandler.middleware';
 
-export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   const body = {
     message: 'All services up and running! Welcome to Proyecto Final, a project by Gonzalo Hirsch and Florencia Petrikovich :)'
   };
@@ -8,4 +9,6 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
     statusCode: 200,
     body: JSON.stringify(body)
   };
-};
+}
+
+export const handler = errorHandler()(endpoint);

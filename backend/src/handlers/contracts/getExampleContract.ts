@@ -4,17 +4,18 @@ import { EXTENSIONS } from '../../constants/contract.constants';
 import { CustomContract } from '../../contracts/custom.contract';
 import { Pausable } from '../../contracts/Pausable.contract';
 import TemplateService from '../../services/template.service';
+import { errorHandler } from '../../middleware/errorHandler.middleware';
 
-export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   const body = {
-      contract: ""
+    contract: ''
   };
 
   const contract = new CustomContract(
     Pausable.getExtensionOZImports(),
     'MyToken',
     'PF',
-    [EXTENSIONS.PAUSABLE],
+    [EXTENSIONS.Pausable],
     Pausable.getExtensionLibs(),
     Pausable.getExtensionVariables(),
     Pausable.getExtensionMethods()
@@ -36,3 +37,5 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
     body: JSON.stringify(body)
   };
 };
+
+export const handler = errorHandler()(endpoint);
