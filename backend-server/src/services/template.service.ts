@@ -6,6 +6,8 @@ class TemplateService {
 
     private static instance: TemplateService;
 
+    constructor() {}
+
     static getInstance = () => {
 
         if (!TemplateService.instance) {

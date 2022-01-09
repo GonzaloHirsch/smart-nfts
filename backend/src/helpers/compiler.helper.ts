@@ -2,16 +2,23 @@ import solc from 'solc';
 import fs from 'fs';
 import path from 'path';
 
+// This should never execute, this is to trick webpack into bundling this dependency
+if (process.env.node_env !== undefined && process.env.node_env !== 'development' && process.env.node_env !== 'production') {
+  import("@openzeppelin/contracts").then(res => {
+    console.log("Imported OpenZeppelin Contracts...");
+  });
+}
+
 // Interface for the input the compiler expects
 interface ICompilerInfo {
-  language: String;
+  language: string;
   sources: any;
   settings: {
     outputSelection: any;
   };
 }
 
-const CONTRACT_NAME: string = './ERC721.sol';
+const CONTRACT_NAME = './ERC721.sol';
 const compilerInput: ICompilerInfo = {
   language: 'Solidity',
   sources: {},
@@ -39,33 +46,19 @@ const findImports = (_path: string): any => {
 
 export const compileContract = (contract: string): string => {
   // Set the input source as our contract
-  let input = compilerInput;
+  const input = compilerInput;
   input.sources[CONTRACT_NAME] = {
     content: contract
   };
 
-  var output = JSON.parse(solc.compile(JSON.stringify(input), {import: findImports}));
+  const output = JSON.parse(solc.compile(JSON.stringify(input), {import: findImports}));
   // TODO: devolver bien un error
   if (output.errors && output.errors.length > 0) {
     console.log(output);
     return '';
   } else {
-    console.log(output);
     // `output` here contains the JSON output as specified in the documentation
-    for (var contractName in output.contracts[CONTRACT_NAME]) {
-      fs.writeFile('/tmp/test-bytecode.json', output.contracts[CONTRACT_NAME][contractName].evm.bytecode.object, function (err) {
-        if (err) {
-          return console.log(err);
-        }
-        console.log('The bytecode was saved!');
-      });
-      fs.writeFile('/tmp/test-abi.json', JSON.stringify(output.contracts[CONTRACT_NAME][contractName].abi), function (err) {
-        if (err) {
-          return console.log(err);
-        }
-        console.log('The abi was saved!');
-      });
-    }
+    console.log(output);
     return '';
   }
 };

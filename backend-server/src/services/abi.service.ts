@@ -5,6 +5,8 @@ class AbiService {
 
     private static instance: AbiService;
 
+    constructor() {}
+
     static getInstance = () => {
 
         if (!AbiService.instance) {

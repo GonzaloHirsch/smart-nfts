@@ -12,6 +12,8 @@ class CreationService {
 
     private static instance: CreationService;
 
+    constructor() {}
+
     static getInstance = () => {
 
         if (!CreationService.instance) {
@@ -20,9 +22,9 @@ class CreationService {
         return CreationService.instance;
     }
 
-    // saveContract = async () => {
+    saveContract = async () => {
 
-    // }
+    }
 
     genContract = (name: string, symbol: string, extensions: EXTENSIONS[]) : string => {
         // Always add the base ERC721 extension
@@ -38,6 +40,7 @@ class CreationService {
         });
 
         extensions = getExtensionAdditions(extensions);
+        console.log(extensions)
 
         const contract = new CustomContract(
             this.genContractImports(classExtensions),
