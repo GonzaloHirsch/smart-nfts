@@ -84,16 +84,7 @@ export class ContractController {
 
         try {
 
-            
-            const contractString = this.creationService.genContract(name, symbol, extensions as EXTENSIONS[]);
-
-            fs.writeFile("/tmp/test", contractString, function(err) {
-                if(err) {
-                    return console.log(err);
-                }
-                console.log("The file was saved!");
-            }); 
-            res.status(200).send({contract: contractString});
+            res.status(200).send({contract: this.creationService.genContract(name, symbol, extensions as EXTENSIONS[])});
 
         } catch (err) {
             next(err);
@@ -112,7 +103,7 @@ export class ContractController {
             Pausable.getExtensionOZImports(),
             'MyToken',
             'PF',
-            [EXTENSIONS.Pausable],
+            [EXTENSIONS.PAUSABLE],
             Pausable.getExtensionLibs(),
             Pausable.getExtensionVariables(),
             Pausable.getExtensionMethods()

@@ -1,0 +1,81 @@
+service: pf--smart-nfts--backend
+frameworkVersion: '2 || 3'
+
+package:
+  individually: true
+
+plugins:
+  - serverless-webpack
+  - serverless-offline
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  lambdaHashingVersion: '20201221'
+  stage: 'prod'
+  region: us-east-1
+  memorySize: 512 # optional, in MB, default is 1024
+  timeout: 15 # optional, in seconds, default is 6
+  deploymentBucket:
+    blockPublicAccess: true
+    skipPolicySetup: false
+    tags:
+      app: pf
+  httpApi:
+    cors: true
+
+custom:
+  serverless-offline:
+    noPrependStageInUrl: true
+  webpack:
+    packager: 'npm' # Packager that will be used to package your external modules
+    includeModules: true
+    # This just includes the contracts in all bundles, not useful
+    # includeModules:   # Node modules configuration for packaging, from https://github.com/serverless-heaven/serverless-webpack/issues/375
+    #   forceInclude:
+    #     - '@openzeppelin/contracts'
+    #excludeRegex: \.ts|test|\.map for some reason excluding this increases the package size
+
+functions:
+  getHealthcheck:
+    handler: src/handlers/health/healthcheck.handler
+    events:
+      - http:
+          path: /
+          method: get
+    tags:
+      app: pf
+  getCompiledContract:
+    handler: src/handlers/contracts/getCompiledContract.handler
+    memorySize: 1024 # Probably more memory-intensive process than the rest
+    timeout: 30 # More timeout because it needs more time to compile
+    events:
+      - http:
+          path: /contracts/compile
+          method: get
+    tags:
+      app: pf
+  getExampleContract:
+    handler: src/handlers/contracts/getExampleContract.handler
+    events:
+      - http:
+          path: /contracts/example
+          method: get
+    tags:
+      app: pf
+  postCreateContract:
+    handler: src/handlers/contracts/postCreateContract.handler
+    events:
+      - http:
+          path: /contracts
+          method: post
+    tags:
+      app: pf
+  putUpdateContract:
+    handler: src/handlers/contracts/putUpdateContract.handler
+    events:
+      - http:
+          path: /contracts/{contractId}
+          method: put
+    tags:
+      app: pf
