@@ -2,7 +2,6 @@
 export const enumHasKeys = (enumData: any, keys: string[]): boolean => {
     for (const key of keys) {
         if (!(key in enumData)) {
-            console.log(key)
             return false;
         }
     }

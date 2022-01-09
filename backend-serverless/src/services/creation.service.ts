@@ -38,7 +38,6 @@ class CreationService {
         });
 
         extensions = getExtensionAdditions(extensions);
-        console.log(extensions)
 
         const contract = new CustomContract(
             this.genContractImports(classExtensions),

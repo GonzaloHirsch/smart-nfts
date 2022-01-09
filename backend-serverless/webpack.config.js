@@ -17,11 +17,28 @@ module.exports = {
         path: path.join(__dirname, '.webpack'),
         filename: '[name].js',
     },
+    optimization: { minimize: true },
     target: 'node',
     externals: [nodeExternals()],
     module: {
         rules: [
             // all files with a `.ts` or `.tsx` extension will be handled by `ts-loader`
+            {
+                include: path.resolve(__dirname, 'src/handlers/contracts/getCompileContract.ts'),
+                loader: 'ts-loader',
+                include: [
+                    [path.resolve(__dirname, 'node_modules/@openzeppelin/contracts')],
+                ],
+                exclude: [
+                    [
+                        path.resolve(__dirname, 'node_modules'),
+                    ],
+                ],
+                options: {
+                    transpileOnly: true,
+                    experimentalWatchApi: true
+                },
+            },
             {
                 test: /\.(tsx?)$/,
                 loader: 'ts-loader',
@@ -34,7 +51,7 @@ module.exports = {
                 ],
                 options: {
                     transpileOnly: true,
-                    experimentalWatchApi: true,
+                    experimentalWatchApi: true
                 },
             },
         ],

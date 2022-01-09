@@ -17,8 +17,6 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
   const symbol = requestBody.symbol as string;
   const extensions = requestBody.extensions as string[];
 
-  console.log(extensions);
-
   if (!name || !symbol || !extensions || !enumHasKeys(EXTENSIONS, extensions)) {
     return {
       statusCode: 400,
