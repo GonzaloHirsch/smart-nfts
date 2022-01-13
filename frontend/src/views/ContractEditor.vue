@@ -8,7 +8,7 @@
   <v-section :noPadding="true" class="bg-typography_primary">
     <div class="flex flex-row">
       <div class="flex flex-col w-6/12 bg-light rounded-r-2xl pt-sm pb-base px-md">
-        <v-editor />
+        <v-editor @contractChanged="handleContractChange" />
       </div>
       <div class="flex w-6/12 p-sm">
         <v-code-viewer class="flex flex-col w-full" :code="contract" />
@@ -65,6 +65,9 @@ import { QuestionMarkCircleIcon } from '@heroicons/vue/solid';
 import { useRoute } from 'vue-router';
 const route = useRoute();
 
+import { useApi } from '@/plugins/api';
+const api = useApi();
+
 import { ref } from 'vue';
 const isOpen = ref(false);
 const showModal = () => {
@@ -80,13 +83,20 @@ useMeta({
   description: 'This is the homepage to our project'
 });
 
-import { useApi } from '@/plugins/api';
-const api = useApi();
-
 const contract = ref(undefined);
 api.loadContract().then((res) => {
   contract.value = res;
 });
+
+import { mapFormToApiData } from '@/js/mapper';
+const handleContractChange = (contractData) => {
+  let dataToSend = mapFormToApiData(contractData);
+  if (dataToSend.name && dataToSend.symbol) {
+    api.editContract(route.params.id, mapFormToApiData(contractData)).then((res) => {
+      contract.value = res.data.contract;
+    });
+  }
+};
 </script>
 
 <style>

@@ -10,7 +10,14 @@
         class="mr-sm md:mr-md lg:mr-xl"
         @click="createNewContract"
       />
-      <v-button format="secondary" aria="Continue with an existing contract" :external="false" :white="true" text="EXISTING" @click="createNewContract" />
+      <v-button
+        format="secondary"
+        aria="Continue with an existing contract"
+        :external="false"
+        :white="true"
+        text="EXISTING"
+        @click="createNewContract"
+      />
     </template>
   </v-hero>
 </template>
@@ -20,15 +27,26 @@
 import vButton from '@/components/button.vue';
 import vHero from '@/components/hero.vue';
 
+import { ref } from 'vue';
+import { useApi } from '@/plugins/api';
 import { useRouter } from 'vue-router';
 const router = useRouter();
+const api = useApi();
+const isLoading = ref(false);
 const createNewContract = () => {
-  router.push(`/create/${Math.random().toString(36).substr(2)}`);
-}
+  isLoading.value = true;
+  // Call API & wait for the response
+  api.createContract().then((res) => {
+    isLoading.value = false;
+    if (res.data && res.data.contractId) {
+      router.push(`/create/${res.data.contractId}`);
+    }
+  });
+};
 
 import { useMeta } from 'vue-meta';
 useMeta({
   title: 'Create',
-  description: 'This is the homepage to our project',
+  description: 'This is the homepage to our project'
 });
 </script>

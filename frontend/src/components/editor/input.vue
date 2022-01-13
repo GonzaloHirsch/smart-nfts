@@ -7,7 +7,7 @@
       :name="props.name"
       :id="props.id"
       :placeholder="props.placeholder"
-      @input="onInputChanged"
+      @change="onInputChanged"
       :value="modelValue"
     />
   </div>

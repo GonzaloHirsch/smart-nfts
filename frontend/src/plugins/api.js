@@ -22,6 +22,11 @@ const api = {
         return instance.put(`contracts/${contractId}`, data).then(res => {
             return res
         })
+    },
+    createContract: async () => {
+        return instance.post(`contracts`).then(res => {
+            return res
+        })
     }
 }
 
@@ -35,7 +40,7 @@ export const apiPlugin = {
     install: (app, options) => {
         // Create axios instance
         instance = axios.create({
-            baseURL: "http://localhost:8080/"
+            baseURL: "http://localhost:8000/"
         });
         // Provide the plugin
         app.provide(PLUGIN_KEY, api)

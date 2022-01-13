@@ -5,27 +5,13 @@
       <div class="form--section">
         <h5 class="form--title">Contract Information <QuestionMarkCircleIcon class="form--title-icon" /></h5>
         <div class="flex flex-row justify-between">
-          <v-input
-            id="contractName"
-            name="contractName"
-            placeholder="SmartNFT..."
-            label="Contract Name"
-            v-model="contractData.contractName"
-            class="w-6/12 pr-2"
-          />
-          <v-input
-            id="contractSymbol"
-            name="contractSymbol"
-            placeholder="SNFT..."
-            label="Contract Symbol"
-            v-model="contractData.contractSymbol"
-            class="w-6/12 pl-2"
-          />
+          <v-input id="name" name="name" placeholder="SmartNFT..." label="Contract Name" v-model="contractData.name" class="w-6/12 pr-2" />
+          <v-input id="symbol" name="symbol" placeholder="SNFT..." label="Contract Symbol" v-model="contractData.symbol" class="w-6/12 pl-2" />
         </div>
       </div>
-      <div class="form--section">
+      <!-- <div class="form--section">
         <h5 class="form--title">Permissions <QuestionMarkCircleIcon class="form--title-icon" /></h5>
-      </div>
+      </div> -->
       <div class="form--section">
         <h5 class="form--title">Creation <QuestionMarkCircleIcon class="form--title-icon" /></h5>
         <v-checkbox
@@ -52,10 +38,18 @@
           v-model="contractData.isBurnable"
           class="w-6/12"
         />
+        <v-checkbox
+          id="isAutoIncrementIds"
+          name="isAutoIncrementIds"
+          placeholder="Has auto incrementable IDs?"
+          label="Has auto incrementable IDs?"
+          v-model="contractData.isAutoIncrementIds"
+          class="w-6/12"
+        />
       </div>
-      <div class="form--section">
+      <!-- <div class="form--section">
         <h5 class="form--title">Metadata <QuestionMarkCircleIcon class="form--title-icon" /></h5>
-      </div>
+      </div> -->
     </div>
     <!-- ACTIONS -->
     <div class="flex flex-row items-center justify-center">
@@ -71,26 +65,37 @@ import vButton from '@/components/button.vue';
 import vInput from '@/components/editor/input.vue';
 import vCheckbox from '@/components/editor/checkbox.vue';
 import { QuestionMarkCircleIcon } from '@heroicons/vue/solid';
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
+
 import { useApi } from '@/plugins/api';
+const api = useApi();
 
 const props = defineProps({});
 
 const contractData = ref({
-  contractName: undefined,
-  contractSymbol: undefined,
+  name: undefined,
+  symbol: undefined,
   isMintable: false,
   isPausable: false,
-  isBurnable: false
+  isBurnable: false,
+  isAutoIncrementIds: false
 });
 
-const api = useApi();
 const test = () => {
-    api.healthCheck();
+  api.healthCheck();
 };
 const saveContract = () => {
-    api.saveContract('1234', contractData.value);
-}
+  api.saveContract('1234', contractData.value);
+};
+
+const emit = defineEmits(['contractChanged']);
+watch(
+  () => contractData.value,
+  () => {
+    emit('contractChanged', contractData.value);
+  },
+  { deep: true }
+);
 </script>
 
 <style>
