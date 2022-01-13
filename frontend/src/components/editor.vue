@@ -17,33 +17,35 @@
         <v-checkbox
           id="isMintable"
           name="isMintable"
-          placeholder="Is Mintable?"
-          label="Is Mintable?"
+          placeholder="Mintable"
+          label="Mintable"
           v-model="contractData.isMintable"
           class="w-6/12"
         />
+        <div class="w-6/12 flex flex-row">
+        <span class="border-l-2 border-black mx-xs"></span>
+        <v-checkbox
+          id="isAutoIncrementIds"
+          name="isAutoIncrementIds"
+          placeholder="Auto Increment IDs"
+          label="Auto Increment IDs"
+          v-model="contractData.isAutoIncrementIds"
+        />
+        </div>
         <v-checkbox
           id="isPausable"
           name="isPausable"
-          placeholder="Is Pausable?"
-          label="Is Pausable?"
+          placeholder="Pausable"
+          label="Pausable"
           v-model="contractData.isPausable"
           class="w-6/12"
         />
         <v-checkbox
           id="isBurnable"
           name="isBurnable"
-          placeholder="Is Burnable?"
-          label="Is Burnable?"
+          placeholder="Burnable"
+          label="Burnable"
           v-model="contractData.isBurnable"
-          class="w-6/12"
-        />
-        <v-checkbox
-          id="isAutoIncrementIds"
-          name="isAutoIncrementIds"
-          placeholder="Has auto incrementable IDs?"
-          label="Has auto incrementable IDs?"
-          v-model="contractData.isAutoIncrementIds"
           class="w-6/12"
         />
       </div>
@@ -92,9 +94,22 @@ const emit = defineEmits(['contractChanged']);
 watch(
   () => contractData.value,
   () => {
-    emit('contractChanged', contractData.value);
+    console.log("CHANGE")
+    // Need to verify that both are selected not to emit a fake event
+    if ((contractData.value.isAutoIncrementIds && contractData.value.isMintable) || !contractData.value.isAutoIncrementIds) {
+      emit('contractChanged', contractData.value);
+    }
   },
   { deep: true }
+);
+watch(
+  () => contractData.value.isAutoIncrementIds,
+  () => {
+    console.log("IDS")
+    if (contractData.value.isAutoIncrementIds) {
+      contractData.value.isMintable = true;
+    }
+  }
 );
 </script>
 

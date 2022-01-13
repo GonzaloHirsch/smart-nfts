@@ -8,6 +8,7 @@
       :placeholder="props.placeholder"
       @input="onInputChanged"
       :value="modelValue"
+      :checked="modelValue"
     />
     <label class="ml-1" :for="props.id">{{ props.label }}</label>
   </div>
