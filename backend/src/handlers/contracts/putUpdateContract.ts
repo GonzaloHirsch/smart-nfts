@@ -1,10 +1,9 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import { EXTENSIONS } from '../../constants/contract.constants';
-import { CustomContract } from '../../contracts/custom.contract';
-import { Pausable } from '../../contracts/Pausable.contract';
-import TemplateService from '../../services/template.service';
 import { errorHandler } from '../../middleware/errorHandler.middleware';
 import HttpException from '../../exceptions/http.exception';
+import { enumHasKeys } from '../../helpers/collection.helper';
+import CreationService from '../../services/creation.service';
 
 const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   if (
@@ -17,19 +16,13 @@ const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyRes
   else if (event.body === null) throw new HttpException(400, '', 'Missing request body');
 
   const requestBody = JSON.parse(event.body);
-  console.log(requestBody);
+  const name = requestBody.name as string;
+  const symbol = requestBody.symbol as string;
+  const extensions = requestBody.extensions as string[];
 
-  const contract = new CustomContract(
-    Pausable.getExtensionOZImports(),
-    'MyToken',
-    'PF',
-    [EXTENSIONS.Pausable],
-    Pausable.getExtensionLibs(),
-    Pausable.getExtensionVariables(),
-    Pausable.getExtensionMethods()
-  );
+  if (!name || !symbol || !extensions || !enumHasKeys(EXTENSIONS, extensions)) throw new HttpException(400, '', 'Missing request body');
 
-  const contractString = TemplateService.getInstance().generateContract(contract);
+  const contractString = CreationService.getInstance().genContract(name, symbol, extensions as EXTENSIONS[]);
 
   return {
     statusCode: 200,
