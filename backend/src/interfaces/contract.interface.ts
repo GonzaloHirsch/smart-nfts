@@ -1,5 +1,6 @@
 import { FINAL_EXTENSIONS, STATE_MUTABILITY, VISIBILITY } from "../constants/contract.constants";
 import { EXTENSIONS } from "../constants/contract.constants";
+import { IAbi } from "./abi.interface";
 import { IParameter } from "./general.interface";
 
 export interface IContract {
