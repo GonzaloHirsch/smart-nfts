@@ -76,6 +76,7 @@ pipelines:
           script:
             - apk add python3
             - npm install -g serverless
+            - cd backend
             - serverless config credentials --provider aws --key $AWS_BACKEND_ACCESS_KEY_ID --secret $AWS_BACKEND_SECRET_ACCESS_KEY
             - serverless deploy
           condition:
