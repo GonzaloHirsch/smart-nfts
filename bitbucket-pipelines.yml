@@ -72,6 +72,7 @@ pipelines:
           caches:
             - node
           script:
+            - apt-get update
             - apt-get install python3.8
             - npm install -g serverless
             - serverless config credentials --provider aws --key $AWS_BACKEND_ACCESS_KEY_ID --secret $AWS_BACKEND_SECRET_ACCESS_KEY
