@@ -1,127 +1,70 @@
-<!--
-title: 'Serverless Framework Node Express API on AWS'
-description: 'This template demonstrates how to develop and deploy a simple Node Express API running on AWS Lambda using the traditional Serverless Framework.'
-layout: Doc
-framework: v2
-platform: AWS
-language: nodeJS
-priority: 1
-authorLink: 'https://github.com/serverless'
-authorName: 'Serverless, inc.'
-authorAvatar: 'https://avatars1.githubusercontent.com/u/13742415?s=200&v=4'
--->
+# Backend
 
-# Serverless Framework Node Express API on AWS
+## Installing
 
-This template demonstrates how to develop and deploy a simple Node Express API service running on AWS Lambda using the traditional Serverless Framework.
+### Dependencies
 
-## Anatomy of the template
-
-This template configures a single function, `api`, which is responsible for handling all incoming requests thanks to the `httpApi` event. To learn more about `httpApi` event configuration options, please refer to [httpApi event docs](https://www.serverless.com/framework/docs/providers/aws/events/http-api/). As the event is configured in a way to accept all incoming requests, `express` framework is responsible for routing and handling requests internally. Implementation takes advantage of `serverless-http` package, which allows you to wrap existing `express` applications. To learn more about `serverless-http`, please refer to corresponding [GitHub repository](https://github.com/dougmoscrop/serverless-http).
-
-## Usage
-
-### Deployment
-
-Install dependencies with:
-
-```
-npm install
-```
-
-and then deploy with:
-
-```
-serverless deploy
-```
-
-After running deploy, you should see output similar to:
-
+Just running the following installs all dependecies:
 ```bash
-Serverless: Packaging service...
-Serverless: Excluding development dependencies...
-Serverless: Creating Stack...
-Serverless: Checking Stack create progress...
-........
-Serverless: Stack create finished...
-Serverless: Uploading CloudFormation file to S3...
-Serverless: Uploading artifacts...
-Serverless: Uploading service aws-node-express-api.zip file to S3 (711.23 KB)...
-Serverless: Validating template...
-Serverless: Updating Stack...
-Serverless: Checking Stack update progress...
-.................................
-Serverless: Stack update finished...
-Service Information
-service: aws-node-express-api
-stage: dev
-region: us-east-1
-stack: aws-node-express-api-dev
-resources: 12
-api keys:
-  None
-endpoints:
-  ANY - https://xxxxxxx.execute-api.us-east-1.amazonaws.com/
-functions:
-  api: aws-node-express-api-dev-api
-layers:
-  None
+npm i
 ```
 
-_Note_: In current form, after deployment, your API is public and can be invoked by anyone. For production deployments, you might want to configure an authorizer. For details on how to do that, refer to [`httpApi` event docs](https://www.serverless.com/framework/docs/providers/aws/events/http-api/).
+### Serverless
 
-### Invocation
+[Serverless](https://www.serverless.com/framework/docs/getting-started) is required to run this, so please verify it's installed first or install it.
 
-After successful deployment, you can call the created application via HTTP:
-
+To verify the installation:
 ```bash
-curl https://xxxxxxx.execute-api.us-east-1.amazonaws.com/
+serverless -v
 ```
 
-Which should result in the following response:
-
-```
-{"message":"Hello from root!"}
-```
-
-Calling the `/hello` path with:
-
+The output should be similar to this:
 ```bash
-curl https://xxxxxxx.execute-api.us-east-1.amazonaws.com/hello
+Serverless: Running "serverless" installed locally (in service node_modules)
+Framework Core: 2.72.0 (local)
+Plugin: 5.5.3
+SDK: 4.3.0
+Components: 3.18.1
 ```
 
-Should result in the following response:
+### AWS CLI
 
+In order to configure credentials for deployment, the [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) is required. Please verify it's installed or install it.
+
+To verify the installation:
 ```bash
-{"message":"Hello from path!"}
+aws --version
 ```
 
-If you try to invoke a path or method that does not have a configured handler, e.g. with:
-
+The output should be similar to this:
 ```bash
-curl https://xxxxxxx.execute-api.us-east-1.amazonaws.com/nonexistent
+aws-cli/2.2.38 Python/3.8.8 Darwin/21.2.0 exe/x86_64 prompt/off
 ```
 
-You should receive the following response:
+## Configuring
 
+A `.env` with the following environment variables is required:
+```
+MONGO_CONNECTION_STRING=Connection string to the MongoDB database
+```
+
+Configuring AWS IAM credentials is also required, with AWS CLI run the following and follow the instructions to configure it:
 ```bash
-{"error":"Not Found"}
+aws configure
 ```
 
-### Local development
+## Development
 
-It is also possible to emulate API Gateway and Lambda locally by using `serverless-offline` plugin. In order to do that, execute the following command:
-
+For local development, `serverless-offline` provides a way to invoke the API locally, just run:
 ```bash
-serverless plugin install -n serverless-offline
+npm run dev
 ```
 
-It will add the `serverless-offline` plugin to `devDependencies` in `package.json` file as well as will add it to `plugins` in `serverless.yml`.
+A local server on port `8000` will start working, `ctrl + c` to stop it.
 
-After installation, you can start local emulation with:
+## Deployment
 
+In order to deploy it, just running the following will deploy the infrastructure:
+```bash
+npm run deploy
 ```
-serverless offline
-```
-
-To learn more about the capabilities of `serverless-offline`, please refer to its [GitHub repository](https://github.com/dherault/serverless-offline).
