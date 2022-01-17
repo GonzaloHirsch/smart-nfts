@@ -40,7 +40,8 @@ export const apiPlugin = {
     install: (app, options) => {
         // Create axios instance
         instance = axios.create({
-            baseURL: "http://localhost:8000/"
+            // baseURL: "http://localhost:8000/"
+            baseURL: "http://api.smart-nfts.gonzalohirsch.com/"
         });
         // Provide the plugin
         app.provide(PLUGIN_KEY, api)
