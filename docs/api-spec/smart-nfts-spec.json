@@ -26,12 +26,12 @@
     "http"
   ],
   "paths": {
-    "/contracts/example": {
-      "get": {
+    "/contracts": {
+      "post": {
         "tags": [
           "/contracts"
         ],
-        "summary": "Get a sample contract",
+        "summary": "Create a new contract",
         "produces": [
           "application/json"
         ],
@@ -41,8 +41,68 @@
             "schema": {
               "type": "object",
               "properties": {
-                "contract": {
+                "id": {
                   "type": "string"
+                },
+                "_id": {
+                  "type": "string"
+                },
+                "abi": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string"
+                      },
+                      "stateMutability": {
+                        "type": "string"
+                      },
+                      "anonymous": {
+                        "type": "boolean"
+                      },
+                      "inputs": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "name": {
+                              "type": "string"
+                            },
+                            "type": {
+                              "type": "string"
+                            },
+                            "indexed": {
+                              "type": "boolean"
+                            },
+                            "internalType": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      "outputs": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "name": {
+                              "type": "string"
+                            },
+                            "type": {
+                              "type": "string"
+                            },
+                            "internalType": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
                 }
               }
             }
