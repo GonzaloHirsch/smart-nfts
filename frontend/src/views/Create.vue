@@ -38,8 +38,8 @@ const createNewContract = () => {
   // Call API & wait for the response
   api.createContract().then((res) => {
     isLoading.value = false;
-    if (res.data && res.data.contractId) {
-      router.push(`/create/${res.data.contractId}`);
+    if (res.data && res.data.id) {
+      router.push(`/create/${res.data.id}`);
     }
   });
 };
