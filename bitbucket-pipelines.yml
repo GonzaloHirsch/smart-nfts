@@ -34,11 +34,24 @@ pipelines:
                     # any changes in frontend directory
                     - "frontend/**"
         - step:
+            name: Install and Build Backend
+            caches:
+              - node
+            script:
+              - cd backend
+              - npm install
+            condition:
+              changesets:
+                  includePaths:
+                    # any changes in backend directory
+                    - "backend/**"
+        - step:
             name: Security Scan
             script:
               # Run a security scan for sensitive data.
               # See more security tools at https://bitbucket.org/product/features/pipelines/integrations?&category=security
               - pipe: atlassian/git-secrets-scan:0.5.1
+      # Front
       - step:
           name: Deploy Frontend to Production
           clone:
@@ -65,6 +78,22 @@ pipelines:
                   includePaths:
                     # any changes in frontend directory
                     - "frontend/**"
+      # Back
+      - step:
+          name: Deploy Backend to Production
+          caches:
+            - node
+          script:
+            - apk add python3
+            - npm install -g serverless
+            - serverless config credentials --provider aws --key $AWS_BACKEND_ACCESS_KEY_ID --secret $AWS_BACKEND_SECRET_ACCESS_KEY
+            - serverless deploy
+          condition:
+              changesets:
+                  includePaths:
+                    # any changes in backend directory
+                    - "backend/**"
+      # Docs
       - step:
             name: Export docs artifacts
             script:
