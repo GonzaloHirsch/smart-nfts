@@ -1,5 +1,6 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import { errorHandler } from '../../middleware/errorHandler.middleware';
+import { corsHandler } from '../../middleware/corsHandler.middleware';
 
 const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   const body = {
@@ -11,4 +12,4 @@ const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyRes
   };
 }
 
-export const handler = errorHandler()(endpoint);
+export const handler = corsHandler("GET")(errorHandler()(endpoint));

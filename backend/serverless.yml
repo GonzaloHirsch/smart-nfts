@@ -24,6 +24,8 @@ provider:
       app: pf
   httpApi:
     cors: true
+  environment:
+    MONGO_CONNECTION_STRING: ${env:MONGO_CONNECTION_STRING}
 
 custom:
   serverless-offline:

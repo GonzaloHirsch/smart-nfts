@@ -5,6 +5,7 @@ import { CustomContract } from '../../contracts/custom.contract';
 import { Pausable } from '../../contracts/Pausable.contract';
 import TemplateService from '../../services/template.service';
 import { errorHandler } from '../../middleware/errorHandler.middleware';
+import { corsHandler } from '../../middleware/corsHandler.middleware';
 
 const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   const body = {
@@ -38,4 +39,4 @@ const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyRes
   };
 };
 
-export const handler = errorHandler()(endpoint);
+export const handler = corsHandler("GET")(errorHandler()(endpoint));

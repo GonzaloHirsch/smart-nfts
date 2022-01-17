@@ -1,6 +1,7 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import { EXTENSIONS } from '../../constants/contract.constants';
 import { errorHandler } from '../../middleware/errorHandler.middleware';
+import { corsHandler } from '../../middleware/corsHandler.middleware';
 import HttpException from '../../exceptions/http.exception';
 import { enumHasKeys } from '../../helpers/collection.helper';
 import CreationService from '../../services/creation.service';
@@ -32,4 +33,4 @@ const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyRes
   };
 };
 
-export const handler = errorHandler()(endpoint);
+export const handler = corsHandler("PUT")(errorHandler()(endpoint));
