@@ -1,5 +1,7 @@
 # Backend
 
+Serverless-based API using MongoDB as a database.
+
 ## Installing
 
 ### Dependencies
