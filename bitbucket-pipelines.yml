@@ -1,17 +1,5 @@
-#  Template React Deploy
-
-#  This template allows you to deploy your React app to an AWS S3 bucket and invalidate the old AWS Cloudfront distribution.
-#  The workflow allows running tests, code linting and security scans on feature branches (as well as master).
-#  The react app will be validated, deployed to S3 and trigger an AWS Cloudfront distribution invalidation to refresh the CDN caches after the code is merged to master.
-
-# Prerequisites: $AWS_ACCESS_KEY_ID, $AWS_SECRET_ACCESS_KEY setup in the Deployment variables.
-# For advanced cases, please, follow examples from the pipe's:
-# README https://bitbucket.org/atlassian/aws-s3-deploy/src/master/README.md
-# README https://bitbucket.org/atlassian/aws-cloudfront-invalidate/src/master/README.md
 
 image: node:16
-
-# Workflow Configuration
 
 pipelines:
   branches:
@@ -34,7 +22,7 @@ pipelines:
                     # any changes in frontend directory
                     - "frontend/**"
         - step:
-            name: Install and Build Backend
+            name: Install Backend
             caches:
               - node
             script:
@@ -84,7 +72,7 @@ pipelines:
           caches:
             - node
           script:
-            - apk add python3
+            - apt-get install python3.8
             - npm install -g serverless
             - serverless config credentials --provider aws --key $AWS_BACKEND_ACCESS_KEY_ID --secret $AWS_BACKEND_SECRET_ACCESS_KEY
             - serverless deploy
