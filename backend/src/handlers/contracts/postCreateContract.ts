@@ -1,14 +1,13 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
-import DatabaseService from '../../services/database.service';
+import StoredContractService from '../../services/storedContract.service';
 import { errorHandler } from '../../middleware/errorHandler.middleware';
 
 const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
-  await DatabaseService.getInstance();
+  const contractService = await StoredContractService.getInstance();
+  const contract = await contractService.createContract();
   return {
     statusCode: 200,
-    body: JSON.stringify({
-      contractId: 'fsdjgusdhg'
-    })
+    body: JSON.stringify(contract)
   };
 };
 
