@@ -14,8 +14,16 @@
           :symbol="storedContract.symbol"
           :extensions="storedContract.extensions"
         >
-        <span v-if="!isLoading && contractEdited" class="flex items-center mt-sm text-sm">{{$t('editor.last_saved', [ $d(lastSaved, 'short') ])}}</span>
-        <span v-else-if="isLoading" class="flex items-center mt-sm text-sm">{{$t('editor.saving')}} <RefreshIcon class="h-4 w-4 animate-spin" /></span>
+          <span v-if="!isLoading && contractEdited" class="flex items-center mt-sm text-sm">{{
+            $t('editor.last_saved', [$d(lastSaved, 'short')])
+          }}</span>
+          <span v-else-if="isLoading" class="flex items-center mt-sm text-sm"
+            >{{ $t('editor.saving') }} <RefreshIcon class="h-4 w-4 animate-spin"
+          /></span>
+          <span class="flex items-center mt-xs text-sm"
+            >{{ $t('editor.contract.id') }}<strong class="ml-1">{{ route.params.id }}</strong
+            ><DocumentDuplicateIcon @click="copyContractId" class="h-5 w-5 ml-1 cursor-pointer hover:text-brand_primary transition duration-300"
+          /></span>
         </v-editor>
       </div>
       <div class="flex w-6/12 p-sm">
@@ -73,13 +81,14 @@ import vCodeViewer from '@/components/codeViewer.vue';
 import vEditor from '@/components/editor.vue';
 import vModal from '@/components/modal.vue';
 import vSection from '@/components/section.vue';
-import { QuestionMarkCircleIcon, RefreshIcon } from '@heroicons/vue/solid';
+import { QuestionMarkCircleIcon, RefreshIcon, DocumentDuplicateIcon } from '@heroicons/vue/solid';
 
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
 
-import { useRoute } from 'vue-router';
-const route = useRoute();
+import { useRoute, useRouter } from 'vue-router';
+const route = useRoute(),
+  router = useRouter();
 
 import { useApi } from '@/plugins/api';
 const api = useApi();
@@ -108,15 +117,25 @@ const contractEdited = ref(false);
 
 const loadContract = () => {
   isLoadingEditor.value = true;
-  api.getContract(route.params.id).then((res) => {
-    storedContract.value = res.data;
-    if (res.data.contract) {
-      contractEdited.value = true;
-      lastSaved.value = new Date();
-      contract.value = res.data.contract;
-    }
-    isLoadingEditor.value = false;
-  });
+  api
+    .getContract(route.params.id)
+    .then((res) => {
+      storedContract.value = res.data;
+      if (res.data.contract) {
+        contractEdited.value = true;
+        lastSaved.value = new Date();
+        contract.value = res.data.contract;
+      }
+      isLoadingEditor.value = false;
+    })
+    .catch((err) => {
+      router.replace({
+        path: '/404',
+        params: {
+          title: 'HERLO'
+        }
+      });
+    });
 };
 loadContract();
 
@@ -132,6 +151,14 @@ const handleContractChange = (contractData) => {
       isLoading.value = false;
     });
   }
+};
+
+const copyContractId = () => {
+  if (!navigator.clipboard) {
+    // Clipboard API not available
+    return;
+  }
+  navigator.clipboard.writeText(route.params.id).catch((err) => console.error('Failed to copy!', err));
 };
 </script>
 

@@ -24,7 +24,8 @@
     },
     "editor": {
         "contract": {
-            "empty": "Start by completing the contract name and symbol..."
+            "empty": "Start by completing the contract name and symbol...",
+            "id": "Your contract ID is:"
         },
         "prepare": "Preparing the editor, hang tight...",
         "last_saved": "Last saved: {0}",

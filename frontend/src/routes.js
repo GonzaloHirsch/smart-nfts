@@ -36,5 +36,6 @@ export const routes = [
     meta: { title: '500' },
     component: ServerError,
   },
-  { path: '/:path(.*)', component: NotFound },
+  { path: '/400', meta: { title: '400' }, component: NotFound, props: true },
+  { path: '/:path(.*)', component: NotFound, props: true },
 ]
