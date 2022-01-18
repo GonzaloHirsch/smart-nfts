@@ -22,6 +22,14 @@
         "create": "Create",
         "interact": "Interact"
     },
+    "editor": {
+        "contract": {
+            "empty": "Start by completing the contract name and symbol..."
+        },
+        "prepare": "Preparing the editor, hang tight...",
+        "last_saved": "Last saved: {0}",
+        "saving": "Saving..."
+    },
     "404": {
         "hero": {
             "title": "404 - Not Found",

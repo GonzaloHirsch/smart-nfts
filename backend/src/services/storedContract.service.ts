@@ -16,12 +16,15 @@ class StoredContractService {
         return StoredContractService.instance;
     };
 
-     
     public createContract = async () : Promise<IStoredContract> => {
         return await StoredContract.create({id: nanoid()}).then(res => res).catch(err => {
             console.error(err);
             throw new HttpException(500, '', 'Internal server error');
         });
+    }
+
+    public getContractById = async (contractId: string) : Promise<IStoredContract | null> => {
+        return await StoredContract.findOne({id: contractId}).exec()
     }
 }
 

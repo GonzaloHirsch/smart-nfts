@@ -23,6 +23,11 @@ const api = {
             return res
         })
     },
+    getContract: async (contractId) => {
+        return instance.get(`contracts/${contractId}`).then(res => {
+            return res
+        })
+    },
     createContract: async () => {
         return instance.post(`contracts`).then(res => {
             return res
@@ -40,8 +45,8 @@ export const apiPlugin = {
     install: (app, options) => {
         // Create axios instance
         instance = axios.create({
-            // baseURL: "http://localhost:8000/"
-            baseURL: "http://api.smart-nfts.gonzalohirsch.com/"
+            baseURL: "http://localhost:8000/"
+            // baseURL: "http://api.smart-nfts.gonzalohirsch.com/"
         });
         // Provide the plugin
         app.provide(PLUGIN_KEY, api)

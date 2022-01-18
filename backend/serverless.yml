@@ -82,3 +82,11 @@ functions:
           method: put
     tags:
       app: pf
+  getContract:
+    handler: src/handlers/contracts/getContract.handler
+    events:
+      - http:
+          path: /contracts/{contractId}
+          method: get
+    tags:
+      app: pf

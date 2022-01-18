@@ -20,7 +20,27 @@ const router = createRouter({
 const i18n = createI18n({
   locale: navigator.language,
   fallbackLocale: 'en',
-  messages: locales
+  messages: locales,
+  datetimeFormats: {
+    'en': {
+      short: {
+        month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric'
+      },
+      long: {
+        year: 'numeric', month: 'short', day: 'numeric',
+        weekday: 'short', hour: 'numeric', minute: 'numeric'
+      }
+    },
+    'es': {
+      short: {
+        month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric'
+      },
+      long: {
+        year: 'numeric', month: 'short', day: 'numeric',
+        weekday: 'short', hour: 'numeric', minute: 'numeric'
+      }
+    }
+  }
 })
 
 const meta = createMetaManager();

@@ -12,3 +12,18 @@ export const mapFormToApiData = (formData) => {
     if (formData.isAutoIncrementIds) data.extensions.push(EXTENSIONS.AUTO_INCREMENT_IDS);
     return data;
 };
+
+export const mapApiExtensionsToForm = (extensions) => {
+    const mappedExtensions = {};
+    // Mapped extensions that are present
+    const map = extensions.reduce((obj, extensions) => {
+        obj[extensions] = true;
+        return obj;
+    }, {});
+    // Check which extensions are present
+    if (EXTENSIONS.MINTABLE in map) mappedExtensions.isMintable = true;
+    if (EXTENSIONS.PAUSABLE in map) mappedExtensions.isPausable = true;
+    if (EXTENSIONS.BURNABLE in map) mappedExtensions.isBurnable = true;
+    if (EXTENSIONS.AUTO_INCREMENT_IDS in map) mappedExtensions.isAutoIncrementIds = true;
+    return mappedExtensions;
+}

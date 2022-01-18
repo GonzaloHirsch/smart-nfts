@@ -5,6 +5,7 @@ import { corsHandler } from '../../middleware/corsHandler.middleware';
 import HttpException from '../../exceptions/http.exception';
 import { enumHasKeys } from '../../helpers/collection.helper';
 import CreationService from '../../services/creation.service';
+import StoredContractService from '../../services/storedContract.service';
 
 const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   if (
@@ -23,7 +24,21 @@ const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyRes
 
   if (!name || !symbol || !extensions || !enumHasKeys(EXTENSIONS, extensions)) throw new HttpException(400, '', 'Missing request body');
 
+  // Find contract in the DB
+  const instance = await StoredContractService.getInstance();
+  const contract = await instance.getContractById(event.pathParameters.contractId);
+  // Verify not null
+  if (contract === null) throw new HttpException(404, '', 'No contract with the given contract ID');
+
+  const extensionsCopy = [...extensions];
+  // Generate the contract itself
   const contractString = CreationService.getInstance().genContract(name, symbol, extensions as EXTENSIONS[]);
+
+  // Store the selection
+  contract.name = name;
+  contract.symbol = symbol;
+  contract.extensions = extensionsCopy;
+  await contract.save();
 
   return {
     statusCode: 200,

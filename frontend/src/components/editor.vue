@@ -14,40 +14,19 @@
       </div> -->
       <div class="form--section">
         <h5 class="form--title">Creation <QuestionMarkCircleIcon class="form--title-icon" /></h5>
-        <v-checkbox
-          id="isMintable"
-          name="isMintable"
-          placeholder="Mintable"
-          label="Mintable"
-          v-model="contractData.isMintable"
-          class="w-6/12"
-        />
+        <v-checkbox id="isMintable" name="isMintable" placeholder="Mintable" label="Mintable" v-model="contractData.isMintable" class="w-6/12" />
         <div class="w-6/12 flex flex-row">
-        <span class="border-l-2 border-black mx-xs"></span>
-        <v-checkbox
-          id="isAutoIncrementIds"
-          name="isAutoIncrementIds"
-          placeholder="Auto Increment IDs"
-          label="Auto Increment IDs"
-          v-model="contractData.isAutoIncrementIds"
-        />
+          <span class="border-l-2 border-black mx-xs"></span>
+          <v-checkbox
+            id="isAutoIncrementIds"
+            name="isAutoIncrementIds"
+            placeholder="Auto Increment IDs"
+            label="Auto Increment IDs"
+            v-model="contractData.isAutoIncrementIds"
+          />
         </div>
-        <v-checkbox
-          id="isPausable"
-          name="isPausable"
-          placeholder="Pausable"
-          label="Pausable"
-          v-model="contractData.isPausable"
-          class="w-6/12"
-        />
-        <v-checkbox
-          id="isBurnable"
-          name="isBurnable"
-          placeholder="Burnable"
-          label="Burnable"
-          v-model="contractData.isBurnable"
-          class="w-6/12"
-        />
+        <v-checkbox id="isPausable" name="isPausable" placeholder="Pausable" label="Pausable" v-model="contractData.isPausable" class="w-6/12" />
+        <v-checkbox id="isBurnable" name="isBurnable" placeholder="Burnable" label="Burnable" v-model="contractData.isBurnable" class="w-6/12" />
       </div>
       <!-- <div class="form--section">
         <h5 class="form--title">Metadata <QuestionMarkCircleIcon class="form--title-icon" /></h5>
@@ -59,6 +38,7 @@
       <v-button format="primary" aria="Create a new NFT" :external="false" :white="false" text="DEPLOY" class="mx-sm" @click="test" />
       <v-button format="primary" aria="Create a new NFT" :external="false" :white="false" text="DOWNLOAD" @click="test" />
     </div>
+    <slot/>
   </form>
 </template>
 
@@ -68,19 +48,35 @@ import vInput from '@/components/editor/input.vue';
 import vCheckbox from '@/components/editor/checkbox.vue';
 import { QuestionMarkCircleIcon } from '@heroicons/vue/solid';
 import { ref, watch } from 'vue';
+import { mapApiExtensionsToForm } from '@/js/mapper.js';
 
 import { useApi } from '@/plugins/api';
 const api = useApi();
 
-const props = defineProps({});
+const props = defineProps({
+  name: {
+    type: String,
+    default: undefined
+  },
+  symbol: {
+    type: String,
+    default: undefined
+  },
+  extensions: {
+    type: Array,
+    default: []
+  }
+});
 
+// Get a mapped version of the extension to see which one is enabled
+const mappedExtensions = mapApiExtensionsToForm(props.extensions);
 const contractData = ref({
-  name: undefined,
-  symbol: undefined,
-  isMintable: false,
-  isPausable: false,
-  isBurnable: false,
-  isAutoIncrementIds: false
+  name: props.name,
+  symbol: props.symbol,
+  isMintable: mappedExtensions.isMintable ?? false,
+  isPausable: mappedExtensions.isPausable ?? false,
+  isBurnable: mappedExtensions.isBurnable ?? false,
+  isAutoIncrementIds: mappedExtensions.isAutoIncrementIds ?? false
 });
 
 const test = () => {
@@ -94,7 +90,6 @@ const emit = defineEmits(['contractChanged']);
 watch(
   () => contractData.value,
   () => {
-    console.log("CHANGE")
     // Need to verify that both are selected not to emit a fake event
     if ((contractData.value.isAutoIncrementIds && contractData.value.isMintable) || !contractData.value.isAutoIncrementIds) {
       emit('contractChanged', contractData.value);
@@ -105,7 +100,6 @@ watch(
 watch(
   () => contractData.value.isAutoIncrementIds,
   () => {
-    console.log("IDS")
     if (contractData.value.isAutoIncrementIds) {
       contractData.value.isMintable = true;
     }
