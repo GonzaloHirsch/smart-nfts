@@ -53,6 +53,7 @@ export enum EXTENSIONS {
     AutoIncrementIds = 'AutoIncrementIds',
     CORRECT = 'Pausable, Ownable',
     Ownable = 'Ownable',
+    Burnable = 'Burnable'
 }
 
 export enum FINAL_EXTENSIONS {
@@ -62,7 +63,8 @@ export enum FINAL_EXTENSIONS {
     ERC721Enumerable = 'ERC721Enumerable',
     Pausable = 'Pausable',
     Ownable = 'Ownable',
-    CORRECT = 'Pausable, Ownable'
+    CORRECT = 'Pausable, Ownable',
+    Burnable = 'Burnable'
 }
 
 export const REQUIRE_KEYWORD = 'require';

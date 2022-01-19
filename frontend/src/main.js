@@ -8,7 +8,8 @@ import { createMetaManager } from 'vue-meta';
 import locales from '@/locales';
 
 // Custom plugins
-import {apiPlugin} from './plugins/api';
+import { apiPlugin } from './plugins/api';
+import { notificationsPlugin } from './plugins/notifications';
 
 const app = createApp(App)
 
@@ -48,5 +49,9 @@ const meta = createMetaManager();
 app.use(router);
 app.use(i18n);
 app.use(meta);
+
+// Custom plugins
 app.use(apiPlugin);
+app.use(notificationsPlugin);
+
 app.mount('#app');

@@ -30,7 +30,17 @@
     </template>
     <template v-else #buttons>
       <div class="flex flex-col items-center justify-center">
-        <v-input id="contract_id" name="contract_id" label="Contract ID" :hideLabel="true" placeholder="Contract ID..." v-model="contractId" :continuousInput="true" format="primary-white" class="mb-sm" />
+        <v-input
+          id="contract_id"
+          name="contract_id"
+          label="Contract ID"
+          :hideLabel="true"
+          placeholder="Contract ID..."
+          v-model="contractId"
+          :continuousInput="true"
+          format="primary-white"
+          class="mb-sm"
+        />
         <v-button
           :format="editDisabled ? 'disabled' : 'secondary'"
           aria="Continue with an existing contract"
@@ -60,6 +70,9 @@ const api = useApi();
 import { useRouter } from 'vue-router';
 const router = useRouter();
 
+import { useNotifications } from '@/plugins/notifications';
+const { setSnackbar } = useNotifications();
+
 const isLoading = ref(false);
 
 const createNewContract = () => {
@@ -86,20 +99,27 @@ const editDisabled = computed(() => {
 const editContract = () => {
   isLoading.value = true;
   // Call API & wait for the response
-  api.getContract(contractId.value).then((res) => {
-    isLoading.value = false;
-    router.push(`/create/${contractId.value}`);
-  }).catch(err => {
-    isLoading.value = false;
-    _editDisabled.value = true;
-  });
-}
-watch(() => contractId.value, () => {
-  // Edit must be disabled because the id is invalid
-  if (_editDisabled.value) {
-    _editDisabled.value = !_editDisabled.value;
+  api
+    .getContract(contractId.value)
+    .then((res) => {
+      isLoading.value = false;
+      router.push(`/create/${contractId.value}`);
+    })
+    .catch((err) => {
+      isLoading.value = false;
+      _editDisabled.value = true;
+      setSnackbar("Contract doesn't exist!", 'error', 5)
+    });
+};
+watch(
+  () => contractId.value,
+  () => {
+    // Edit must be disabled because the id is invalid
+    if (_editDisabled.value) {
+      _editDisabled.value = !_editDisabled.value;
+    }
   }
-})
+);
 
 import { useMeta } from 'vue-meta';
 useMeta({

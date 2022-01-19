@@ -9,6 +9,7 @@
     <main id="main">
       <router-view />
     </main>
+    <v-snackbar/>
     <v-footer />
   </div>
 </template>
@@ -23,6 +24,7 @@ import { NAV_HEIGHT } from '@/js/constants.js';
 // Components
 import vNavbar from '@/components/static/navbar.vue';
 import vFooter from '@/components/static/footer.vue';
+import vSnackbar from '@/components/notifications/snackbar.vue';
 
 const app = ref(null);
 const navbar = ref(null);
