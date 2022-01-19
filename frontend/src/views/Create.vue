@@ -7,7 +7,7 @@
   >
     <template v-if="isNewContract" #buttons>
       <v-button
-        format="secondary"
+        :format="isLoading ? 'disabled' : 'secondary'"
         aria="Create a new NFT"
         :external="false"
         :white="true"
@@ -18,7 +18,7 @@
         @click="createNewContract"
       />
       <v-button
-        format="secondary"
+        :format="isLoading ? 'disabled' : 'secondary'"
         aria="Continue with an existing contract"
         :external="false"
         :white="true"

@@ -1,8 +1,15 @@
 # Front-End
 
-## Desarrollo
+## Configuration
 
-Instalar las dependencias y correr con `dev`:
+A `.env` file is needed with the following:
+```
+VITE_API_URL=https://api.smart-nfts.gonzalohirsch.com/ or http://localhost:8000/
+```
+
+## Development
+
+Installing dependencies and running:
 
 ```sh
 npm i
@@ -16,6 +23,6 @@ npm i
 npm run build
 ```
 
-## Producción
+## Production
 
-Al hacer un commit que afecte a la carpeta `frontend`, automaticamente se hace un deploy a S3 e invalidación del CDN.
+When a commit that affects the `/frontend` folder is made, an automatic deploy to S3 and caché invalidation are generated.
