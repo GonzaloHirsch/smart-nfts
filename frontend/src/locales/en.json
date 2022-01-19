@@ -3,9 +3,17 @@
         "name": "Smart NFTs"
     },
     "create": {
-        "hero": {
-            "title": "Create an NFT",
-            "subtitle": "Create a <strong>new NFT</strong> or continue the creation of an <strong>existing contract</strong>"
+        "new": {
+            "hero": {
+                "title": "Create an NFT",
+                "subtitle": "Create a <strong>new NFT</strong> or continue the creation of an <strong>existing contract</strong>"
+            }
+        },
+        "existing": {
+            "hero": {
+                "title": "Continue your NFT",
+                "subtitle": "Input the <strong>contract ID</strong> for the contract you want to <strong>continue editing</strong>"
+            }
         }
     },
     "footer": {

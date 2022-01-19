@@ -1,8 +1,21 @@
 <template>
   <div class="flex flex-col">
-    <label class="mb-1" :for="props.id">{{ props.label }}</label>
+    <label v-show="!props.hideLabel" :aria-hidden="hideLabel" class="mb-1" :for="props.id">{{ props.label }}</label>
+    <!-- If continuous input, it will use the @input to trigger on each key -->
     <input
-      class="rounded-sm border-2 border-typography_secondary focus:border-brand_primary bg-transparent transition-colors duration-300"
+      v-if="continuousInput"
+      :class="['rounded-sm transition-colors duration-300', classes]"
+      type="text"
+      :name="props.name"
+      :id="props.id"
+      :placeholder="props.placeholder"
+      @input="onInputChanged"
+      :value="modelValue"
+    />
+    <!-- Otherwise use a discrete approach, just event when focus is lost -->
+    <input
+      v-else
+      :class="['rounded-sm transition-colors duration-300', classes]"
       type="text"
       :name="props.name"
       :id="props.id"
@@ -14,6 +27,7 @@
 </template>
 
 <script setup>
+import { computed } from 'vue';
 const emit = defineEmits(['update:modelValue']);
 
 const props = defineProps({
@@ -33,8 +47,29 @@ const props = defineProps({
     type: String,
     required: true
   },
+  hideLabel: {
+    type: Boolean,
+    default: false
+  },
   modelValue: {
     type: String
+  },
+  format: {
+    type: String,
+    default: 'primary'
+  },
+  continuousInput: {
+    type: Boolean,
+    default: false
+  }
+});
+
+const classes = computed(() => {
+  switch (props.format) {
+    case 'primary':
+      return 'border-2 border-typography_secondary focus:border-brand_primary bg-transparent';
+    case 'primary-white':
+      return 'border-2 border-white focus:border-white bg-white';
   }
 });
 

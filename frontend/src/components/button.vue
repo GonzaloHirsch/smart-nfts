@@ -1,5 +1,8 @@
 <template>
-  <button :class="[buttonFormat, 'button']" type="button">
+  <button :class="[buttonFormat, 'button']" type="button" :disabled="props.disabled">
+    <span v-if="props.loading" class="no-inherit py-sm pl-sm -mr-xs">
+      <v-spinner class="animate-spin" />
+    </span>
     <template v-if="props.external">
       <a :href="props.href" :target="props.target" :aria-label="props.aria">{{ props.text }}</a>
     </template>
@@ -14,6 +17,7 @@
 
 <script setup>
 import { computed } from 'vue';
+import vSpinner from '@/components/icons/spinner.vue';
 
 const props = defineProps({
   href: {
@@ -42,6 +46,14 @@ const props = defineProps({
   format: {
     type: String,
     default: 'primary'
+  },
+  disabled: {
+    type: Boolean,
+    default: false
+  },
+  loading: {
+    type: Boolean,
+    default: false
   }
 });
 const buttonFormat = computed(() => (props.white ? `button--${props.format}-white` : `button--${props.format}`));
@@ -51,7 +63,8 @@ const buttonFormat = computed(() => (props.white ? `button--${props.format}-whit
 .button {
   @apply rounded transition duration-200 cursor-pointer inline-flex;
 }
-.button a, .button span{
+.button a,
+.button span:not(.no-inherit) {
   @apply text-h5 px-sm py-sm;
 }
 
@@ -109,5 +122,13 @@ const buttonFormat = computed(() => (props.white ? `button--${props.format}-whit
 }
 .button--danger-white:hover {
   @apply text-error bg-white;
+}
+
+/* DISABLED FORMAT */
+.button--disabled {
+  @apply border-2 border-gray-400 text-gray-400 bg-gray-400 bg-opacity-50 cursor-not-allowed;
+}
+.button--disabled-white {
+  @apply border-2 border-gray-400 text-gray-400 bg-gray-400 bg-opacity-50 cursor-not-allowed;
 }
 </style>
