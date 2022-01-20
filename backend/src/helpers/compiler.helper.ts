@@ -70,7 +70,7 @@ export const compileContract = (contract: string): ICompilerResponse => {
     return {
       bytecode: output.contracts[CONTRACT_NAME][contractName].evm.bytecode.object,
       abi: output.contracts[CONTRACT_NAME][contractName].abi,
-      compilerVersion: `v${JSON.parse(output.contracts[CONTRACT_NAME][contractName].metadata).compiler.version}`  // add a 'v' that the version is missing
+      compilerVersion: `v${JSON.parse(output.contracts[CONTRACT_NAME][contractName].metadata).compiler.version}` // add a 'v' that the version is missing
     };
   }
 };
@@ -79,5 +79,7 @@ export const flattenContract = async (contract: string): Promise<string> => {
   let path = `${Date.now()}.sol`;
   fs.writeFileSync(path, contract);
   // Flatten and remove extra licenses
-  return await Straightener.straighten(path).then((res: any) => removeAllButLast(res, '// SPDX-License-Identifier: MIT'));
+  return await Straightener.straighten(path)
+    .then((res: any) => removeAllButLast(res, '// SPDX-License-Identifier: MIT'))
+    .catch((err: any) => console.log(err));
 };

@@ -52,6 +52,7 @@ const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyRes
     contract.verification.date = new Date();
     await contract.save();
   } catch (err) {
+    console.log(err)
     if (err instanceof VerificationFailedException) {
       throw new HttpException(500, '', 'Verification failed');  
     }
