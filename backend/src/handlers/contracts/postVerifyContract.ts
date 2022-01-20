@@ -8,7 +8,6 @@ import { corsHandler } from '../../middleware/corsHandler.middleware';
 import { EXTENSIONS } from '../../constants/contract.constants';
 import HttpException from '../../exceptions/http.exception';
 import VerificationFailedException from '../../exceptions/verificationFailed.exception';
-import fs from 'fs';
 
 const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   if (

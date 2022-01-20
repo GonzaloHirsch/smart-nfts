@@ -3,6 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import Straightener from 'sol-straightener';
 import { removeAllButLast } from '../helpers/string.helper';
+import { straightenContent } from '../helpers/contractFlattener.helper';
 
 // This should never execute, this is to trick webpack into bundling this dependency
 if (process.env.node_env !== undefined && process.env.node_env !== 'development' && process.env.node_env !== 'production') {
@@ -76,10 +77,11 @@ export const compileContract = (contract: string): ICompilerResponse => {
 };
 
 export const flattenContract = async (contract: string): Promise<string> => {
-  let path = `${Date.now()}.sol`;
-  fs.writeFileSync(path, contract);
   // Flatten and remove extra licenses
-  return await Straightener.straighten(path)
+  return await straightenContent(contract)
     .then((res: any) => removeAllButLast(res, '// SPDX-License-Identifier: MIT'))
-    .catch((err: any) => console.log(err));
+    .catch((err: any) => {
+      console.log(err);
+      return '';
+    });
 };
