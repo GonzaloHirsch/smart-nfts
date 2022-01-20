@@ -26,6 +26,11 @@ provider:
     cors: true
   environment:
     MONGO_CONNECTION_STRING: ${env:MONGO_CONNECTION_STRING}
+    INFURA_PROJECT_ID: ${env:INFURA_PROJECT_ID}
+    DEPLOYMENT_ADDRESS: ${env:DEPLOYMENT_ADDRESS}
+    DEPLOYMENT_PRIVATE_KEY: ${env:DEPLOYMENT_PRIVATE_KEY}
+    ETHERSCAN_API_KEY: ${env:ETHERSCAN_API_KEY}
+    ETHERSCAN_API_URL: ${env:ETHERSCAN_API_URL}
 
 custom:
   serverless-offline:
@@ -80,6 +85,24 @@ functions:
       - http:
           path: /contracts/{contractId}
           method: put
+    tags:
+      app: pf
+  postDeployContract:
+    handler: src/handlers/contracts/postDeployContract.handler
+    memorySize: 1024 # Probably more memory-intensive process than the rest
+    timeout: 60 # More timeout because it needs more time to compile
+    events:
+      - http:
+          path: /contracts/{contractId}/deploy
+          method: post
+    tags:
+      app: pf
+  postVerifyContract:
+    handler: src/handlers/contracts/postVerifyContract.handler
+    events:
+      - http:
+          path: /contracts/{contractId}/verify
+          method: post
     tags:
       app: pf
   getContract:

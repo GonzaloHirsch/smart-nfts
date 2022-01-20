@@ -27,13 +27,18 @@ export enum STATE_MUTABILITY {
 
 export enum METHOD_TYPE {
     FUNCTION = 'function',
-    EVENT = 'event'
+    EVENT = 'event',
+    CONSTRUCTOR = 'constructor'
 }
 
 export enum PARAMETER_TYPE {
     ADDRESS = 'address',
     STRING_MEMORY = 'string memory',
     UINT256 = 'uint256',
+    BOOL = 'bool',
+    STRING = 'string',
+    BYTES = 'bytes',
+    BYTES4 = 'bytes4'
 }
 
 export enum VISIBILITY {

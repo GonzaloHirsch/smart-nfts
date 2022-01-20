@@ -1,7 +1,5 @@
-import { log } from 'console';
 import { EXTENSIONS, EXTENSION_MAP, REQUIRE_KEYWORD } from '../constants/contract.constants';
 import { CustomContract } from '../contracts/custom.contract';
-import GenericException from '../exceptions/generic.exception';
 import { flattenArray, getSortFn } from '../helpers/collection.helper';
 import { getExtensionAdditions, getMergedMethodStateMutability, getMergedMethodVisibility } from '../helpers/creation.helper';
 import { hashString } from '../helpers/string.helper';
@@ -32,6 +30,8 @@ class CreationService {
     // Fetch the extension classes
     const classExtensions = extensions.map((extensionName) => {
       if (!EXTENSION_MAP.has(extensionName)) {
+        console.log("MISSING EXTENSION");
+        
         throw new Error('missing extension in map');
         // TODO ERROR HANDLING
       }

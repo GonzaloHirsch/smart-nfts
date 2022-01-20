@@ -4,7 +4,7 @@ import { IParameter } from "./general.interface";
 export type IAbi = IAbiMethod[];
 
 export interface IAbiMethod {
-    name: string,
+    name?: string,
     type: METHOD_TYPE,
     anonymous?: boolean,
     inputs: IAbiInput[],

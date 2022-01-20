@@ -70,3 +70,9 @@ In order to deploy it, just running the following will deploy the infrastructure
 ```bash
 npm run deploy
 ```
+
+## Ethereum Funds
+
+In order to get test ethereum for Rinkeby, the following pages can be used:
+- https://faucets.chain.link/rinkeby
+- https://faucet.rinkeby.io/

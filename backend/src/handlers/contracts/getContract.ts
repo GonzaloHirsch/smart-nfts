@@ -24,7 +24,7 @@ const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyRes
   // Generate the contract itself if it has been edited
   let contractString = null;
   if (contract.name) {
-    contractString = CreationService.getInstance().genContract(contract.name, contract.symbol, contract.extensions as EXTENSIONS[]);
+    contractString = CreationService.getInstance().genContract(contract.name, contract.symbol, [...contract.extensions] as EXTENSIONS[]);
   }
     
   return {

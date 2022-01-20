@@ -8,7 +8,7 @@ const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyRes
   const contract = await contractService.createContract();
   return {
     statusCode: 201,
-    body: JSON.stringify(contract)
+    body: JSON.stringify(contract.toJSON())
   };
 };
 
