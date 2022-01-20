@@ -31,7 +31,8 @@ export const verifyContract = async (contract: string, contractName: string, con
       if (res.data.status === '0') throw new VerificationFailedException('Verification failed');
       return res.data.result;
     })
-    .catch(() => {
+    .catch((err) => {
+      console.log(err)
       throw new VerificationFailedException('Verification failed');
     });
 };
