@@ -89,8 +89,8 @@ functions:
       app: pf
   postDeployContract:
     handler: src/handlers/contracts/postDeployContract.handler
-    memorySize: 1024 # Probably more memory-intensive process than the rest
-    timeout: 60 # More timeout because it needs more time to compile
+    memorySize: 2048 # Probably more memory-intensive process than the rest
+    timeout: 120 # More timeout because it needs more time to compile
     events:
       - http:
           path: /contracts/{contractId}/deploy
@@ -99,6 +99,8 @@ functions:
       app: pf
   postVerifyContract:
     handler: src/handlers/contracts/postVerifyContract.handler
+    memorySize: 1024 # Probably more memory-intensive process than the rest
+    timeout: 30 # More timeout because it needs more time to make the request
     events:
       - http:
           path: /contracts/{contractId}/verify
