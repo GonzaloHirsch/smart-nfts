@@ -48,6 +48,11 @@ aws-cli/2.2.38 Python/3.8.8 Darwin/21.2.0 exe/x86_64 prompt/off
 A `.env` with the following environment variables is required:
 ```
 MONGO_CONNECTION_STRING=Connection string to the MongoDB database
+INFURA_PROJECT_ID=Infura project ID
+DEPLOYMENT_ADDRESS=Address of wallet used for deployments
+DEPLOYMENT_PRIVATE_KEY=Private key for that address
+ETHERSCAN_API_KEY=API Key for Etherscan
+ETHERSCAN_API_URL=URL for the Etherscan API
 ```
 
 Configuring AWS IAM credentials is also required, with AWS CLI run the following and follow the instructions to configure it:
