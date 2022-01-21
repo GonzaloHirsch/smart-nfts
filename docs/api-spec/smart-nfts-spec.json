@@ -106,6 +106,64 @@
         }
       }
     },
+    "/contracts/{contractId}/deploy": {
+      "post": {
+        "tags": [
+          "Contracts"
+        ],
+        "summary": "Deploy a contract to a testnet",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/idParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "address": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/contracts/{contractId}/verify": {
+      "post": {
+        "tags": [
+          "Contracts"
+        ],
+        "summary": "Verify a contract in a testnet",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/idParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "verificationId": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/": {
       "get": {
         "tags": [
