@@ -1,18 +1,36 @@
 <template>
   <v-modal :showModal="isOpen" @close="handleModalClose">
     <template #title>
-      <h2 class="text-brand_primary">Contract Saved</h2>
+      <h3 v-if="modalType === 'deploy'" class="text-brand_primary">Deploy Contract</h3>
+      <h3 v-else-if="modalType === 'verify'" class="text-brand_primary">Verify Contract</h3>
     </template>
-    <p>THIS IS THE CONTENT</p>
+    <template v-if="isLoadingModal">
+      <div class="w-full rounded-lg text-brand_primary">
+        <h4 v-if="modalType === 'deploy'" class="flex items-center justify-center my-base py-xl">
+          {{ $t('editor.deploy.loading') }} <RefreshIcon class="h-10 w-10 animate-spin" />
+        </h4>
+        <h4 v-else-if="modalType === 'verify'" class="flex items-center justify-center my-base py-xl">
+          {{ $t('editor.verify.loading') }} <RefreshIcon class="h-10 w-10 animate-spin" />
+        </h4>
+      </div>
+    </template>
+    <template v-else>
+      <p v-if="modalType === 'deploy'" class="break-words" v-html="$t('editor.deploy.message', [storedContract.deployment.address])"></p>
+      <p v-else-if="modalType === 'verify'" class="break-words" v-html="$t('editor.verify.message')"></p>
+    </template>
   </v-modal>
   <v-section :noPadding="true" class="bg-typography_primary">
     <div v-if="!isLoadingEditor" class="flex flex-row">
       <div class="flex flex-col w-6/12 bg-light rounded-r-2xl pt-sm pb-base px-md">
         <v-editor
           @contractChanged="handleContractChange"
+          @deployContract="handleDeployContract"
+          @verifyContract="handleVerifyContract"
           :name="storedContract.name"
           :symbol="storedContract.symbol"
           :extensions="storedContract.extensions"
+          :isVerified="isVerified"
+          :id="route.params.id"
         >
           <span v-if="!isLoading && contractEdited" class="flex items-center mt-sm text-sm">{{
             $t('editor.last_saved', [$d(lastSaved, 'short')])
@@ -22,8 +40,28 @@
           /></span>
           <span class="flex items-center mt-xs text-sm"
             >{{ $t('editor.contract.id') }}<strong class="ml-1">{{ route.params.id }}</strong
-            ><DocumentDuplicateIcon @click="copyContractId" class="h-5 w-5 ml-1 cursor-pointer hover:text-brand_primary transition duration-300"
+            ><DocumentDuplicateIcon
+              @click="copyContractId"
+              class="h-5 w-5 block ml-1 cursor-pointer hover:text-brand_primary transition duration-300"
           /></span>
+          <span v-if="isDeployed" class="flex items-center mt-xs text-sm"
+            >{{ $t('editor.contract.deploy') }}<strong class="ml-1 break-all">{{ storedContract.deployment.address }}</strong
+            ><DocumentDuplicateIcon
+              @click="copyContractAddress"
+              class="h-5 w-5 block ml-1 cursor-pointer hover:text-brand_primary transition duration-300"
+          /></span>
+          <span v-if="isVerified" class="flex items-center mt-xs text-sm"
+            >{{ $t('editor.contract.verified') }}<BadgeCheckIcon class="h-5 w-5 block ml-1 text-brand_primary"
+          /></span>
+          <a
+            v-if="isDeployed"
+            class="flex items-center mt-xs text-sm hover:text-brand_primary transition-colors duration-300"
+            :href="`https://ropsten.etherscan.io/address/${storedContract.deployment.address}`"
+            aria-label="View on Etherscan"
+            target="_blank"
+            rel="noopener noreferrer"
+            >{{ $t('editor.contract.view') }} <ExternalLinkIcon class="h-5 w-5 block ml-1"
+          /></a>
         </v-editor>
       </div>
       <div class="flex w-6/12 p-sm">
@@ -81,7 +119,10 @@ import vCodeViewer from '@/components/codeViewer.vue';
 import vEditor from '@/components/editor.vue';
 import vModal from '@/components/modal.vue';
 import vSection from '@/components/section.vue';
-import { QuestionMarkCircleIcon, RefreshIcon, DocumentDuplicateIcon } from '@heroicons/vue/solid';
+import { QuestionMarkCircleIcon, RefreshIcon, DocumentDuplicateIcon, BadgeCheckIcon, ExternalLinkIcon } from '@heroicons/vue/solid';
+
+import { useNotifications } from '@/plugins/notifications';
+const { setSnackbar } = useNotifications();
 
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
@@ -93,13 +134,16 @@ const route = useRoute(),
 import { useApi } from '@/plugins/api';
 const api = useApi();
 
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 const isOpen = ref(false);
+const modalType = ref(undefined);
 const showModal = () => {
   isOpen.value = !isOpen.value;
 };
 const handleModalClose = () => {
   isOpen.value = false;
+  modalType.value = undefined;
+  isLoadingModal.value = false;
 };
 
 import { useMeta } from 'vue-meta';
@@ -112,6 +156,7 @@ const contract = ref(t('editor.contract.empty'));
 const storedContract = ref({});
 const isLoading = ref(false);
 const isLoadingEditor = ref(true);
+const isLoadingModal = ref(false);
 const lastSaved = ref(undefined);
 const contractEdited = ref(false);
 
@@ -130,10 +175,7 @@ const loadContract = () => {
     })
     .catch((err) => {
       router.replace({
-        path: '/404',
-        params: {
-          title: 'HERLO'
-        }
+        path: '/404'
       });
     });
 };
@@ -146,6 +188,7 @@ const handleContractChange = (contractData) => {
     isLoading.value = true;
     api.editContract(route.params.id, mapFormToApiData(contractData)).then((res) => {
       contract.value = res.data.contract;
+      storedContract.value = res.data;
       contractEdited.value = true;
       lastSaved.value = new Date();
       isLoading.value = false;
@@ -153,12 +196,68 @@ const handleContractChange = (contractData) => {
   }
 };
 
+const isDeployed = computed(() => {
+  return storedContract.value && storedContract.value.deployment;
+});
+const handleDeployContract = () => {
+  modalType.value = 'deploy';
+  isLoadingModal.value = true;
+  showModal();
+  api
+    .deployContract(route.params.id)
+    .then((res) => {
+      storedContract.value = res.data;
+      isLoadingModal.value = false;
+    })
+    .catch((err) => {
+      console.log(err);
+      isLoadingModal.value = false;
+    });
+};
+
+const isVerified = computed(() => {
+  return (
+    isDeployed.value &&
+    storedContract.value.verification &&
+    storedContract.value.verification.verifiedAddress === storedContract.value.deployment.address
+  );
+});
+const handleVerifyContract = () => {
+  modalType.value = 'verify';
+  isLoadingModal.value = true;
+  showModal();
+  api
+    .verifyContract(route.params.id)
+    .then((res) => {
+      storedContract.value = res.data;
+      isLoadingModal.value = false;
+    })
+    .catch((err) => {
+      console.log(err);
+      isLoadingModal.value = false;
+    });
+};
+
 const copyContractId = () => {
   if (!navigator.clipboard) {
-    // Clipboard API not available
+    setSnackbar('Cannot copy contract ID to clipboard!', 'error', 5);
     return;
   }
-  navigator.clipboard.writeText(route.params.id).catch((err) => console.error('Failed to copy!', err));
+  navigator.clipboard.writeText(route.params.id).catch((err) => {
+    console.error(err);
+    setSnackbar('Cannot copy contract ID to clipboard!', 'error', 5);
+  });
+};
+
+const copyContractAddress = () => {
+  if (!navigator.clipboard) {
+    setSnackbar('Cannot copy contract address to clipboard!', 'error', 5);
+    return;
+  }
+  navigator.clipboard.writeText(route.params.id).catch((err) => {
+    console.error(err);
+    setSnackbar('Cannot copy contract address to clipboard!', 'error', 5);
+  });
 };
 </script>
 

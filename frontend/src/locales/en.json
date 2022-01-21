@@ -33,7 +33,23 @@
     "editor": {
         "contract": {
             "empty": "Start by completing the contract name and symbol...",
-            "id": "Your contract ID is:"
+            "id": "Your contract ID is:",
+            "deploy": "Your contract is deployed on address:",
+            "verified": "Your contract is verified!",
+            "view": "View on Etherscan"
+        },
+        "buttons": {
+            "save": "Save",
+            "deploy": "Deploy",
+            "verify": "Verify"
+        },
+        "deploy": {
+            "loading": "Deploying contract, please wait...",
+            "message": "Your contract is now deployed on address <strong>{0}</strong>. You will be able to see it in the blockchain (it may take a couple of minutes for the block to be mined). You can now verify it, but please wait until the contract is visible. If you edit the contract, you will have to deploy it again."
+        },
+        "verify": {
+            "loading": "Verifying contract, please wait...",
+            "message": "Your contract is now verified. Be mindful, if you edit the contract you will have to deploy it and verify it again."
         },
         "prepare": "Preparing the editor, hang tight...",
         "last_saved": "Last saved: {0}",

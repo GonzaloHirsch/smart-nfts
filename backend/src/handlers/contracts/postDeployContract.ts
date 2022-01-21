@@ -57,9 +57,7 @@ const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyRes
 
   return {
     statusCode: 200,
-    body: JSON.stringify({
-      address: contractAddress
-    })
+    body: JSON.stringify(contract.toJSON())
   };
 };
 

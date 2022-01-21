@@ -34,9 +34,10 @@
     </div>
     <!-- ACTIONS -->
     <div class="flex flex-row items-center justify-center">
-      <v-button format="primary" aria="Create a new NFT" :external="false" :white="false" text="SAVE" @click="saveContract" />
-      <v-button format="primary" aria="Create a new NFT" :external="false" :white="false" text="DEPLOY" class="mx-sm" @click="test" />
-      <v-button format="primary" aria="Create a new NFT" :external="false" :white="false" text="DOWNLOAD" @click="test" />
+      <v-button format="primary" aria="Create a new NFT" :external="false" :white="false" size="medium" :text="$t('editor.buttons.save').toUpperCase()" @click="saveContract" />
+      <v-button format="primary" aria="Deploy the NFT contract" :external="false" :white="false" size="medium" :text="$t('editor.buttons.deploy').toUpperCase()" class="ml-sm" @click="deployContract" />
+      <v-button v-if="!props.isVerified" format="primary" aria="Verify the NFT contract" :external="false" :white="false" size="medium" :text="$t('editor.buttons.verify').toUpperCase()" class="ml-sm" @click="verifyContract" />
+      <v-button format="primary" aria="Create a new NFT" :external="false" :white="false" size="medium" text="DOWNLOAD" class="ml-sm" @click="saveContract" />
     </div>
     <slot/>
   </form>
@@ -65,6 +66,14 @@ const props = defineProps({
   extensions: {
     type: Array,
     default: []
+  },
+  isVerified: {
+    type: Boolean,
+    default: false
+  },
+  id: {
+    type: String,
+    default: undefined
   }
 });
 
@@ -79,14 +88,18 @@ const contractData = ref({
   isAutoIncrementIds: mappedExtensions.isAutoIncrementIds ?? false
 });
 
-const test = () => {
-  api.healthCheck();
-};
+const emit = defineEmits(['contractChanged', 'verifyContract', 'deployContract']);
 const saveContract = () => {
-  api.saveContract('1234', contractData.value);
+  // api.saveContract('1234', contractData.value);
+  console.log("DSAVE");
+};
+const deployContract = () => {
+  emit('deployContract');
+};
+const verifyContract = () => {
+  emit('verifyContract');
 };
 
-const emit = defineEmits(['contractChanged']);
 watch(
   () => contractData.value,
   () => {

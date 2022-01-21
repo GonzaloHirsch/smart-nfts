@@ -1,5 +1,5 @@
 <template>
-  <button :class="[buttonFormat, 'button']" type="button" :disabled="props.disabled">
+  <button :class="[buttonFormat, buttonSize, 'button']" type="button" :disabled="props.disabled">
     <span v-if="props.loading" class="no-inherit py-sm pl-sm -mr-xs">
       <v-spinner class="animate-spin" />
     </span>
@@ -54,19 +54,31 @@ const props = defineProps({
   loading: {
     type: Boolean,
     default: false
+  },
+  size: {
+    type: String,
+    default: 'large'
   }
 });
 const buttonFormat = computed(() => (props.white ? `button--${props.format}-white` : `button--${props.format}`));
+const buttonSize = computed(() => `button--size-${props.size}`);
 </script>
 
 <style scoped>
 .button {
   @apply rounded transition duration-200 cursor-pointer inline-flex;
 }
-.button a,
-.button span:not(.no-inherit) {
+
+.button.button--size-large a, 
+.button.button--size-large span:not(.no-inherit) {
   @apply text-h5 px-sm py-sm;
 }
+
+.button.button--size-medium a, 
+.button.button--size-medium span:not(.no-inherit) {
+  @apply text-lg px-xs py-xs;
+}
+
 
 /* PRIMARY FORMAT */
 .button--primary {

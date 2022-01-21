@@ -60,9 +60,7 @@ const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyRes
 
   return {
     statusCode: 200,
-    body: JSON.stringify({
-      verificationId: verificationId
-    })
+    body: JSON.stringify(contract.toJSON())
   };
 };
 

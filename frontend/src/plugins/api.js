@@ -32,7 +32,17 @@ const api = {
         return instance.post(`contracts`).then(res => {
             return res
         })
-    }
+    },
+    deployContract: async (contractId) => {
+        return instance.post(`contracts/${contractId}/deploy`).then(res => {
+            return res
+        })
+    },
+    verifyContract: async (contractId) => {
+        return instance.post(`contracts/${contractId}/verify`).then(res => {
+            return res
+        })
+    },
 }
 
 // Method to inject API in any setup component
