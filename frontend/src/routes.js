@@ -4,6 +4,7 @@ import Home from './views/Home.vue';
 const Create = () => import('./views/Create.vue');
 const Components = () => import('./views/Components.vue');
 const ContractEditor = () => import('./views/ContractEditor.vue');
+const Existing = () => import('./views/Existing.vue');
 const Interact = () => import('./views/Interact.vue');
 const NotFound = () => import('./views/NotFound.vue');
 const ServerError = () => import('./views/ServerError.vue');
@@ -15,6 +16,11 @@ export const routes = [
     path: '/create',
     meta: { title: 'Create' },
     component: Create,
+  },
+  {
+    path: '/existing',
+    meta: { title: 'Existing' },
+    component: Existing,
   },
   {
     path: '/create/:id',

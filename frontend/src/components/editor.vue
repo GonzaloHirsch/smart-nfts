@@ -4,9 +4,9 @@
     <div class="divide-y divide-typography_secondary">
       <div class="form--section">
         <h5 class="form--title">Contract Information <QuestionMarkCircleIcon class="form--title-icon" /></h5>
-        <div class="flex flex-row justify-between">
-          <v-input id="name" name="name" placeholder="SmartNFT..." label="Contract Name" v-model="contractData.name" class="w-6/12 pr-2" />
-          <v-input id="symbol" name="symbol" placeholder="SNFT..." label="Contract Symbol" v-model="contractData.symbol" class="w-6/12 pl-2" />
+        <div class="flex flex-col md:flex-row justify-between">
+          <v-input id="name" name="name" placeholder="SmartNFT..." label="Contract Name" v-model="contractData.name" class="w-full pb-2 md:w-6/12 md:pr-2 md:py-0" />
+          <v-input id="symbol" name="symbol" placeholder="SNFT..." label="Contract Symbol" v-model="contractData.symbol" class="w-full pt-2 md:w-6/12 md:pl-2 md:py-0" />
         </div>
       </div>
       <!-- <div class="form--section">
@@ -14,8 +14,8 @@
       </div> -->
       <div class="form--section">
         <h5 class="form--title">Creation <QuestionMarkCircleIcon class="form--title-icon" /></h5>
-        <v-checkbox id="isMintable" name="isMintable" placeholder="Mintable" label="Mintable" v-model="contractData.isMintable" class="w-6/12" />
-        <div class="w-6/12 flex flex-row">
+        <v-checkbox id="isMintable" name="isMintable" placeholder="Mintable" label="Mintable" v-model="contractData.isMintable" class="w-full md:w-6/12" />
+        <div class="flex flex-row">
           <span class="border-l-2 border-black mx-xs"></span>
           <v-checkbox
             id="isAutoIncrementIds"
@@ -25,19 +25,19 @@
             v-model="contractData.isAutoIncrementIds"
           />
         </div>
-        <v-checkbox id="isPausable" name="isPausable" placeholder="Pausable" label="Pausable" v-model="contractData.isPausable" class="w-6/12" />
-        <v-checkbox id="isBurnable" name="isBurnable" placeholder="Burnable" label="Burnable" v-model="contractData.isBurnable" class="w-6/12" />
+        <v-checkbox id="isPausable" name="isPausable" placeholder="Pausable" label="Pausable" v-model="contractData.isPausable" class="w-full md:w-6/12" />
+        <v-checkbox id="isBurnable" name="isBurnable" placeholder="Burnable" label="Burnable" v-model="contractData.isBurnable" class="w-full md:w-6/12" />
       </div>
       <!-- <div class="form--section">
         <h5 class="form--title">Metadata <QuestionMarkCircleIcon class="form--title-icon" /></h5>
       </div> -->
     </div>
     <!-- ACTIONS -->
-    <div class="flex flex-row items-center justify-center">
+    <div class="flex flex-col sm:flex-row items-center justify-center">
       <v-button format="primary" aria="Create a new NFT" :external="false" :white="false" size="medium" :text="$t('editor.buttons.save').toUpperCase()" @click="saveContract" />
-      <v-button format="primary" aria="Deploy the NFT contract" :external="false" :white="false" size="medium" :text="$t('editor.buttons.deploy').toUpperCase()" class="ml-sm" @click="deployContract" />
-      <v-button v-if="!props.isVerified" format="primary" aria="Verify the NFT contract" :external="false" :white="false" size="medium" :text="$t('editor.buttons.verify').toUpperCase()" class="ml-sm" @click="verifyContract" />
-      <v-button format="primary" aria="Create a new NFT" :external="false" :white="false" size="medium" text="DOWNLOAD" class="ml-sm" @click="saveContract" />
+      <v-button v-if="props.canDeploy" format="primary" aria="Deploy the NFT contract" :external="false" :white="false" size="medium" :text="$t('editor.buttons.deploy').toUpperCase()" class="mt-sm sm:ml-sm sm:mt-0" @click="deployContract" />
+      <v-button v-if="!props.isVerified && props.canVerify" format="primary" aria="Verify the NFT contract" :external="false" :white="false" size="medium" :text="$t('editor.buttons.verify').toUpperCase()" class="mt-sm sm:ml-sm sm:mt-0" @click="verifyContract" />
+      <v-button format="primary" aria="Create a new NFT" :external="false" :white="false" size="medium" text="DOWNLOAD" class="mt-sm sm:ml-sm sm:mt-0" @click="saveContract" />
     </div>
     <slot/>
   </form>
@@ -68,6 +68,14 @@ const props = defineProps({
     default: []
   },
   isVerified: {
+    type: Boolean,
+    default: false
+  },
+  canVerify: {
+    type: Boolean,
+    default: false
+  },
+  canDeploy: {
     type: Boolean,
     default: false
   },

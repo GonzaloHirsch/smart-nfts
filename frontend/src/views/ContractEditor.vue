@@ -20,8 +20,8 @@
     </template>
   </v-modal>
   <v-section :noPadding="true" class="bg-typography_primary">
-    <div v-if="!isLoadingEditor" class="flex flex-row">
-      <div class="flex flex-col w-6/12 bg-light rounded-r-2xl pt-sm pb-base px-md">
+    <div v-if="!isLoadingEditor" class="flex flex-col md:flex-row">
+      <div class="flex flex-col w-full md:w-6/12 bg-light rounded-b-2xl md:rounded-b-0 md:rounded-r-2xl pt-sm pb-base px-md">
         <v-editor
           @contractChanged="handleContractChange"
           @deployContract="handleDeployContract"
@@ -30,6 +30,8 @@
           :symbol="storedContract.symbol"
           :extensions="storedContract.extensions"
           :isVerified="isVerified"
+          :canVerify="canVerify"
+          :canDeploy="canDeploy"
           :id="route.params.id"
         >
           <span v-if="!isLoading && contractEdited" class="flex items-center mt-sm text-sm">{{
@@ -64,7 +66,7 @@
           /></a>
         </v-editor>
       </div>
-      <div class="flex w-6/12 p-sm">
+      <div class="flex w-full md:w-6/12 p-sm">
         <v-code-viewer class="flex flex-col w-full" :code="contract" :loading="isLoading" />
       </div>
     </div>
@@ -221,6 +223,16 @@ const isVerified = computed(() => {
     storedContract.value.verification &&
     storedContract.value.verification.verifiedAddress === storedContract.value.deployment.address
   );
+});
+const canVerify = computed(() => {
+  return (
+    isDeployed.value &&
+    storedContract.value.verification &&
+    storedContract.value.verification.verifiedAddress !== storedContract.value.deployment.address
+  );
+});
+const canDeploy = computed(() => {
+  return storedContract.value.contract !== undefined && storedContract.value.contract !== null && storedContract.value.contract !== '';
 });
 const handleVerifyContract = () => {
   modalType.value = 'verify';
