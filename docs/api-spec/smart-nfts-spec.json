@@ -46,13 +46,13 @@
               "type": "object",
               "properties": {
                 "id": {
-                  "$ref": "#/components/schemas/ID"
+                  "$ref": "#/definitions/ID"
                 },
                 "_id": {
-                  "$ref": "#/components/schemas/_ID"
+                  "$ref": "#/definitions/_ID"
                 },
                 "abi": {
-                  "$ref": "#/components/schemas/ABI"
+                  "$ref": "#/definitions/ABI"
                 }
               }
             }
@@ -78,7 +78,7 @@
           "200": {
             "description": "Successful operation",
             "schema": {
-              "$ref": "#/components/schemas/COMPLETE_CONTRACT"
+              "$ref": "#/definitions/COMPLETE_CONTRACT"
             }
           }
         }
@@ -100,7 +100,7 @@
           "200": {
             "description": "Successful operation",
             "schema": {
-              "$ref": "#/components/schemas/COMPLETE_CONTRACT"
+              "$ref": "#/definitions/COMPLETE_CONTRACT"
             }
           }
         }
@@ -189,116 +189,114 @@
       }
     }
   },
-  "components": {
-    "schemas": {
-      "ABI": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string"
-            },
-            "type": {
-              "type": "string"
-            },
-            "stateMutability": {
-              "type": "string"
-            },
-            "anonymous": {
-              "type": "boolean"
-            },
-            "inputs": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string"
-                  },
-                  "type": {
-                    "type": "string"
-                  },
-                  "indexed": {
-                    "type": "boolean"
-                  },
-                  "internalType": {
-                    "type": "string"
-                  }
+  "definitions": {
+    "ABI": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "stateMutability": {
+            "type": "string"
+          },
+          "anonymous": {
+            "type": "boolean"
+          },
+          "inputs": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "type": {
+                  "type": "string"
+                },
+                "indexed": {
+                  "type": "boolean"
+                },
+                "internalType": {
+                  "type": "string"
                 }
               }
-            },
-            "outputs": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string"
-                  },
-                  "type": {
-                    "type": "string"
-                  },
-                  "internalType": {
-                    "type": "string"
-                  }
+            }
+          },
+          "outputs": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "type": {
+                  "type": "string"
+                },
+                "internalType": {
+                  "type": "string"
                 }
               }
             }
           }
         }
-      },
-      "ID": {
-        "type": "string"
-      },
-      "_ID": {
-        "type": "string"
-      },
-      "CONTRACT": {
-        "type": "string"
-      },
-      "NAME": {
-        "type": "string"
-      },
-      "SYMBOL": {
-        "type": "string"
-      },
-      "EXTENSIONS": {
-        "type": "array",
-        "items": {
-          "type": "string",
-          "enum": [
-            "Pausable",
-            "Mintable",
-            "AutoIncrementIds",
-            "Burnable"
-          ]
-        }
-      },
-      "COMPLETE_CONTRACT": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "$ref": "#/components/schemas/ID"
-          },
-          "_id": {
-            "$ref": "#/components/schemas/_ID"
-          },
-          "abi": {
-            "$ref": "#/components/schemas/ABI"
-          },
-          "contract": {
-            "$ref": "#/components/schemas/CONTRACT"
-          },
-          "name": {
-            "$ref": "#/components/schemas/NAME"
-          },
-          "symbol": {
-            "$ref": "#/components/schemas/SYMBOL"
-          },
-          "extensions": {
-            "$ref": "#/components/schemas/EXTENSIONS"
-          }
+      }
+    },
+    "ID": {
+      "type": "string"
+    },
+    "_ID": {
+      "type": "string"
+    },
+    "CONTRACT": {
+      "type": "string"
+    },
+    "NAME": {
+      "type": "string"
+    },
+    "SYMBOL": {
+      "type": "string"
+    },
+    "EXTENSIONS": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "Pausable",
+          "Mintable",
+          "AutoIncrementIds",
+          "Burnable"
+        ]
+      }
+    },
+    "COMPLETE_CONTRACT": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/ID"
+        },
+        "_id": {
+          "$ref": "#/definitions/_ID"
+        },
+        "abi": {
+          "$ref": "#/definitions/ABI"
+        },
+        "contract": {
+          "$ref": "#/definitions/CONTRACT"
+        },
+        "name": {
+          "$ref": "#/definitions/NAME"
+        },
+        "symbol": {
+          "$ref": "#/definitions/SYMBOL"
+        },
+        "extensions": {
+          "$ref": "#/definitions/EXTENSIONS"
         }
       }
     }
@@ -308,7 +306,7 @@
       "in": "path",
       "name": "contractId",
       "type": "string",
-      "required": "true",
+      "required": true,
       "description": "ID of the contract"
     }
   }
