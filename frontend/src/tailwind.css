@@ -1,3 +1,6 @@
+@import url('./assets/styles/inter.css');
+@import url('./assets/styles/open_sans.css');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
