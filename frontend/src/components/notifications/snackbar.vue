@@ -4,7 +4,7 @@
       v-if="snackbarContent.text"
       :class="[
         snackbarContent.text ? '-translate-y-6' : '',
-        'mx-auto max-w-lg fixed bottom-0 left-0 right-0 shadow-md text-center py-2 pl-2 pr-8 rounded-md overflow-hidden w-max',
+        'mx-auto max-w-lg fixed bottom-0 left-0 right-0 shadow-md text-center py-2 pl-2 pr-8 rounded-md overflow-hidden w-max z-50',
         classes.parent
       ]"
     >

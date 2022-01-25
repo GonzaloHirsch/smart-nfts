@@ -69,7 +69,7 @@ const classes = computed(() => {
     case 'primary':
       return 'border-2 border-typography_secondary focus:border-brand_primary bg-transparent';
     case 'primary-white':
-      return 'border-2 border-white focus:border-white bg-white';
+      return 'border-2 border-white focus:border-white bg-white text-typography_secondary';
   }
 });
 

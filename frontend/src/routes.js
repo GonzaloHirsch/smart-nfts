@@ -2,7 +2,6 @@
 // Not split Home for less layout shift ==> Better experience
 import Home from './views/Home.vue';
 const Create = () => import('./views/Create.vue');
-const Components = () => import('./views/Components.vue');
 const ContractEditor = () => import('./views/ContractEditor.vue');
 const Existing = () => import('./views/Existing.vue');
 const Interact = () => import('./views/Interact.vue');
@@ -31,11 +30,6 @@ export const routes = [
     path: '/interact/:id?',
     meta: { title: 'Interact' },
     component: Interact,
-  },
-  {
-    path: '/components',
-    meta: { title: 'Components' },
-    component: Components,
   },
   {
     path: '/500',

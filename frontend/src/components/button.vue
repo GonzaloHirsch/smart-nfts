@@ -79,6 +79,16 @@ const buttonSize = computed(() => `button--size-${props.size}`);
   @apply text-lg px-xs py-xs;
 }
 
+.button.button--size-small a, 
+.button.button--size-small span:not(.no-inherit) {
+  @apply text-sm px-xs py-xs;
+}
+
+.button.button--size-xsmall a, 
+.button.button--size-xsmall span:not(.no-inherit) {
+  @apply text-xs px-xs py-xs;
+}
+
 
 /* PRIMARY FORMAT */
 .button--primary {

@@ -55,6 +55,22 @@
         "last_saved": "Last saved: {0}",
         "saving": "Saving..."
     },
+    "interact": {
+        "loading": {
+            "contract": "Loading contract...",
+            "method": "",
+            "methods": "Loading methods...",
+            "initial": "Input your contract ID to load it's methods.",
+            "initialMethods": "Contract methods will appear here once loaded."
+        },
+        "error": {
+            "invalidContract": "Invalid contract ID",
+            "missingParameter": "Missing parameter {0} ({1})"
+        },
+        "buttons": {
+            "execute": "Execute"
+        }
+    },
     "404": {
         "hero": {
             "title": "404 - Not Found",
