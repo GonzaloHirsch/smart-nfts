@@ -43,6 +43,11 @@
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
       corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
     </p>
+    <v-anchored-title type="h5" text="This is a title" anchor="a-titleh5"/>
+    <v-anchored-title type="h4" text="This is a title" anchor="a-titleh4"/>
+    <v-anchored-title type="h3" text="This is a title" anchor="a-titleh3"/>
+    <v-anchored-title type="h2" text="This is a title" anchor="a-titleh2"/>
+    <v-anchored-title type="h1" text="This is a title" anchor="a-titleh1"/>
     <p>
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
       corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
@@ -76,6 +81,7 @@
 
 <script setup>
 // Components
+import vAnchoredTitle from '@/components/anchoredTitle.vue';
 import vButton from '@/components/button.vue';
 import vInput from '@/components/editor/input.vue';
 import vInteracter from '@/components/interacter.vue';

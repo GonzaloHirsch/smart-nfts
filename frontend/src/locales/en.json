@@ -2,6 +2,9 @@
     "app": {
         "name": "Smart NFTs"
     },
+    "aria": {
+        "anchorLinks": "Link to {0}" 
+    },
     "create": {
         "new": {
             "hero": {
