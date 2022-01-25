@@ -1,85 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Smart NFTs | Petrikovich &amp; Hirsch</title>
-  <meta name="description" content="Smart NFTs, a capstone project by Florencia Petrikovich and Gonzalo Hirsch. Create, deploy, and test a custom NFT contract in just minutes.">
-  <!-- Highlight.js -->
-  <!-- This is the theme, more themes here https://highlightjs.org/static/demo/ -->
-  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/stackoverflow-dark.min.css"> -->
-  <!-- Open Graph -->
-  <meta property="og:title" content="Smart NFTs | Petrikovich &amp; Hirsch" />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://smart-nfts.gonzalohirsch.com/" />
-  <meta property="og:image" content="https://smart-nfts.gonzalohirsch.com/" />
-  <meta property="og:description"
-    content="Smart NFTs, a capstone project by Florencia Petrikovich and Gonzalo Hirsch. Create, deploy, and test a custom NFT contract in just minutes." />
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary" />
-  <!-- Canonical -->
-  <link rel="canonical" href="https://smart-nfts.gonzalohirsch.com/">
-  <!-- SEO Schemas -->
-  <!-- Source https://jsonld.com/ -->
-  <script type="application/ld+json">
-  {
-    "@context": "http://schema.org",
-    "@type": "WebSite",
-      "name": "Smart NFTs",
-      "url": "https://www.smart-nfts.gonzalohirsch.com/",
-  }
-  </script>
-  <script type="application/ld+json">
-  {
-    "@context": "http://schema.org",
-    "@type": "Organization",
-    "name": "Proyecto Final - Petrikovich & Hirsch",
-    "description": "DESCRIPTION",
-    "image": "HERO",
-    "logo": "LOGO",
-    "url": "https://www.smart-nfts.gonzalohirsch.com/",
-    "foundingDate": "2021",
-    "founders": [
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart NFTs | Petrikovich &amp; Hirsch</title>
+    <meta
+      name="description"
+      content="Smart NFTs, a capstone project by Florencia Petrikovich and Gonzalo Hirsch. Create, deploy, and test a custom NFT contract in just minutes."
+    />
+    <!-- Highlight.js -->
+    <!-- This is the theme, more themes here https://highlightjs.org/static/demo/ -->
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/stackoverflow-dark.min.css"> -->
+    <!-- Open Graph -->
+    <meta property="og:title" content="Smart NFTs | Petrikovich &amp; Hirsch" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://smart-nfts.gonzalohirsch.com/" />
+    <meta property="og:image" content="https://smart-nfts.gonzalohirsch.com/" />
+    <meta
+      property="og:description"
+      content="Smart NFTs, a capstone project by Florencia Petrikovich and Gonzalo Hirsch. Create, deploy, and test a custom NFT contract in just minutes."
+    />
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary" />
+    <!-- Canonical -->
+    <link rel="canonical" href="https://smart-nfts.gonzalohirsch.com/" />
+    <!-- SEO Schemas -->
+    <!-- Source https://jsonld.com/ -->
+    <script type="application/ld+json">
       {
-        "@type": "Person",
-        "name": "Florencia Petrikovich",
-        "email": "fpetrikovich@itba.edu.ar",
-        "alumniOf": "Instituto Tecnológico de Buenos Aires (ITBA)",
-        "url": "https://www.linkedin.com/in/florencia-petrikovich-a2b3aa1a6/?originalSubdomain=ar"
-      },
+        "@context": "http://schema.org",
+        "@type": "WebSite",
+        "name": "Smart NFTs",
+        "url": "https://www.smart-nfts.gonzalohirsch.com/"
+      }
+    </script>
+    <script type="application/ld+json">
       {
-        "@type": "Person",
-        "name": "Gonzalo Hirsch",
-        "email": "ghirsch@itba.edu.ar",
-        "alumniOf": "Instituto Tecnológico de Buenos Aires (ITBA)",
-        "url": "https://gonzalohirsch.com/",
-        "sameAs": [
-          "https://www.linkedin.com/in/gonzalo-hirsch/",
-          "https://github.com/GonzaloHirsch",
-          "https://www.toptal.com/resume/gonzalo-hirsch"
+        "@context": "http://schema.org",
+        "@type": "Organization",
+        "name": "Proyecto Final - Petrikovich & Hirsch",
+        "description": "Smart NFTs, a capstone project by Florencia Petrikovich and Gonzalo Hirsch. Create, deploy, and test a custom NFT contract in just minutes.",
+        "image": "HERO",
+        "logo": "LOGO",
+        "url": "https://www.smart-nfts.gonzalohirsch.com/",
+        "foundingDate": "2021",
+        "founders": [
+          {
+            "@type": "Person",
+            "name": "Florencia Petrikovich",
+            "email": "fpetrikovich@itba.edu.ar",
+            "alumniOf": "Instituto Tecnológico de Buenos Aires (ITBA)",
+            "url": "https://www.linkedin.com/in/florencia-petrikovich-a2b3aa1a6/?originalSubdomain=ar"
+          },
+          {
+            "@type": "Person",
+            "name": "Gonzalo Hirsch",
+            "email": "ghirsch@itba.edu.ar",
+            "alumniOf": "Instituto Tecnológico de Buenos Aires (ITBA)",
+            "url": "https://gonzalohirsch.com/",
+            "sameAs": [
+              "https://www.linkedin.com/in/gonzalo-hirsch/",
+              "https://github.com/GonzaloHirsch",
+              "https://www.toptal.com/resume/gonzalo-hirsch"
+            ]
+          }
         ]
-      } 
-    ]
-  }
-  </script>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "url": "https://www.smart-nfts.gonzalohirsch.com/",
-    "logo": "http://www.example.com/images/logo.png"
-  }
-  </script>
-</head>
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "url": "https://www.smart-nfts.gonzalohirsch.com/",
+        "logo": "http://www.example.com/images/logo.png"
+      }
+    </script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-67VCXVZX4N" type="module"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
 
-<body>
-  <div id="app"></div>
-  <script type="module" src="/src/main.js"></script>
-  <!-- Self hosting js -->
-  <script src="/js/highlight.min.js"></script>
-  <script src="/js/solidity.min.js"></script>
-  <!-- No need to call highlight all, will highlight on demand -->
-</body>
+      gtag('config', 'G-67VCXVZX4N');
+    </script>
+  </head>
 
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.js"></script>
+    <!-- Self hosting js -->
+    <script src="/js/highlight.min.js"></script>
+    <script src="/js/solidity.min.js"></script>
+    <!-- No need to call highlight all, will highlight on demand -->
+  </body>
 </html>
