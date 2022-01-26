@@ -24,7 +24,7 @@
           :name="input.name"
           :label="`${input.name} (${input.type})`"
           :hideLabel="false"
-          :placeholder="`${input.name} (${input.type})`"
+          :placeholder="$t(getParameterPlaceholder(input.type))"
           v-model="inputs[input.name]"
           :continuousInput="false"
           :validations="['required', input.type]"
@@ -43,6 +43,7 @@ import vAccordion from '@/components/accordion.vue';
 import vInput from '@/components/editor/input.vue';
 import vButton from '@/components/button.vue';
 import { QuestionMarkCircleIcon } from '@heroicons/vue/solid';
+import {getParameterPlaceholder} from '@/js/utils.js';
 
 const props = defineProps({
   method: {
@@ -76,8 +77,7 @@ const callMethod = () => {
     // Verify with the emitted errors from the inputs
     else if (inputsErrors.value[input.name] !== undefined) {
       hasError = hasError || true;
-      // TODO: Add i18n messages here
-      errors.value = inputsErrors.value[input.name];
+      errors.value = `${t(inputsErrors.value[input.name])} - ${input.name}`;
     }
   });
   // Call methods

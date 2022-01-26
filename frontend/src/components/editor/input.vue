@@ -24,7 +24,7 @@
       :value="modelValue"
     />
     <!-- Showing the error -->
-    <span v-if="error" class="text-error text-xs mt-xs">{{ error }}</span>
+    <span v-if="error" class="text-error text-xs mt-xs">{{ $t(error) }}</span>
   </div>
 </template>
 
@@ -78,9 +78,9 @@ const error = ref(undefined);
 const classes = computed(() => {
   switch (props.format) {
     case 'primary':
-      return 'border-2 border-typography_secondary focus:border-brand_primary bg-transparent';
+      return `input--${props.format} border-2 border-typography_secondary focus:border-brand_primary bg-transparent`;
     case 'primary-white':
-      return 'border-2 border-white focus:border-white bg-white text-typography_secondary';
+      return `input--${props.format} border-2 border-white focus:border-white bg-white text-typography_secondary`;
   }
 });
 
@@ -112,5 +112,13 @@ const onInputChanged = (e) => {
 <style scoped>
 .input-error {
   @apply border-2 border-error !important;
+}
+
+.input--primary::placeholder {
+  @apply text-typography_secondary text-opacity-30;
+}
+
+.input--primary-white::placeholder {
+  @apply text-typography_secondary text-opacity-30;
 }
 </style>

@@ -4,31 +4,30 @@ const hash = new Keccak(256);
 // Limit for uint256 numbers
 const uint256Limit = (2 ** 256) - 1;
 
-// TODO: Return i18n messages here
 export const allValidations = {
     "required": {
         label: "Field is required",
-        func: (input) => (input !== null && input !== undefined && input !== '' && input.trim() !== '') || "Field is required"
+        func: (input) => (input !== null && input !== undefined && input !== '' && input.trim() !== '') || "interact.error.parameters.required"
     },
     "address": {
         label: "Field must be valid address",
-        func: (input) => (isAddress(input)) || "Invalid address"
+        func: (input) => (isAddress(input)) || "interact.error.parameters.address"
     },
     "uint256": {
         label: "Field must be valid uint256 number",
-        func: (input) => (isUint256(input)) || "Invalid uint256 number"
+        func: (input) => (isUint256(input)) || "interact.error.parameters.uint256"
     },
     "bytes4": {
         label: "Field must be valid bytes4",
-        func: (input) => (isBytes4(input)) || "Invalid bytes4"
+        func: (input) => (isBytes4(input)) || "interact.error.parameters.bytes4"
     },
     "bytes": {
         label: "Field must be valid bytes",
-        func: (input) => (isBytes(input)) || "Invalid bytes"
+        func: (input) => (isBytes(input)) || "interact.error.parameters.bytes"
     },
     "bool": {
         label: "Field must be valid boolean (true | false)",
-        func: (input) => (isBool(input)) || "Invalid boolean (true | false)"
+        func: (input) => (isBool(input)) || "interact.error.parameters.bool"
     },
 }
 

@@ -68,10 +68,27 @@
         },
         "error": {
             "invalidContract": "Invalid contract ID",
-            "missingParameter": "Missing parameter {0} ({1})"
+            "missingParameter": "Missing parameter {0} ({1})",
+            "parameters": {
+                "address": "Invalid address",
+                "required": "Parameter is required",
+                "bytes": "Invalid bytes",
+                "bytes4": "Invalid bytes4",
+                "uint256": "Invalid uint256 number",
+                "bool": "Invalid boolean (true | false)"
+            }
         },
         "buttons": {
             "execute": "Execute"
+        }
+    },
+    "inputs": {
+        "placeholder": {
+            "address": "0xb794f5ea0ba39494ce839613fffba74279579268",
+            "uint256": "Number - 1234567890",
+            "bytes4": "0x11AAFF44",
+            "bytes": "0x11FFA4...",
+            "bool": "true or false"
         }
     },
     "404": {
