@@ -53,24 +53,6 @@ functions:
           method: get
     tags:
       app: pf
-  getCompiledContract:
-    handler: src/handlers/contracts/getCompiledContract.handler
-    memorySize: 1024 # Probably more memory-intensive process than the rest
-    timeout: 30 # More timeout because it needs more time to compile
-    events:
-      - http:
-          path: /contracts/compile
-          method: get
-    tags:
-      app: pf
-  getExampleContract:
-    handler: src/handlers/contracts/getExampleContract.handler
-    events:
-      - http:
-          path: /contracts/example
-          method: get
-    tags:
-      app: pf
   postCreateContract:
     handler: src/handlers/contracts/postCreateContract.handler
     events:
@@ -104,6 +86,16 @@ functions:
     events:
       - http:
           path: /contracts/{contractId}/verify
+          method: post
+    tags:
+      app: pf
+  postInteractContract:
+    handler: src/handlers/contracts/postInteractContract.handler
+    memorySize: 1024 # Probably more memory-intensive process than the rest
+    timeout: 30 # More timeout because it needs more time to make the request
+    events:
+      - http:
+          path: /contracts/{contractId}/interact
           method: post
     tags:
       app: pf

@@ -4,7 +4,9 @@ import { corsHandler } from '../../middleware/corsHandler.middleware';
 
 const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   const body = {
-    message: 'All services up and running! Welcome to Proyecto Final, a project by Gonzalo Hirsch and Florencia Petrikovich :)'
+    message: 'All services up and running! Welcome to Proyecto Final, a project by Gonzalo Hirsch and Florencia Petrikovich :)',
+    walletAddress: process.env.DEPLOYMENT_ADDRESS,
+    timestamp: new Date()
   };
   return {
     statusCode: 200,

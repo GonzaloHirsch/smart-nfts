@@ -6,18 +6,14 @@ import HttpException from '../../exceptions/http.exception';
 import { enumHasKeys } from '../../helpers/collection.helper';
 import CreationService from '../../services/creation.service';
 import StoredContractService from '../../services/storedContract.service';
+import { isEmptyPathParams, validContractId, isEmptyBody } from '../../helpers/validations.helper';
 
 const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
-  if (
-    !event.pathParameters ||
-    event.pathParameters.contractId === null ||
-    event.pathParameters.contractId === undefined ||
-    event.pathParameters.contractId.trim().length === 0
-  )
+  if (isEmptyPathParams(event.pathParameters) || !validContractId(event.pathParameters!.contractId))
     throw new HttpException(400, '', 'Missing contract ID');
-  else if (event.body === null) throw new HttpException(400, '', 'Missing request body');
+  else if (isEmptyBody(event.body)) throw new HttpException(400, '', 'Missing request body');
 
-  const requestBody = JSON.parse(event.body);
+  const requestBody = JSON.parse(event.body!);
   const name = requestBody.name as string;
   const symbol = requestBody.symbol as string;
   const extensions = requestBody.extensions as string[];
@@ -26,7 +22,7 @@ const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyRes
 
   // Find contract in the DB
   const instance = await StoredContractService.getInstance();
-  const contract = await instance.getContractById(event.pathParameters.contractId);
+  const contract = await instance.getContractById(event.pathParameters!.contractId!);
   // Verify not null
   if (contract === null) throw new HttpException(404, '', 'No contract with the given contract ID');
 
@@ -49,4 +45,4 @@ const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyRes
   };
 };
 
-export const handler = corsHandler("PUT")(errorHandler()(endpoint));
+export const handler = corsHandler('PUT')(errorHandler()(endpoint));

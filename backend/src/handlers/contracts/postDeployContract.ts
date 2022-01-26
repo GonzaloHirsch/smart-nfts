@@ -8,19 +8,15 @@ import { corsHandler } from '../../middleware/corsHandler.middleware';
 import { EXTENSIONS } from '../../constants/contract.constants';
 import HttpException from '../../exceptions/http.exception';
 import InsufficientGasException from '../../exceptions/insufficientGas.exception';
+import { isEmptyPathParams, validContractId } from '../../helpers/validations.helper';
 
 const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
-  if (
-    !event.pathParameters ||
-    event.pathParameters.contractId === null ||
-    event.pathParameters.contractId === undefined ||
-    event.pathParameters.contractId.trim().length === 0
-  )
+  if (isEmptyPathParams(event.pathParameters) || !validContractId(event.pathParameters!.contractId))
     throw new HttpException(400, '', 'Missing contract ID');
 
   // Find contract in the DB
   const storedContractServiceInstance = await StoredContractService.getInstance();
-  const contract = await storedContractServiceInstance.getContractById(event.pathParameters.contractId);
+  const contract = await storedContractServiceInstance.getContractById(event.pathParameters!.contractId!);
   // Verify not null
   if (contract === null) throw new HttpException(404, '', 'No contract with the given contract ID');
 
@@ -37,12 +33,12 @@ const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyRes
   try {
     // Compile contract
     const compiledContract = compileContract(contractString);
-    
+
     // Deploy contract
     contractAddress = await DeploymentService.getInstance().deployContract(compiledContract.abi, compiledContract.bytecode);
     // Update inner state
     contract.abi = compiledContract.abi;
-    contract.markModified("deployment");
+    contract.markModified('deployment');
     contract.deployment.address = contractAddress!;
     contract.deployment.date = new Date();
     contract.deployment.compilerVersion = compiledContract.compilerVersion;
