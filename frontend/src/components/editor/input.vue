@@ -1,10 +1,10 @@
 <template>
   <div class="flex flex-col">
-    <label v-show="!props.hideLabel" :aria-hidden="hideLabel" class="mb-1" :for="props.id">{{ props.label }}</label>
+    <label v-show="!props.hideLabel" :aria-hidden="hideLabel" :class="['mb-1', error ? 'text-error' : '']" :for="props.id">{{ props.label }}</label>
     <!-- If continuous input, it will use the @input to trigger on each key -->
     <input
       v-if="continuousInput"
-      :class="['rounded-sm transition-colors duration-300', classes]"
+      :class="['rounded-sm transition-colors duration-300', classes, error ? 'input-error' : '']"
       type="text"
       :name="props.name"
       :id="props.id"
@@ -15,7 +15,7 @@
     <!-- Otherwise use a discrete approach, just event when focus is lost -->
     <input
       v-else
-      :class="['rounded-sm transition-colors duration-300', classes]"
+      :class="['rounded-sm transition-colors duration-300', classes, error ? 'input-error' : '']"
       type="text"
       :name="props.name"
       :id="props.id"
@@ -23,12 +23,16 @@
       @change="onInputChanged"
       :value="modelValue"
     />
+    <!-- Showing the error -->
+    <span v-if="error" class="text-error text-xs mt-xs">{{ error }}</span>
   </div>
 </template>
 
 <script setup>
-import { computed } from 'vue';
-const emit = defineEmits(['update:modelValue']);
+import { applyValidations } from '@/js/validations.js';
+import { computed, ref } from 'vue';
+
+const emit = defineEmits(['update:modelValue', 'validInput', 'invalidInput']);
 
 const props = defineProps({
   name: {
@@ -61,9 +65,16 @@ const props = defineProps({
   continuousInput: {
     type: Boolean,
     default: false
+  },
+  validations: {
+    type: Array,
+    default: []
   }
 });
 
+const error = ref(undefined);
+
+// Compute classes depending on the format
 const classes = computed(() => {
   switch (props.format) {
     case 'primary':
@@ -73,9 +84,33 @@ const classes = computed(() => {
   }
 });
 
+// Handle input changed
 const onInputChanged = (e) => {
+  // If no validations are present, the input is assumed valid
+  if (props.validations.length > 0) {
+    // Try validations
+    let validationResult = applyValidations(e.target.value, props.validations);
+    let isValid = true;
+    // Reset error
+    error.value = undefined;
+    // Evaluate if there are errors
+    validationResult.forEach((result) => {
+      isValid = isValid && result === true;
+      // Keep first error present
+      if (result !== true && error.value === undefined) {
+        error.value = result.message;
+      }
+    });
+    // Emit input state depending on the validation
+    if (isValid) emit('validInput');
+    else emit('invalidInput', error.value);
+  }
   emit('update:modelValue', e.target.value);
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.input-error {
+  @apply border-2 border-error !important;
+}
+</style>

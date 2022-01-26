@@ -39,15 +39,7 @@
 
   <v-section class="bg-typography_primary">
     <h2 class="text-center text-brand_primary mb-base">Methods Explained</h2>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
-      corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
-    </p>
-    <v-anchored-title type="h5" text="This is a title" anchor="a-titleh5"/>
-    <v-anchored-title type="h4" text="This is a title" anchor="a-titleh4"/>
-    <v-anchored-title type="h3" text="This is a title" anchor="a-titleh3"/>
-    <v-anchored-title type="h2" text="This is a title" anchor="a-titleh2"/>
-    <v-anchored-title type="h1" text="This is a title" anchor="a-titleh1"/>
+    <v-anchored-title type="h3" text="balanceOf" anchor="balanceOf" class="mt-sm"/>
     <p>
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
       corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
@@ -56,6 +48,7 @@
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
       corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
     </p>
+    <v-anchored-title type="h3" text="getApproved" anchor="getApproved" class="mt-sm"/>
     <p>
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
       corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
@@ -64,10 +57,124 @@
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
       corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
     </p>
+    <v-anchored-title type="h3" text="isApprovedForAll" anchor="isApprovedForAll" class="mt-sm"/>
     <p>
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
       corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
     </p>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
+      corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
+    </p>
+    <v-anchored-title type="h3" text="name" anchor="name" class="mt-sm"/>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
+      corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
+    </p>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
+      corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
+    </p>
+    <v-anchored-title type="h3" text="owner" anchor="owner" class="mt-sm"/>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
+      corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
+    </p>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
+      corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
+    </p>
+    <v-anchored-title type="h3" text="ownerOf" anchor="ownerOf" class="mt-sm"/>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
+      corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
+    </p>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
+      corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
+    </p>
+    <v-anchored-title type="h3" text="supportsInterface" anchor="supportsInterface" class="mt-sm"/>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
+      corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
+    </p>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
+      corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
+    </p>
+    <v-anchored-title type="h3" text="symbol" anchor="symbol" class="mt-sm"/>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
+      corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
+    </p>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
+      corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
+    </p>
+    <v-anchored-title type="h3" text="tokenURI" anchor="tokenURI" class="mt-sm"/>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
+      corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
+    </p>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
+      corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
+    </p>
+    <v-anchored-title type="h3" text="approve" anchor="approve" class="mt-sm"/>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
+      corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
+    </p>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
+      corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
+    </p>
+    <v-anchored-title type="h3" text="renounceOwnership" anchor="renounceOwnership" class="mt-sm"/>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
+      corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
+    </p>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
+      corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
+    </p>
+    <v-anchored-title type="h3" text="safeMint" anchor="safeMint" class="mt-sm"/>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
+      corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
+    </p>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
+      corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
+    </p>
+    <v-anchored-title type="h3" text="safeTransferFrom" anchor="safeTransferFrom" class="mt-sm"/>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
+      corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
+    </p>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
+      corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
+    </p>
+    <v-anchored-title type="h3" text="setApprovalForAll" anchor="setApprovalForAll" class="mt-sm"/>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
+      corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
+    </p>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
+      corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
+    </p>
+    <v-anchored-title type="h3" text="transferFrom" anchor="transferFrom" class="mt-sm"/>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
+      corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
+    </p>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
+      corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
+    </p>
+    <v-anchored-title type="h3" text="transferOwnership" anchor="transferOwnership" class="mt-sm"/>
     <p>
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
       corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
