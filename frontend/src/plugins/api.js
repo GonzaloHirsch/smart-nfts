@@ -1,5 +1,6 @@
 import { inject } from 'vue';
 import axios from 'axios';
+import fileDownload from 'js-file-download';
 
 // Constant plugin key
 const PLUGIN_KEY = 'pf-api';
@@ -41,6 +42,13 @@ const api = {
     verifyContract: async (contractId) => {
         return instance.post(`contracts/${contractId}/verify`).then(res => {
             return res
+        })
+    },
+    downloadContract: async (contractId) => {
+        return instance.get(`contracts/${contractId}/contents`, {responseType: 'blob'}).then(res => {
+            const filename = res.headers['content-disposition'].split('filename=')[1];
+            fileDownload(res.data, `${filename}.zip`);
+            return res;
         })
     },
 }

@@ -44,7 +44,8 @@
         "buttons": {
             "save": "Save",
             "deploy": "Deploy",
-            "verify": "Verify"
+            "verify": "Verify",
+            "download": "Download"
         },
         "deploy": {
             "loading": "Deploying contract, please wait...",
@@ -52,7 +53,8 @@
         },
         "verify": {
             "loading": "Verifying contract, please wait...",
-            "message": "Your contract is now verified. Be mindful, if you edit the contract you will have to deploy it and verify it again."
+            "message": "Your contract is now verified. Be mindful, if you edit the contract you will have to deploy it and verify it again.",
+            "error": "Error verifying contract. If the contract was deployed in the last 5 minutes, please verify the transaction is mined on Etherscan and try again."
         },
         "prepare": "Preparing the editor, hang tight...",
         "last_saved": "Last saved: {0}",

@@ -43,6 +43,7 @@ custom:
     #   forceInclude:
     #     - '@openzeppelin/contracts'
     #excludeRegex: \.ts|test|\.map for some reason excluding this increases the package size
+  # As per https://medium.com/nextfaze/binary-responses-with-serverless-framework-and-api-gateway-5fde91376b76
 
 functions:
   getHealthcheck:
@@ -104,6 +105,16 @@ functions:
     events:
       - http:
           path: /contracts/{contractId}
+          method: get
+    tags:
+      app: pf
+  getContractContents:
+    handler: src/handlers/contracts/getContractContents.handler
+    memorySize: 1024 # Probably more memory-intensive process than the rest
+    timeout: 30 # More timeout because it needs more time to make the request
+    events:
+      - http:
+          path: /contracts/{contractId}/contents
           method: get
     tags:
       app: pf

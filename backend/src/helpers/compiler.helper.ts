@@ -1,7 +1,6 @@
 import solc from 'solc';
 import fs from 'fs';
 import path from 'path';
-import Straightener from 'sol-straightener';
 import { removeAllButLast } from '../helpers/string.helper';
 import { straightenContent } from '../helpers/contractFlattener.helper';
 

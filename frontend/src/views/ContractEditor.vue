@@ -16,7 +16,8 @@
     </template>
     <template v-else>
       <p v-if="modalType === 'deploy'" class="break-words" v-html="$t('editor.deploy.message', [storedContract.deployment.address])"></p>
-      <p v-else-if="modalType === 'verify'" class="break-words" v-html="$t('editor.verify.message')"></p>
+      <p v-else-if="modalType === 'verify' && !modalError" class="break-words" v-html="$t('editor.verify.message')"></p>
+      <p v-else-if="modalType === 'verify' && modalError" class="break-words" v-html="$t('editor.verify.error')"></p>
     </template>
   </v-modal>
   <v-section :noPadding="true" class="bg-typography_primary">
@@ -26,13 +27,16 @@
           @contractChanged="handleContractChange"
           @deployContract="handleDeployContract"
           @verifyContract="handleVerifyContract"
+          @downloadContract="handleDownloadContract"
           :name="storedContract.name"
           :symbol="storedContract.symbol"
           :extensions="storedContract.extensions"
           :isVerified="isVerified"
           :canVerify="canVerify"
           :canDeploy="canDeploy"
+          :canDownload="canDownload"
           :id="route.params.id"
+          :loadingDownload="isLoadingDownload"
         >
           <span v-if="!isLoading && contractEdited" class="flex items-center mt-sm text-sm">{{
             $t('editor.last_saved', [$d(lastSaved, 'short')])
@@ -139,12 +143,14 @@ const api = useApi();
 import { ref, computed } from 'vue';
 const isOpen = ref(false);
 const modalType = ref(undefined);
+const modalError = ref(undefined);
 const showModal = () => {
   isOpen.value = !isOpen.value;
 };
 const handleModalClose = () => {
   isOpen.value = false;
   modalType.value = undefined;
+  modalError.value = undefined;
   isLoadingModal.value = false;
 };
 
@@ -159,6 +165,7 @@ const storedContract = ref({});
 const isLoading = ref(false);
 const isLoadingEditor = ref(true);
 const isLoadingModal = ref(false);
+const isLoadingDownload = ref(false);
 const lastSaved = ref(undefined);
 const contractEdited = ref(false);
 
@@ -232,7 +239,10 @@ const canVerify = computed(() => {
   );
 });
 const canDeploy = computed(() => {
-  return storedContract.value.contract !== undefined && storedContract.value.contract !== null && storedContract.value.contract !== '';
+  return storedContract.value.name !== undefined && storedContract.value.name !== null && storedContract.value.name !== '' && storedContract.value.name !== undefined && storedContract.value.name !== null && storedContract.value.name !== '';
+});
+const canDownload = computed(() => {
+  return storedContract.value.name !== undefined && storedContract.value.name !== null && storedContract.value.name !== '' && storedContract.value.symbol !== undefined && storedContract.value.symbol !== null && storedContract.value.symbol !== '';
 });
 const handleVerifyContract = () => {
   modalType.value = 'verify';
@@ -246,7 +256,21 @@ const handleVerifyContract = () => {
     })
     .catch((err) => {
       console.log(err);
+      modalError.value = true
       isLoadingModal.value = false;
+    });
+};
+const handleDownloadContract = () => {
+  isLoadingDownload.value = true;
+  api
+    .downloadContract(route.params.id)
+    .then((res) => {
+      isLoadingDownload.value = false;
+      setSnackbar('Contract is downloaded!', 'default', 5);
+    })
+    .catch((err) => {
+      isLoadingDownload.value = false;
+      console.log(err);
     });
 };
 
@@ -255,10 +279,15 @@ const copyContractId = () => {
     setSnackbar('Cannot copy contract ID to clipboard!', 'error', 5);
     return;
   }
-  navigator.clipboard.writeText(route.params.id).catch((err) => {
-    console.error(err);
-    setSnackbar('Cannot copy contract ID to clipboard!', 'error', 5);
-  });
+  navigator.clipboard
+    .writeText(route.params.id)
+    .then(() => {
+      setSnackbar('Copied to clipboard!', 'default', 5);
+    })
+    .catch((err) => {
+      console.error(err);
+      setSnackbar('Cannot copy contract ID to clipboard!', 'error', 5);
+    });
 };
 
 const copyContractAddress = () => {
@@ -266,10 +295,15 @@ const copyContractAddress = () => {
     setSnackbar('Cannot copy contract address to clipboard!', 'error', 5);
     return;
   }
-  navigator.clipboard.writeText(route.params.id).catch((err) => {
-    console.error(err);
-    setSnackbar('Cannot copy contract address to clipboard!', 'error', 5);
-  });
+  navigator.clipboard
+    .writeText(route.params.id)
+    .then(() => {
+      setSnackbar('Copied to clipboard!', 'default', 5);
+    })
+    .catch((err) => {
+      console.error(err);
+      setSnackbar('Cannot copy contract address to clipboard!', 'error', 5);
+    });
 };
 </script>
 

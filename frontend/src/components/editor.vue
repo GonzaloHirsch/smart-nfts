@@ -34,10 +34,10 @@
     </div>
     <!-- ACTIONS -->
     <div class="flex flex-col sm:flex-row items-center justify-center">
-      <v-button format="primary" aria="Create a new NFT" :external="false" :white="false" size="medium" :text="$t('editor.buttons.save').toUpperCase()" @click="saveContract" />
+      <!-- <v-button format="primary" aria="Create a new NFT" :external="false" :white="false" size="medium" :text="$t('editor.buttons.save').toUpperCase()" @click="saveContract" /> -->
       <v-button v-if="props.canDeploy" format="primary" aria="Deploy the NFT contract" :external="false" :white="false" size="medium" :text="$t('editor.buttons.deploy').toUpperCase()" class="mt-sm sm:ml-sm sm:mt-0" @click="deployContract" />
       <v-button v-if="!props.isVerified && props.canVerify" format="primary" aria="Verify the NFT contract" :external="false" :white="false" size="medium" :text="$t('editor.buttons.verify').toUpperCase()" class="mt-sm sm:ml-sm sm:mt-0" @click="verifyContract" />
-      <v-button format="primary" aria="Create a new NFT" :external="false" :white="false" size="medium" text="DOWNLOAD" class="mt-sm sm:ml-sm sm:mt-0" @click="saveContract" />
+      <v-button v-if="props.canDownload" :format="props.loadingDownload ? 'disabled' : 'primary'" :disabled="props.loadingDownload" :loading="props.loadingDownload" aria="Download your NFT contract" :external="false" :white="false" size="medium" :text="$t('editor.buttons.download').toUpperCase()" class="mt-sm sm:ml-sm sm:mt-0" @click="downloadContract" />
     </div>
     <slot/>
   </form>
@@ -79,9 +79,17 @@ const props = defineProps({
     type: Boolean,
     default: false
   },
+  canDownload: {
+    type: Boolean,
+    default: false
+  },
   id: {
     type: String,
     default: undefined
+  },
+  loadingDownload: {
+    type: Boolean,
+    default: false
   }
 });
 
@@ -96,7 +104,7 @@ const contractData = ref({
   isAutoIncrementIds: mappedExtensions.isAutoIncrementIds ?? false
 });
 
-const emit = defineEmits(['contractChanged', 'verifyContract', 'deployContract']);
+const emit = defineEmits(['contractChanged', 'verifyContract', 'deployContract', 'downloadContract']);
 const saveContract = () => {
   // api.saveContract('1234', contractData.value);
   console.log("DSAVE");
@@ -107,6 +115,9 @@ const deployContract = () => {
 const verifyContract = () => {
   emit('verifyContract');
 };
+const downloadContract = () => {
+  emit('downloadContract')
+}
 
 watch(
   () => contractData.value,

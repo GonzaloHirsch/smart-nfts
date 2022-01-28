@@ -80,6 +80,9 @@
             "schema": {
               "$ref": "#/definitions/COMPLETE_CONTRACT"
             }
+          },
+          "404": {
+            "$ref": "#/definitions/responses/NotFound"
           }
         }
       },
@@ -102,6 +105,9 @@
             "schema": {
               "$ref": "#/definitions/COMPLETE_CONTRACT"
             }
+          },
+          "404": {
+            "$ref": "#/definitions/responses/NotFound"
           }
         }
       }
@@ -131,6 +137,9 @@
                 }
               }
             }
+          },
+          "404": {
+            "$ref": "#/definitions/responses/NotFound"
           }
         }
       }
@@ -160,6 +169,49 @@
                 }
               }
             }
+          },
+          "404": {
+            "$ref": "#/definitions/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/contracts/{contractId}/contents": {
+      "get": {
+        "tags": [
+          "Contracts"
+        ],
+        "summary": "Download a contract file by ID",
+        "produces": [
+          "application/zip, application/octet-stream"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/idParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "string",
+              "format": "binary"
+            },
+            "headers": {
+              "content-disposition": {
+                "description": "attachment; filename=FILENAME.zip",
+                "schema": {
+                  "type": "string",
+                  "format": "attachment; filename=FILENAME.zip"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Contract exists, but it's not edited"
+          },
+          "404": {
+            "$ref": "#/definitions/responses/NotFound"
           }
         }
       }
@@ -297,6 +349,19 @@
         },
         "extensions": {
           "$ref": "#/definitions/EXTENSIONS"
+        }
+      }
+    },
+    "responses": {
+      "NotFound": {
+        "description": "Contract Not Found",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string"
+            }
+          }
         }
       }
     }

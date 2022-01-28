@@ -1,7 +1,7 @@
 <template>
   <button :class="[buttonFormat, buttonSize, 'button']" type="button" :disabled="props.disabled">
-    <span v-if="props.loading" class="no-inherit py-sm pl-sm -mr-xs">
-      <v-spinner class="animate-spin" />
+    <span v-if="props.loading" class="no-inherit button-spinner--wrapper">
+      <v-spinner class="animate-spin button-spinner" />
     </span>
     <template v-if="props.external">
       <a :href="props.href" :target="props.target" :aria-label="props.aria">{{ props.text }}</a>
@@ -89,6 +89,17 @@ const buttonSize = computed(() => `button--size-${props.size}`);
   @apply text-xs px-xs py-xs;
 }
 
+.button.button--size-large .button-spinner--wrapper {
+  @apply py-sm pl-sm -mr-xs;
+}
+
+.button.button--size-medium .button-spinner--wrapper {
+  @apply my-auto px-xs pl-xs -mr-xs;
+}
+
+.button.button--size-medium .button-spinner {
+  @apply w-4 h-4;
+}
 
 /* PRIMARY FORMAT */
 .button--primary {

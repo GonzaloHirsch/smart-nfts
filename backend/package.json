@@ -16,12 +16,15 @@
   },
   "dependencies": {
     "@openzeppelin/contracts": "^4.4.1",
+    "adm-zip": "^0.5.9",
     "axios": "^0.21.4",
     "dotenv": "^8.2.0",
     "get-installed-path": "^4.0.8",
     "mongoose": "^6.1.6",
     "nanoid": "^3.2.0",
     "qs": "^6.5.3",
+    "serverless-apigw-binary": "^0.4.4",
+    "serverless-apigwy-binary": "^1.0.1",
     "serverless-plugin-typescript": "^2.1.0",
     "serverless-webpack": "^5.6.0",
     "solc": "^0.8.11",
@@ -30,6 +33,7 @@
   },
   "devDependencies": {
     "@openzeppelin/contracts": "^4.4.1",
+    "@types/adm-zip": "^0.4.34",
     "@types/aws-lambda": "^8.10.51",
     "@types/dotenv": "^8.2.0",
     "@types/get-installed-path": "^4.0.1",
