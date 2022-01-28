@@ -5,8 +5,8 @@
       <div class="form--section">
         <h5 class="form--title">Contract Information <QuestionMarkCircleIcon class="form--title-icon" /></h5>
         <div class="flex flex-col md:flex-row justify-between">
-          <v-input id="name" name="name" placeholder="SmartNFT..." label="Contract Name" v-model="contractData.name" class="w-full pb-2 md:w-6/12 md:pr-2 md:py-0" />
-          <v-input id="symbol" name="symbol" placeholder="SNFT..." label="Contract Symbol" v-model="contractData.symbol" class="w-full pt-2 md:w-6/12 md:pl-2 md:py-0" />
+          <v-input id="name" name="name" format="primary-white" placeholder="SmartNFT..." label="Contract Name" v-model="contractData.name" class="w-full pb-2 md:w-6/12 md:pr-2 md:py-0" />
+          <v-input id="symbol" name="symbol" format="primary-white" placeholder="SNFT..." label="Contract Symbol" v-model="contractData.symbol" class="w-full pt-2 md:w-6/12 md:pl-2 md:py-0" />
         </div>
       </div>
       <!-- <div class="form--section">
