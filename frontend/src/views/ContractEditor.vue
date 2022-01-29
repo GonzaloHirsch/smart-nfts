@@ -206,7 +206,7 @@ const handleContractChange = (contractData) => {
 };
 
 const isDeployed = computed(() => {
-  return storedContract.value && storedContract.value.deployment;
+  return storedContract.value && storedContract.value.deployment?.address;
 });
 const handleDeployContract = () => {
   modalType.value = 'deploy';
@@ -234,15 +234,29 @@ const isVerified = computed(() => {
 const canVerify = computed(() => {
   return (
     isDeployed.value &&
-    storedContract.value.verification &&
-    storedContract.value.verification.verifiedAddress !== storedContract.value.deployment.address
+    ((storedContract.value.verification && storedContract.value.verification.verifiedAddress !== storedContract.value.deployment.address) ||
+      !storedContract.value.verification)
   );
 });
 const canDeploy = computed(() => {
-  return storedContract.value.name !== undefined && storedContract.value.name !== null && storedContract.value.name !== '' && storedContract.value.name !== undefined && storedContract.value.name !== null && storedContract.value.name !== '';
+  return (
+    storedContract.value.name !== undefined &&
+    storedContract.value.name !== null &&
+    storedContract.value.name !== '' &&
+    storedContract.value.name !== undefined &&
+    storedContract.value.name !== null &&
+    storedContract.value.name !== ''
+  );
 });
 const canDownload = computed(() => {
-  return storedContract.value.name !== undefined && storedContract.value.name !== null && storedContract.value.name !== '' && storedContract.value.symbol !== undefined && storedContract.value.symbol !== null && storedContract.value.symbol !== '';
+  return (
+    storedContract.value.name !== undefined &&
+    storedContract.value.name !== null &&
+    storedContract.value.name !== '' &&
+    storedContract.value.symbol !== undefined &&
+    storedContract.value.symbol !== null &&
+    storedContract.value.symbol !== ''
+  );
 });
 const handleVerifyContract = () => {
   modalType.value = 'verify';
@@ -256,7 +270,7 @@ const handleVerifyContract = () => {
     })
     .catch((err) => {
       console.log(err);
-      modalError.value = true
+      modalError.value = true;
       isLoadingModal.value = false;
     });
 };

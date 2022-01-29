@@ -32,7 +32,7 @@
         <h5 class="form--title">Metadata <QuestionMarkCircleIcon class="form--title-icon" /></h5>
       </div> -->
     </div>
-    <!-- ACTIONS -->
+    <!-- ACTIONS -->      
     <div class="flex flex-col sm:flex-row items-center justify-center">
       <!-- <v-button format="primary" aria="Create a new NFT" :external="false" :white="false" size="medium" :text="$t('editor.buttons.save').toUpperCase()" @click="saveContract" /> -->
       <v-button v-if="props.canDeploy" format="primary" aria="Deploy the NFT contract" :external="false" :white="false" size="medium" :text="$t('editor.buttons.deploy').toUpperCase()" class="mt-sm sm:ml-sm sm:mt-0" @click="deployContract" />
