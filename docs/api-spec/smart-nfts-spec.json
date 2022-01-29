@@ -82,7 +82,7 @@
             }
           },
           "404": {
-            "$ref": "#/definitions/NotFound"
+            "$ref": "#/responses/NotFound"
           }
         }
       },
@@ -107,7 +107,7 @@
             }
           },
           "404": {
-            "$ref": "#/definitions/NotFound"
+            "$ref": "#/responses/NotFound"
           }
         }
       }
@@ -139,7 +139,7 @@
             }
           },
           "404": {
-            "$ref": "#/definitions/NotFound"
+            "$ref": "#/responses/NotFound"
           }
         }
       }
@@ -171,7 +171,7 @@
             }
           },
           "404": {
-            "$ref": "#/definitions/NotFound"
+            "$ref": "#/responses/NotFound"
           }
         }
       }
@@ -200,10 +200,8 @@
             "headers": {
               "content-disposition": {
                 "description": "attachment; filename=FILENAME.zip",
-                "schema": {
-                  "type": "string",
-                  "format": "attachment; filename=FILENAME.zip"
-                }
+                "type": "string",
+                "format": "attachment; filename=FILENAME.zip"
               }
             }
           },
@@ -211,7 +209,7 @@
             "description": "Contract exists, but it's not edited"
           },
           "404": {
-            "$ref": "#/definitions/NotFound"
+            "$ref": "#/responses/NotFound"
           }
         }
       }
@@ -351,7 +349,9 @@
           "$ref": "#/definitions/EXTENSIONS"
         }
       }
-    },
+    }
+  },
+  "responses": {
     "NotFound": {
       "description": "Contract Not Found",
       "schema": {
