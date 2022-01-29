@@ -5,6 +5,11 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Smooth scrolling https://www.w3schools.com/howto/howto_css_smooth_scroll.asp */
+html {
+  scroll-behavior: smooth;
+}
+
 h1 {
   @apply text-h2 font-highlight;
 }

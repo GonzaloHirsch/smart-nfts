@@ -1,5 +1,5 @@
 <template>
-  <form>
+  <div>
     <h2 class="text-center text-brand_primary">Features</h2>
     <div class="divide-y divide-typography_secondary">
       <div class="form--section">
@@ -40,7 +40,7 @@
       <v-button v-if="props.canDownload" :format="props.loadingDownload ? 'disabled' : 'primary'" :disabled="props.loadingDownload" :loading="props.loadingDownload" aria="Download your NFT contract" :external="false" :white="false" size="medium" :text="$t('editor.buttons.download').toUpperCase()" class="mt-sm sm:ml-sm sm:mt-0" @click="downloadContract" />
     </div>
     <slot/>
-  </form>
+  </div>
 </template>
 
 <script setup>

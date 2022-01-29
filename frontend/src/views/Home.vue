@@ -1,5 +1,5 @@
 <template>
-  <v-hero :full-height="true" class="bg-custom_gradient_1 bg-cover" title="app.name" subtitle="home.hero.subtitle">
+  <v-hero :full-height="true" class="bg-gradient-to-tl from-brand_secondary to-brand_primary" title="app.name" subtitle="home.hero.subtitle">
     <template #buttons>
       <v-button
         format="secondary"

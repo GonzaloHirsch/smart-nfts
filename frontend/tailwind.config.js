@@ -5,15 +5,20 @@ module.exports = {
   content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
   theme: {
     extend: {
+      // @deprecated
       backgroundImage: {
         custom_gradient_1: "url('@/assets/images/bg-gradient-1.svg')",
         custom_gradient_2: "url('@/assets/images/bg-gradient-2.svg')",
         custom_gradient_3: "url('@/assets/images/bg-gradient-3.svg')",
       },
       colors: {
-        brand_primary: "#002CCC",
-        brand_secondary: "#a000cc",
-        brand_tertiary: "#cc002c",
+        // https://tailwindcss.com/docs/background-color
+        // blue-800
+        brand_primary: "rgb(30 64 175)",
+        // fuchsia-800
+        brand_secondary: "rgb(134 25 143)",
+        // red-600
+        brand_tertiary: "rgb(220 38 38)",
         typography_primary: "#FFFFFF",
         typography_secondary: "#333333",
         light: "#F4F4F4",

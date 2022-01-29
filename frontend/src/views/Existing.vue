@@ -1,5 +1,5 @@
 <template>
-  <v-hero :full-height="true" class="bg-custom_gradient_2 bg-cover" title="create.existing.hero.title" subtitle="create.existing.hero.subtitle">
+  <v-hero :full-height="true" class="bg-gradient-to-t from-brand_secondary to-brand_primary" title="create.existing.hero.title" subtitle="create.existing.hero.subtitle">
     <template #buttons>
       <div class="flex flex-col items-center justify-center">
         <v-input
@@ -63,7 +63,8 @@ const editContract = () => {
   api
     .getContract(contractId.value)
     .then((res) => {
-      isLoading.value = false;
+      // Don't make it stop loading, otherwise it doesn't look good
+      // isLoading.value = false;
       router.push(`/create/${contractId.value}`);
     })
     .catch((err) => {

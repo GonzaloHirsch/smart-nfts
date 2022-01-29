@@ -1,5 +1,5 @@
 <template>
-  <v-hero :full-height="true" class="bg-custom_gradient_2 bg-cover" title="create.new.hero.title" subtitle="create.new.hero.subtitle">
+  <v-hero :full-height="true" class="bg-gradient-to-t from-brand_secondary to-brand_primary" title="create.new.hero.title" subtitle="create.new.hero.subtitle">
     <template #buttons>
       <v-button
         :format="isLoading ? 'disabled' : 'secondary'"
@@ -20,7 +20,8 @@
         text="EXISTING"
         :loading="isLoading"
         :disabled="isLoading"
-        @click="switchToExistingContract"
+        href="/existing"
+        target="_self"
       />
     </template>
   </v-hero>
@@ -48,14 +49,14 @@ const createNewContract = () => {
   isLoading.value = true;
   // Call API & wait for the response
   api.createContract().then((res) => {
-    isLoading.value = false;
+    // Don't make it stop loading if it's ok, it's better for the experience
+    // isLoading.value = false;
     if (res.data && res.data.id) {
       router.push(`/create/${res.data.id}`);
+    } else {
+      isLoading.value = false;
     }
   });
-};
-const switchToExistingContract = () => {
-  router.push({ path: '/existing' });
 };
 
 import { useMeta } from 'vue-meta';

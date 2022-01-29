@@ -1,5 +1,5 @@
 <template>
-  <form class="flex flex-col divide-y-2 divide-brand_primary h-full">
+  <div class="flex flex-col divide-y-2 divide-brand_primary h-full">
     <template v-if="validContract && hasContract">
       <div class="mb-sm">
         <h4>Read</h4>
@@ -24,7 +24,7 @@
         {{ $t('interact.loading.initialMethods') }}
       </div>
     </template>
-  </form>
+  </div>
 </template>
 
 <script setup>
