@@ -82,7 +82,7 @@
             }
           },
           "404": {
-            "$ref": "#/definitions/responses/NotFound"
+            "$ref": "#/definitions/NotFound"
           }
         }
       },
@@ -107,7 +107,7 @@
             }
           },
           "404": {
-            "$ref": "#/definitions/responses/NotFound"
+            "$ref": "#/definitions/NotFound"
           }
         }
       }
@@ -139,7 +139,7 @@
             }
           },
           "404": {
-            "$ref": "#/definitions/responses/NotFound"
+            "$ref": "#/definitions/NotFound"
           }
         }
       }
@@ -171,7 +171,7 @@
             }
           },
           "404": {
-            "$ref": "#/definitions/responses/NotFound"
+            "$ref": "#/definitions/NotFound"
           }
         }
       }
@@ -211,7 +211,7 @@
             "description": "Contract exists, but it's not edited"
           },
           "404": {
-            "$ref": "#/definitions/responses/NotFound"
+            "$ref": "#/definitions/NotFound"
           }
         }
       }
@@ -352,15 +352,13 @@
         }
       }
     },
-    "responses": {
-      "NotFound": {
-        "description": "Contract Not Found",
-        "schema": {
-          "type": "object",
-          "properties": {
-            "message": {
-              "type": "string"
-            }
+    "NotFound": {
+      "description": "Contract Not Found",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
           }
         }
       }
