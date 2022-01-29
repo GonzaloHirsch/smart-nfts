@@ -24,6 +24,8 @@ provider:
       app: pf
   httpApi:
     cors: true
+  restApi:
+    cors: true
   environment:
     MONGO_CONNECTION_STRING: ${env:MONGO_CONNECTION_STRING}
     INFURA_PROJECT_ID: ${env:INFURA_PROJECT_ID}
@@ -52,6 +54,7 @@ functions:
       - http:
           path: /
           method: get
+          cors: true
     tags:
       app: pf
   postCreateContract:
@@ -60,6 +63,7 @@ functions:
       - http:
           path: /contracts
           method: post
+          cors: true
     tags:
       app: pf
   putUpdateContract:
@@ -68,6 +72,7 @@ functions:
       - http:
           path: /contracts/{contractId}
           method: put
+          cors: true
     tags:
       app: pf
   postDeployContract:
@@ -78,6 +83,7 @@ functions:
       - http:
           path: /contracts/{contractId}/deploy
           method: post
+          cors: true
     tags:
       app: pf
   postVerifyContract:
@@ -88,6 +94,7 @@ functions:
       - http:
           path: /contracts/{contractId}/verify
           method: post
+          cors: true
     tags:
       app: pf
   postInteractContract:
@@ -98,6 +105,7 @@ functions:
       - http:
           path: /contracts/{contractId}/interact
           method: post
+          cors: true
     tags:
       app: pf
   getContract:
@@ -106,6 +114,7 @@ functions:
       - http:
           path: /contracts/{contractId}
           method: get
+          cors: true
     tags:
       app: pf
   getContractContents:
@@ -116,5 +125,6 @@ functions:
       - http:
           path: /contracts/{contractId}/contents
           method: get
+          cors: true
     tags:
       app: pf
