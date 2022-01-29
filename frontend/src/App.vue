@@ -4,7 +4,7 @@
     <template v-slot:description="{ content }">{{ content ? `${content}` : `SITE_DESCRIPTION` }}</template>
   </metainfo>
   <div class="relative" ref="app">
-    <a class="skip-to-content-link" aria-label="Skip to main content" href="#main" aria-hidden="true">Skip to content</a>
+    <a class="skip-to-content-link" aria-label="Skip to main content" href="#main">Skip to content</a>
     <v-navbar ref="navbar" />
     <main id="main">
       <router-view />
