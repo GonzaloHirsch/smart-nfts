@@ -1,6 +1,6 @@
 import AdmZip from 'adm-zip';
 
-export const generateContractZip = (contents: string) => {
+export const generateContractZip = (contents: string) : Buffer => {
     const zip = new AdmZip();
     // Add file directly
     zip.addFile("contract.sol", Buffer.from(contents, "utf8"));
