@@ -49,6 +49,6 @@ const props = defineProps({
 });
 
 // Wait for the props to change and generate the structure acording to that
-const availableMethods_read = computed(() => props.abi.filter((method) => method.type === 'function' && method.stateMutability === 'view'));
-const availableMethods_write = computed(() => props.abi.filter((method) => method.type === 'function' && method.stateMutability === 'nonpayable'));
+const availableMethods_read = computed(() => props.abi.filter((method) => method.type === 'function' && (method.stateMutability === 'view' || method.stateMutability === 'pure')));
+const availableMethods_write = computed(() => props.abi.filter((method) => method.type === 'function' && (method.stateMutability === 'nonpayable' || method.stateMutability === 'payable')));
 </script>

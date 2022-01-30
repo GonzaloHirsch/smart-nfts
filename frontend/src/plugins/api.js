@@ -47,7 +47,7 @@ const api = {
     downloadContract: async (contractId) => {
         return instance.get(`contracts/${contractId}/contents`, {responseType: 'blob'}).then(res => {
             const filename = res.headers['content-disposition'].split('filename=')[1];
-            fileDownload(res.data, `${filename}.zip`);
+            fileDownload(res.data, filename);
             return res;
         })
     },

@@ -41,6 +41,8 @@ export const allValidations = {
 const isChecksumAddress = (address) => {
     // Check each case
     address = address.replace('0x', '');
+    // Need to reset the hash in order to avoid errors
+    hash.reset();
     hash.update(address.toLowerCase());
     const addressHash = hash.digest('hex');
     for (let i = 0; i < 40; i++) {
@@ -74,7 +76,9 @@ const isAddress = (address) => {
 };
 
 const isUint256 = (num) => {
-    return !isNaN(num) && parseFloat(num, 10) <= uint256Limit;
+    if (isNaN(num)) return false;
+    let _num = parseFloat(num, 10);
+    return _num >= 0 && _num <= uint256Limit;
 };
 
 const isBytes4 = (bytes) => {
