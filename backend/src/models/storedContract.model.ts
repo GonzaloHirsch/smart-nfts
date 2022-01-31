@@ -1,5 +1,5 @@
+import { Document, model, models, Schema } from 'mongoose';
 import { METHOD_TYPE, STATE_MUTABILITY, PARAMETER_TYPE } from '../constants/contract.constants';
-import { Document, model, Schema, models } from 'mongoose';
 import { IAbi } from '../interfaces/abi.interface';
 
 export interface IStoredContract extends Document {

@@ -1,4 +1,4 @@
-import { connect, ConnectOptions, set } from 'mongoose';
+import { connect, ConnectOptions } from 'mongoose';
 
 class DatabaseService {
     private static instance: DatabaseService;
