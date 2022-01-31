@@ -42,10 +42,10 @@ class DeploymentService {
         
         // Update inner state
         contract.abi = compiledContract.abi;
-        contract.markModified('deployment');
         contract.deployment.address = contractAddress!;
         contract.deployment.date = new Date();
         contract.deployment.compilerVersion = compiledContract.compilerVersion;
+        contract.markModified('deployment');
         await contract.save();
 
         return contract;

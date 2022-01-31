@@ -19,11 +19,16 @@ export const errorHandler = () =>
 
     } catch (err) {
 
+        console.error(err);
+
         if (err instanceof HttpException) {
+
+            const status = err.status || 500;
             
             return {
-                statusCode: err.status || 500,
+                statusCode: status,
                 body: JSON.stringify({
+                    internalStatus: err.internalStatus || (status < 500 ? 'CLIENT_ERROR' : 'SERVER_ERROR'),
                     message: err.message || 'Internal server error'
                 })
             };
@@ -37,6 +42,7 @@ export const errorHandler = () =>
                 return {
                     statusCode: httpError.status,
                     body: JSON.stringify({
+                        internalStatus: httpError.internalStatus,
                         message: err.message
                     })
                 };
@@ -48,6 +54,7 @@ export const errorHandler = () =>
         return {
             statusCode: 500,
             body: JSON.stringify({
+                internalStatus: 'SERVER_ERROR',
                 message: 'Internal server error'
             })
         };

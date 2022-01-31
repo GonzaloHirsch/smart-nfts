@@ -12,7 +12,8 @@
     "dev": "serverless offline --httpPort 8000",
     "clean": "rimraf .serverless/* .build/* .webpack/* ./*.sol",
     "tsc": "tsc",
-    "deploy": "npm run clean && serverless deploy"
+    "deploy": "npm run clean && serverless deploy",
+    "package": "serverless package"
   },
   "dependencies": {
     "@openzeppelin/contracts": "^4.4.1",
