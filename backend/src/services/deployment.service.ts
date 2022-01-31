@@ -1,4 +1,4 @@
-import { compileContract } from '../helpers/compiler.helper';
+import { compileContract, flattenContract } from '../helpers/compiler.helper';
 import { IStoredContract } from '../models/storedContract.model';
 import Web3 from 'web3';
 import { ropstenNetwork, deployGas, gasPrice } from '../constants/general.constants';
@@ -7,7 +7,7 @@ import InsufficientGasException from '../exceptions/insufficientGas.exception';
 class DeploymentService {
     private static instance: DeploymentService;
     private web3;
-    private deploymentAddress = process.env.DEPLOYMENT_ADDRESS;
+    private deploymentAddress = process.env.DEPLOYMENT_ADDRESS!;
 
     constructor() {
         // Create web3 instance
@@ -16,7 +16,7 @@ class DeploymentService {
 
     static getInstance = () => {
         if (!DeploymentService.instance) {
-        DeploymentService.instance = new DeploymentService();
+            DeploymentService.instance = new DeploymentService();
         }
         return DeploymentService.instance;
     };

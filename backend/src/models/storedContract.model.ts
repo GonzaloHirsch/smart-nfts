@@ -71,6 +71,9 @@ const StoredConstractSchema = new Schema({
             required: false
         }
     }
+},
+{
+  timestamps: true
 });
 
 export default models.StoredContract || model<IStoredContract>('StoredContract', StoredConstractSchema);
