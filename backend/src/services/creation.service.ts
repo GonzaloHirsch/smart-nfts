@@ -111,13 +111,14 @@ class CreationService {
 
     private genContractMethods = (extensions: IContractExtension[]): IContractMethod[] => {
         const methodHashMap: { [hash: number]: IContractMethod[] } = {};
+        const methodHashOrder: number[] = [];
 
         // Get parent extensions from the extensions
         const parentExtensions = extensions.map((e) => e.getParentExtension()).filter((parent) => parent !== null);
 
         // Filter out all parent extension with a child extension present and fetch all methods
         const methods = flattenArray<IContractMethod>(
-        extensions.filter((e) => !parentExtensions.includes(e.getExtensionName())).map((e) => e.getExtensionMethods())
+            extensions.filter((e) => !parentExtensions.includes(e.getExtensionName())).map((e) => e.getExtensionMethods())
         );
 
         // Seperate the methods by name, if two extensions have the same method, we must merge them
@@ -126,14 +127,15 @@ class CreationService {
 
             if (methodHashMap[hash] == null) {
                 methodHashMap[hash] = [method];
+                methodHashOrder.push(hash)
             } else {
                 methodHashMap[hash] = methodHashMap[hash].concat(method);
             }
         });
 
         // Merge the repeating methods into one and return them
-        const finalMethods = Object.keys(methodHashMap)
-            .map((methodHash) => this.genMergedContractMethod(methodHashMap[parseInt(methodHash)]))
+        const finalMethods = methodHashOrder
+            .map((methodHash) => this.genMergedContractMethod(methodHashMap[methodHash]))
             .filter((method) => method != null) as IContractMethod[];
         
         // Send the required solidity overrides to the end
