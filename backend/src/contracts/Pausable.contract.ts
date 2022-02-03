@@ -9,7 +9,7 @@ export abstract class Pausable {
         return ["@openzeppelin/contracts/security/Pausable.sol"];
     }
     public static getExtensionName(): EXTENSIONS {
-        return EXTENSIONS.PAUSABLE;
+        return EXTENSIONS.Pausable;
     }
     public static getExtensionLibs(): IContractLibrary[] {
         return [];

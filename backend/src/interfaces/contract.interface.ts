@@ -43,5 +43,6 @@ export interface IContractMethod {
     options?: string;
     stateMutability?: STATE_MUTABILITY;
     overrides?: EXTENSIONS[]; // Only override if the extension is included
-    returns?: string
+    returns?: string,
+    solidityRequired?: boolean;
 }

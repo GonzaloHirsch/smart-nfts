@@ -19,6 +19,11 @@ export const arrayWrapper = (array: any[], defaultContent: string): string => {
 //*********CONTRACT TEMPLATE********//
 //**********************************//
 
+
+export const getRequiredOverridesMessage = (): string => {
+    return newLine() + '// The following functions are overrides required by Solidity.';
+}
+
 export const getSolidityVersion = (version: string): string => {
     return `pragma solidity ^${version};` + newLine();
 }

@@ -78,13 +78,21 @@ class TemplateService {
     }
 
     generateMethods = (methods: IContractMethod[]): string => {
-        const methodsContent = methods
+        const methodsStrings = methods
             .map(method => this.generateMethod(method))
-            .join(Template.newLine());
+        
+        let prevIsRequired = false;
+
+        for (let i = 0; i < methods.length; i++) {
+            if (methods[i].solidityRequired && !prevIsRequired) {
+                methodsStrings.splice(i, 0, Template.getRequiredOverridesMessage());
+                prevIsRequired = true;
+            }
+        }
 
         return Template.arrayWrapper(
             methods,
-            methodsContent
+            methodsStrings.join(Template.newLine())
         );
     }
 

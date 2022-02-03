@@ -136,8 +136,8 @@ class CreationService {
             .map((methodHash) => this.genMergedContractMethod(methodHashMap[parseInt(methodHash)]))
             .filter((method) => method != null) as IContractMethod[];
         
-        // Send the methods with _ to the end of the contract
-        finalMethods.sort(getSortFn<IContractMethod>((m) => !m.name.includes('_')));
+        // Send the required solidity overrides to the end
+        finalMethods.sort(getSortFn<IContractMethod>((m) => !m.solidityRequired));
 
         return finalMethods;
     };
@@ -174,12 +174,13 @@ class CreationService {
         });
 
         return {
-        name: methodName,
-        params: finalParams,
-        mandatory: true,
-        content: content,
-        visibility: getMergedMethodVisibility(methods.map((m) => m.visibility)),
-        stateMutability: getMergedMethodStateMutability(methods.map((m) => m.stateMutability))
+            name: methodName,
+            params: finalParams,
+            mandatory: true,
+            content: content,
+            visibility: getMergedMethodVisibility(methods.map((m) => m.visibility)),
+            stateMutability: getMergedMethodStateMutability(methods.map((m) => m.stateMutability)),
+            solidityRequired: methods.every(m => m.solidityRequired === true)
         };
     };
 }

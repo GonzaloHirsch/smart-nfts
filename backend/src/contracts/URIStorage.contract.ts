@@ -41,7 +41,8 @@ export abstract class URIStorage {
                 visibility: VISIBILITY.PUBLIC,
                 stateMutability: STATE_MUTABILITY.VIEW,
                 overrides: [EXTENSIONS.ERC721, EXTENSIONS.ERC721Enumerable],
-                returns: PARAMETER_TYPE.STRING_MEMORY            
+                returns: PARAMETER_TYPE.STRING_MEMORY,
+                solidityRequired: true            
             },
             {
                 name: '_burn',
@@ -52,7 +53,8 @@ export abstract class URIStorage {
                 mandatory: true,
                 content: ['super._burn(tokenId);\n'],
                 visibility: VISIBILITY.INTERNAL,
-                overrides: [EXTENSIONS.ERC721, EXTENSIONS.ERC721URIStorage]
+                overrides: [EXTENSIONS.ERC721, EXTENSIONS.ERC721URIStorage],
+                solidityRequired: true
             },
         ];
     }    
