@@ -157,6 +157,8 @@ class CreationService {
         methods.sort(getSortFn<IContractMethod>((m) => m.mandatory));
 
         const methodName = methods[0].name;
+        const overrideHashMap: { [hash: number]: EXTENSIONS } = {};
+        const optionsHashMap: { [hash: number]: string } = {};
         const paramsHashMap: { [hash: number]: boolean } = {};
         const finalParams: IParameter[] = [];
         const content: string[] = flattenArray<string>(methods.map((m) => m.content));
@@ -175,14 +177,36 @@ class CreationService {
             });
         });
 
+        // Get all unique options
+        methods.forEach((m) => {
+            m.options?.split(' ').forEach((o) => {
+                const hash = hashString(o);
+                if (!optionsHashMap[hash]) {
+                    optionsHashMap[hash] = o;
+                }
+            });
+        });
+
+        // Get all unique overrides
+        methods.forEach((m) => {
+            m.overrides?.forEach((o) => {
+                const hash = hashString(o);
+                if (!overrideHashMap[hash]) {
+                    overrideHashMap[hash] = o;
+                }
+            });
+        });
+
         return {
             name: methodName,
             params: finalParams,
             mandatory: true,
             content: content,
+            options: Object.values(optionsHashMap).join(' '),
             visibility: getMergedMethodVisibility(methods.map((m) => m.visibility)),
             stateMutability: getMergedMethodStateMutability(methods.map((m) => m.stateMutability)),
-            solidityRequired: methods.every(m => m.solidityRequired === true)
+            solidityRequired: methods.every(m => m.solidityRequired === true),
+            overrides: Object.values(overrideHashMap)
         };
     };
 }

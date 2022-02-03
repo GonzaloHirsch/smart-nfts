@@ -40,7 +40,7 @@ export abstract class URIStorage {
                 content: ['return super.tokenURI(tokenId);\n'],
                 visibility: VISIBILITY.PUBLIC,
                 stateMutability: STATE_MUTABILITY.VIEW,
-                overrides: [EXTENSIONS.ERC721, EXTENSIONS.ERC721Enumerable],
+                overrides: [EXTENSIONS.ERC721, EXTENSIONS.ERC721URIStorage],
                 returns: PARAMETER_TYPE.STRING_MEMORY,
                 solidityRequired: true            
             },

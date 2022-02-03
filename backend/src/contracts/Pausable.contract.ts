@@ -55,7 +55,7 @@ export abstract class Pausable {
                 content: ['super._beforeTokenTransfer(from, to, tokenId);\n'],
                 visibility: VISIBILITY.INTERNAL,
                 options: 'whenNotPaused',
-                overrides: [EXTENSIONS.ERC721, EXTENSIONS.ERC721Enumerable]
+                overrides: []
             }
         ];
     }    
