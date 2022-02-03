@@ -10,6 +10,7 @@ export const mapFormToApiData = (formData) => {
     if (formData.isPausable) data.extensions.push(EXTENSIONS.PAUSABLE);
     if (formData.isBurnable) data.extensions.push(EXTENSIONS.BURNABLE);
     if (formData.isAutoIncrementIds) data.extensions.push(EXTENSIONS.AUTO_INCREMENT_IDS);
+    if (formData.isURIStorage) data.extensions.push(EXTENSIONS.URI_STORAGE);
     return data;
 };
 
@@ -25,5 +26,6 @@ export const mapApiExtensionsToForm = (extensions) => {
     if (EXTENSIONS.PAUSABLE in map) mappedExtensions.isPausable = true;
     if (EXTENSIONS.BURNABLE in map) mappedExtensions.isBurnable = true;
     if (EXTENSIONS.AUTO_INCREMENT_IDS in map) mappedExtensions.isAutoIncrementIds = true;
+    if (EXTENSIONS.URI_STORAGE in map) mappedExtensions.isURIStorage = true;
     return mappedExtensions;
 }

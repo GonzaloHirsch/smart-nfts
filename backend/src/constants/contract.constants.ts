@@ -5,17 +5,19 @@ import { IContractExtension } from "../interfaces/contract.interface";
 import { AutoIncrementIds } from "../contracts/AutoIncrementIds.contract";
 import { Mintable } from "../contracts/Mintable.contract";
 import { Correct } from "../contracts/Correct.contract";
+import { URIStorage } from "../contracts/URIStorage.contract";
 
 export const SOLIDITY_VERSION = '0.8.2';
 export const CONTRACT_LICENSE = 'MIT';
 
 export const EXTENSION_MAP: Map<string, IContractExtension> = new Map([
     ['ERC721', ERC721], 
-    ['Burnable', Burnable],
+    ['ERC721Burnable', Burnable],
     ['Pausable', Pausable],    
     ['Mintable', Mintable],    
     ['AutoIncrementIds', AutoIncrementIds],
     ['Correct', Correct],
+    ['ERC721URIStorage', URIStorage],
 ]);
 
 export enum STATE_MUTABILITY {
@@ -56,9 +58,7 @@ export enum EXTENSIONS {
     Pausable = 'Pausable',
     Mintable = 'Mintable',
     AutoIncrementIds = 'AutoIncrementIds',
-    CORRECT = 'Pausable, Ownable',
     Ownable = 'Ownable',
-    Burnable = 'Burnable'
 }
 
 export enum FINAL_EXTENSIONS {
@@ -68,8 +68,6 @@ export enum FINAL_EXTENSIONS {
     ERC721Enumerable = 'ERC721Enumerable',
     Pausable = 'Pausable',
     Ownable = 'Ownable',
-    CORRECT = 'Pausable, Ownable',
-    Burnable = 'Burnable'
 }
 
 export const REQUIRE_KEYWORD = 'require';
