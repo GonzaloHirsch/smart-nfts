@@ -39,7 +39,8 @@
             "id": "Your contract ID is:",
             "deploy": "Your contract is deployed on address:",
             "verified": "Your contract is verified!",
-            "view": "View on Etherscan"
+            "view": "View on Etherscan",
+            "interact": "Interact with this contract"
         },
         "buttons": {
             "save": "Save",

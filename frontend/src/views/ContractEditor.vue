@@ -68,6 +68,8 @@
             rel="noopener noreferrer"
             >{{ $t('editor.contract.view') }} <ExternalLinkIcon class="h-5 w-5 block ml-1"
           /></a>
+          <router-link v-if="isDeployed" class="flex items-center mt-xs text-sm hover:text-brand_primary transition-colors duration-300" :to="`/interact/${storedContract.id}`">{{ $t('editor.contract.interact') }}<PlayIcon class="h-5 w-5 block ml-1"
+          /></router-link>
         </v-editor>
       </div>
       <div class="flex w-full md:w-6/12 p-sm">
@@ -125,7 +127,7 @@ import vCodeViewer from '@/components/codeViewer.vue';
 import vEditor from '@/components/editor.vue';
 import vModal from '@/components/modal.vue';
 import vSection from '@/components/section.vue';
-import { QuestionMarkCircleIcon, RefreshIcon, DocumentDuplicateIcon, BadgeCheckIcon, ExternalLinkIcon } from '@heroicons/vue/solid';
+import { QuestionMarkCircleIcon, RefreshIcon, DocumentDuplicateIcon, BadgeCheckIcon, ExternalLinkIcon, PlayIcon } from '@heroicons/vue/solid';
 
 import { useNotifications } from '@/plugins/notifications';
 const { setSnackbar } = useNotifications();

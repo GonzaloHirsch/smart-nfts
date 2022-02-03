@@ -4,11 +4,11 @@
       :class="[formats.button, 'flex justify-between w-full px-base py-sm text-left rounded-md outline-none relative', props.class]"
       style="z-index: 2"
     >
-      <div class="flex flex-row items-center h-full">
+      <div class="flex flex-row items-center h-full w-full">
         <span class="mr-sm text-body_xl">{{ props.title }}</span>
         <slot name="header" />
       </div>
-      <ChevronUpIcon v-if="$slots.content" :class="[open ? 'transform rotate-180' : '', 'transition duration-200 w-8 h-8']" />
+      <ChevronUpIcon :class="[$slots.content ? '' : 'invisible', open ? '' : 'transform rotate-180', 'transition duration-200 w-8 h-8']" />
     </DisclosureButton>
     <DisclosurePanel
       v-if="$slots.content"
