@@ -3,7 +3,7 @@
         "name": "Smart NFTs"
     },
     "aria": {
-        "anchorLinks": "Link to {0}" 
+        "anchorLinks": "Link to {0}"
     },
     "placeholders": {
         "contractId": "Contract ID..."
@@ -38,9 +38,32 @@
         "tabs": {
             "title": "Our Features",
             "buttons": {
-                "create": "Go Create",
-                "edit": "Go Edit",
-                "interact": "Go Interact"
+                "create": {
+                    "text": "Go Create",
+                    "aria": "Create a new contract"
+                },
+                "edit": {
+                    "text": "Go Edit",
+                    "aria": "Edit an existing contract"
+                },
+                "interact": {
+                    "text": "Go Interact",
+                    "aria": "Interact with a deployed contract"
+                }
+            }
+        },
+        "facts": {
+            "wallet": {
+                "title": "No Wallet",
+                "description": "Lorem ipsum wallet Lorem ipsum wallet Lorem ipsum wallet Lorem ipsum wallet Lorem ipsum wallet"
+            },
+            "gas": {
+                "title": "No Gas Fees",
+                "description": "Lorem ipsum gas fees Lorem ipsum gas fees Lorem ipsum gas fees Lorem ipsum gas fees Lorem ipsum gas fees"
+            },
+            "coding": {
+                "title": "No Coding",
+                "description": "Lorem ipsum coding Lorem ipsum coding Lorem ipsum coding Lorem ipsum coding Lorem ipsum coding"
             }
         }
     },

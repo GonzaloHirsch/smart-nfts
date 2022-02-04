@@ -12,7 +12,7 @@
             />
         </template>
         <a
-            href="#explained"
+            href="#benefits"
             class="text-brand_secondary text-center mt-sm text-body_xl flex flex-row items-center justify-center"
             aria-label="Learn more about the possible options you have"
         >
@@ -22,7 +22,7 @@
     </v-left-hero>
 
     <v-section id="features" class="bg-typography_primary">
-        <h2 class="mb-base text-brand_secondary">{{$t('home.tabs.title')}}</h2>
+        <h2 class="mb-base text-brand_secondary">{{ $t('home.tabs.title') }}</h2>
         <v-tabs :tabs="['Create', 'Edit', 'Interact']">
             <template #Create>
                 <v-feature-content>
@@ -37,12 +37,13 @@
                     <template #bottom>
                         <v-button
                             format="secondary"
-                            href="/create"
-                            target="_self"
-                            aria="Go to interact page"
+                            @click="handleCreateContract"
+                            :aria="$t('home.tabs.buttons.create.aria')"
                             :external="false"
                             :white="false"
-                            text="Go Create"
+                            :loading="isLoading"
+                            :disabled="isLoading"
+                            :text="$t('home.tabs.buttons.create.text')"
                         />
                     </template>
                     <template #image>
@@ -61,7 +62,10 @@
                         </p>
                     </template>
                     <template #bottom>
-                        <v-contract-id-verificator :button="{ text: 'home.tabs.buttons.edit', format: 'secondary' }" @validId="handleValidEditId" />
+                        <v-contract-id-verificator
+                            :button="{ text: 'home.tabs.buttons.edit.text', aria: 'home.tabs.buttons.edit.aria', format: 'secondary' }"
+                            @validId="handleValidEditId"
+                        />
                     </template>
                     <template #image>
                         <v-edit-drawing />
@@ -80,7 +84,7 @@
                     </template>
                     <template #bottom>
                         <v-contract-id-verificator
-                            :button="{ text: 'home.tabs.buttons.interact', format: 'secondary' }"
+                            :button="{ text: 'home.tabs.buttons.interact.text', aria: 'home.tabs.buttons.interact.aria', format: 'secondary' }"
                             @validId="handleValidInteractId"
                         />
                     </template>
@@ -90,6 +94,10 @@
                 </v-feature-content>
             </template>
         </v-tabs>
+    </v-section>
+
+    <v-section id="benefits" class="bg-typography_primary">
+        <v-facts :facts="facts" />
     </v-section>
 
     <v-section class="bg-light">
@@ -138,16 +146,28 @@ import { QuestionMarkCircleIcon } from '@heroicons/vue/solid';
 import vTabs from '@/components/tabs.vue';
 import vFeatureContent from '@/components/featureContent.vue';
 import vHiddenAnchor from '@/components/hiddenAnchor.vue';
+import vContractIdVerificator from '@/components/contractIdVerificator.vue';
+import vFacts from '@/components/facts.vue';
 
 import { useMeta } from 'vue-meta';
+import { ref } from 'vue';
 
+// Images
 import vCreateDrawing from '@/assets/images/Create-Drawing.svg?component';
 import vEditDrawing from '@/assets/images/Edit-Drawing.svg?component';
 import vInteractDrawing from '@/assets/images/Interact-Drawing.svg?component';
-import vContractIdVerificator from '@/components/contractIdVerificator.vue';
+import vIconNoWallet from '@/assets/images/icons/Icon-No-Wallet.svg?component';
+import vIconNoGas from '@/assets/images/icons/Icon-No-Gas.svg?component';
+import vIconNoCoding from '@/assets/images/icons/Icon-No-Coding.svg?component';
 
 import { useRouter } from 'vue-router';
 const router = useRouter();
+
+import { useApi } from '@/plugins/api';
+const api = useApi();
+
+import { useNotifications } from '@/plugins/notifications';
+const { setSnackbar } = useNotifications();
 
 const handleValidEditId = (id) => {
     router.push(`/create/${id}`);
@@ -156,6 +176,42 @@ const handleValidEditId = (id) => {
 const handleValidInteractId = (id) => {
     router.push(`/interact/${id}`);
 };
+
+const isLoading = ref(false);
+const handleCreateContract = () => {
+    isLoading.value = true;
+    // Call API & wait for the response
+    api.createContract().then((res) => {
+        // Don't make it stop loading if it's ok, it's better for the experience
+        // isLoading.value = false;
+        if (res.data && res.data.id) {
+            router.push(`/create/${res.data.id}`);
+        } else {
+            isLoading.value = false;
+        }
+    });
+};
+
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
+
+const facts = [
+    {
+        title: t('home.facts.wallet.title'),
+        description: t('home.facts.wallet.description'),
+        icon: vIconNoWallet
+    },
+    {
+        title: t('home.facts.gas.title'),
+        description: t('home.facts.gas.description'),
+        icon: vIconNoGas
+    },
+    {
+        title: t('home.facts.coding.title'),
+        description: t('home.facts.coding.description'),
+        icon: vIconNoCoding
+    }
+];
 
 useMeta({
     title: 'Homepage',

@@ -13,7 +13,7 @@
         />
         <v-button
             :format="editDisabled ? 'disabled' : props.button.format"
-            aria="Continue with an existing contract"
+            :aria="$t(props.button.aria)"
             :external="false"
             :white="false"
             :text="$t(props.button.text)"

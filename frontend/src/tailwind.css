@@ -185,3 +185,13 @@ svg.hero-background-drawing {
   transform: translate(200px, -300px) rotate(-63deg);
   /* transform: translate(150px, -200px); */
 }
+
+svg.fact--image {
+  max-width: 150px;
+}
+
+@screen md {
+  svg.fact--image {
+    max-width: 250px;
+  }
+}
