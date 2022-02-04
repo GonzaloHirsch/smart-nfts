@@ -148,3 +148,18 @@ code.hljs {
 .hljs-strong {
   font-weight: 700;
 }
+
+.fc--image-wrapper svg {
+  @apply w-full;
+  z-index: 1;
+  max-width: 400px;
+}
+
+.fc--image-wrapper .image-background {
+  @apply w-full;
+  max-width: 350px;
+  max-height: 350px;
+  min-width: 350px;
+  min-height: 350px;
+  border-radius: 50%;
+}

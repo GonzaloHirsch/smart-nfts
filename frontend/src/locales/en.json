@@ -31,7 +31,8 @@
     },
     "nav": {
         "create": "Create",
-        "interact": "Interact"
+        "interact": "Interact",
+        "edit": "Edit"
     },
     "editor": {
         "contract": {
