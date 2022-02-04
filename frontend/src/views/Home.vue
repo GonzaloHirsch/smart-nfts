@@ -100,7 +100,7 @@
         <v-facts :facts="facts" />
     </v-section>
 
-    <v-section id="process" class="bg-gradient-to-b from-white to-brand_primary">
+    <v-section id="offer" class="bg-gradient-to-b from-white to-brand_primary">
         <div class="flex flex-col md:flex-row w-full">
             <div class="w-full md:w-6/12">
                 <v-vertical-facts :facts="verticalFacts" />
@@ -109,42 +109,6 @@
                 <v-contract-drawing class="contract-drawing h-full mx-auto" />
             </div>
         </div>
-    </v-section>
-
-    <v-section class="bg-light">
-        <h2 class="text-center text-brand_primary mb-base">About the project</h2>
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
-            corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
-        </p>
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
-            corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
-        </p>
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
-            corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
-        </p>
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
-            corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
-        </p>
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
-            corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
-        </p>
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
-            corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
-        </p>
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
-            corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
-        </p>
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
-            corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
-        </p>
     </v-section>
 </template>
 

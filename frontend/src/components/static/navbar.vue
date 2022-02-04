@@ -1,7 +1,7 @@
 <template>
     <header id="header" class="sticky top-0 left-0 px-sm md:px-base lg:px-xl py-sm bg-white w-full shadow z-10">
         <nav class="flex flex-row justify-between items-center" aria-labelledby="header">
-            <router-link to="/" class="text-h5 text-brand_secondary font-semibold">{{ $t('app.name') }}</router-link>
+            <router-link to="/" @click="handleTopScroll" class="text-h5 text-brand_secondary font-semibold">{{ $t('app.name') }}</router-link>
             <ul class="flex flex-row list-none">
                 <template v-for="(link, index) in links" :key="index">
                     <li class="mr-base last:mr-0">
@@ -28,4 +28,9 @@ const links = [
         text: 'nav.interact'
     }
 ];
+
+const handleTopScroll = () => {
+  document.body.scrollTop = 0; // For Safari
+  document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+}
 </script>

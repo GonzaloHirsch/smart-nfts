@@ -27,7 +27,9 @@
     },
     "footer": {
         "made": "Made by",
-        "location": "Proyecto Final - Instituto Tecnológico de Buenos Aires (ITBA)"
+        "madeContinued": "This is a capstone project for our Software Engineering degrees.",
+        "location": "Proyecto Final - Instituto Tecnológico de Buenos Aires (ITBA)",
+        "copyright": "© 2022 Smart NFTs"
     },
     "home": {
         "title": "Home",
@@ -84,7 +86,9 @@
     "nav": {
         "create": "Create",
         "interact": "Interact",
-        "edit": "Edit"
+        "edit": "Edit",
+        "features": "Features",
+        "contact": "Contact"
     },
     "editor": {
         "contract": {
