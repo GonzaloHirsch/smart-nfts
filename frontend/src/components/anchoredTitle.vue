@@ -72,7 +72,7 @@ const classes = computed(() => {
         case 'primary':
             return {
                 text: 'text-typograpy_primary',
-                icon: 'hover:text-brand_primary'
+                icon: 'hover:text-brand_secondary'
             }
     }
 });

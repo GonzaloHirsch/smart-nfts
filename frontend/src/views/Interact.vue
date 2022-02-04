@@ -3,7 +3,7 @@
     <div class="flex flex-row">
       <div class="flex flex-col w-8/12 bg-light rounded-r-2xl pt-sm pb-base px-md entire-panel" :style="panelStyle">
         <div class="flex flex-row justify-between items-center">
-          <h2 class="text-left text-brand_primary">Contract</h2>
+          <h2 class="text-left text-brand_secondary">Contract</h2>
           <v-input
             id="contract_id"
             name="contract_id"
@@ -38,7 +38,7 @@
   </v-section>
 
   <v-section class="bg-typography_primary">
-    <h2 class="text-center text-brand_primary mb-base">Methods Explained</h2>
+    <h2 class="text-center text-brand_secondary mb-base">Methods Explained</h2>
     <v-anchored-title type="h3" text="balanceOf" anchor="balanceOf" class="mt-sm"/>
     <p>
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi

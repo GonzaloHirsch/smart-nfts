@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h2 class="text-center text-brand_primary">Features</h2>
+        <h2 class="text-center text-brand_secondary">Features</h2>
         <div class="divide-y divide-typography_secondary">
             <div class="form--section">
                 <h5 class="form--title">Contract Information <QuestionMarkCircleIcon class="form--title-icon" /></h5>
@@ -239,7 +239,7 @@ watch(
 
 <style>
 .form--title {
-    @apply text-brand_primary flex items-center;
+    @apply text-brand_secondary flex items-center;
 }
 
 .form--title-icon {
