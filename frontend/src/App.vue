@@ -44,7 +44,7 @@ useMeta({
 
 <style>
 .skip-to-content-link {
-  @apply bg-white text-brand_primary rounded-b-md border-2 border-brand_primary z-50 px-sm py-xs font-text mx-auto w-max;
+  @apply bg-white text-brand_secondary rounded-b-md border-2 border-brand_secondary z-50 px-sm py-xs font-text mx-auto w-max;
   left: 0;
   right: 0;
   position: absolute;
