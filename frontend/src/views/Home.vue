@@ -1,29 +1,28 @@
 <template>
-    <v-hero :full-height="true" class="bg-gradient-to-tl from-brand_secondary to-brand_primary" title="app.name" subtitle="home.hero.subtitle">
+    <v-left-hero :full-height="true" class="bg-gradient-to-b from-brand_primary to-white" title="home.hero.title">
         <template #buttons>
             <v-button
                 format="secondary"
-                href="/create"
+                href="/#features"
                 target="_self"
                 aria="Go to create page"
                 :external="false"
-                :white="true"
-                text="CREATE"
-                class="mr-sm md:mr-md lg:mr-xl"
+                :white="false"
+                :text="$t('home.hero.buttonStart')"
             />
-            <v-button format="secondary" href="/interact" target="_self" aria="Go to interact page" :external="false" :white="true" text="INTERACT" />
         </template>
         <a
             href="#explained"
-            class="text-typography_primary text-center mt-xl text-body_xl flex flex-row items-center justify-center"
+            class="text-brand_secondary text-center mt-sm text-body_xl flex flex-row items-center justify-center"
             aria-label="Learn more about the possible options you have"
         >
             Learn More
             <QuestionMarkCircleIcon class="h-8 w-8 ml-xs" />
         </a>
-    </v-hero>
+    </v-left-hero>
 
-    <v-section id="explained" class="bg-typography_primary">
+    <v-section id="features" class="bg-typography_primary">
+        <h2 class="mb-base text-brand_secondary">{{$t('home.tabs.title')}}</h2>
         <v-tabs :tabs="['Create', 'Edit', 'Interact']">
             <template #Create>
                 <v-feature-content>
@@ -133,11 +132,12 @@
 <script setup>
 // Components
 import vButton from '@/components/button.vue';
-import vHero from '@/components/hero.vue';
+import vLeftHero from '@/components/leftHero.vue';
 import vSection from '@/components/section.vue';
 import { QuestionMarkCircleIcon } from '@heroicons/vue/solid';
 import vTabs from '@/components/tabs.vue';
 import vFeatureContent from '@/components/featureContent.vue';
+import vHiddenAnchor from '@/components/hiddenAnchor.vue';
 
 import { useMeta } from 'vue-meta';
 

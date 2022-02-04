@@ -32,9 +32,11 @@
     "home": {
         "title": "Home",
         "hero": {
-            "subtitle": "Create your <strong>custom NFT</strong> in just <strong>minutes</strong>"
+            "title": "Create, deploy, and interact with your <strong>custom NFT</strong> contract in just <strong>minutes</strong>",
+            "buttonStart": "Start Now"
         },
         "tabs": {
+            "title": "Our Features",
             "buttons": {
                 "create": "Go Create",
                 "edit": "Go Edit",

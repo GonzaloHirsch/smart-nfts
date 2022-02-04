@@ -1,7 +1,7 @@
 <template>
     <div class="w-full relative">
         <template v-for="(tab, index) in props.tabs" :key="index">
-            <v-hidden-anchor :anchor="tab" :distanceMultiplier="2"/>
+            <v-hidden-anchor :anchor="tab" :distanceMultiplier="3"/>
         </template>
         <TabGroup @change="changedTab" :defaultIndex="customDefaultIndex" :key="customDefaultIndex">
             <TabList class="flex p-1 space-x-1 bg-brand_primary rounded-lg max-w-md mb-sm absolute top-0 left-0 w-full">
