@@ -37,7 +37,6 @@
                     </template>
                     <template #bottom>
                         <v-button
-                            class="mt-sm"
                             format="secondary"
                             href="/create"
                             target="_self"
@@ -48,7 +47,7 @@
                         />
                     </template>
                     <template #image>
-                        <v-create-drawing/>
+                        <v-create-drawing />
                     </template>
                 </v-feature-content>
             </template>
@@ -63,19 +62,10 @@
                         </p>
                     </template>
                     <template #bottom>
-                        <v-button
-                            class="mt-sm"
-                            format="secondary"
-                            href="/create"
-                            target="_self"
-                            aria="Go to interact page"
-                            :external="false"
-                            :white="false"
-                            text="Go Edit"
-                        />
+                        <v-contract-id-verificator :button="{ text: 'home.tabs.buttons.edit', format: 'secondary' }" @validId="handleValidEditId" />
                     </template>
                     <template #image>
-                        <v-edit-drawing/>
+                        <v-edit-drawing />
                     </template>
                 </v-feature-content>
             </template>
@@ -90,19 +80,13 @@
                         </p>
                     </template>
                     <template #bottom>
-                        <v-button
-                            class="mt-sm"
-                            format="secondary"
-                            href="/create"
-                            target="_self"
-                            aria="Go to interact page"
-                            :external="false"
-                            :white="false"
-                            text="Go Interact"
+                        <v-contract-id-verificator
+                            :button="{ text: 'home.tabs.buttons.interact', format: 'secondary' }"
+                            @validId="handleValidInteractId"
                         />
                     </template>
                     <template #image>
-                        <v-interact-drawing/>
+                        <v-interact-drawing />
                     </template>
                 </v-feature-content>
             </template>
@@ -157,9 +141,21 @@ import vFeatureContent from '@/components/featureContent.vue';
 
 import { useMeta } from 'vue-meta';
 
-import vCreateDrawing from '@/assets/images/Create-Drawing.svg?component'
-import vEditDrawing from '@/assets/images/Edit-Drawing.svg?component'
-import vInteractDrawing from '@/assets/images/Interact-Drawing.svg?component'
+import vCreateDrawing from '@/assets/images/Create-Drawing.svg?component';
+import vEditDrawing from '@/assets/images/Edit-Drawing.svg?component';
+import vInteractDrawing from '@/assets/images/Interact-Drawing.svg?component';
+import vContractIdVerificator from '@/components/contractIdVerificator.vue';
+
+import { useRouter } from 'vue-router';
+const router = useRouter();
+
+const handleValidEditId = (id) => {
+    router.push(`/create/${id}`);
+};
+
+const handleValidInteractId = (id) => {
+    router.push(`/interact/${id}`);
+};
 
 useMeta({
     title: 'Homepage',
