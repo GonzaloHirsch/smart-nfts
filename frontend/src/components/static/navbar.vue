@@ -16,7 +16,7 @@
 <script setup>
 const links = [
     {
-        to: '/create',
+        to: '/#Create',
         text: 'nav.create'
     },
     {

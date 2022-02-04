@@ -36,8 +36,8 @@
                     </template>
                     <template #bottom>
                         <v-button
-                            format="secondary"
-                            @click="handleCreateContract"
+                            :format="isLoading ? 'disabled' : 'secondary'"
+                            @click="isLoading ? undefined : handleCreateContract()"
                             :aria="$t('home.tabs.buttons.create.aria')"
                             :external="false"
                             :white="false"
@@ -100,6 +100,17 @@
         <v-facts :facts="facts" />
     </v-section>
 
+    <v-section id="process" class="bg-gradient-to-b from-white to-brand_primary">
+        <div class="flex flex-col md:flex-row w-full">
+            <div class="w-full md:w-6/12">
+                <v-vertical-facts :facts="verticalFacts" />
+            </div>
+            <div class="w-full md:w-6/12">
+                <v-contract-drawing class="contract-drawing h-full mx-auto" />
+            </div>
+        </div>
+    </v-section>
+
     <v-section class="bg-light">
         <h2 class="text-center text-brand_primary mb-base">About the project</h2>
         <p>
@@ -148,6 +159,7 @@ import vFeatureContent from '@/components/featureContent.vue';
 import vHiddenAnchor from '@/components/hiddenAnchor.vue';
 import vContractIdVerificator from '@/components/contractIdVerificator.vue';
 import vFacts from '@/components/facts.vue';
+import vVerticalFacts from '@/components/verticalFacts.vue';
 
 import { useMeta } from 'vue-meta';
 import { ref } from 'vue';
@@ -156,9 +168,13 @@ import { ref } from 'vue';
 import vCreateDrawing from '@/assets/images/Create-Drawing.svg?component';
 import vEditDrawing from '@/assets/images/Edit-Drawing.svg?component';
 import vInteractDrawing from '@/assets/images/Interact-Drawing.svg?component';
+import vContractDrawing from '@/assets/images/Contract-Drawing.svg?component';
 import vIconNoWallet from '@/assets/images/icons/Icon-No-Wallet.svg?component';
 import vIconNoGas from '@/assets/images/icons/Icon-No-Gas.svg?component';
 import vIconNoCoding from '@/assets/images/icons/Icon-No-Coding.svg?component';
+import vIconExplanation from '@/assets/images/icons/Icon-Explanation.svg?component';
+import vIconTime from '@/assets/images/icons/Icon-Time.svg?component';
+import vIconCentralized from '@/assets/images/icons/Icon-Centralized.svg?component';
 
 import { useRouter } from 'vue-router';
 const router = useRouter();
@@ -210,6 +226,24 @@ const facts = [
         title: t('home.facts.coding.title'),
         description: t('home.facts.coding.description'),
         icon: vIconNoCoding
+    }
+];
+
+const verticalFacts = [
+    {
+        title: t('home.verticalFacts.step.title'),
+        description: t('home.verticalFacts.step.description'),
+        icon: vIconExplanation
+    },
+    {
+        title: t('home.verticalFacts.simple.title'),
+        description: t('home.verticalFacts.simple.description'),
+        icon: vIconTime
+    },
+    {
+        title: t('home.verticalFacts.centralized.title'),
+        description: t('home.verticalFacts.centralized.description'),
+        icon: vIconCentralized
     }
 ];
 

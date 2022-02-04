@@ -65,6 +65,20 @@
                 "title": "No Coding",
                 "description": "Lorem ipsum coding Lorem ipsum coding Lorem ipsum coding Lorem ipsum coding Lorem ipsum coding"
             }
+        },
+        "verticalFacts": {
+            "step": {
+                "title": "Step by step explanations",
+                "description": "Lorem ipsum wallet Lorem ipsum wallet Lorem ipsum wallet Lorem ipsum wallet Lorem ipsum wallet"
+            },
+            "simple": {
+                "title": "Simple and Quick",
+                "description": "Lorem ipsum gas fees Lorem ipsum gas fees Lorem ipsum gas fees Lorem ipsum gas fees Lorem ipsum gas fees"
+            },
+            "centralized": {
+                "title": "All in One",
+                "description": "Lorem ipsum coding Lorem ipsum coding Lorem ipsum coding Lorem ipsum coding Lorem ipsum coding"
+            }
         }
     },
     "nav": {

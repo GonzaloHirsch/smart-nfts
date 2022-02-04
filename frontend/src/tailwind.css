@@ -195,3 +195,24 @@ svg.fact--image {
     max-width: 250px;
   }
 }
+
+svg.vertical-fact--image {
+  max-width: 100px;
+}
+
+@screen md {
+  svg.vertical-fact--image {
+    max-width: 100px;
+  }
+}
+
+svg.contract-drawing {
+  @apply w-full;
+  max-width: 200px;
+}
+
+@screen md {
+  svg.contract-drawing {
+    max-width: 400px;
+  }
+}
