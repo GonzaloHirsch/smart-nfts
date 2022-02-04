@@ -53,6 +53,8 @@ DEPLOYMENT_ADDRESS=Address of wallet used for deployments
 DEPLOYMENT_PRIVATE_KEY=Private key for that address
 ETHERSCAN_API_KEY=API Key for Etherscan
 ETHERSCAN_API_URL=URL for the Etherscan API
+PINATA_API_KEY=API Key ID for Pinata
+PINATA_API_SECRET=API secret for Pinata
 ```
 
 Configuring AWS IAM credentials is also required, with AWS CLI run the following and follow the instructions to configure it:

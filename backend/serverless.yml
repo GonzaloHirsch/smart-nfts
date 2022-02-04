@@ -9,6 +9,7 @@ package:
 plugins:
   - serverless-webpack
   - serverless-offline
+  - serverless-apigw-binary
 
 provider:
   name: aws
@@ -50,6 +51,9 @@ custom:
     #     - '@openzeppelin/contracts'
     #excludeRegex: \.ts|test|\.map for some reason excluding this increases the package size
   # As per https://medium.com/nextfaze/binary-responses-with-serverless-framework-and-api-gateway-5fde91376b76
+  apigwBinary:
+    types:
+      - 'multipart/form-data'
 
 functions:
   getHealthcheck:
