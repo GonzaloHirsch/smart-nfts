@@ -148,3 +148,71 @@ code.hljs {
 .hljs-strong {
   font-weight: 700;
 }
+
+.fc--image-wrapper svg {
+  @apply w-full;
+  z-index: 1;
+  max-width: 400px;
+}
+
+.fc--image-wrapper .image-background {
+  @apply w-full;
+  max-width: 350px;
+  max-height: 350px;
+  min-width: 350px;
+  min-height: 350px;
+  border-radius: 50%;
+}
+
+.hero-main-drawing svg,
+svg.hero-main-drawing {
+  @apply w-full;
+  z-index: 1;
+  max-width: 300px;
+}
+
+@screen md {
+  .hero-main-drawing svg,
+  svg.hero-main-drawing {
+    max-width: 550px;
+  }
+}
+
+.hero-background-drawing svg,
+svg.hero-background-drawing {
+  @apply w-full z-0 absolute top-0 left-0 bottom-0 right-0 overflow-visible;
+  min-width: 1000px;
+  transform: translate(200px, -300px) rotate(-63deg);
+  /* transform: translate(150px, -200px); */
+}
+
+svg.fact--image {
+  max-width: 150px;
+}
+
+@screen md {
+  svg.fact--image {
+    max-width: 250px;
+  }
+}
+
+svg.vertical-fact--image {
+  max-width: 100px;
+}
+
+@screen md {
+  svg.vertical-fact--image {
+    max-width: 100px;
+  }
+}
+
+svg.contract-drawing {
+  @apply w-full;
+  max-width: 200px;
+}
+
+@screen md {
+  svg.contract-drawing {
+    max-width: 400px;
+  }
+}

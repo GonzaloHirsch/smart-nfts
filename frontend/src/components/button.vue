@@ -103,24 +103,24 @@ const buttonSize = computed(() => `button--size-${props.size}`);
 
 /* PRIMARY FORMAT */
 .button--primary {
-  @apply border-2 border-brand_primary text-brand_primary bg-transparent;
+  @apply border-2 border-brand_secondary text-brand_secondary bg-transparent;
 }
 .button--primary:hover {
-  @apply bg-brand_primary text-white;
+  @apply bg-brand_secondary text-white;
 }
 .button--primary-white {
   @apply border-2 border-white text-white bg-transparent;
 }
 .button--primary-white:hover {
-  @apply text-brand_primary bg-white;
+  @apply text-brand_secondary bg-white;
 }
 
 /* SECONDARY FORMAT */
 .button--secondary {
-  @apply border-2 border-brand_secondary text-brand_secondary bg-transparent;
+  @apply border-2 border-brand_secondary text-white bg-brand_secondary;
 }
 .button--secondary:hover {
-  @apply bg-brand_secondary text-white;
+  @apply bg-brand_secondary/80 text-white;
 }
 .button--secondary-white {
   @apply border-2 border-white text-white bg-transparent;

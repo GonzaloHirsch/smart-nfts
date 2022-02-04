@@ -6,7 +6,7 @@
   <div class="relative" ref="app">
     <a class="skip-to-content-link" aria-label="Skip to main content" href="#main">Skip to content</a>
     <v-navbar ref="navbar" />
-    <main id="main">
+    <main id="main" class="overflow-hidden">
       <router-view />
     </main>
     <v-snackbar/>
