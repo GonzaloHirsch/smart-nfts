@@ -5,6 +5,40 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  .button.button--size-large a, 
+  .button.button--size-large span:not(.no-inherit) {
+    @apply text-h5 px-sm py-sm;
+  }
+  
+  .button.button--size-medium a, 
+  .button.button--size-medium span:not(.no-inherit) {
+    @apply text-lg px-xs py-xs;
+  }
+  
+  .button.button--size-small a, 
+  .button.button--size-small span:not(.no-inherit) {
+    @apply text-sm px-xs py-xs;
+  }
+  
+  .button.button--size-xsmall a, 
+  .button.button--size-xsmall span:not(.no-inherit) {
+    @apply text-xs px-xs py-xs;
+  }
+  
+  .button.button--size-large .button-spinner--wrapper {
+    @apply py-sm pl-sm -mr-xs;
+  }
+  
+  .button.button--size-medium .button-spinner--wrapper {
+    @apply my-auto px-xs pl-xs -mr-xs;
+  }
+  
+  .button.button--size-medium .button-spinner {
+    @apply w-4 h-4;
+  }
+}
+
 /* Smooth scrolling https://www.w3schools.com/howto/howto_css_smooth_scroll.asp */
 html {
   scroll-behavior: smooth;
@@ -149,26 +183,46 @@ code.hljs {
   font-weight: 700;
 }
 
-.fc--image-wrapper svg {
+/* TAB IMAGES */
+.fc--image-wrapper svg:not(.fact-image--smaller) {
   @apply w-full;
   z-index: 1;
   max-width: 400px;
 }
 
+/* SMALLER IMAGES TO FIT BETTER */
+.fc--image-wrapper svg.fact-image--smaller {
+  @apply w-full;
+  z-index: 1;
+  max-width: 400px;
+  padding: 30px
+}
+
+/* CIRCLES BEHIND TAB IMAGES */
 .fc--image-wrapper .image-background {
   @apply w-full;
-  max-width: 350px;
-  max-height: 350px;
-  min-width: 350px;
-  min-height: 350px;
+  max-width: 225px;
+  max-height: 225px;
+  min-width: 225px;
+  min-height: 225px;
   border-radius: 50%;
 }
 
+@screen md {
+  .fc--image-wrapper .image-background {
+    max-width: 350px;
+    max-height: 350px;
+    min-width: 350px;
+    min-height: 350px;
+  }
+}
+
+/* HERO DRAWING */
 .hero-main-drawing svg,
 svg.hero-main-drawing {
   @apply w-full;
   z-index: 1;
-  max-width: 300px;
+  max-width: 250px;
 }
 
 @screen md {
@@ -178,6 +232,7 @@ svg.hero-main-drawing {
   }
 }
 
+/* HERO BACKGROUND DRAWING */
 .hero-background-drawing svg,
 svg.hero-background-drawing {
   @apply w-full z-0 absolute top-0 left-0 bottom-0 right-0 overflow-visible;
@@ -186,6 +241,7 @@ svg.hero-background-drawing {
   /* transform: translate(150px, -200px); */
 }
 
+/* HORIZONTAL FACT IMAGES */
 svg.fact--image {
   max-width: 150px;
 }
@@ -196,16 +252,18 @@ svg.fact--image {
   }
 }
 
+/* VERTICAL FACT IMAGES */
 svg.vertical-fact--image {
-  max-width: 100px;
+  max-width: 65px;
 }
 
 @screen md {
   svg.vertical-fact--image {
-    max-width: 100px;
+    max-width: 80px;
   }
 }
 
+/* CONTRACT IMAGE */
 svg.contract-drawing {
   @apply w-full;
   max-width: 200px;
@@ -217,6 +275,7 @@ svg.contract-drawing {
   }
 }
 
+/* MOBILE MENU OVERLAY */
 .body-noscroll {
   @apply overflow-hidden;
 }

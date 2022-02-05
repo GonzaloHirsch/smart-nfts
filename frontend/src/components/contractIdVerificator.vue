@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-row items-center">
+    <div class="flex flex-col md:flex-row items-center">
         <v-input
             id="contract_id"
             name="contract_id"
@@ -9,7 +9,7 @@
             v-model="contractId"
             :continuousInput="true"
             format="primary-white"
-            class="mr-sm"
+            class="mb-xs md:mr-sm md:mb-0"
         />
         <v-button
             :format="editDisabled ? 'disabled' : props.button.format"

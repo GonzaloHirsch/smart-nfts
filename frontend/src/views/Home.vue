@@ -13,7 +13,7 @@
         </template>
         <a
             href="#benefits"
-            class="text-brand_secondary text-center mt-sm text-body_xl flex flex-row items-center justify-center"
+            class="text-brand_secondary text-center mt-sm text-lg md:text-body_xl flex flex-row items-center justify-center"
             aria-label="Learn more about the possible options you have"
         >
             Learn More
@@ -68,7 +68,7 @@
                         />
                     </template>
                     <template #image>
-                        <v-edit-drawing />
+                        <v-edit-drawing class="fact-image--smaller" />
                     </template>
                 </v-feature-content>
             </template>

@@ -8,7 +8,7 @@
                 <Tab v-for="tab in props.tabs" as="template" :key="tab" v-slot="{ selected }">
                     <button
                         :class="[
-                            'w-full py-xs text-h5 leading-1 font-medium text-black rounded-md',
+                            'w-full py-xs text-sm sm:text-base md:text-h5 leading-1 font-medium text-black rounded-md',
                             'focus:outline-none focus:ring-2 ring-brand_secondary ring-opacity-60',
                             selected ? 'bg-brand_tertiary p-6 shadow' : 'text-brand_secondary hover:bg-brand_tertiary/20 hover:text-brand_secondary'
                         ]"
