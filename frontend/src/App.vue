@@ -5,7 +5,8 @@
   </metainfo>
   <div class="relative" ref="app">
     <a class="skip-to-content-link" aria-label="Skip to main content" href="#main">Skip to content</a>
-    <v-navbar ref="navbar" />
+    <v-navbar class="hidden md:block" ref="navbar" />
+    <v-navbar-mobile class="block md:hidden" ref="navbarMobile" />
     <main id="main" class="overflow-hidden">
       <router-view />
     </main>
@@ -23,15 +24,17 @@ import { NAV_HEIGHT } from '@/js/constants.js';
 
 // Components
 import vNavbar from '@/components/static/navbar.vue';
+import vNavbarMobile from '@/components/static/navbarMobile.vue';
 import vFooter from '@/components/static/footer.vue';
 import vSnackbar from '@/components/notifications/snackbar.vue';
 
 const app = ref(null);
 const navbar = ref(null);
+const navbarMobile = ref(null);
 const navbarHeight = ref(undefined);
 provide(NAV_HEIGHT, navbarHeight);
 useResizeObserver(app, (_) => {
-  navbarHeight.value = navbar.value?.$el.clientHeight;
+  navbarHeight.value = navbar.value?.$el.clientHeight || navbarMobile.value?.$el.clientHeight;
 });
 
 // Meta

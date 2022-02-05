@@ -1,5 +1,5 @@
 <template>
-    <header id="header" class="sticky top-0 left-0 px-sm md:px-base lg:px-xl py-sm bg-white w-full shadow z-10">
+    <header id="header" :class="['sticky top-0 left-0 px-sm md:px-base lg:px-xl py-sm bg-white w-full z-10 transition duration-300', isScrolled ? 'shadow-lg' : '']">
         <nav class="flex flex-row justify-between items-center" aria-labelledby="header">
             <router-link to="/" @click="handleTopScroll" class="text-h5 text-brand_secondary font-semibold">{{ $t('app.name') }}</router-link>
             <ul class="flex flex-row list-none">
@@ -14,6 +14,8 @@
 </template>
 
 <script setup>
+import {ref, onUnmounted} from 'vue';
+
 const links = [
     {
         to: '/#Create',
@@ -33,4 +35,14 @@ const handleTopScroll = () => {
   document.body.scrollTop = 0; // For Safari
   document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
 }
+
+const isScrolled = ref(false);
+
+const handleScroll = () => {
+    isScrolled.value = window.scrollY > 50;
+}
+window.addEventListener('scroll', handleScroll);
+onUnmounted(() => {
+    window.removeEventListener('scroll', handleScroll);
+});
 </script>
