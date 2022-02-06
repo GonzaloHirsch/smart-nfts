@@ -3,22 +3,23 @@ const defaultTheme = require('tailwindcss/defaultTheme');
 /** @type {import("@types/tailwindcss/tailwind-config").TailwindConfig } */
 module.exports = {
   content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
+  safelist: [
+    {
+      pattern: /^button--size.*/,
+      variants: ['lg', 'md', 'sm'],
+    },
+    ,
+  ],
   theme: {
     extend: {
-      // @deprecated
-      backgroundImage: {
-        custom_gradient_1: "url('@/assets/images/bg-gradient-1.svg')",
-        custom_gradient_2: "url('@/assets/images/bg-gradient-2.svg')",
-        custom_gradient_3: "url('@/assets/images/bg-gradient-3.svg')",
-      },
       colors: {
         // https://tailwindcss.com/docs/background-color
         // blue-800
-        brand_primary: "rgb(30 64 175)",
+        brand_primary: "#E0C3FC73",
         // fuchsia-800
-        brand_secondary: "rgb(134 25 143)",
+        brand_secondary: "#72419F",
         // red-600
-        brand_tertiary: "rgb(220 38 38)",
+        brand_tertiary: "#D7B1FC",
         typography_primary: "#FFFFFF",
         typography_secondary: "#333333",
         light: "#F4F4F4",
@@ -47,11 +48,15 @@ module.exports = {
         base: "2rem",
         md: "3rem",
         xl: "4rem",
+        '2xl': "5rem",
+        '3xl': "6rem",
         "-xs": "-0.5rem",
         "-sm": "-1rem",
         "-base": "-2rem",
         "-md": "-3rem",
         "-xl": "-4rem",
+        '-2xl': "-5rem",
+        '-3xl': "-6rem",
       }
     },
   },

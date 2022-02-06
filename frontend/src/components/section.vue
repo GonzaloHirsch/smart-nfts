@@ -1,5 +1,5 @@
 <template>
-  <section :style="sectionStyle" :class="[props.noPadding ? '' : 'px-sm md:px-md lg:px-xl py-sm md:py-md lg:py-xl']">
+  <section :style="sectionStyle" :class="[props.noPadding ? '' : 'px-base md:px-xl lg:px-2xl py-base md:py-xl lg:py-3xl']">
     <slot />
   </section>
 </template>

@@ -3,7 +3,13 @@
         "name": "Smart NFTs"
     },
     "aria": {
-        "anchorLinks": "Link to {0}" 
+        "anchorLinks": "Link to {0}"
+    },
+    "placeholders": {
+        "contractId": "Contract ID..."
+    },
+    "labels": {
+        "contractId": "Contract ID"
     },
     "create": {
         "new": {
@@ -21,17 +27,68 @@
     },
     "footer": {
         "made": "Made by",
-        "location": "Proyecto Final - Instituto Tecnológico de Buenos Aires (ITBA)"
+        "madeContinued": "This is a capstone project for our Software Engineering degrees.",
+        "location": "Proyecto Final - Instituto Tecnológico de Buenos Aires (ITBA)",
+        "copyright": "© 2022 Smart NFTs"
     },
     "home": {
         "title": "Home",
         "hero": {
-            "subtitle": "Create your <strong>custom NFT</strong> in just <strong>minutes</strong>"
+            "title": "Create, deploy, and interact with your <strong>custom NFT</strong> contract in just <strong>minutes</strong>",
+            "buttonStart": "Start Now"
+        },
+        "tabs": {
+            "title": "Our Features",
+            "buttons": {
+                "create": {
+                    "text": "Go Create",
+                    "aria": "Create a new contract"
+                },
+                "edit": {
+                    "text": "Go Edit",
+                    "aria": "Edit an existing contract"
+                },
+                "interact": {
+                    "text": "Go Interact",
+                    "aria": "Interact with a deployed contract"
+                }
+            }
+        },
+        "facts": {
+            "wallet": {
+                "title": "No Wallet",
+                "description": "Lorem ipsum wallet Lorem ipsum wallet Lorem ipsum wallet Lorem ipsum wallet Lorem ipsum wallet"
+            },
+            "gas": {
+                "title": "No Gas Fees",
+                "description": "Lorem ipsum gas fees Lorem ipsum gas fees Lorem ipsum gas fees Lorem ipsum gas fees Lorem ipsum gas fees"
+            },
+            "coding": {
+                "title": "No Coding",
+                "description": "Lorem ipsum coding Lorem ipsum coding Lorem ipsum coding Lorem ipsum coding Lorem ipsum coding"
+            }
+        },
+        "verticalFacts": {
+            "step": {
+                "title": "Step by step explanations",
+                "description": "Lorem ipsum wallet Lorem ipsum wallet Lorem ipsum wallet Lorem ipsum wallet Lorem ipsum wallet"
+            },
+            "simple": {
+                "title": "Simple and Quick",
+                "description": "Lorem ipsum gas fees Lorem ipsum gas fees Lorem ipsum gas fees Lorem ipsum gas fees Lorem ipsum gas fees"
+            },
+            "centralized": {
+                "title": "All in One",
+                "description": "Lorem ipsum coding Lorem ipsum coding Lorem ipsum coding Lorem ipsum coding Lorem ipsum coding"
+            }
         }
     },
     "nav": {
         "create": "Create",
-        "interact": "Interact"
+        "interact": "Interact",
+        "edit": "Edit",
+        "features": "Features",
+        "contact": "Contact"
     },
     "editor": {
         "contract": {
@@ -39,7 +96,8 @@
             "id": "Your contract ID is:",
             "deploy": "Your contract is deployed on address:",
             "verified": "Your contract is verified!",
-            "view": "View on Etherscan"
+            "view": "View on Etherscan",
+            "interact": "Interact with this contract"
         },
         "buttons": {
             "save": "Save",
@@ -77,7 +135,9 @@
                 "bytes": "Invalid bytes",
                 "bytes4": "Invalid bytes4",
                 "uint256": "Invalid uint256 number",
-                "bool": "Invalid boolean (true | false)"
+                "bool": "Invalid boolean (true | false)",
+                "name": "Name can only contain alphanumeric characters and underscore (_)",
+                "symbol": "Symbol can only contain alphanumeric characters and underscore (_)"
             }
         },
         "buttons": {

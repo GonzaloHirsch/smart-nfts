@@ -1,6 +1,10 @@
 <template>
   <v-accordion :title="props.method.name" :format="props.format">
     <template #header>
+      <!-- Icon for help -->
+      <QuestionMarkCircleIcon class="w-7 h-7 text-brand_tertiary" @click.stop="getHelp" />
+      <!-- Displaying the errors -->
+      <span v-if="errors" class="ml-sm text-error">{{ errors }}</span>
       <v-button
         format="primary"
         :aria="`Execute the ${props.method.name} method`"
@@ -9,11 +13,8 @@
         size="xsmall"
         :text="$t('interact.buttons.execute').toUpperCase()"
         @click.native.stop="callMethod"
+        class="ml-auto mr-sm"
       />
-      <!-- Icon for help -->
-      <QuestionMarkCircleIcon class="ml-sm w-7 h-7 text-brand_tertiary" @click.stop="getHelp" />
-      <!-- Displaying the errors -->
-      <span v-if="errors" class="ml-sm text-error">{{ errors }}</span>
     </template>
     <template v-if="props.method.inputs && props.method.inputs.length > 0" #content>
       <template v-for="(input, index) in props.method.inputs" :key="`read-${index}`">

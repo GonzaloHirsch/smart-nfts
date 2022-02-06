@@ -78,7 +78,7 @@ const error = ref(undefined);
 const classes = computed(() => {
   switch (props.format) {
     case 'primary':
-      return `input--${props.format} border-2 border-typography_secondary focus:border-brand_primary bg-transparent`;
+      return `input--${props.format} border-2 border-brand_secondary focus:border-brand_primary bg-transparent`;
     case 'primary-white':
       return `input--${props.format} border-2 border-white focus:border-white bg-white text-typography_secondary`;
   }

@@ -29,6 +29,14 @@ export const allValidations = {
         label: "Field must be valid boolean (true | false)",
         func: (input) => (isBool(input)) || "interact.error.parameters.bool"
     },
+    "name": {
+        label: "Name can only contain alphanumeric characters and underscore (_)",
+        func: (input) => (isName(input)) || "interact.error.parameters.name"
+    },
+    "symbol": {
+        label: "Symbol can only contain alphanumeric characters and underscore (_)",
+        func: (input) => (isSymbol(input)) || "interact.error.parameters.symbol"
+    },
 }
 
 /**
@@ -91,6 +99,14 @@ const isBytes = (bytes) => {
 
 const isBool = (bool) => {
     return bool === 'true' || bool === 'false';
+};
+
+const isName = (name) => {
+    return /^[a-zA-Z0-9_]+$/i.test(name);
+};
+
+const isSymbol = (symbol) => {
+    return /^[a-zA-Z0-9_]+$/i.test(symbol);
 };
 
 export const applyValidations = (input, validations) => {

@@ -5,8 +5,9 @@
   </metainfo>
   <div class="relative" ref="app">
     <a class="skip-to-content-link" aria-label="Skip to main content" href="#main">Skip to content</a>
-    <v-navbar ref="navbar" />
-    <main id="main">
+    <v-navbar class="hidden md:block" ref="navbar" />
+    <v-navbar-mobile class="block md:hidden" ref="navbarMobile" />
+    <main id="main" class="overflow-hidden">
       <router-view />
     </main>
     <v-snackbar/>
@@ -23,15 +24,17 @@ import { NAV_HEIGHT } from '@/js/constants.js';
 
 // Components
 import vNavbar from '@/components/static/navbar.vue';
+import vNavbarMobile from '@/components/static/navbarMobile.vue';
 import vFooter from '@/components/static/footer.vue';
 import vSnackbar from '@/components/notifications/snackbar.vue';
 
 const app = ref(null);
 const navbar = ref(null);
+const navbarMobile = ref(null);
 const navbarHeight = ref(undefined);
 provide(NAV_HEIGHT, navbarHeight);
 useResizeObserver(app, (_) => {
-  navbarHeight.value = navbar.value?.$el.clientHeight;
+  navbarHeight.value = navbar.value?.$el.clientHeight || navbarMobile.value?.$el.clientHeight;
 });
 
 // Meta
@@ -44,7 +47,7 @@ useMeta({
 
 <style>
 .skip-to-content-link {
-  @apply bg-white text-brand_primary rounded-b-md border-2 border-brand_primary z-50 px-sm py-xs font-text mx-auto w-max;
+  @apply bg-white text-brand_secondary rounded-b-md border-2 border-brand_secondary z-50 px-sm py-xs font-text mx-auto w-max;
   left: 0;
   right: 0;
   position: absolute;

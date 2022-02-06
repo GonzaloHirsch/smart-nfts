@@ -58,10 +58,14 @@ const props = defineProps({
   size: {
     type: String,
     default: 'large'
+  },
+  sizeMobile: {
+    type: String,
+    default: 'medium'
   }
 });
 const buttonFormat = computed(() => (props.white ? `button--${props.format}-white` : `button--${props.format}`));
-const buttonSize = computed(() => `button--size-${props.size}`);
+const buttonSize = computed(() => `button--size-${props.sizeMobile ?? props.size} md:button--size-${props.size}`);
 </script>
 
 <style scoped>
@@ -69,58 +73,26 @@ const buttonSize = computed(() => `button--size-${props.size}`);
   @apply rounded transition duration-200 cursor-pointer inline-flex;
 }
 
-.button.button--size-large a, 
-.button.button--size-large span:not(.no-inherit) {
-  @apply text-h5 px-sm py-sm;
-}
-
-.button.button--size-medium a, 
-.button.button--size-medium span:not(.no-inherit) {
-  @apply text-lg px-xs py-xs;
-}
-
-.button.button--size-small a, 
-.button.button--size-small span:not(.no-inherit) {
-  @apply text-sm px-xs py-xs;
-}
-
-.button.button--size-xsmall a, 
-.button.button--size-xsmall span:not(.no-inherit) {
-  @apply text-xs px-xs py-xs;
-}
-
-.button.button--size-large .button-spinner--wrapper {
-  @apply py-sm pl-sm -mr-xs;
-}
-
-.button.button--size-medium .button-spinner--wrapper {
-  @apply my-auto px-xs pl-xs -mr-xs;
-}
-
-.button.button--size-medium .button-spinner {
-  @apply w-4 h-4;
-}
-
 /* PRIMARY FORMAT */
 .button--primary {
-  @apply border-2 border-brand_primary text-brand_primary bg-transparent;
+  @apply border-2 border-brand_secondary text-brand_secondary bg-transparent;
 }
 .button--primary:hover {
-  @apply bg-brand_primary text-white;
+  @apply bg-brand_secondary text-white;
 }
 .button--primary-white {
   @apply border-2 border-white text-white bg-transparent;
 }
 .button--primary-white:hover {
-  @apply text-brand_primary bg-white;
+  @apply text-brand_secondary bg-white;
 }
 
 /* SECONDARY FORMAT */
 .button--secondary {
-  @apply border-2 border-brand_secondary text-brand_secondary bg-transparent;
+  @apply border-2 border-brand_secondary text-white bg-brand_secondary;
 }
 .button--secondary:hover {
-  @apply bg-brand_secondary text-white;
+  @apply bg-brand_secondary/80 text-white;
 }
 .button--secondary-white {
   @apply border-2 border-white text-white bg-transparent;
