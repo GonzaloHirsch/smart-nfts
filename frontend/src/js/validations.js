@@ -37,6 +37,14 @@ export const allValidations = {
         label: "Symbol can only contain alphanumeric characters and underscore (_)",
         func: (input) => (isSymbol(input)) || "interact.error.parameters.symbol"
     },
+    "metadataName": {
+        label: "This field can only contain letters, numbers, and _",
+        func: (input) => (isMetadata(input)) || "interact.error.parameters.metadataName"
+    },
+    "max20": {
+        label: "This field can have a maximum of 20 characters",
+        func: (input) => (max20(input)) || "interact.error.parameters.max20"
+    },
 }
 
 /**
@@ -109,6 +117,14 @@ const isSymbol = (symbol) => {
     return /^[a-zA-Z0-9_]+$/i.test(symbol);
 };
 
+const isMetadata = (metadataName) => {
+    return /^[a-zA-Z0-9_ ]{0,20}$/i.test(metadataName);
+};
+
+const max20 = (text) => {
+    return text.length <= 20;
+}
+
 export const applyValidations = (input, validations) => {
     if (!(validations)) return undefined;
     let result;
@@ -123,3 +139,18 @@ export const applyValidations = (input, validations) => {
         return result;
     });
 };
+
+export const sumarizeValidationResults = (validationResult) => {
+    let isValid = true;
+    // Reset error
+    let error = undefined;
+    // Evaluate if there are errors
+    validationResult.forEach((result) => {
+      isValid = isValid && result === true;
+      // Keep first error present
+      if (result !== true && error === undefined) {
+        error = result.message;
+      }
+    });
+    return [isValid, error];
+}

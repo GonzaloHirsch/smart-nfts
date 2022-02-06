@@ -1,9 +1,9 @@
 <template>
     <div>
-        <h2 class="text-center text-brand_secondary">Features</h2>
+        <h2 class="text-center text-brand_secondary">{{$t('editor.contract.features')}}</h2>
         <div class="divide-y divide-typography_secondary">
             <div class="form--section">
-                <h5 class="form--title">Contract Information <QuestionMarkCircleIcon class="form--title-icon" /></h5>
+                <h5 class="form--title">{{$t('editor.contract.information')}}<QuestionMarkCircleIcon class="form--title-icon" /></h5>
                 <div class="flex flex-col md:flex-row justify-between">
                     <!-- Set validations for each field and the validation events -->
                     <v-input
@@ -35,25 +35,58 @@
             <!-- <div class="form--section">
         <h5 class="form--title">Permissions <QuestionMarkCircleIcon class="form--title-icon" /></h5>
       </div> -->
-      <div class="form--section">
-        <h5 class="form--title">Creation <QuestionMarkCircleIcon class="form--title-icon" /></h5>
-        <v-checkbox id="isMintable" name="isMintable" placeholder="Mintable" label="Mintable" v-model="contractData.isMintable" class="w-full md:w-6/12" />
-        <div class="flex flex-row">
-          <span class="border-l-2 border-black mx-xs"></span>
-          <v-checkbox
-            id="isAutoIncrementIds"
-            name="isAutoIncrementIds"
-            placeholder="Auto Increment IDs"
-            label="Auto Increment IDs"
-            v-model="contractData.isAutoIncrementIds"
-          />
-        </div>
-        <v-checkbox id="isPausable" name="isPausable" placeholder="Pausable" label="Pausable" v-model="contractData.isPausable" class="w-full md:w-6/12" />
-        <v-checkbox id="isBurnable" name="isBurnable" placeholder="Burnable" label="Burnable" v-model="contractData.isBurnable" class="w-full md:w-6/12" />
-        <v-checkbox id="isEnumerable" name="isEnumerable" placeholder="Enumerable" label="Enumerable" v-model="contractData.isEnumerable" class="w-full md:w-6/12" />
-        <v-checkbox id="isURIStorage" name="isURIStorage" placeholder="URIStorage" label="URIStorage" v-model="contractData.isURIStorage" class="w-full md:w-6/12" />
-      </div>
-      <!-- <div class="form--section">
+            <div class="form--section">
+                <h5 class="form--title">{{$t('editor.contract.creation')}} <QuestionMarkCircleIcon class="form--title-icon" /></h5>
+                <v-checkbox
+                    id="isMintable"
+                    name="isMintable"
+                    placeholder="Mintable"
+                    label="Mintable"
+                    v-model="contractData.isMintable"
+                    class="w-full md:w-6/12"
+                />
+                <div class="flex flex-row">
+                    <span class="border-l-2 border-black mx-xs"></span>
+                    <v-checkbox
+                        id="isAutoIncrementIds"
+                        name="isAutoIncrementIds"
+                        placeholder="Auto Increment IDs"
+                        label="Auto Increment IDs"
+                        v-model="contractData.isAutoIncrementIds"
+                    />
+                </div>
+                <v-checkbox
+                    id="isPausable"
+                    name="isPausable"
+                    placeholder="Pausable"
+                    label="Pausable"
+                    v-model="contractData.isPausable"
+                    class="w-full md:w-6/12"
+                />
+                <v-checkbox
+                    id="isBurnable"
+                    name="isBurnable"
+                    placeholder="Burnable"
+                    label="Burnable"
+                    v-model="contractData.isBurnable"
+                    class="w-full md:w-6/12"
+                />
+                <v-checkbox id="isEnumerable" name="isEnumerable" placeholder="Enumerable" label="Enumerable" v-model="contractData.isEnumerable" class="w-full md:w-6/12" />
+                <v-checkbox
+                    id="isURIStorage"
+                    name="isURIStorage"
+                    placeholder="URIStorage"
+                    label="URIStorage"
+                    v-model="contractData.isURIStorage"
+                    class="w-full md:w-6/12"
+                />
+            </div>
+            <div class="form--section">
+                <h5 class="form--title">{{$t('editor.contract.metadata')}} <QuestionMarkCircleIcon class="form--title-icon" /></h5>
+                <p><strong>Note:</strong> By default, all tokens have name & description</p>
+                <v-metadata v-model="contractData.metadata"/>
+            </div>
+            <!-- <div class="form--section">
         <h5 class="form--title">Metadata <QuestionMarkCircleIcon class="form--title-icon" /></h5>
       </div> -->
         </div>
@@ -103,6 +136,7 @@
 <script setup>
 import vButton from '@/components/button.vue';
 import vInput from '@/components/editor/input.vue';
+import vMetadata from '@/components/editor/metadata/metadata.vue';
 import vCheckbox from '@/components/editor/checkbox.vue';
 import { QuestionMarkCircleIcon } from '@heroicons/vue/solid';
 import { ref, watch } from 'vue';
@@ -153,14 +187,15 @@ const props = defineProps({
 // Get a mapped version of the extension to see which one is enabled
 const mappedExtensions = mapApiExtensionsToForm(props.extensions);
 const contractData = ref({
-  name: props.name,
-  symbol: props.symbol,
-  isMintable: mappedExtensions.isMintable ?? false,
-  isPausable: mappedExtensions.isPausable ?? false,
-  isBurnable: mappedExtensions.isBurnable ?? false,
-  isAutoIncrementIds: mappedExtensions.isAutoIncrementIds ?? false,
-  isEnumerable: mappedExtensions.isEnumerable ?? false,
-  isURIStorage: mappedExtensions.isURIStorage ?? false
+    name: props.name,
+    symbol: props.symbol,
+    isMintable: mappedExtensions.isMintable ?? false,
+    isPausable: mappedExtensions.isPausable ?? false,
+    isBurnable: mappedExtensions.isBurnable ?? false,
+    isAutoIncrementIds: mappedExtensions.isAutoIncrementIds ?? false,
+    isEnumerable: mappedExtensions.isEnumerable ?? false,
+    isURIStorage: mappedExtensions.isURIStorage ?? false,
+    metadata: []
 });
 const inputsErrors = ref({});
 

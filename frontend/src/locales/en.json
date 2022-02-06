@@ -97,7 +97,11 @@
             "deploy": "Your contract is deployed on address:",
             "verified": "Your contract is verified!",
             "view": "View on Etherscan",
-            "interact": "Interact with this contract"
+            "interact": "Interact with this contract",
+            "information": "Contract Information",
+            "features": "Features",
+            "creation": "Creation",
+            "metadata": "Metadata"
         },
         "buttons": {
             "save": "Save",
@@ -137,7 +141,9 @@
                 "uint256": "Invalid uint256 number",
                 "bool": "Invalid boolean (true | false)",
                 "name": "Name can only contain alphanumeric characters and underscore (_)",
-                "symbol": "Symbol can only contain alphanumeric characters and underscore (_)"
+                "symbol": "Symbol can only contain alphanumeric characters and underscore (_)",
+                "metadataName": "This field can only contain letters, numbers, and _",
+                "max20": "This field can have a maximum of 20 characters"
             }
         },
         "buttons": {
