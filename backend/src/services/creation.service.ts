@@ -15,7 +15,7 @@ class CreationService {
 
     static getInstance = () => {
         if (!CreationService.instance) {
-        CreationService.instance = new CreationService();
+            CreationService.instance = new CreationService();
         }
         return CreationService.instance;
     };

@@ -8,6 +8,7 @@ import ContractNotFoundException from '../exceptions/contractNotFound.exception'
 // Others
 import { EXTENSIONS } from '../constants/contract.constants';
 import { customAlphabet } from 'nanoid';
+import { FilterQuery } from 'mongoose';
 const nanoid = customAlphabet('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz', 15);
 
 
@@ -29,6 +30,10 @@ class StoredContractService {
 
     public getContractById = async (contractId: string) : Promise<IStoredContract | null> => {
         return await StoredContract.findOne({id: contractId}).exec()
+    }
+
+    public getContractByQuery = async (query: FilterQuery<IStoredContract>) : Promise<IStoredContract[]> => {
+        return await StoredContract.find(query).exec()
     }
 
     public getEnforcedContractById = async (contractId: string): Promise<IStoredContract> => {

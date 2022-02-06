@@ -1,9 +1,10 @@
+import { Document } from "mongoose";
 import { METHOD_TYPE, PARAMETER_TYPE, STATE_MUTABILITY } from "../constants/contract.constants";
 import { IParameter } from "./general.interface";
 
 export type IAbi = IAbiMethod[];
 
-export interface IAbiMethod {
+export interface IAbiMethod extends Document {
     name?: string,
     type: METHOD_TYPE,
     anonymous?: boolean,

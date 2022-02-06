@@ -1,11 +1,13 @@
 export const EXAMPLE = 'EXAMPLE';
 
-export const baseURI = 'https://ipfs.io/ipfs/';
-export const deployGas = 3000000;
-export const mintGas = 300000;
-export const baseUriGas = 35000;
-export const transferGas = 40000;
-export const gasPrice = '13'; // https://ethgasstation.info/ --> STANDARD
+export const NULL_ADDRESS = '0x0';
+
+export const BASE_URI = 'https://ipfs.io/ipfs/';
+export const DEPLOY_GAS = 3000000;
+export const MINT_GAS = 300000;
+export const BASE_URI_GAS = 35000;
+export const TRANSFER_GAS = 40000;
+export const GAS_PRICE = '13'; // https://ethgasstation.info/ --> STANDARD
 
 export const rinkebyNetwork = (projectId: string | undefined) => `https://rinkeby.infura.io/v3/${projectId}`;
 export const rinkebyEtherscan = (type: string, hash: string) => `Etherscan: https://rinkeby.etherscan.io/${type}/${hash}`;

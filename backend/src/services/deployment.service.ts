@@ -1,17 +1,18 @@
-import { compileContract, flattenContract } from '../helpers/compiler.helper';
+import { compileContract } from '../helpers/compiler.helper';
 import { IStoredContract } from '../models/storedContract.model';
 import Web3 from 'web3';
-import { ropstenNetwork, deployGas, gasPrice } from '../constants/general.constants';
-import InsufficientGasException from '../exceptions/insufficientGas.exception';
-import { ITransactionConfig } from '../interfaces/blockchain.interface';
+import { ropstenNetwork, DEPLOY_GAS, NULL_ADDRESS } from '../constants/general.constants';
+import TransactionService from './transaction.service';
 
 class DeploymentService {
     private static instance: DeploymentService;
     private web3;
     private deploymentAddress = process.env.DEPLOYMENT_ADDRESS!;
+    private transactionService;
 
     constructor() {
         // Create web3 instance
+        this.transactionService = TransactionService.getInstance();
         this.web3 = new Web3(new Web3.providers.HttpProvider(ropstenNetwork(process.env.INFURA_PROJECT_ID)));
     }
 
@@ -68,50 +69,15 @@ class DeploymentService {
         })
         .encodeABI();
 
-        const tx = await this._createTransaction(contractData, deployGas);
+        const tx = await this.transactionService.createTransaction(
+            NULL_ADDRESS, 
+            this.deploymentAddress,
+            contractData, 
+            DEPLOY_GAS
+        );
 
-        return await this._signAndSendTransaction(tx, true);
+        return await this.transactionService.signAndSendTransaction(tx, true);
     };
-
-    private async _createTransaction (data: string, gasLimit: number) {
-        const nonce = await this.web3.eth.getTransactionCount(this.deploymentAddress!);
-
-        const gasPriceHex = this.web3.utils.toHex(this.web3.utils.toWei(gasPrice, 'gwei'));
-        const gasLimitHex = this.web3.utils.toHex(gasLimit);
-
-        const tx: ITransactionConfig = {
-            nonce: nonce, // this.web3.utils.toHex(nonce), // TODO - Check!!
-            gasPrice: gasPriceHex,
-            gas: gasLimitHex,
-            from: this.deploymentAddress,
-            // No to: because we are deploying a contract
-            value: 0,
-            data: data
-        };
-
-        return tx;
-    }
-
-    private async _signAndSendTransaction (
-        tx: ITransactionConfig, 
-        isDeploy: boolean = false
-    ): Promise<string | void | undefined> {
-        const signPromise = this.web3.eth.accounts.signTransaction(tx, process.env.DEPLOYMENT_PRIVATE_KEY!);
-
-        return signPromise
-            .then((signedTx) => {
-                const sentTx = this.web3.eth.sendSignedTransaction(signedTx.rawTransaction!);
-                return sentTx;
-            })
-            .then((receipt) => {
-                if (isDeploy) {
-                    return receipt.contractAddress;
-                }
-            })
-            .catch((err) => {
-                throw new InsufficientGasException(this.deploymentAddress);
-            });
-    }
 }
 
 export default DeploymentService;

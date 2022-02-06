@@ -42,14 +42,14 @@ export const arrayHasValue = <O>(array: O[], value: O): boolean => {
     return array.indexOf(value) > -1;
 };
 
-export const arrayHasObjectId = (array: any[], value: any): boolean => {
+export const arrayGetFirstMatch = <O>(array: O[], condition: (elem: O) => boolean): O | null => {
     for (const obj of array) {
-        if (obj.equals(value)) {
-            return true;
+        if (condition(obj)) {
+            return obj;
         }
     }
 
-    return false;
+    return null;
 };
 
 export const getIndexOfValue = (array: any[], value: any): number => {

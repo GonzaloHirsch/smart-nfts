@@ -1,5 +1,6 @@
+import { arrayGetFirstMatch } from "src/helpers/collection.helper";
 import { METHOD_TYPE } from "../constants/contract.constants";
-import { IAbi } from "../interfaces/abi.interface";
+import { IAbi, IAbiMethod } from "../interfaces/abi.interface";
 
 class AbiService {
 
@@ -13,8 +14,18 @@ class AbiService {
         return AbiService.instance;
     }
 
-    static getContractFunction = (abi : IAbi) : IAbi => {
+    getContractFunction = (abi : IAbi) : IAbi => {
         return abi.filter(method => method.type === METHOD_TYPE.FUNCTION);
+    }
+
+    getContractMethod = (abi: IAbi, methodId: string): IAbiMethod => {
+        const method = arrayGetFirstMatch(abi, (abiMethod: IAbiMethod) => abiMethod._id === methodId);
+
+        if (method == null) {
+            throw new Error('TODO');
+        }
+
+        return method;
     }
 }
 
