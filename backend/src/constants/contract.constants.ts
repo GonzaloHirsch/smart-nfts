@@ -13,7 +13,7 @@ export const CONTRACT_LICENSE = 'MIT';
 export enum STATE_MUTABILITY {
     PURE = 'pure',
     VIEW = 'view',
-    NONPAYABLE = 'nonpayable',
+    NONPAYABLE = '',
     PAYABLE = 'payable'
 };
 
@@ -27,6 +27,7 @@ export enum PARAMETER_TYPE {
     ADDRESS = 'address',
     STRING_MEMORY = 'string memory',
     UINT256 = 'uint256',
+    UINT256_ARRAY = 'uint256[]',
     BOOL = 'bool',
     STRING = 'string',
     BYTES = 'bytes',
@@ -49,6 +50,7 @@ export enum EXTENSIONS {
     Mintable = 'Mintable',
     AutoIncrementIds = 'AutoIncrementIds',
     Ownable = 'Ownable',
+    ListTokens = 'ListTokens',
 }
 
 export enum FINAL_EXTENSIONS {

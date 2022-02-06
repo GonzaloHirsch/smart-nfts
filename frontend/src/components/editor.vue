@@ -27,6 +27,7 @@
         </div>
         <v-checkbox id="isPausable" name="isPausable" placeholder="Pausable" label="Pausable" v-model="contractData.isPausable" class="w-full md:w-6/12" />
         <v-checkbox id="isBurnable" name="isBurnable" placeholder="Burnable" label="Burnable" v-model="contractData.isBurnable" class="w-full md:w-6/12" />
+        <v-checkbox id="isEnumerable" name="isEnumerable" placeholder="Enumerable" label="Enumerable" v-model="contractData.isEnumerable" class="w-full md:w-6/12" />
         <v-checkbox id="isURIStorage" name="isURIStorage" placeholder="URIStorage" label="URIStorage" v-model="contractData.isURIStorage" class="w-full md:w-6/12" />
       </div>
       <!-- <div class="form--section">
@@ -103,6 +104,7 @@ const contractData = ref({
   isPausable: mappedExtensions.isPausable ?? false,
   isBurnable: mappedExtensions.isBurnable ?? false,
   isAutoIncrementIds: mappedExtensions.isAutoIncrementIds ?? false,
+  isEnumerable: mappedExtensions.isEnumerable ?? false,
   isURIStorage: mappedExtensions.isURIStorage ?? false
 });
 

@@ -3,6 +3,7 @@ import { IStoredContract } from '../models/storedContract.model';
 import Web3 from 'web3';
 import { ropstenNetwork, deployGas, gasPrice } from '../constants/general.constants';
 import InsufficientGasException from '../exceptions/insufficientGas.exception';
+import { ITransactionConfig } from '../interfaces/blockchain.interface';
 
 class DeploymentService {
     private static instance: DeploymentService;
@@ -72,14 +73,14 @@ class DeploymentService {
         return await this._signAndSendTransaction(tx, true);
     };
 
-    private async _createTransaction(data: string, gasLimit: number) {
+    private async _createTransaction (data: string, gasLimit: number) {
         const nonce = await this.web3.eth.getTransactionCount(this.deploymentAddress!);
 
         const gasPriceHex = this.web3.utils.toHex(this.web3.utils.toWei(gasPrice, 'gwei'));
         const gasLimitHex = this.web3.utils.toHex(gasLimit);
 
-        const tx = {
-            nonce: this.web3.utils.toHex(nonce),
+        const tx: ITransactionConfig = {
+            nonce: nonce, // this.web3.utils.toHex(nonce), // TODO - Check!!
             gasPrice: gasPriceHex,
             gas: gasLimitHex,
             from: this.deploymentAddress,
@@ -91,22 +92,25 @@ class DeploymentService {
         return tx;
     }
 
-    private async _signAndSendTransaction(tx: any, isDeploy = false): Promise<string | void | undefined> {
+    private async _signAndSendTransaction (
+        tx: ITransactionConfig, 
+        isDeploy: boolean = false
+    ): Promise<string | void | undefined> {
         const signPromise = this.web3.eth.accounts.signTransaction(tx, process.env.DEPLOYMENT_PRIVATE_KEY!);
 
         return signPromise
-        .then((signedTx) => {
-            const sentTx = this.web3.eth.sendSignedTransaction(signedTx.rawTransaction!);
-            return sentTx;
-        })
-        .then((receipt) => {
-            if (isDeploy) {
-            return receipt.contractAddress;
-            }
-        })
-        .catch((err) => {
-            throw new InsufficientGasException(this.deploymentAddress);
-        });
+            .then((signedTx) => {
+                const sentTx = this.web3.eth.sendSignedTransaction(signedTx.rawTransaction!);
+                return sentTx;
+            })
+            .then((receipt) => {
+                if (isDeploy) {
+                    return receipt.contractAddress;
+                }
+            })
+            .catch((err) => {
+                throw new InsufficientGasException(this.deploymentAddress);
+            });
     }
 }
 

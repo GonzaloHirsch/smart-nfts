@@ -16,14 +16,12 @@ export const getMergedMethodVisibility = (visibilities: (VISIBILITY | undefined)
 export const getMergedMethodStateMutability = (mutabilities: (STATE_MUTABILITY | undefined)[]): STATE_MUTABILITY => {
     // Must take ether for it to work
     if (mutabilities.includes(STATE_MUTABILITY.PAYABLE)) return STATE_MUTABILITY.PAYABLE;
-    // Default mutability is non payable
-    else if (mutabilities.includes(undefined)) return STATE_MUTABILITY.NONPAYABLE;
-    // Cannot take any ether
-    else if (mutabilities.includes(STATE_MUTABILITY.NONPAYABLE)) return STATE_MUTABILITY.NONPAYABLE;
+    // Does not modify or read from the state
+    else if (mutabilities.includes(STATE_MUTABILITY.PURE)) return STATE_MUTABILITY.PURE;
     // Only reads and does not modify the state
     else if (mutabilities.includes(STATE_MUTABILITY.VIEW)) return STATE_MUTABILITY.VIEW;
-    // Does not modify or read from the state
-    else return STATE_MUTABILITY.PURE;
+    // Default is nonpayable
+    else return STATE_MUTABILITY.NONPAYABLE;
 }
 
 export const getExtensionAdditions = (extensions: EXTENSIONS[]): EXTENSIONS[] => {

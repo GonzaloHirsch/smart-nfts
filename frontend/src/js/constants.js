@@ -6,4 +6,5 @@ export const EXTENSIONS = {
     MINTABLE: 'Mintable',
     AUTO_INCREMENT_IDS: 'AutoIncrementIds',
     URI_STORAGE: 'ERC721URIStorage',
+    ENUMERABLE: 'ERC721Enumerable',
 };
