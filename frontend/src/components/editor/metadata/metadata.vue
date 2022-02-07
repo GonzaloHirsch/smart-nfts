@@ -1,9 +1,9 @@
 <template>
-    <div class="flex flex-col mt-xs">
+    <form class="flex flex-col mt-xs" autocomplete="off">
         <div class="grid grid-cols-7" v-if="props.modelValue.length > 0">
-            <span class="col-span-2 pl-xs">Name</span>
-            <span class="col-span-2 pl-xs">Type</span>
-            <span class="col-span-2 pl-xs">Display</span>
+            <span class="col-span-2 pl-xs font-bold">Name</span>
+            <span class="col-span-2 pl-xs font-bold">Type</span>
+            <span class="col-span-2 pl-xs font-bold">Display</span>
         </div>
         <v-metadata-field
             v-for="(field, index) in props.modelValue"
@@ -20,7 +20,7 @@
             :class="['w-fit flex transition duration-200 mt-xs', canAddField ? 'cursor-pointer hover:text-brand_secondary' : 'text-gray-500']"
             ><PlusCircleIcon class="w-6 h-6 mr-1" /> Add Attribute</span
         >
-    </div>
+    </form>
 </template>
 
 <script setup>
