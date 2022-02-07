@@ -23,7 +23,7 @@
 
     <v-section :noPadding="true" class="bg-typography_primary">
         <div v-if="!isLoadingEditor" class="flex flex-col md:flex-row">
-            <div class="flex flex-col w-full md:w-6/12 p-sm h-fit" ref="editorContainer">
+            <div class="flex flex-col w-full md:w-6/12 p-sm h-fit" ref="editorContainer" :key="lastSaved">
                 <v-editor
                     @contractChanged="handleContractChange"
                     @deployContract="handleDeployContract"
@@ -201,6 +201,7 @@ loadContract();
 
 import { mapFormToApiData } from '@/js/mapper';
 const handleContractChange = (contractData) => {
+    
     let dataToSend = mapFormToApiData(contractData);
     if (dataToSend.name && dataToSend.symbol) {
         isLoading.value = true;
