@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="bg-light p-sm rounded-md shadow-lg border border-gray-200">
         <h2 class="text-center text-brand_secondary">{{$t('editor.contract.features')}}</h2>
         <div class="divide-y divide-typography_secondary">
             <div class="form--section">
@@ -32,9 +32,6 @@
                     />
                 </div>
             </div>
-            <!-- <div class="form--section">
-        <h5 class="form--title">Permissions <QuestionMarkCircleIcon class="form--title-icon" /></h5>
-      </div> -->
             <div class="form--section">
                 <h5 class="form--title">{{$t('editor.contract.creation')}} <QuestionMarkCircleIcon class="form--title-icon" /></h5>
                 <v-checkbox
@@ -81,18 +78,24 @@
                     class="w-full md:w-6/12"
                 />
             </div>
-            <div class="form--section">
+            <div v-if="contractData.isURIStorage" class="form--section">
                 <h5 class="form--title">{{$t('editor.contract.metadata')}} <QuestionMarkCircleIcon class="form--title-icon" /></h5>
                 <p><strong>Note:</strong> By default, all tokens have name & description</p>
+                <p class="text-xl text-brand_secondary mt-sm">Image</p>
+                <v-checkbox
+                    id="hasImage"
+                    name="hasImage"
+                    placeholder="Has Image?"
+                    :label="$t('editor.contract.hasImage')"
+                    v-model="contractData.hasImage"
+                    class="w-full md:w-6/12"
+                />
+                <p class="text-xl text-brand_secondary mt-sm">Fields</p>
                 <v-metadata v-model="contractData.metadata"/>
             </div>
-            <!-- <div class="form--section">
-        <h5 class="form--title">Metadata <QuestionMarkCircleIcon class="form--title-icon" /></h5>
-      </div> -->
         </div>
         <!-- ACTIONS -->
         <div class="flex flex-col sm:flex-row items-center justify-center">
-            <!-- <v-button format="primary" aria="Create a new NFT" :external="false" :white="false" size="medium" :text="$t('editor.buttons.save').toUpperCase()" @click="saveContract" /> -->
             <v-button
                 v-if="props.canDeploy"
                 format="primary"
@@ -139,8 +142,8 @@ import vInput from '@/components/editor/input.vue';
 import vMetadata from '@/components/editor/metadata/metadata.vue';
 import vCheckbox from '@/components/editor/checkbox.vue';
 import { QuestionMarkCircleIcon } from '@heroicons/vue/solid';
-import { ref, watch } from 'vue';
-import { mapApiExtensionsToForm } from '@/js/mapper.js';
+import { ref, watch, computed } from 'vue';
+import { mapApiExtensionsToForm, mapApiMetadataToForm } from '@/js/mapper.js';
 
 import { useApi } from '@/plugins/api';
 const api = useApi();
@@ -157,6 +160,10 @@ const props = defineProps({
     extensions: {
         type: Array,
         default: []
+    },
+    metadata: {
+        type: Object,
+        default: {}
     },
     isVerified: {
         type: Boolean,
@@ -186,6 +193,7 @@ const props = defineProps({
 
 // Get a mapped version of the extension to see which one is enabled
 const mappedExtensions = mapApiExtensionsToForm(props.extensions);
+const [hasImage, mappedMetadata] = mapApiMetadataToForm(props.metadata);
 const contractData = ref({
     name: props.name,
     symbol: props.symbol,
@@ -195,15 +203,12 @@ const contractData = ref({
     isAutoIncrementIds: mappedExtensions.isAutoIncrementIds ?? false,
     isEnumerable: mappedExtensions.isEnumerable ?? false,
     isURIStorage: mappedExtensions.isURIStorage ?? false,
-    metadata: []
+    hasImage: hasImage ?? true,
+    metadata: mappedMetadata ?? []
 });
 const inputsErrors = ref({});
 
 const emit = defineEmits(['contractChanged', 'verifyContract', 'deployContract', 'downloadContract']);
-const saveContract = () => {
-    // api.saveContract('1234', contractData.value);
-    console.log('DSAVE');
-};
 const deployContract = () => {
     emit('deployContract');
 };
@@ -223,11 +228,15 @@ const handleInvalidInput = (name, error) => {
     inputsErrors.value[name] = error;
 };
 
+const validMetadata = computed(() => {
+    return contractData.value.metadata.filter(field => field.name === '' || field.name === null || field.name === undefined).length === 0;
+});
 watch(
     () => contractData.value,
     () => {
         // Need to verify that both are selected not to emit a fake event
-        if ((contractData.value.isAutoIncrementIds && contractData.value.isMintable) || !contractData.value.isAutoIncrementIds) {
+        console.log(contractData.value, validMetadata.value);
+        if (((contractData.value.isAutoIncrementIds && contractData.value.isMintable) || !contractData.value.isAutoIncrementIds) && validMetadata.value) {
             // Don't send the update event if the name or symbol are invalid
             if (!inputsErrors.value['name'] && !inputsErrors.value['symbol']) {
                 emit('contractChanged', contractData.value);

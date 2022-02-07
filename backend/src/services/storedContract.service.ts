@@ -5,10 +5,12 @@ import DatabaseService from './database.service';
 import CreationService from './creation.service';
 // Exceptions
 import ContractNotFoundException from '../exceptions/contractNotFound.exception';
+import InvalidContractOptionsException from '../exceptions/invalidContractOptionsException.exception';
 // Others
 import { EXTENSIONS } from '../constants/contract.constants';
 import { customAlphabet } from 'nanoid';
 import { FilterQuery } from 'mongoose';
+import { IAttribute, IMetadata } from '../interfaces/metadata.interface';
 const nanoid = customAlphabet('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz', 15);
 
 
@@ -65,8 +67,13 @@ class StoredContractService {
         contractId: string,
         name: string,
         symbol: string,
-        extensions: EXTENSIONS[]
+        extensions: EXTENSIONS[],
+        metadata: IMetadata
     ): Promise<{contract: IStoredContract, contractString: string}> => {
+        /* Make sure it can add metadata, after reviewing the flow, this shouldn't be validated
+        If the user chooses not to have URIStorage, it will need to remove the configured metadata, which won't be
+        available again if the user changes it's mind, making them lose the progress */
+        // if (!extensions.includes(EXTENSIONS.ERC721URIStorage) && metadata.length > 0) throw new InvalidContractOptionsException(contractId);
 
         // Find contract in the DB
         const contract = await this.getEnforcedContractById(contractId);
@@ -80,6 +87,9 @@ class StoredContractService {
         contract.name = name;
         contract.symbol = symbol;
         contract.extensions = extensionCopy;
+        contract.metadata.hasImage = metadata.hasImage;
+        contract.metadata.attributes = metadata.attributes;
+        contract.markModified('metadata');
         await contract.save();
 
         return {contract, contractString};

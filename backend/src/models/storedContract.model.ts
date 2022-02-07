@@ -1,5 +1,6 @@
 import { Document, model, models, Schema } from 'mongoose';
-import { METHOD_TYPE, STATE_MUTABILITY, PARAMETER_TYPE } from '../constants/contract.constants';
+import { IMetadata } from '../interfaces/metadata.interface';
+import { METHOD_TYPE, STATE_MUTABILITY, PARAMETER_TYPE, METADATA_TYPES, METADATA_DISPLAY_TYPES } from '../constants/contract.constants';
 import { IAbi } from '../interfaces/abi.interface';
 
 export interface IStoredContract extends Document {
@@ -18,6 +19,7 @@ export interface IStoredContract extends Document {
         verifiedAddress: string;
         date: Date;
     };
+    metadata: IMetadata
 }
 
 const StoredConstractSchema = new Schema({
@@ -70,6 +72,18 @@ const StoredConstractSchema = new Schema({
             type: Date,
             required: false
         }
+    },
+    metadata: {
+        hasImage: {
+            type: Boolean,
+            required: false,
+            default: true
+        },
+        attributes: [{
+            trait_type: { type: String, required: true },
+            display_type: { type: String, required: false, enum: METADATA_DISPLAY_TYPES },
+            trait_format: { type: String, required: true, enum: METADATA_TYPES },
+        }]
     }
 },
 {

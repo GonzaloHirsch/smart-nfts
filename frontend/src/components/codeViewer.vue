@@ -1,14 +1,14 @@
 <template>
-  <div class="overflow-x-auto overflow-y-auto code-viewer justify-start items-start rounded-md bg-slate-800 text-white">
-    <pre v-if="!props.loading">
+    <div class="overflow-x-auto overflow-y-auto code-viewer justify-start items-start rounded-md bg-slate-800 text-white shadown-lg">
+        <pre v-if="!props.loading">
       <code ref="contractCode" class="language-solidity">
         {{props.code}}
       </code>
     </pre>
-    <div v-else class="w-full flex flex-col items-center justify-center h-full">
-      <RefreshIcon class="h-12 w-12 animate-spin mx-auto my-auto" />
+        <div v-else class="w-full flex flex-col items-center justify-center h-full">
+            <RefreshIcon class="h-12 w-12 animate-spin mx-auto my-auto" />
+        </div>
     </div>
-  </div>
 </template>
 
 <script setup>
@@ -16,40 +16,48 @@ import { ref, watch, nextTick } from 'vue';
 import { RefreshIcon } from '@heroicons/vue/solid';
 
 const props = defineProps({
-  code: {
-    type: String,
-    default: undefined
-  },
-  loading: {
-    type: Boolean,
-    default: false
-  }
+    code: {
+        type: String,
+        default: undefined
+    },
+    loading: {
+        type: Boolean,
+        default: false
+    }
 });
 
 // Ref to access the element
 const contractCode = ref(null);
 const formatCode = () => {
-  if (props.code && contractCode.value) {
-    hljs.highlightElement(contractCode.value);
-  }
+    if (props.code && contractCode.value) {
+        hljs.highlightElement(contractCode.value);
+    }
 };
 // Watch for changes and style again
 watch(
-  () => props.code,
-  async () => {
-    // We need to wait for next tick so that it's done loading
-    await nextTick();
-    formatCode();
-  },
-  {
-    immediate: true
-  }
+    () => props.loading,
+    async () => {
+        // We need to wait for next tick so that it's done loading
+        if (!props.loading) {
+            await nextTick();
+            formatCode();
+        }
+    },
+    {
+        immediate: true
+    }
 );
 </script>
 
 <style scoped>
 .code-viewer {
-  @apply h-auto;
-  max-height: 100vh;
+    @apply h-auto;
+    max-height: 100vh;
+}
+
+@screen md {
+    .code-viewer {
+        max-height: none;
+    }
 }
 </style>
