@@ -70,10 +70,9 @@ class DeploymentService {
         .encodeABI();
 
         const tx = await this.transactionService.createTransaction(
-            NULL_ADDRESS, 
-            this.deploymentAddress,
             contractData, 
-            DEPLOY_GAS
+            DEPLOY_GAS,
+            this.deploymentAddress,
         );
 
         return await this.transactionService.signAndSendTransaction(tx, true);

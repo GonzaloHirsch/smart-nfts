@@ -7,6 +7,7 @@ import GenericException from '../../exceptions/generic.exception';
 import { setHttpErrorMsg } from '../../helpers/errors.helper';
 import { HTTP_ERRORS } from '../../constants/errors.constants';
 import { parse } from 'aws-multipart-parser'
+import StoredContractService from '../../services/storedContract.service';
 
 const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     
@@ -15,23 +16,25 @@ const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyRes
     // else 
     const formData = parse(event, true);
     
+    // Parse the inputs and check if its a valid JSON
+    let args: IArguments;
+    try {
+        args = JSON.parse(formData.inputs) as IArguments;
+    } catch (err) {
+        throw new GenericException(setHttpErrorMsg(HTTP_ERRORS.BAD_REQUEST.PARAMS, 'Invalid JSON input'));
+    }
+
     // @ts-ignore
     await IpfsService.getInstance().addFileToIPFS(formData.token.content, formData.token.filename);
     // @ts-ignore
     console.log(await IpfsService.getInstance().addJSONToIPFS({test: "a", test2: "b"}, formData.token.filename));
     // console.log(formData.token.content);
     
-    
-    // if (isEmptyBody(event.body)) 
-    //     throw new GenericException(setHttpErrorMsg(HTTP_ERRORS.BAD_REQUEST.PARAMS, 'Missing request body'));
-    
-    // TODO: Check for input validity
+    const instance = await StoredContractService.getInstance();
 
-    // Get contract by id, we need it
-    // const instance = await StoredContractService.getInstance();
-    // const contract = await instance.getEnforcedContractById(event.pathParameters!.contractId!);
+    const contract = await instance.getEnforcedContractById(event.pathParameters!.contractId!)
 
-    // TODO: Do things with the contract
+    
 
     return {
         statusCode: 201,

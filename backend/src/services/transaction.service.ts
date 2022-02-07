@@ -21,10 +21,10 @@ class TransactionService {
     };
 
     createTransaction = async (
-        to: string,
-        from: string,
         data: string, 
-        gasLimit: number
+        gasLimit: number,
+        from: string,
+        to?: string,
     ): Promise<ITransactionConfig> => {
         const nonce = await this.web3.eth.getTransactionCount(this.deploymentAddress!);
 
@@ -36,10 +36,13 @@ class TransactionService {
             gasPrice: gasPriceHex,
             gas: gasLimitHex,
             from: from,
-            to: to,
             value: 0,
             data: data
         };
+
+        if (to != null) {
+            tx.to = to;
+        }
 
         return tx;
     }
