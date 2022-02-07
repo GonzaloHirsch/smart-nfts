@@ -7,10 +7,10 @@
         <template v-if="isLoadingModal">
             <div class="w-full rounded-lg text-brand_secondary">
                 <h4 v-if="modalType === 'deploy'" class="flex items-center justify-center my-base py-xl">
-                    {{ $t('editor.deploy.loading') }} <RefreshIcon class="h-10 w-10 animate-spin" />
+                    {{ $t('editor.deploy.loading') }} <RefreshIcon class="h-10 w-10 animate-spin transform rotate-180" />
                 </h4>
                 <h4 v-else-if="modalType === 'verify'" class="flex items-center justify-center my-base py-xl">
-                    {{ $t('editor.verify.loading') }} <RefreshIcon class="h-10 w-10 animate-spin" />
+                    {{ $t('editor.verify.loading') }} <RefreshIcon class="h-10 w-10 animate-spin transform rotate-180" />
                 </h4>
             </div>
         </template>
@@ -23,7 +23,7 @@
 
     <v-section :noPadding="true" class="bg-typography_primary">
         <div v-if="!isLoadingEditor" class="flex flex-col md:flex-row">
-            <div class="flex flex-col w-full md:w-6/12 p-sm" ref="editorContainer">
+            <div class="flex flex-col w-full md:w-6/12 p-sm h-fit" ref="editorContainer">
                 <v-editor
                     @contractChanged="handleContractChange"
                     @deployContract="handleDeployContract"
@@ -44,7 +44,7 @@
                         $t('editor.last_saved', [$d(lastSaved, 'short')])
                     }}</span>
                     <span v-else-if="isLoading" class="flex items-center mt-sm text-sm"
-                        >{{ $t('editor.saving') }} <RefreshIcon class="h-4 w-4 animate-spin"
+                        >{{ $t('editor.saving') }} <RefreshIcon class="h-4 w-4 animate-spin transform rotate-180"
                     /></span>
                     <span class="flex items-center mt-xs text-sm"
                         >{{ $t('editor.contract.id') }}<strong class="ml-1">{{ route.params.id }}</strong
@@ -85,7 +85,7 @@
         <div v-else class="flex flex-row items-center justify-center p-xs md:p-md">
             <div class="bg-brand_secondary w-full rounded-lg text-typography_primary">
                 <h4 class="flex items-center justify-center my-base py-xl">
-                    {{ $t('editor.prepare') }} <RefreshIcon class="h-10 w-10 animate-spin" />
+                    {{ $t('editor.prepare') }} <RefreshIcon class="h-10 w-10 animate-spin transform rotate-180" />
                 </h4>
             </div>
         </div>

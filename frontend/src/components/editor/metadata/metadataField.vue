@@ -62,7 +62,7 @@ import { XCircleIcon, ExclamationIcon } from '@heroicons/vue/solid';
 import { ref, watch } from 'vue';
 import { applyValidations, sumarizeValidationResults } from '@/js/validations.js';
 
-const emit = defineEmits(['update:name', 'update:type', 'removeField']);
+const emit = defineEmits(['update:name', 'update:type', 'update:display', 'removeField']);
 const props = defineProps({
     name: {
         type: String,

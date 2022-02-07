@@ -13,7 +13,6 @@
             v-model:type="field.type"
             v-model:display="field.display"
             :names="currentNames"
-            @change="handleMetadataChange"
             @removeField="handleRemoveField"
         />
         <span
@@ -57,10 +56,6 @@ const handleAddField = () => {
         type: 'string',
         display: undefined
     });
-    emit('update:modelValue', props.modelValue);
-};
-
-const handleMetadataChange = () => {
     emit('update:modelValue', props.modelValue);
 };
 
