@@ -4,7 +4,16 @@ export const mapFormToApiData = (formData) => {
     const data = {
         name: formData.name,
         symbol: formData.symbol,
-        extensions: []
+        extensions: [],
+        metadata: {
+            hasImage: formData.hasImage,
+            attributes: formData.metadata.map(field => {
+            return {
+                trait_type: field.name,
+                display_type: field.display,
+                trait_format: field.type
+            }
+        })}
     };
     if (formData.isMintable) data.extensions.push(EXTENSIONS.MINTABLE);
     if (formData.isPausable) data.extensions.push(EXTENSIONS.PAUSABLE);
@@ -31,3 +40,13 @@ export const mapApiExtensionsToForm = (extensions) => {
     if (EXTENSIONS.URI_STORAGE in map) mappedExtensions.isURIStorage = true;
     return mappedExtensions;
 }
+
+export const mapApiMetadataToForm = (metadata) => {
+    return [metadata.hasImage, metadata.attributes.map(field => {
+        return {
+            name: field.trait_type,
+            type: field.trait_format,
+            display: field.display_type
+        }
+    })];
+};

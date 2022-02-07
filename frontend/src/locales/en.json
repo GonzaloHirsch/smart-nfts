@@ -101,7 +101,11 @@
             "information": "Contract Information",
             "features": "Features",
             "creation": "Creation",
-            "metadata": "Metadata"
+            "metadata": "Metadata",
+            "hasImage": "Has image?"
+        },
+        "error": {
+            "nameUsed": "Name for property already in use"
         },
         "buttons": {
             "save": "Save",

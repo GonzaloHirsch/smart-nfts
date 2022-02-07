@@ -23,7 +23,7 @@
 
     <v-section :noPadding="true" class="bg-typography_primary">
         <div v-if="!isLoadingEditor" class="flex flex-col md:flex-row">
-            <div class="flex flex-col w-full md:w-6/12 bg-light rounded-b-2xl md:rounded-b-0 md:rounded-r-2xl pt-sm pb-base px-md">
+            <div class="flex flex-col w-full md:w-6/12 p-sm" ref="editorContainer">
                 <v-editor
                     @contractChanged="handleContractChange"
                     @deployContract="handleDeployContract"
@@ -32,6 +32,7 @@
                     :name="storedContract.name"
                     :symbol="storedContract.symbol"
                     :extensions="storedContract.extensions"
+                    :metadata="storedContract.metadata"
                     :isVerified="isVerified"
                     :canVerify="canVerify"
                     :canDeploy="canDeploy"
@@ -77,8 +78,8 @@
                     /></router-link>
                 </v-editor>
             </div>
-            <div class="flex w-full md:w-6/12 p-sm">
-                <v-code-viewer class="flex flex-col w-full" :code="contract" :loading="isLoading" />
+            <div class="flex w-full md:w-6/12 p-sm" :style="`min-height: ${editorHeight}px; max-height: ${editorHeight}px`">
+                <v-code-viewer :key="contract" class="flex flex-col w-full" :code="contract" :loading="isLoading" />
             </div>
         </div>
         <div v-else class="flex flex-row items-center justify-center p-xs md:p-md">
@@ -324,6 +325,12 @@ const copyContractAddress = () => {
             setSnackbar('Cannot copy contract address to clipboard!', 'error', 5);
         });
 };
+
+// Container heights
+const editorContainer = ref(null);
+const editorHeight = computed(() => {
+    return editorContainer.value?.clientHeight;
+})
 </script>
 
 <style>

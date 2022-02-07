@@ -9,6 +9,7 @@ import { isEmptyPathParams, validContractId, isEmptyBody } from '../../helpers/v
 import GenericException from '../../exceptions/generic.exception';
 import { setHttpErrorMsg } from '../../helpers/errors.helper';
 import { HTTP_ERRORS } from '../../constants/errors.constants';
+import { IAttribute, IMetadata } from '../../interfaces/metadata.interface';
 
 const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     
@@ -21,6 +22,7 @@ const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyRes
     const name = requestBody.name as string;
     const symbol = requestBody.symbol as string;
     const extensions = requestBody.extensions as string[];
+    const metadata = requestBody.metadata as IMetadata;
 
     if (!name || !symbol || !extensions || !enumHasKeys(EXTENSIONS, extensions)) {
         throw new GenericException(HTTP_ERRORS.BAD_REQUEST.PARAMS);
@@ -33,7 +35,8 @@ const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyRes
         event.pathParameters!.contractId!, 
         name, 
         symbol, 
-        extensions as EXTENSIONS[]
+        extensions as EXTENSIONS[],
+        metadata
     );
 
     return {

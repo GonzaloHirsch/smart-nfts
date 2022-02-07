@@ -13,7 +13,7 @@ export const CONTRACT_LICENSE = 'MIT';
 export enum STATE_MUTABILITY {
     PURE = 'pure',
     VIEW = 'view',
-    NONPAYABLE = '',
+    NONPAYABLE = 'nonpayable',
     PAYABLE = 'payable'
 };
 
@@ -73,3 +73,14 @@ export const EXTENSION_MAP: Map<string, IContractExtension> = new Map([
 ]);
 
 export const REQUIRE_KEYWORD = 'require';
+
+export enum METADATA_TYPES {
+    NUMBER = 'number',
+    STRING = 'string'
+};
+
+export enum METADATA_DISPLAY_TYPES {
+    BOOST_NUMBER = 'boost_number',
+    BOOST_PERCENTAGE = 'boost_percentage',
+    PLAIN_NUMBER = 'number'
+};

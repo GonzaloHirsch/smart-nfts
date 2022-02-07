@@ -12,6 +12,7 @@
             v-model:name="field.name"
             v-model:type="field.type"
             v-model:display="field.display"
+            :names="currentNames"
             @change="handleMetadataChange"
             @removeField="handleRemoveField"
         />
@@ -39,6 +40,16 @@ const props = defineProps({
 const canAddField = computed(() => {
     return props.modelValue.length === 0 || props.modelValue.filter((el) => el.name === undefined || el.name === '' || el.name === null).length === 0;
 });
+
+const currentNames = computed(() => {
+    return props.modelValue.map(field => field.name).reduce((obj, field) => {
+        if (!(field in obj)) {
+            obj[field] = 0;
+        }
+        obj[field] = obj[field] + 1;
+        return obj;
+    }, {});
+})
 
 const handleAddField = () => {
     props.modelValue.push({

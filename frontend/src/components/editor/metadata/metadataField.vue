@@ -1,5 +1,11 @@
 <template>
-    <div class="grid grid-cols-7 gap-xs mb-xs">
+    <div :class="['grid grid-cols-7 gap-xs mb-xs relative transform transition duration-200', metadataField.error ? 'translate-x-4' : '']">
+        <ExclamationIcon
+            :class="[
+                'absolute top-0 bottom-0 left-0 my-auto text-error h-6 w-6 transform transition duration-200',
+                metadataField.error ? 'opacity-100 -translate-x-7' : 'opacity-0'
+            ]"
+        />
         <v-input
             :name="`name-${props.id}`"
             :id="`name-${props.id}`"
@@ -45,13 +51,13 @@
             <XCircleIcon @click="handleRemoveEntry" class="w-8 h-8 cursor-pointer hover:text-error transition duration-200" />
         </div>
     </div>
-    <span v-if="metadataField.error" class="text-error text-xs mt-xs">{{ $t(metadataField.error) }}</span>
+    <span v-if="metadataField.error" class="text-error text-xs">{{ $t(metadataField.error) }}</span>
 </template>
 
 <script setup>
 import vInput from '@/components/editor/input.vue';
 import vSelect from '@/components/editor/select.vue';
-import { XCircleIcon } from '@heroicons/vue/solid';
+import { XCircleIcon, ExclamationIcon } from '@heroicons/vue/solid';
 
 import { ref, watch } from 'vue';
 import { applyValidations, sumarizeValidationResults } from '@/js/validations.js';
@@ -74,12 +80,18 @@ const props = defineProps({
     id: {
         type: Number,
         required: true
+    },
+    // Current names chosen, used for collision detection
+    names: {
+        type: Object,
+        required: true
     }
 });
 
 const metadataField = ref({
     name: props.name ?? undefined,
     type: props.type ?? undefined,
+    display: props.display ?? undefined,
     error: undefined
 });
 
@@ -119,7 +131,13 @@ const handleInvalidInput = (error) => {
 };
 
 const handleInputChange = () => {
-    if (!metadataField.value.error) emit('update:name', metadataField.value.name);
+    if (!metadataField.value.error) {
+        if (metadataField.value.name in props.names && props.names[metadataField.value.name] > 1) {
+            metadataField.value.error = 'editor.error.nameUsed';
+        } else {
+            emit('update:name', metadataField.value.name);
+        }
+    }
 };
 
 const handleTypeChange = () => {
