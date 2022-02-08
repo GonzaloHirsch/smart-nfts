@@ -1,7 +1,9 @@
+import { SUPPORTED_NETWORKS } from '../constants/contract.constants';
 import Web3 from 'web3';
-import { ropstenNetwork, GAS_PRICE } from '../constants/general.constants';
+import { ropstenNetwork, GAS_PRICE, rinkebyNetwork } from '../constants/general.constants';
 import InsufficientGasException from '../exceptions/insufficientGas.exception';
 import { ITransactionConfig } from '../interfaces/blockchain.interface';
+import NoNetworkException from '../exceptions/noNetwork.exception';
 
 class TransactionService {
     private static instance: TransactionService;
@@ -10,7 +12,7 @@ class TransactionService {
 
     constructor() {
         // Create web3 instance
-        this.web3 = new Web3(new Web3.providers.HttpProvider(ropstenNetwork(process.env.INFURA_PROJECT_ID)));
+        this.web3 = new Web3(new Web3.providers.HttpProvider(this.getNetwork()!));
     }
 
     static getInstance = () => {
@@ -18,6 +20,16 @@ class TransactionService {
             TransactionService.instance = new TransactionService();
         }
         return TransactionService.instance;
+    };
+
+    private getNetwork = (): string | undefined => {
+        switch (process.env.DEPLOYMENT_NETWORK) {
+            case SUPPORTED_NETWORKS.RINKEBY:
+                return rinkebyNetwork(process.env.INFURA_PROJECT_ID);
+            case SUPPORTED_NETWORKS.ROPSTEN:
+                return ropstenNetwork(process.env.INFURA_PROJECT_ID);
+        }
+        throw new NoNetworkException(process.env.DEPLOYMENT_NETWORK);
     };
 
     createTransaction = async (

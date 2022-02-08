@@ -84,3 +84,8 @@ export enum METADATA_DISPLAY_TYPES {
     BOOST_PERCENTAGE = 'boost_percentage',
     PLAIN_NUMBER = 'number'
 };
+
+export enum SUPPORTED_NETWORKS {
+    RINKEBY = 'rinkeby',
+    ROPSTEN = 'ropsten'
+};
