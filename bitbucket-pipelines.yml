@@ -36,7 +36,7 @@ pipelines:
         - step:
             name: Security Scan
             script:
-              # Run a security scan for sensitive data.
+              # Run a security scan for sensitive data (all commits)
               # See more security tools at https://bitbucket.org/product/features/pipelines/integrations?&category=security
               - pipe: atlassian/git-secrets-scan:0.5.1
       # Front
