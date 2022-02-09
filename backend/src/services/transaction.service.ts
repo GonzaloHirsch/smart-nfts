@@ -1,9 +1,9 @@
-import { SUPPORTED_NETWORKS } from '../constants/contract.constants';
 import Web3 from 'web3';
+import { SUPPORTED_NETWORKS } from '../constants/contract.constants';
 import { ropstenNetwork, GAS_PRICE, rinkebyNetwork } from '../constants/general.constants';
-import InsufficientGasException from '../exceptions/insufficientGas.exception';
 import { ITransactionConfig } from '../interfaces/blockchain.interface';
 import NoNetworkException from '../exceptions/noNetwork.exception';
+import BlockchainInteractException from '../exceptions/blockchainInteract.exception';
 
 class TransactionService {
     private static instance: TransactionService;
@@ -78,7 +78,7 @@ class TransactionService {
             })
             .catch((err) => {
                 console.log(err)
-                throw new InsufficientGasException(this.deploymentAddress);
+                throw new BlockchainInteractException(err.message);
             });
     }
 }

@@ -1,7 +1,7 @@
 import { compileContract } from '../helpers/compiler.helper';
 import { IStoredContract } from '../models/storedContract.model';
 import Web3 from 'web3';
-import { ropstenNetwork, rinkebyNetwork, DEPLOY_GAS, NULL_ADDRESS } from '../constants/general.constants';
+import { ropstenNetwork, rinkebyNetwork, DEPLOY_GAS } from '../constants/general.constants';
 import TransactionService from './transaction.service';
 import { SUPPORTED_NETWORKS } from '../constants/contract.constants';
 import NoNetworkException from '../exceptions/noNetwork.exception';
@@ -52,7 +52,7 @@ class DeploymentService {
 
         // Update inner state
         contract.abi = compiledContract.abi;
-        contract.deployment.network = process.env.DEPLOYMENT_NETWORK;
+        contract.deployment.network = process.env.DEPLOYMENT_NETWORK as SUPPORTED_NETWORKS;
         contract.deployment.address = contractAddress!;
         contract.deployment.date = new Date();
         contract.deployment.compilerVersion = compiledContract.compilerVersion;

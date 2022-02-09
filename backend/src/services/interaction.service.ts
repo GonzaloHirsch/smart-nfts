@@ -1,13 +1,21 @@
-import ContractNotDeployedException from '../exceptions/contractNotDeployed.exception';
-import { IStoredContract } from '../models/storedContract.model';
 import Web3 from 'web3';
+// Model
+import { IStoredContract } from '../models/storedContract.model';
+// Constants, interfaces, helpers
 import { ropstenNetwork } from '../constants/general.constants';
-import AbiService from './abi.service';
 import { IArguments } from '../interfaces/general.interface';
 import { IAbiInput } from '../interfaces/abi.interface';
 import { IAbiMethod } from '../interfaces/abi.interface';
 import { STATE_MUTABILITY } from '../constants/contract.constants';
+import { typeValidations } from '../helpers/validations.helper';
+// Services
 import TransactionService from './transaction.service';
+import AbiService from './abi.service';
+// Exceptions
+import MethodInputException from '../exceptions/methodInput.exception';
+import BlockchainInteractException from '../exceptions/blockchainInteract.exception';
+import ContractNotDeployedException from '../exceptions/contractNotDeployed.exception';
+
 
 class InteractionService {
     private static instance: InteractionService;
@@ -55,16 +63,20 @@ class InteractionService {
 
     private _checkValidInputs = (methodInputs: IAbiInput[], args: IArguments): void => {
         
-        for (const input of methodInputs) {      
+        for (const inputDef of methodInputs) {      
             
-            const argumentValue = args[input.name]; 
+            const argumentValue = args[inputDef.name]; 
+            const typeValidator = typeValidations[inputDef.type];
 
+            console.log(argumentValue, typeValidator)
             if (argumentValue == null) {
-                // TODO - MISSING PARAM ERROR
-                throw new Error('TODO')
+                throw new MethodInputException(inputDef.name, inputDef.type);
             }
-            
-            // TODO - Validar que sea el tipo correcto (Gonza validations) -> sino error
+
+            if (typeValidator == null || !typeValidator(argumentValue)) {
+                console.log('INVALID  PARAM TYPE')
+                throw new MethodInputException(inputDef.name, inputDef.type, argumentValue);
+            }
         }
     }
 
@@ -79,7 +91,12 @@ class InteractionService {
 
         const argsValues = Object.values(args);
 
-        return await contract.methods[method.name!](...argsValues).call({from: this.deploymentAddress});
+        return await contract.methods[method.name!](...argsValues)
+            .call({from: this.deploymentAddress})
+            .catch((err: any) => {
+                console.log(err);
+                throw new BlockchainInteractException(err.message);
+            });
     }
 
     private _handleWriteMethod = async (

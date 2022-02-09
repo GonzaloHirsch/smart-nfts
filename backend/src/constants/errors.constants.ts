@@ -6,6 +6,8 @@ export const HTTP_ERRORS = {
         PARAMS: { status: 400, internalStatus: 'INVALID_PARAMS', message: 'Invalid parameters.' },
         CONTRACT: { status: 400, internalStatus: 'INVALID_CONTRACT', message: 'Invalid contract. Data missing.' },
         MISSING_DEPLOY: { status: 400, internalStatus: 'MISSING_DEPLOY', message: 'Contract must be deployed.' },
+        INVALID_INTERACTION: { status: 400, internalStatus: 'INVALID_INTERACTION', message: 'Blockchain error when interacting.' },
+        INVALID_METHOD_INPUTS: { status: 400, internalStatus: 'INVALID_METHOD_INPUTS', message: 'Invalid params for method' },
     },
     FORBIDDEN: {
         GENERAL: { status: 403, internalStatus: 'FORBIDDEN', message: 'Forbidden.' },
@@ -37,6 +39,8 @@ export const EXCEPTION_NAMES = {
     INVALID_CONTRACT_OPTIONS: 'InvalidContractOptionsException',
     MISSING_EXTENSION: 'MissingExtensionException',
     NO_NETWORK: 'NoNetworkException',
+    BLOCKCHAIN_INTERACT: 'BlockchainException',
+    METHOD_INPUT_ERROR: 'MethodInputException',
 }
 
 export const EXCEPTION_TO_HTTP_MAP = new Map<string, IHttpErrorData>([
@@ -49,4 +53,6 @@ export const EXCEPTION_TO_HTTP_MAP = new Map<string, IHttpErrorData>([
     [EXCEPTION_NAMES.COMPILATION_ERROR, HTTP_ERRORS.SERVER.COMPILATION],
     [EXCEPTION_NAMES.MISSING_EXTENSION, HTTP_ERRORS.SERVER.EXTENSION],
     [EXCEPTION_NAMES.NO_NETWORK, HTTP_ERRORS.SERVER.CONFIGURATION],
+    [EXCEPTION_NAMES.BLOCKCHAIN_INTERACT, HTTP_ERRORS.BAD_REQUEST.INVALID_INTERACTION],
+    [EXCEPTION_NAMES.METHOD_INPUT_ERROR, HTTP_ERRORS.BAD_REQUEST.INVALID_METHOD_INPUTS],
 ]);
