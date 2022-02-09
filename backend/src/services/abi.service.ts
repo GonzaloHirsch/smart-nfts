@@ -1,4 +1,4 @@
-import { arrayGetFirstMatch } from "src/helpers/collection.helper";
+import { arrayGetFirstMatch } from "../helpers/collection.helper";
 import { METHOD_TYPE } from "../constants/contract.constants";
 import { IAbi, IAbiMethod } from "../interfaces/abi.interface";
 
@@ -19,7 +19,10 @@ class AbiService {
     }
 
     getContractMethod = (abi: IAbi, methodId: string): IAbiMethod => {
-        const method = arrayGetFirstMatch(abi, (abiMethod: IAbiMethod) => abiMethod._id === methodId);
+        const method = arrayGetFirstMatch(
+            abi, 
+            (abiMethod: IAbiMethod) => abiMethod._id.toString() === methodId
+        );
 
         if (method == null) {
             throw new Error('TODO');

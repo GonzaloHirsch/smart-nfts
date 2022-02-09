@@ -54,11 +54,12 @@ class InteractionService {
     private _checkValidInputs = (methodInputs: IAbiInput[], args: IArguments): void => {
         
         for (const input of methodInputs) {      
-
+            
             const argumentValue = args[input.name]; 
 
             if (argumentValue == null) {
                 // TODO - MISSING PARAM ERROR
+                throw new Error('TODO')
             }
             
             // TODO - Validar que sea el tipo correcto (Gonza validations) -> sino error
@@ -85,11 +86,11 @@ class InteractionService {
 
         const argsValues = Object.values(args);
 
-        const data = contract.methods[method.name!](argsValues).encodeABI();
+        const data = contract.methods[method.name!](...argsValues).encodeABI();
             
         // TODO - gas fees
         const tx = await TransactionService.getInstance().createTransaction(
-            data, 30000, this.deploymentAddress
+            data, 300000, this.deploymentAddress
         );
 
         return await TransactionService.getInstance().signAndSendTransaction(tx);

@@ -59,11 +59,13 @@ class TransactionService {
                 return sentTx;
             })
             .then((receipt) => {
+                console.log(receipt);
                 if (isDeploy) {
                     return receipt.contractAddress;
                 }
             })
             .catch((err) => {
+                console.log(err)
                 throw new InsufficientGasException(this.deploymentAddress);
             });
     }

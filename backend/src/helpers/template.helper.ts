@@ -71,7 +71,7 @@ export const getGlobalVariable = (variable: IContractVariable): string => {
 //**********************************//
 
 const getNullableDetail = (detail?: string): string => {
-    return detail != null 
+    return detail != null && detail !== ''
         ? `${indexContent(detail)}` + newLine()
         : '';
 }

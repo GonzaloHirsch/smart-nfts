@@ -1,7 +1,6 @@
 import { EXTENSIONS, FINAL_EXTENSIONS } from "../constants/contract.constants";
 import { enumHasKeys } from "../helpers/collection.helper";
 import { IContract, IContractLibrary, IContractMethod, IContractVariable } from "../interfaces/contract.interface";
-import { Mintable } from "./Mintable.contract";
 
 export class CustomContract implements IContract {
     private imports: string[];

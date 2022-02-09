@@ -11,8 +11,6 @@ import TemplateService from './template.service';
 class CreationService {
     private static instance: CreationService;
 
-    constructor() {}
-
     static getInstance = () => {
         if (!CreationService.instance) {
             CreationService.instance = new CreationService();
