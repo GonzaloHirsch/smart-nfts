@@ -31,7 +31,7 @@ class VerificationService {
         const flatContract = await flattenContract(contractString);
        
         // Verify the contract
-        const verificationId = await this._verifyContract(flatContract, contract.name, contract.deployment.address, contract.deployment.compilerVersion);
+        const verificationId = await this._verifyContract(flatContract, contract.name, contract.deployment.address, contract.deployment.compilerVersion, contract.deployment.network);
        
         // Updating the state
         contract.verification.verified = true;
@@ -47,7 +47,8 @@ class VerificationService {
         contract: string, 
         contractName: string, 
         contractAddress: string, 
-        compilerVersion: string
+        compilerVersion: string,
+        contractNetwork: string
     ) => {
         // Create stringified version of the object
         const data = qs.stringify({
@@ -62,9 +63,10 @@ class VerificationService {
             sourceCode: contract
         });
         // Config for request as per what Postman says
+        const url = process.env.ETHERSCAN_API_URL?.replace('NETWORK', contractNetwork);
         const config: AxiosRequestConfig = {
             method: 'post',
-            url: `${process.env.ETHERSCAN_API_URL}api`,
+            url: `${url}api`,
             headers: { 
                 'Content-Type': 'application/x-www-form-urlencoded'
             },

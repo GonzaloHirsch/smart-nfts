@@ -19,6 +19,7 @@ export const HTTP_ERRORS = {
     },
     SERVER: {
         GENERAL: { status: 500, internalStatus: 'UNKNOWN_ERROR', message: 'Unknown server error.' },
+        CONFIGURATION: { status: 500, internalStatus: 'CONFIGURATION_ERROR', message: 'Missing or invalid configuration.' },
         DATABASE: { status: 500, internalStatus: 'DB_ERROR', message: 'Database error.' },
         BLOCKCHAIN: { status: 500, internalStatus: 'BLOCKCHAIN_ERROR', message: 'Blockchain error.' },
         COMPILATION: { status: 500, internalStatus: 'COMPILATION_ERROR', message: 'Compilation error.' },
@@ -35,6 +36,7 @@ export const EXCEPTION_NAMES = {
     CONTRACT_NOT_DEPLOYED: 'ContractNotDeployedException',
     INVALID_CONTRACT_OPTIONS: 'InvalidContractOptionsException',
     MISSING_EXTENSION: 'MissingExtensionException',
+    NO_NETWORK: 'NoNetworkException',
 }
 
 export const EXCEPTION_TO_HTTP_MAP = new Map<string, IHttpErrorData>([
@@ -46,4 +48,5 @@ export const EXCEPTION_TO_HTTP_MAP = new Map<string, IHttpErrorData>([
     [EXCEPTION_NAMES.INVALID_CONTRACT_OPTIONS, HTTP_ERRORS.BAD_REQUEST.PARAMS],
     [EXCEPTION_NAMES.COMPILATION_ERROR, HTTP_ERRORS.SERVER.COMPILATION],
     [EXCEPTION_NAMES.MISSING_EXTENSION, HTTP_ERRORS.SERVER.EXTENSION],
+    [EXCEPTION_NAMES.NO_NETWORK, HTTP_ERRORS.SERVER.CONFIGURATION],
 ]);

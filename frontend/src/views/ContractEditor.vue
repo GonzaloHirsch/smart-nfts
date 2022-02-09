@@ -62,9 +62,9 @@
                         >{{ $t('editor.contract.verified') }}<BadgeCheckIcon class="h-5 w-5 block ml-1 text-brand_secondary"
                     /></span>
                     <a
-                        v-if="isDeployed"
+                        v-if="isDeployed && storedContract.deployment.network"
                         class="flex items-center mt-xs text-sm hover:text-brand_secondary transition-colors duration-300"
-                        :href="`https://ropsten.etherscan.io/address/${storedContract.deployment.address}`"
+                        :href="`https://${storedContract.deployment.network}.etherscan.io/address/${storedContract.deployment.address}`"
                         aria-label="View on Etherscan"
                         target="_blank"
                         rel="noopener noreferrer"
@@ -317,7 +317,7 @@ const copyContractAddress = () => {
         return;
     }
     navigator.clipboard
-        .writeText(route.params.id)
+        .writeText(storedContract.value.deployment.address)
         .then(() => {
             setSnackbar('Copied to clipboard!', 'default', 5);
         })
