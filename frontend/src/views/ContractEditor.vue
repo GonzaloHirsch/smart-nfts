@@ -130,7 +130,6 @@
 
 <script setup>
 // Components
-import vButton from '@/components/button.vue';
 import vCodeViewer from '@/components/codeViewer.vue';
 import vEditor from '@/components/editor.vue';
 import vModal from '@/components/modal.vue';

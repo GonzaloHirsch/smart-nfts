@@ -19,6 +19,7 @@
             :text="$t(props.button.text)"
             :disabled="editDisabled"
             :loading="isLoading"
+            :sizeMobile="props.button.sizeMobile"
             @click="handleClick"
         />
     </div>

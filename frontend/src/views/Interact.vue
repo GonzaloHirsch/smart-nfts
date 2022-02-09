@@ -15,7 +15,7 @@
             format="primary-white"
           />
         </div>
-        <v-interacter v-if="!isLoading" :abi="contract.abi" :validContract="validContract" :hasContract="hasContract" />
+        <v-interacter v-if="!isLoading" :abi="contract.abi" :metadata="hasMetadata ? contract.metadata : undefined" :validContract="validContract" :hasContract="hasContract" />
         <div v-else class="w-full flex flex-row items-center justify-center h-full mx-auto my-auto">
           <span class="text-h5">{{ $t('interact.loading.methods') }}</span
           ><RefreshIcon class="h-12 w-12 animate-spin" />
@@ -194,7 +194,7 @@ import vInput from '@/components/editor/input.vue';
 import vInteracter from '@/components/interacter.vue';
 import vSection from '@/components/section.vue';
 import { PlayIcon, RefreshIcon } from '@heroicons/vue/solid';
-import { NAV_HEIGHT } from '@/js/constants.js';
+import { NAV_HEIGHT, EXTENSIONS } from '@/js/constants.js';
 
 // Router
 import { useRoute, useRouter } from 'vue-router';
@@ -214,6 +214,7 @@ const validContract = ref(true);
 const contractId = ref(undefined);
 const contract = ref({});
 const hasContract = computed(() => !(contractId.value === '' || contractId.value === null || contractId.value === undefined));
+const hasMetadata = computed(() => contract.value.extensions.includes(EXTENSIONS.URI_STORAGE));
 
 watch(
   () => contractId.value,

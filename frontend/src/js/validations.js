@@ -45,6 +45,22 @@ export const allValidations = {
         label: "This field can have a maximum of 20 characters",
         func: (input) => (max20(input)) || "interact.error.parameters.max20"
     },
+    "string": {
+        label: "Invalid string, maximum length is 256 characters.",
+        func: (input) => (max256(input)) || "interact.error.parameters.string"
+    },
+    "number": {
+        label: "Not a valid number",
+        func: (input) => (isNumber(input)) || "interact.error.parameters.number"
+    },
+    "boost_number": {
+        label: "Not a valid number",
+        func: (input) => (isNumber(input)) || "interact.error.parameters.number"
+    },
+    "boost_percentage": {
+        label: "Invalid percentage, must be between 0 and 100 (without %)",
+        func: (input) => (isPercentage(input)) || "interact.error.parameters.boost_percentage"
+    }
 }
 
 /**
@@ -124,6 +140,21 @@ const isMetadata = (metadataName) => {
 const max20 = (text) => {
     return text.length <= 20;
 }
+
+const max256 = (text) => {
+    return text.length <= 256;
+}
+
+const isPercentage = (num) => {
+    if (isNaN(num)) return false;
+    let _num = parseFloat(num, 10);
+    return _num >= 0 && _num <= 100;
+};
+
+const isNumber = (num) => {
+    if (isNaN(num)) return false;
+    return true;
+};
 
 export const applyValidations = (input, validations) => {
     if (!(validations)) return undefined;

@@ -61,7 +61,7 @@ const props = defineProps({
   },
   sizeMobile: {
     type: String,
-    default: 'medium'
+    default: 'xsmall'
   }
 });
 const buttonFormat = computed(() => (props.white ? `button--${props.format}-white` : `button--${props.format}`));

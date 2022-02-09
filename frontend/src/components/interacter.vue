@@ -10,7 +10,7 @@
       <div class="pt-sm">
         <h4>Write</h4>
         <template v-for="(method, index) in availableMethods_write" :key="`write-${index}`">
-          <v-method-accordion :method="method" class="mb-xs"/>
+          <v-method-accordion :method="method" :metadata="method.name.toLowerCase().includes('mint') ? props.metadata : undefined" class="mb-xs"/>
         </template>
       </div>
     </template>
@@ -45,6 +45,10 @@ const props = defineProps({
   hasContract: {
     type: Boolean,
     default: false
+  },
+  metadata: {
+    type: Object,
+    default: undefined
   }
 });
 

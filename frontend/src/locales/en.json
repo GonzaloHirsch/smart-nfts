@@ -3,7 +3,8 @@
         "name": "Smart NFTs"
     },
     "aria": {
-        "anchorLinks": "Link to {0}"
+        "anchorLinks": "Link to {0}",
+        "imageUploadRemove": "Remove the selected image"
     },
     "placeholders": {
         "contractId": "Contract ID..."
@@ -147,7 +148,10 @@
                 "name": "Name can only contain alphanumeric characters and underscore (_)",
                 "symbol": "Symbol can only contain alphanumeric characters and underscore (_)",
                 "metadataName": "This field can only contain letters, numbers, and _",
-                "max20": "This field can have a maximum of 20 characters"
+                "max20": "This field can have a maximum of 20 characters",
+                "number": "Not a valid number",
+                "boost_percentage": "Invalid percentage, must be between 0 and 100 (without %)",
+                "string": "Invalid string, maximum length is 256 characters."
             }
         },
         "buttons": {
@@ -160,7 +164,18 @@
             "uint256": "Number - 1234567890",
             "bytes4": "0x11AAFF44",
             "bytes": "0x11FFA4...",
-            "bool": "true or false"
+            "bool": "true or false",
+            "string": "String - The quick brown fox...",
+            "boost_number": "Number - 1234567890",
+            "boost_percentage": "Percentage - 0 ... 100",
+            "number": "Number - 1234567890",
+            "image": "Drop the image here or <span class=\"underline\">click here</span> to select it..."
+        },
+        "text": {
+            "boost_number": "Boost Number",
+            "boost_percentage": "Boost Percentage",
+            "number": "Plain Number",
+            "image": "File: {0}"
         }
     },
     "404": {
