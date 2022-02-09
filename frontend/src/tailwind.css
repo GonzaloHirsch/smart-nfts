@@ -34,6 +34,14 @@
     @apply my-auto px-xs pl-xs -mr-xs;
   }
   
+  .button.button--size-small .button-spinner--wrapper {
+    @apply my-auto px-2 pl-2 -mr-2;
+  }
+  
+  .button.button--size-xsmall .button-spinner--wrapper {
+    @apply my-auto px-1 pl-1 -mr-1;
+  }
+  
   .button.button--size-medium .button-spinner {
     @apply w-4 h-4;
   }
@@ -98,6 +106,7 @@ a {
   Colors: /blob/v0.64.0/lib/css/exports/_stacks-constants-colors.less
 */
 pre code.hljs {
+  @apply text-sm;
   display: block;
   overflow-x: auto;
   padding: 1em;

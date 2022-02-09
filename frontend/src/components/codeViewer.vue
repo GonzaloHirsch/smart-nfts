@@ -1,12 +1,12 @@
 <template>
-    <div class="overflow-x-auto overflow-y-auto code-viewer justify-start items-start rounded-md bg-slate-800 text-white shadown-lg">
+    <div class="overflow-x-auto overflow-y-auto code-viewer justify-start items-start rounded-md bg-slate-800 text-white">
         <pre v-if="!props.loading">
       <code ref="contractCode" class="language-solidity">
         {{props.code}}
       </code>
     </pre>
         <div v-else class="w-full flex flex-col items-center justify-center h-full">
-            <RefreshIcon class="h-12 w-12 animate-spin mx-auto my-auto" />
+            <RefreshIcon class="h-12 w-12 animate-spin-reverse mx-auto my-auto" />
         </div>
     </div>
 </template>
@@ -51,7 +51,7 @@ watch(
 
 <style scoped>
 .code-viewer {
-    @apply h-auto;
+    @apply h-auto shadow-2xl !important;
     max-height: 100vh;
 }
 

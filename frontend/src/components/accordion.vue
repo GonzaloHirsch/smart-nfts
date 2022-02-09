@@ -5,7 +5,7 @@
       style="z-index: 2"
     >
       <div class="flex flex-row items-center h-full w-full">
-        <span class="mr-sm text-body_xl">{{ props.title }}</span>
+        <span class="mr-sm text-base md:text-body_xl">{{ props.title }}</span>
         <slot name="header" />
       </div>
       <ChevronUpIcon :class="[$slots.content ? '' : 'invisible', open ? '' : 'transform rotate-180', 'transition duration-200 w-8 h-8']" />
@@ -46,7 +46,7 @@ const formats = computed(() => {
 
 <style scoped>
 .accordion--button-light {
-  @apply bg-light text-typography_secondary;
+  @apply bg-light text-typography_secondary shadow-sm;
 }
 
 .accordion--content-light {
@@ -54,7 +54,7 @@ const formats = computed(() => {
 }
 
 .accordion--button-white {
-  @apply bg-white text-typography_secondary;
+  @apply bg-white text-typography_secondary shadow-sm;
 }
 
 .accordion--content-white {
@@ -62,7 +62,7 @@ const formats = computed(() => {
 }
 
 .accordion--button-primary {
-  @apply bg-white text-typography_secondary;
+  @apply bg-white text-typography_secondary shadow-sm;
 }
 
 .accordion--content-primary {

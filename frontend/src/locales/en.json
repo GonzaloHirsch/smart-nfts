@@ -138,6 +138,7 @@
         "error": {
             "invalidContract": "Invalid contract ID",
             "missingParameter": "Missing parameter {0} ({1})",
+            "missingImage": "Missing token image",
             "parameters": {
                 "address": "Invalid address",
                 "required": "Parameter is required",

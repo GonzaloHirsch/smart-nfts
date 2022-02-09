@@ -4,7 +4,7 @@
         <div class="divide-y divide-typography_secondary">
             <div class="form--section">
                 <h5 class="form--title">{{$t('editor.contract.information')}}<QuestionMarkCircleIcon class="form--title-icon" /></h5>
-                <div class="flex flex-col md:flex-row justify-between">
+                <div class="flex flex-col justify-between">
                     <!-- Set validations for each field and the validation events -->
                     <v-input
                         id="name"
@@ -14,7 +14,7 @@
                         :validations="['required', 'name']"
                         label="Contract Name"
                         v-model="contractData.name"
-                        class="w-full pb-2 md:w-6/12 md:pr-2 md:py-0"
+                        class="w-full pb-2"
                         @validInput="() => handleValidInput('name')"
                         @invalidInput="(error) => handleInvalidInput('name', error)"
                     />
@@ -26,7 +26,7 @@
                         :validations="['required', 'symbol']"
                         label="Contract Symbol"
                         v-model="contractData.symbol"
-                        class="w-full pt-2 md:w-6/12 md:pl-2 md:py-0"
+                        class="w-full pt-2"
                         @validInput="() => handleValidInput('symbol')"
                         @invalidInput="(error) => handleInvalidInput('symbol', error)"
                     />
