@@ -2,7 +2,6 @@ import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import { EXTENSIONS } from '../../constants/contract.constants';
 import { errorHandler } from '../../middleware/errorHandler.middleware';
 import { corsHandler } from '../../middleware/corsHandler.middleware';
-import HttpException from '../../exceptions/http.exception';
 import { enumHasKeys } from '../../helpers/collection.helper';
 import StoredContractService from '../../services/storedContract.service';
 import { isEmptyPathParams, validContractId, isEmptyBody } from '../../helpers/validations.helper';

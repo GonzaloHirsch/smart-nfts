@@ -35,6 +35,8 @@ class InteractionService {
         if (!storedContract.deployment || !storedContract.deployment.address) {
             throw new ContractNotDeployedException(storedContract.id);
         }
+        // Address of the deployed contract
+        const address = storedContract.deployment.address;
 
         // Get the method definition from the ABI
         const method = AbiService.getInstance().getContractMethod(storedContract.abi, methodId);
@@ -43,22 +45,23 @@ class InteractionService {
         this._checkValidInputs(method.inputs, args);
 
         // Get the web3 Contract
-        const contract = new this.web3.eth.Contract(storedContract.abi as any, storedContract.deployment.address);
+        const contract = new this.web3.eth.Contract(storedContract.abi as any, address);
 
         // Different calls for read and write methods
         return this._isReadMethod(method)
             ? this._handleReadMethod(contract, method, args)
-            : this._handleWriteMethod(contract, method, args);
+            : this._handleWriteMethod(contract, address, method, args);
     }
 
     private _checkValidInputs = (methodInputs: IAbiInput[], args: IArguments): void => {
         
         for (const input of methodInputs) {      
-
+            
             const argumentValue = args[input.name]; 
 
             if (argumentValue == null) {
                 // TODO - MISSING PARAM ERROR
+                throw new Error('TODO')
             }
             
             // TODO - Validar que sea el tipo correcto (Gonza validations) -> sino error
@@ -80,16 +83,16 @@ class InteractionService {
     }
 
     private _handleWriteMethod = async (
-        contract: any, method: IAbiMethod, args: IArguments
+        contract: any, contractAddress: string, method: IAbiMethod, args: IArguments
     ): Promise<any> => {
 
         const argsValues = Object.values(args);
 
-        const data = contract.methods[method.name!](argsValues).encodeABI();
+        const data = contract.methods[method.name!](...argsValues).encodeABI();
             
         // TODO - gas fees
         const tx = await TransactionService.getInstance().createTransaction(
-            data, 30000, this.deploymentAddress
+            data, 300000, this.deploymentAddress, contractAddress
         );
 
         return await TransactionService.getInstance().signAndSendTransaction(tx);
