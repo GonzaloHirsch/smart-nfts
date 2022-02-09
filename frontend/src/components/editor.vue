@@ -120,20 +120,6 @@
                 class="mt-sm sm:ml-sm sm:mt-0"
                 @click="verifyContract"
             />
-            <v-button
-                v-if="props.canDownload"
-                :format="props.loadingDownload ? 'disabled' : 'primary'"
-                :disabled="props.loadingDownload"
-                :loading="props.loadingDownload"
-                aria="Download your NFT contract"
-                :external="false"
-                :white="false"
-                size="large"
-                sizeMobile="medium"
-                :text="$t('editor.buttons.download').toUpperCase()"
-                class="mt-sm sm:ml-sm sm:mt-0"
-                @click="downloadContract"
-            />
         </div>
         <slot />
     </div>
@@ -180,17 +166,9 @@ const props = defineProps({
         type: Boolean,
         default: false
     },
-    canDownload: {
-        type: Boolean,
-        default: false
-    },
     id: {
         type: String,
         default: undefined
-    },
-    loadingDownload: {
-        type: Boolean,
-        default: false
     }
 });
 
@@ -211,15 +189,12 @@ const contractData = ref({
 });
 const inputsErrors = ref({});
 
-const emit = defineEmits(['contractChanged', 'verifyContract', 'deployContract', 'downloadContract']);
+const emit = defineEmits(['contractChanged', 'verifyContract', 'deployContract']);
 const deployContract = () => {
     emit('deployContract');
 };
 const verifyContract = () => {
     emit('verifyContract');
-};
-const downloadContract = () => {
-    emit('downloadContract');
 };
 
 // Error handling

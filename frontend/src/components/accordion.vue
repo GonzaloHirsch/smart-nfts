@@ -1,7 +1,7 @@
 <template>
   <Disclosure v-slot="{ open }">
     <DisclosureButton
-      :class="[formats.button, 'flex justify-between w-full px-base py-sm text-left rounded-md outline-none relative', props.class]"
+      :class="[formats.button, 'flex justify-between w-full px-base py-sm text-left rounded-lg outline-none relative', props.class]"
       style="z-index: 2"
     >
       <div class="flex flex-row items-center h-full w-full">

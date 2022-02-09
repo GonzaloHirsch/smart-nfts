@@ -1,5 +1,5 @@
 <template>
-    <div class="overflow-x-auto overflow-y-auto code-viewer justify-start items-start rounded-md bg-slate-800 text-white">
+    <div class="overflow-x-auto overflow-y-auto code-viewer justify-start items-start rounded-md bg-slate-800 text-white relative">
         <pre v-if="!props.loading">
       <code ref="contractCode" class="language-solidity">
         {{props.code}}
@@ -8,13 +8,47 @@
         <div v-else class="w-full flex flex-col items-center justify-center h-full">
             <RefreshIcon class="h-12 w-12 animate-spin-reverse mx-auto my-auto" />
         </div>
+        <div v-if="!props.loading && props.canDownload" class="absolute flex top-0 right-0">
+            <div
+                @click="!props.loadingCopy ? copyContract() : undefined"
+                :class="[
+                    'p-1 border-2 transition duration-200 rounded-l-md',
+                    props.loadingCopy
+                        ? 'bg-gray-500 text-gray-700 border-gray-700 cursor-not-allowed'
+                        : 'border-white text-white hover:text-brand_secondary hover:border-brand_secondary hover:bg-white cursor-pointer'
+                ]"
+                :aria-label="$t('aria.copyContract')"
+                :aria-disabled="props.loadingCopy"
+            >
+                <DocumentDuplicateIcon v-if="!props.loadingCopy" class="h-8 w-8" />
+                <RefreshIcon v-else class="h-8 w-8 animate-spin-reverse" />
+            </div>
+            <div
+                @click="!props.loadingDownload ? downloadContract() : undefined"
+                :class="[
+                    'p-1 border-2 transition duration-200',
+                    props.loadingDownload
+                        ? 'bg-gray-500 text-gray-700 border-gray-700 cursor-not-allowed'
+                        : 'border-white text-white hover:text-brand_secondary hover:border-brand_secondary hover:bg-white cursor-pointer'
+                ]"
+                :aria-label="$t('aria.downloadContract')"
+                :aria-disabled="props.loadingDownload"
+            >
+                <DownloadIcon v-if="!props.loadingDownload" class="h-8 w-8" />
+                <RefreshIcon v-else class="h-8 w-8 animate-spin-reverse" />
+            </div>
+        </div>
     </div>
 </template>
 
 <script setup>
 import { ref, watch, nextTick } from 'vue';
-import { RefreshIcon } from '@heroicons/vue/solid';
+import { RefreshIcon, DocumentDuplicateIcon, DownloadIcon } from '@heroicons/vue/solid';
 
+import { useNotifications } from '@/plugins/notifications';
+const { setSnackbar } = useNotifications();
+
+const emit = defineEmits(['downloadContract']);
 const props = defineProps({
     code: {
         type: String,
@@ -23,8 +57,40 @@ const props = defineProps({
     loading: {
         type: Boolean,
         default: false
+    },
+    canDownload: {
+        type: Boolean,
+        default: false
+    },
+    loadingDownload: {
+        type: Boolean,
+        default: false
     }
 });
+
+const downloadContract = () => {
+    emit('downloadContract');
+};
+
+const loadingCopy = ref(false);
+const copyContract = () => {
+    loadingCopy.value = true;
+    if (!navigator.clipboard) {
+        setSnackbar('Cannot copy contract code to clipboard!', 'error', 5);
+        return;
+    }
+    navigator.clipboard
+        .writeText(props.code)
+        .then(() => {
+            setSnackbar('Copied to clipboard!', 'default', 5);
+            loadingCopy.value = false;
+        })
+        .catch((err) => {
+            console.error(err);
+            setSnackbar('Cannot copy contract code to clipboard!', 'error', 5);
+            loadingCopy.value = false;
+        });
+};
 
 // Ref to access the element
 const contractCode = ref(null);

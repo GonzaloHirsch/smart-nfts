@@ -4,7 +4,9 @@
     },
     "aria": {
         "anchorLinks": "Link to {0}",
-        "imageUploadRemove": "Remove the selected image"
+        "imageUploadRemove": "Remove the selected image",
+        "copyContract": "Copy this contract",
+        "downloadContract": "Download this contract"
     },
     "placeholders": {
         "contractId": "Contract ID..."
@@ -137,6 +139,7 @@
         },
         "error": {
             "invalidContract": "Invalid contract ID",
+            "contractNotDeployed": "Contract has not been deployed yet",
             "missingParameter": "Missing parameter {0} ({1})",
             "missingImage": "Missing token image",
             "parameters": {

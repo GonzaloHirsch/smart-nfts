@@ -1,6 +1,6 @@
 <template>
     <div v-if="!props.isLoading" class="flex flex-col">
-        <template v-if="validContract && hasContract">
+        <template v-if="validContract && hasContract && contractDeployed">
             <template v-for="(method, index) in props.abi" :key="`${index}`">
                 <v-method-accordion :method="method" class="mb-xs" :isMint="props.isMint" :metadata="props.metadata" />
             </template>
@@ -10,6 +10,13 @@
                 class="bg-red-500 text-center text-typography_primary my-auto mx-auto h-20 px-xl rounded-md flex flex-col items-center justify-center"
             >
                 {{ $t('interact.error.invalidContract') }}
+            </div>
+        </template>
+        <template v-else-if="!contractDeployed && hasContract">
+            <div
+                class="bg-red-500 text-center text-typography_primary my-auto mx-auto h-20 px-xl rounded-md flex flex-col items-center justify-center"
+            >
+                {{ $t('interact.error.contractNotDeployed') }}
             </div>
         </template>
         <template v-else-if="!hasContract">
@@ -41,6 +48,10 @@ const props = defineProps({
         default: true
     },
     hasContract: {
+        type: Boolean,
+        default: false
+    },
+    contractDeployed: {
         type: Boolean,
         default: false
     },

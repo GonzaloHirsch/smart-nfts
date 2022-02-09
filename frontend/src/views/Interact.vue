@@ -1,5 +1,5 @@
 <template>
-    <v-section :noPadding="true" :class="[!validContract && !isLoading ? 'bg-gradient-to-b from-error to-white' : '']">
+    <v-section :noPadding="true" :class="[(!validContract || !contractIsDeployed) && !isLoading ? 'bg-gradient-to-b from-error to-white' : '']">
         <form class="grid grid-cols-10 gap-sm p-sm" autocomplete="off">
             <div class="col-span-full entire-panel">
                 <div class="flex flex-row justify-between items-center">
@@ -19,6 +19,7 @@
                     :abi="getAbiMint(contract.abi)"
                     :metadata="hasMetadata ? contract.metadata : undefined"
                     :validContract="validContract"
+                    :contractDeployed="contractIsDeployed"
                     :hasContract="hasContract"
                     :isMint="true"
                     :isLoading="isLoading"
@@ -30,6 +31,7 @@
                     :abi="getAbiRead(contract.abi)"
                     :metadata="undefined"
                     :validContract="validContract"
+                    :contractDeployed="contractIsDeployed"
                     :hasContract="hasContract"
                     :isLoading="isLoading"
                 />
@@ -40,6 +42,7 @@
                     :abi="getAbiWrite(contract.abi)"
                     :metadata="undefined"
                     :validContract="validContract"
+                    :contractDeployed="contractIsDeployed"
                     :hasContract="hasContract"
                     :isLoading="isLoading"
                 />
@@ -223,6 +226,7 @@ const validContract = ref(true);
 const contractId = ref(undefined);
 const contract = ref({});
 const hasContract = computed(() => !(contractId.value === '' || contractId.value === null || contractId.value === undefined));
+const contractIsDeployed = computed(() => hasContract.value && contract.value.deployment?.address);
 const hasMetadata = computed(() =>
     contract.value && contract.value.extensions ? contract.value.extensions.includes(EXTENSIONS.URI_STORAGE) : undefined
 );
@@ -249,14 +253,17 @@ watch(
                 isLoading.value = true;
                 api.getContract(contractId.value)
                     .then((res) => {
-                        isLoading.value = false;
                         contract.value = res.data;
                         validContract.value = true;
+                        isLoading.value = false;
+                        if (!contractIsDeployed.value) {
+                            setSnackbar('Contract has not been deployed yet!', 'error', 5);
+                        }
                     })
                     .catch((err) => {
-                        isLoading.value = false;
                         validContract.value = false;
                         setSnackbar("Contract doesn't exist!", 'error', 5);
+                        isLoading.value = false;
                     });
             } else {
                 contractId.value = undefined;
@@ -270,11 +277,11 @@ watch(
 
 // Abi method filtering
 const getAbiRead = (abi) => {
-    if (!validContract.value || isLoading.value) return [];
+    if (!validContract.value || isLoading.value || !hasContract.value) return [];
     return abi.filter((method) => method.type === 'function' && (method.stateMutability === 'view' || method.stateMutability === 'pure'));
 };
 const getAbiWrite = (abi) => {
-    if (!validContract.value || isLoading.value) return [];
+    if (!validContract.value || isLoading.value || !hasContract.value) return [];
     return abi.filter(
         (method) =>
             method.type === 'function' &&
@@ -283,7 +290,7 @@ const getAbiWrite = (abi) => {
     );
 };
 const getAbiMint = (abi) => {
-    if (!validContract.value || isLoading.value) return [];
+    if (!validContract.value || isLoading.value || !hasContract.value) return [];
     return abi.filter(
         (method) =>
             method.type === 'function' &&

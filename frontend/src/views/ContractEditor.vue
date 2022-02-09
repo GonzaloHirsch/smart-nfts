@@ -28,7 +28,6 @@
                     @contractChanged="handleContractChange"
                     @deployContract="handleDeployContract"
                     @verifyContract="handleVerifyContract"
-                    @downloadContract="handleDownloadContract"
                     :name="storedContract.name"
                     :symbol="storedContract.symbol"
                     :extensions="storedContract.extensions"
@@ -36,9 +35,7 @@
                     :isVerified="isVerified"
                     :canVerify="canVerify"
                     :canDeploy="canDeploy"
-                    :canDownload="canDownload"
                     :id="route.params.id"
-                    :loadingDownload="isLoadingDownload"
                 >
                     <span v-if="!isLoading && contractEdited" class="flex items-center mt-sm text-sm">{{
                         $t('editor.last_saved', [$d(lastSaved, 'short')])
@@ -79,7 +76,15 @@
                 </v-editor>
             </div>
             <div class="flex w-full md:w-6/12 lg:w-7/12 xl:w-8/12 p-sm" :style="`min-height: ${editorHeight}px; max-height: ${editorHeight}px`">
-                <v-code-viewer :key="contract" class="flex flex-col w-full" :code="contract" :loading="isLoading" />
+                <v-code-viewer
+                    @downloadContract="handleDownloadContract"
+                    :key="contract"
+                    class="flex flex-col w-full"
+                    :code="contract"
+                    :loading="isLoading"
+                    :canDownload="canDownload"
+                    :loadingDownload="isLoadingDownload"
+                />
             </div>
         </div>
         <div v-else class="flex flex-row items-center justify-center p-xs md:p-md">
@@ -200,7 +205,6 @@ loadContract();
 
 import { mapFormToApiData } from '@/js/mapper';
 const handleContractChange = (contractData) => {
-    
     let dataToSend = mapFormToApiData(contractData);
     if (dataToSend.name && dataToSend.symbol) {
         isLoading.value = true;
@@ -330,7 +334,7 @@ const copyContractAddress = () => {
 const editorContainer = ref(null);
 const editorHeight = computed(() => {
     return editorContainer.value?.clientHeight;
-})
+});
 </script>
 
 <style>
