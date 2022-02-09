@@ -32,8 +32,8 @@ const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyRes
     const result = await InteractionService.getInstance().handleMethodCall(contract, methodId, inputs)
 
     return {
-        statusCode: 201,
-        body: JSON.stringify(result)
+        statusCode: 200,
+        body: JSON.stringify({result: result})
     };
 };
 

@@ -56,6 +56,16 @@ module.exports = {
         "-xl": "-4rem",
         '-2xl': "-5rem",
         '-3xl': "-6rem",
+      },
+      animation: {
+        'spin-reverse': 'spinreverse 1s linear infinite',
+      },
+      keyframes: {
+        spinreverse: {
+          from: {
+            transform: 'rotate(360deg)'
+          }
+        }
       }
     },
   },

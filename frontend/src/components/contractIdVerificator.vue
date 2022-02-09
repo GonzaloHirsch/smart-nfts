@@ -10,6 +10,7 @@
             :continuousInput="true"
             format="primary-white"
             class="mb-xs md:mr-sm md:mb-0"
+            autocomplete="contractId"
         />
         <v-button
             :format="editDisabled ? 'disabled' : props.button.format"
@@ -19,6 +20,7 @@
             :text="$t(props.button.text)"
             :disabled="editDisabled"
             :loading="isLoading"
+            :sizeMobile="props.button.sizeMobile"
             @click="handleClick"
         />
     </div>

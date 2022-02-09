@@ -1,7 +1,7 @@
 <template>
   <button :class="[buttonFormat, buttonSize, 'button']" type="button" :disabled="props.disabled">
     <span v-if="props.loading" class="no-inherit button-spinner--wrapper">
-      <v-spinner class="animate-spin button-spinner" />
+      <v-spinner class="animate-spin-reverse button-spinner" />
     </span>
     <template v-if="props.external">
       <a :href="props.href" :target="props.target" :aria-label="props.aria">{{ props.text }}</a>
@@ -61,7 +61,7 @@ const props = defineProps({
   },
   sizeMobile: {
     type: String,
-    default: 'medium'
+    default: 'xsmall'
   }
 });
 const buttonFormat = computed(() => (props.white ? `button--${props.format}-white` : `button--${props.format}`));

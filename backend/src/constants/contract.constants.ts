@@ -13,7 +13,8 @@ export const CONTRACT_LICENSE = 'MIT';
 export enum STATE_MUTABILITY {
     PURE = 'pure',
     VIEW = 'view',
-    NONPAYABLE = '',
+    NONPAYABLE = 'nonpayable',
+    NONPAYABLE_EMPTY = '',
     PAYABLE = 'payable'
 };
 

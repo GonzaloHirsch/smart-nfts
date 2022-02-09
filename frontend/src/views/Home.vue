@@ -9,6 +9,7 @@
                 :external="false"
                 :white="false"
                 :text="$t('home.hero.buttonStart')"
+                sizeMobile="medium"
             />
         </template>
         <a
@@ -44,6 +45,7 @@
                             :loading="isLoading"
                             :disabled="isLoading"
                             :text="$t('home.tabs.buttons.create.text')"
+                            sizeMobile="medium"
                         />
                     </template>
                     <template #image>
@@ -63,7 +65,7 @@
                     </template>
                     <template #bottom>
                         <v-contract-id-verificator
-                            :button="{ text: 'home.tabs.buttons.edit.text', aria: 'home.tabs.buttons.edit.aria', format: 'secondary' }"
+                            :button="{ text: 'home.tabs.buttons.edit.text', aria: 'home.tabs.buttons.edit.aria', format: 'secondary', sizeMobile: 'medium' }"
                             @validId="handleValidEditId"
                         />
                     </template>
@@ -84,7 +86,7 @@
                     </template>
                     <template #bottom>
                         <v-contract-id-verificator
-                            :button="{ text: 'home.tabs.buttons.interact.text', aria: 'home.tabs.buttons.interact.aria', format: 'secondary' }"
+                            :button="{ text: 'home.tabs.buttons.interact.text', aria: 'home.tabs.buttons.interact.aria', format: 'secondary', sizeMobile: 'medium' }"
                             @validId="handleValidInteractId"
                         />
                     </template>

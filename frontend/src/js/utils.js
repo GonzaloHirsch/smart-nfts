@@ -10,6 +10,14 @@ export const getParameterPlaceholder = (type) => {
             return 'inputs.placeholder.bytes'
         case 'bool':
             return 'inputs.placeholder.bool'
+        case 'string':
+            return 'inputs.placeholder.string'
+        case 'boost_number':
+            return 'inputs.placeholder.boost_number'
+        case 'boost_percentage':
+            return 'inputs.placeholder.boost_percentage'
+        case 'number':
+            return 'inputs.placeholder.number'
     }
     return '';
 }

@@ -21,7 +21,7 @@ export const getMergedMethodStateMutability = (mutabilities: (STATE_MUTABILITY |
     // Only reads and does not modify the state
     else if (mutabilities.includes(STATE_MUTABILITY.VIEW)) return STATE_MUTABILITY.VIEW;
     // Default is nonpayable
-    else return STATE_MUTABILITY.NONPAYABLE;
+    else return STATE_MUTABILITY.NONPAYABLE_EMPTY;
 }
 
 export const getExtensionAdditions = (extensions: EXTENSIONS[]): EXTENSIONS[] => {

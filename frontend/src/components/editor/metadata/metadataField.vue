@@ -1,5 +1,5 @@
 <template>
-    <div :class="['grid grid-cols-7 gap-xs mb-xs relative transform transition duration-200', metadataField.error ? 'translate-x-4' : '']">
+    <div :class="['grid grid-cols-10 gap-xs mb-xs relative transform transition duration-200', metadataField.error ? 'translate-x-4' : '']">
         <ExclamationIcon
             :class="[
                 'absolute top-0 bottom-0 left-0 my-auto text-error h-6 w-6 transform transition duration-200',
@@ -20,7 +20,7 @@
             @validInput="handleValidInput"
             @invalidInput="(error) => handleInvalidInput(error)"
             @change="handleInputChange"
-            class="col-span-2"
+            class="col-span-3 text-sm"
         />
         <v-select
             :name="`type-${props.id}`"
@@ -30,7 +30,7 @@
             :label="'Field Type'"
             v-model="metadataField.type"
             :value="props.type"
-            class="col-span-2"
+            class="col-span-3"
             @change="handleTypeChange"
             :options="typeOptions"
         />
@@ -43,7 +43,7 @@
             v-model="metadataField.display"
             :value="props.display"
             :disabled="metadataField.type !== 'number'"
-            :class="['col-span-2']"
+            class="col-span-3"
             @change="handleDisplayChange"
             :options="displayOptions"
         />

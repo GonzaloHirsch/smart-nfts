@@ -13,6 +13,7 @@
             :placeholder="props.placeholder"
             @input="onInputChanged"
             :value="modelValue"
+            :autocomplete="props.autocomplete"
         />
         <!-- Otherwise use a discrete approach, just event when focus is lost -->
         <input
@@ -24,6 +25,7 @@
             :placeholder="props.placeholder"
             @change="onInputChanged"
             :value="modelValue"
+            :autocomplete="props.autocomplete"
         />
         <!-- Showing the error -->
         <span v-if="error && !props.hideError" class="text-error text-xs mt-xs">{{ $t(error) }}</span>
@@ -75,6 +77,10 @@ const props = defineProps({
     validations: {
         type: Array,
         default: []
+    },
+    autocomplete: {
+        type: String,
+        default: undefined
     }
 });
 
@@ -84,9 +90,9 @@ const error = ref(undefined);
 const classes = computed(() => {
     switch (props.format) {
         case 'primary':
-            return `input--${props.format} border-2 border-brand_secondary focus:border-brand_primary bg-transparent`;
+            return `input--${props.format} border-2 border-brand_secondary focus:border-brand_secondary focus:ring-brand_secondary bg-transparent`;
         case 'primary-white':
-            return `input--${props.format} border-2 border-white focus:border-white bg-white text-typography_secondary`;
+            return `input--${props.format} border-2 border-white focus:border-white bg-white focus:ring-brand_secondary text-typography_secondary`;
     }
 });
 
