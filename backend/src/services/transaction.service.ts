@@ -75,6 +75,7 @@ class TransactionService {
                 if (isDeploy) {
                     return receipt.contractAddress;
                 }
+                return receipt.transactionHash;
             })
             .catch((err) => {
                 console.log(err)

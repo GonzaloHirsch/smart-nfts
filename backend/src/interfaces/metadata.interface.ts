@@ -2,11 +2,11 @@ import { METADATA_DISPLAY_TYPES, METADATA_TYPES } from "../constants/contract.co
 
 export type IMetadata = {
     hasImage: boolean,
-    attributes: IAttribute[]
+    attributes: IMetadataAttribute[]
 }
 
-export interface IAttribute {
-    trait_type: string,
-    display_type: METADATA_DISPLAY_TYPES,
-    trait_format: METADATA_TYPES
+export interface IMetadataAttribute {
+    traitType: string,
+    displayType: METADATA_DISPLAY_TYPES,
+    traitFormat: METADATA_TYPES
 };

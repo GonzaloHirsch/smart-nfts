@@ -27,6 +27,8 @@ export const typeValidations: { [key: string]: (input: any) => boolean } = {
     bool: (input: any) => (isBool(input)),
     string: (input: any) => (max256(input)),
     number: (input: any) => (isNumber(input)),
+    boost_number: (input: any) => (isNumber(input)),
+    boost_percentage: (input) => (isPercentage(input)),
 }
 
 /**
@@ -99,4 +101,10 @@ const isNumber = (num: any) => {
     const onlyNumbers = /^[0-9]+[\.]?[0-9]*$/i.test(stringNum)
     const floatNum = parseFloat(stringNum);
     return !isNaN(floatNum) && onlyNumbers;
+};
+
+const isPercentage = (num: any) => {
+    if (!isNumber(num)) return false;
+    let _num = parseFloat(num.toString());
+    return _num >= 0 && _num <= 100;
 };

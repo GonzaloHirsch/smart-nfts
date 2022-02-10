@@ -10,7 +10,7 @@ import InvalidContractOptionsException from '../exceptions/invalidContractOption
 import { EXTENSIONS } from '../constants/contract.constants';
 import { customAlphabet } from 'nanoid';
 import { FilterQuery } from 'mongoose';
-import { IAttribute, IMetadata } from '../interfaces/metadata.interface';
+import { IMetadataAttribute, IMetadata } from '../interfaces/metadata.interface';
 const nanoid = customAlphabet('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz', 15);
 
 

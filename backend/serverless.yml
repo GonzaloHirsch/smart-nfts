@@ -117,6 +117,17 @@ functions:
           cors: true
     tags:
       app: pf
+  postMintToken:
+    handler: src/handlers/contracts/postMintToken.handler
+    memorySize: 1024 # Probably more memory-intensive process than the rest
+    timeout: 30 # More timeout because it needs more time to make the request
+    events:
+      - http:
+          path: /contracts/{contractId}/mint
+          method: post
+          cors: true
+    tags:
+      app: pf
   getContract:
     handler: src/handlers/contracts/getContract.handler
     events:

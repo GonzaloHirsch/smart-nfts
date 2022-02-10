@@ -8,7 +8,7 @@ import { isEmptyPathParams, validContractId, isEmptyBody } from '../../helpers/v
 import GenericException from '../../exceptions/generic.exception';
 import { setHttpErrorMsg } from '../../helpers/errors.helper';
 import { HTTP_ERRORS } from '../../constants/errors.constants';
-import { IAttribute, IMetadata } from '../../interfaces/metadata.interface';
+import { IMetadataAttribute, IMetadata } from '../../interfaces/metadata.interface';
 
 const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     
