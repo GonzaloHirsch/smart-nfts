@@ -106,13 +106,7 @@ a {
   Colors: /blob/v0.64.0/lib/css/exports/_stacks-constants-colors.less
 */
 pre code.hljs {
-  @apply text-sm;
-  display: block;
-  overflow-x: auto;
-  padding: 1em;
-}
-code.hljs {
-  padding: 3px 5px;
+  @apply text-sm block overflow-x-auto;
 }
 .hljs {
   @apply text-white bg-slate-800;

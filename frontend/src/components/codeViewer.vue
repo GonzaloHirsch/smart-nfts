@@ -1,6 +1,6 @@
 <template>
     <div class="overflow-x-auto overflow-y-auto code-viewer justify-start items-start rounded-md bg-slate-800 text-white relative">
-        <pre v-if="!props.loading">
+        <pre v-if="!props.loading" class="p-sm flex">
       <code ref="contractCode" class="language-solidity">
         {{props.code}}
       </code>
