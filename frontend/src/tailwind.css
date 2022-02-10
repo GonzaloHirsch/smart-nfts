@@ -288,3 +288,9 @@ svg.contract-drawing {
 .body-noscroll {
   @apply overflow-hidden;
 }
+
+/* CODE */
+
+pre.code {
+  @apply underline decoration-brand_secondary inline-block italic;
+}

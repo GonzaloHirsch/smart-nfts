@@ -55,6 +55,13 @@
         </form>
     </v-section>
 
+    <v-section v-if="validContract && contractIsDeployed && hasContract && !isLoading" :noPadding="true">
+        <div class="mx-xl mt-xl bg-brand_primary rounded-md p-base">
+        <h4>Important Note</h4>
+        <p class="inline">If you execute the <pre class="code"><code>transferOwnership</code></pre> or <pre class="code"><code>renounceOwnership</code></pre> methods, you will be effectively removing us (the Smart NFTs team) as the owners of your contract, which means that multiple methods will stop working. Be mindful of this action, otherwise you will have to transfer ownership back to us or deploy a new version of this contract.</p>
+        </div>
+    </v-section>
+
     <v-section class="bg-typography_primary">
         <h2 class="text-center text-brand_secondary mb-base">Methods Explained</h2>
         <v-anchored-title type="h3" text="balanceOf" anchor="balanceOf" class="mt-sm" />
