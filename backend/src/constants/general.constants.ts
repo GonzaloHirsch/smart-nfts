@@ -1,5 +1,8 @@
-export const EXAMPLE = 'EXAMPLE';
 
+// METADATA
+export const DEFAULT_METADATA_FIELDS = ['name', 'description'];
+
+// BLOCKCHAIN
 export const NULL_ADDRESS = '0x0';
 
 export const BASE_URI = 'https://ipfs.io/ipfs/';

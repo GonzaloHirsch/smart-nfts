@@ -3,7 +3,7 @@ import { FileData, MultipartFormData } from 'aws-multipart-parser/dist/models';
 // Model
 import { IStoredContract } from '../models/storedContract.model';
 // Constants, interfaces, helpers
-import { ropstenNetwork } from '../constants/general.constants';
+import { DEFAULT_METADATA_FIELDS, ropstenNetwork } from '../constants/general.constants';
 import { IArguments } from '../interfaces/general.interface';
 import { IAbiInput } from '../interfaces/abi.interface';
 import { IAbiMethod } from '../interfaces/abi.interface';
@@ -19,6 +19,7 @@ import MethodInputException from '../exceptions/invalidInput.exception';
 import BlockchainInteractException from '../exceptions/blockchainInteract.exception';
 import ContractNotDeployedException from '../exceptions/contractNotDeployed.exception';
 import InvalidInputException from '../exceptions/invalidInput.exception';
+import InvalidContractOptionsException from '../exceptions/invalidContractOptionsException.exception';
 
 
 class InteractionService {
@@ -50,6 +51,8 @@ class InteractionService {
         
         const fileData = formData.token as FileData;
 
+        console.log('FILE DATA: ', fileData)
+
         // Parse the inputs and check if its a valid JSON
         let methodArgs: IArguments;
         let metadataArgs: IArguments;
@@ -64,17 +67,23 @@ class InteractionService {
         }
 
         if (storedContract.extensions.includes(EXTENSIONS.ERC721URIStorage)) {
-            if (!storedContract.metadata) {
-                //TODO throw
+            // Get the metadata definition
+            const metadataDef = storedContract.metadata;
+
+            if (!metadataDef) {
+                throw new InvalidContractOptionsException(storedContract._id);
             }
             // check metadata input is correct
-            this._checkValidMetadata(storedContract.metadata, metadataArgs, fileData != null);
+            this._checkValidMetadata(metadataDef, metadataArgs, fileData != null);
 
             // Upload the metadata
-            const pinnedMetadata = await IpfsService.getInstance().addMetadataWithFileToIPFS(
-                metadataArgs, fileData.content, fileData.filename
-            );
+            const pinnedMetadata = metadataDef.hasImage
+                ? await IpfsService.getInstance().addMetadataWithFileToIPFS(
+                    metadataArgs, fileData.content, fileData.filename
+                ) 
+                : await IpfsService.getInstance().addJSONToIPFS(metadataArgs, metadataArgs.name);
 
+            // Set the uri to pass to the method call
             methodArgs.uri = pinnedMetadata.ipfsHash;
         }
         
@@ -113,17 +122,31 @@ class InteractionService {
 
     private _checkValidMetadata = (metadataDef: IMetadata, metaArgs: IArguments, hasImage: boolean): void => {
         
+        // If the attributes received and the attributes in def is different throw error
+        if (metadataDef.attributes.length !== Object.keys(metaArgs.attributes ?? {}).length) {
+            throw new Error('TODO')
+        }
+
+        // Metadata def must indicate whether or not to accept image
         if (metadataDef.hasImage !== hasImage) {
             throw new InvalidInputException('hasImage', 'boolean');
         }
 
+        // Check valid default fields are present
+        for (const defaultField of DEFAULT_METADATA_FIELDS) {
+            if (!metaArgs[defaultField] || typeValidations.string(!metaArgs[defaultField])) {
+                throw new InvalidInputException(defaultField, 'string');
+            }
+        }
+
+        // Check custom attributes are valid and present
         for (const attributeDef of metadataDef.attributes) {      
-            
+            console.log(metadataDef, attributeDef)
             const argumentType = attributeDef.traitFormat === METADATA_TYPES.STRING 
                 ? attributeDef.traitFormat
                 : attributeDef.displayType;
 
-            const argumentValue = metaArgs[attributeDef.traitType]; 
+            const argumentValue = metaArgs.attributes[attributeDef.traitType]; 
             const typeValidator = typeValidations[argumentType];
 
             console.log(argumentValue, argumentType)

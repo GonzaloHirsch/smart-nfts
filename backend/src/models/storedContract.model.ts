@@ -86,9 +86,9 @@ const StoredConstractSchema = new Schema({
             default: true
         },
         attributes: [{
-            trait_type: { type: String, required: true },
-            display_type: { type: String, required: false, enum: METADATA_DISPLAY_TYPES },
-            trait_format: { type: String, required: true, enum: METADATA_TYPES },
+            traitType: { type: String, required: true },
+            displayType: { type: String, required: false, enum: METADATA_DISPLAY_TYPES },
+            traitFormat: { type: String, required: true, enum: METADATA_TYPES },
         }]
     }
 },

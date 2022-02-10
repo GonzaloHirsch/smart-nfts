@@ -60,16 +60,16 @@ class IpfsService {
             });
     }
 
-    public addMetadataWithFileToIPFS = async (content: IArguments, file: any, name: string): Promise<IJsonPinResponse> => {
+    public addMetadataWithFileToIPFS = async (content: IArguments, file: any, fileName: string): Promise<IJsonPinResponse> => {
         
         // Pin file to metadata and get its hash and uri
-        const pinnedFile = await IpfsService.getInstance().addFileToIPFS(file, name);
+        const pinnedFile = await IpfsService.getInstance().addFileToIPFS(file, fileName);
         
         // Add the file uri to the metadata
         content.image = pinnedFile.ipfsUri;
 
         // Pin the metadata json to IPFS
-        return await IpfsService.getInstance().addJSONToIPFS(content, name)
+        return await IpfsService.getInstance().addJSONToIPFS(content, content.name ?? fileName)
     }
 }
 

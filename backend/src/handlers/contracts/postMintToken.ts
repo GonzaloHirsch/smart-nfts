@@ -1,5 +1,4 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
-import IpfsService from '../../services/ipfs.service';
 import { errorHandler } from '../../middleware/errorHandler.middleware';
 import { corsHandler } from '../../middleware/corsHandler.middleware';
 import { isEmptyPathParams, validContractId } from '../../helpers/validations.helper';
