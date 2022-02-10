@@ -6,7 +6,7 @@
         <form class="grid grid-cols-10 gap-sm p-sm" autocomplete="off">
             <div class="col-span-full entire-panel">
                 <div class="flex flex-row justify-between items-center">
-                    <h2 class="text-left text-brand_secondary">Contract</h2>
+                    <h2 class="text-left text-brand_secondary">{{hasContract && contractIsDeployed && !isLoading && getAbiMint(contract.abi).length > 0 ? 'Create Token' : 'Contract'}}</h2>
                     <v-input
                         id="contract_id"
                         name="contract_id"
@@ -231,7 +231,7 @@ const validContract = ref(true);
 const contractId = ref(undefined);
 const contract = ref({});
 const hasContract = computed(() => !(contractId.value === '' || contractId.value === null || contractId.value === undefined));
-const contractIsDeployed = computed(() => hasContract.value && contract.value.deployment?.address);
+const contractIsDeployed = computed(() => hasContract.value && contract.value.deployment?.address !== null && contract.value.deployment?.address !== undefined && contract.value.deployment?.address !== '');
 const hasMetadata = computed(() =>
     contract.value && contract.value.extensions ? contract.value.extensions.includes(EXTENSIONS.URI_STORAGE) : undefined
 );
@@ -282,11 +282,11 @@ watch(
 
 // Abi method filtering
 const getAbiRead = (abi) => {
-    if (!validContract.value || isLoading.value || !hasContract.value) return [];
+    if (!validContract.value || isLoading.value || !hasContract.value || !abi) return [];
     return abi.filter((method) => method.type === 'function' && (method.stateMutability === 'view' || method.stateMutability === 'pure'));
 };
 const getAbiWrite = (abi) => {
-    if (!validContract.value || isLoading.value || !hasContract.value) return [];
+    if (!validContract.value || isLoading.value || !hasContract.value || !abi) return [];
     return abi.filter(
         (method) =>
             method.type === 'function' &&
@@ -295,7 +295,7 @@ const getAbiWrite = (abi) => {
     );
 };
 const getAbiMint = (abi) => {
-    if (!validContract.value || isLoading.value || !hasContract.value) return [];
+    if (!validContract.value || isLoading.value || !hasContract.value || !abi) return [];
     return abi.filter(
         (method) =>
             method.type === 'function' &&

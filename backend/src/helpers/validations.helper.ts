@@ -74,7 +74,6 @@ const isAddress = (address: string) => {
 };
 
 const isUint256 = (num: number) => {
-    console.log('HI: ', num)
     if (isNaN(num)) return false;
     return num >= 0 && num <= uint256Limit;
 };
@@ -97,7 +96,7 @@ const max256 = (text: string) => {
 
 const isNumber = (num: any) => {
     const stringNum = num.toString();
-    const onlyNumbers = /^[0-9]+(.)?[0-9]+$/i.test(stringNum)
+    const onlyNumbers = /^[0-9]+[\.]?[0-9]*$/i.test(stringNum)
     const floatNum = parseFloat(stringNum);
     return !isNaN(floatNum) && onlyNumbers;
 };

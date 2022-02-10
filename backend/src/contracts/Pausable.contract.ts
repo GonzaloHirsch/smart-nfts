@@ -6,7 +6,7 @@ import {staticImplements} from '../helpers/global.helper';
 export abstract class Pausable {
     
     public static getExtensionOZImports(): string[] {
-        return ["@openzeppelin/contracts/security/Pausable.sol"];
+        return ["@openzeppelin/contracts/security/Pausable.sol", "@openzeppelin/contracts/access/Ownable.sol"];
     }
     public static getExtensionName(): EXTENSIONS {
         return EXTENSIONS.Pausable;

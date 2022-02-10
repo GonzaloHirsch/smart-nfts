@@ -76,7 +76,7 @@
                 <template v-if="callResult || callError">
                     <div :class="[props.metadata || (props.method.inputs && props.method.inputs.length > 0) ? 'mt-sm pt-sm' : '']">
                         <p class="text-h5">Result</p>
-                        <div class="w-full bg-white rounded-md p-xs mt-sm pr-xl relative">
+                        <div class="w-full bg-white rounded-md p-xs mt-sm pr-base relative break-words">
                             <p v-if="callResult" class="text-typography_secondary">{{ callResult }}</p>
                             <p v-if="callError" class="text-error">{{ callError }}</p>
                             <div

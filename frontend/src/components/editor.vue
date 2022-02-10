@@ -231,6 +231,14 @@ watch(
         }
     }
 );
+watch(
+    () => contractData.value.isMintable,
+    () => {
+        if (!contractData.value.isMintable) {
+            contractData.value.isAutoIncrementIds = false;
+        }
+    }
+);
 </script>
 
 <style>

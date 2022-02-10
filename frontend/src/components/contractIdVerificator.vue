@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col md:flex-row items-center">
+    <form class="flex flex-col md:flex-row items-center" autocomplete="off">
         <v-input
             id="contract_id"
             name="contract_id"
@@ -23,7 +23,7 @@
             :sizeMobile="props.button.sizeMobile"
             @click="handleClick"
         />
-    </div>
+    </form>
 </template>
 
 <script setup>
