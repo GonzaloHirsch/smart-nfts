@@ -1,5 +1,8 @@
 <template>
-    <v-section :noPadding="true" :class="[(!validContract || !contractIsDeployed) && !isLoading ? 'bg-gradient-to-b from-error to-white' : '']">
+    <v-section
+        :noPadding="true"
+        :class="[(!validContract || (!contractIsDeployed && hasContract)) && !isLoading ? 'bg-gradient-to-b from-error to-white' : '']"
+    >
         <form class="grid grid-cols-10 gap-sm p-sm" autocomplete="off">
             <div class="col-span-full entire-panel">
                 <div class="flex flex-row justify-between items-center">
@@ -25,28 +28,30 @@
                     :isLoading="isLoading"
                 />
             </div>
-            <div class="col-span-full lg:col-span-5 entire-panel">
-                <h3 class="text-left text-brand_secondary">Read</h3>
-                <v-interacter
-                    :abi="getAbiRead(contract.abi)"
-                    :metadata="undefined"
-                    :validContract="validContract"
-                    :contractDeployed="contractIsDeployed"
-                    :hasContract="hasContract"
-                    :isLoading="isLoading"
-                />
-            </div>
-            <div class="col-span-full lg:col-span-5 entire-panel">
-                <h3 class="text-left text-brand_secondary">Write</h3>
-                <v-interacter
-                    :abi="getAbiWrite(contract.abi)"
-                    :metadata="undefined"
-                    :validContract="validContract"
-                    :contractDeployed="contractIsDeployed"
-                    :hasContract="hasContract"
-                    :isLoading="isLoading"
-                />
-            </div>
+            <template v-if="hasContract && contractIsDeployed && !isLoading && validContract">
+                <div class="col-span-full lg:col-span-5 entire-panel">
+                    <h3 class="text-left text-brand_secondary">Read</h3>
+                    <v-interacter
+                        :abi="getAbiRead(contract.abi)"
+                        :metadata="undefined"
+                        :validContract="validContract"
+                        :contractDeployed="contractIsDeployed"
+                        :hasContract="hasContract"
+                        :isLoading="isLoading"
+                    />
+                </div>
+                <div class="col-span-full lg:col-span-5 entire-panel">
+                    <h3 class="text-left text-brand_secondary">Write</h3>
+                    <v-interacter
+                        :abi="getAbiWrite(contract.abi)"
+                        :metadata="undefined"
+                        :validContract="validContract"
+                        :contractDeployed="contractIsDeployed"
+                        :hasContract="hasContract"
+                        :isLoading="isLoading"
+                    />
+                </div>
+            </template>
         </form>
     </v-section>
 
