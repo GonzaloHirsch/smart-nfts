@@ -57,7 +57,7 @@ const api = {
             inputs: inputs
         }).then(res => {
             return res;
-        })
+        });
     }
 }
 

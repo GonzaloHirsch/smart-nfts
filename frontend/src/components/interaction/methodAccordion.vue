@@ -74,12 +74,15 @@
                     </div>
                 </template>
                 <template v-if="callResult || callError">
-                    <div :class="[props.metadata || props.method.inputs && props.method.inputs.length > 0 ? 'mt-sm pt-sm' : '']">
+                    <div :class="[props.metadata || (props.method.inputs && props.method.inputs.length > 0) ? 'mt-sm pt-sm' : '']">
                         <p class="text-h5">Result</p>
-                        <div class="w-full bg-white rounded-md p-xs mt-sm pr-lg relative">
-                            <p v-if="callResult" class="text-typography_secondary">{{callResult}}</p>
-                            <p v-if="callError" class="text-error">{{callError}}</p>
-                            <div class="absolute right-0 top-0 text-black hover:text-brand_secondary hover:bg-brand_primary cursor-pointer p-1 border border-black rounded-md transition duration-200" @click="() => copyResponse(callResult || callError)">
+                        <div class="w-full bg-white rounded-md p-xs mt-sm pr-xl relative">
+                            <p v-if="callResult" class="text-typography_secondary">{{ callResult }}</p>
+                            <p v-if="callError" class="text-error">{{ callError }}</p>
+                            <div
+                                class="absolute right-0 top-0 text-black hover:text-brand_secondary hover:bg-brand_primary cursor-pointer p-1 border border-black rounded-md transition duration-200"
+                                @click="() => copyResponse(callResult || callError)"
+                            >
                                 <DocumentDuplicateIcon class="h-5 w-5" />
                             </div>
                         </div>
@@ -135,7 +138,7 @@ const api = useApi();
 import { useNotifications } from '@/plugins/notifications';
 const { setSnackbar } = useNotifications();
 
-import {useRoute, useRouter} from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 const route = useRoute();
 const router = useRouter();
 
@@ -167,18 +170,18 @@ const handleMethodCall = (contractId) => {
     isLoading.value = true;
     api.interactWithContract(contractId, props.method._id, inputs.value)
         .then((res) => {
-            isLoading.value = false;
             callResult.value = res.data.result;
             callError.value = undefined;
-            console.log(res);
+            isLoading.value = false;
         })
         .catch((err) => {
-            isLoading.value = false;
-            console.log("ERROR");
-            console.log(err);
-            callError.value = 'INTERNAL ERROR'
+            if (err.response && err.response.status === 400) {
+                callError.value = err.response.data.message;
+            } else {
+                callError.value = "Internal error"
+            }
             callResult.value = undefined;
-            // setSnackbar("Contract doesn't exist!", 'error', 5);
+            isLoading.value = false;
         });
 };
 
