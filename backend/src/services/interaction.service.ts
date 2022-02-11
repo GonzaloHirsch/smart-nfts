@@ -156,12 +156,12 @@ class InteractionService {
 
             // Create the standard attribute with the input received
             const standardAttribute: IStandardMetadataAttribute = {
-                traitType: attributeDef.traitType,
+                trait_type: attributeDef.traitType,
                 value:  argumentValue
             }
 
             if (attributeDef.displayType != null) {
-                standardAttribute.displayType = attributeDef.displayType;
+                standardAttribute.display_type = attributeDef.displayType;
             }
 
             standardMetadata.attributes.push(standardAttribute);

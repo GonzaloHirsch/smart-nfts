@@ -39,6 +39,8 @@ provider:
     ETHERSCAN_API_KEY: ${env:ETHERSCAN_API_KEY}
     ETHERSCAN_API_URL: ${env:ETHERSCAN_API_URL}
     DEPLOYMENT_NETWORK: ${env:DEPLOYMENT_NETWORK}
+    PINATA_API_KEY: ${env:PINATA_API_KEY}
+    PINATA_API_SECRET: ${env:PINATA_API_SECRET}
 
 custom:
   serverless-offline:
@@ -98,7 +100,7 @@ functions:
   postVerifyContract:
     handler: src/handlers/contracts/postVerifyContract.handler
     memorySize: 1024 # Probably more memory-intensive process than the rest
-    timeout: 30 # More timeout because it needs more time to make the request
+    timeout: 45 # More timeout because it needs more time to make the request
     events:
       - http:
           path: /contracts/{contractId}/verify
@@ -108,8 +110,8 @@ functions:
       app: pf
   postInteractContract:
     handler: src/handlers/contracts/postInteractContract.handler
-    memorySize: 1024 # Probably more memory-intensive process than the rest
-    timeout: 30 # More timeout because it needs more time to make the request
+    memorySize: 512 # Probably more memory-intensive process than the rest
+    timeout: 45 # More timeout because it needs more time to make the request
     events:
       - http:
           path: /contracts/{contractId}/interact
@@ -119,8 +121,8 @@ functions:
       app: pf
   postMintToken:
     handler: src/handlers/contracts/postMintToken.handler
-    memorySize: 1024 # Probably more memory-intensive process than the rest
-    timeout: 30 # More timeout because it needs more time to make the request
+    memorySize: 512 # Probably more memory-intensive process than the rest
+    timeout: 45 # More timeout because it needs more time to make the request
     events:
       - http:
           path: /contracts/{contractId}/mint

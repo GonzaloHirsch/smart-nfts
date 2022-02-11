@@ -15,8 +15,8 @@ export interface IMetadataAttribute {
 // OpenSea standard definitions
 
 export interface IStandardMetadataAttribute {
-    traitType: string,
-    displayType?: METADATA_DISPLAY_TYPES,
+    trait_type: string,
+    display_type?: METADATA_DISPLAY_TYPES,
     value: any
 };
 
