@@ -1,4 +1,4 @@
-import { EXTENSIONS, PARAMETER_TYPE, STATE_MUTABILITY, VISIBILITY } from "../constants/contract.constants";
+import { EXTENSIONS, CONTRACT_TYPES, STATE_MUTABILITY, VISIBILITY } from "../constants/contract.constants";
 import { IContractExtension, IContractLibrary, IContractMethod, IContractVariable } from "../interfaces/contract.interface";
 import {staticImplements} from '../helpers/global.helper';
 
@@ -24,15 +24,15 @@ export abstract class Enumerable {
                 params: [
                     {
                         name: 'from',
-                        type: PARAMETER_TYPE.ADDRESS
+                        type: CONTRACT_TYPES.ADDRESS
                     },
                     {
                         name: 'to',
-                        type: PARAMETER_TYPE.ADDRESS
+                        type: CONTRACT_TYPES.ADDRESS
                     },
                     {
                         name: 'tokenId',
-                        type: PARAMETER_TYPE.UINT256
+                        type: CONTRACT_TYPES.UINT256
                     },
                 ],
                 mandatory: true,
@@ -45,14 +45,14 @@ export abstract class Enumerable {
                 name: 'supportsInterface',
                 params: [{
                     name: 'interfaceId',
-                    type: PARAMETER_TYPE.BYTES4
+                    type: CONTRACT_TYPES.BYTES4
                 }],
                 mandatory: true,
                 content: ['return super.supportsInterface(interfaceId);\n'],
                 visibility: VISIBILITY.PUBLIC,
                 stateMutability: STATE_MUTABILITY.VIEW,
                 overrides: [EXTENSIONS.ERC721, EXTENSIONS.ERC721Enumerable],
-                returns: PARAMETER_TYPE.BOOL,
+                returns: CONTRACT_TYPES.BOOL,
                 solidityRequired: true            
             },
         ];

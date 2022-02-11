@@ -1,4 +1,4 @@
-import { EXTENSIONS, PARAMETER_TYPE, STATE_MUTABILITY, VISIBILITY } from "../constants/contract.constants";
+import { EXTENSIONS, CONTRACT_TYPES, STATE_MUTABILITY, VISIBILITY } from "../constants/contract.constants";
 import { IContractExtension, IContractLibrary, IContractMethod, IContractVariable } from "../interfaces/contract.interface";
 import {staticImplements} from '../helpers/global.helper';
 
@@ -23,7 +23,7 @@ export abstract class URIStorage {
                 name: 'safeMint',
                 params: [{
                     name: 'uri',
-                    type: PARAMETER_TYPE.STRING_MEMORY
+                    type: CONTRACT_TYPES.STRING_MEMORY
                 }],
                 mandatory: false,
                 content: ['_setTokenURI(tokenId, uri);\n'],
@@ -34,21 +34,21 @@ export abstract class URIStorage {
                 name: 'tokenURI',
                 params: [{
                     name: 'tokenId',
-                    type: PARAMETER_TYPE.UINT256
+                    type: CONTRACT_TYPES.UINT256
                 }],
                 mandatory: true,
                 content: ['return super.tokenURI(tokenId);\n'],
                 visibility: VISIBILITY.PUBLIC,
                 stateMutability: STATE_MUTABILITY.VIEW,
                 overrides: [EXTENSIONS.ERC721, EXTENSIONS.ERC721URIStorage],
-                returns: PARAMETER_TYPE.STRING_MEMORY,
+                returns: CONTRACT_TYPES.STRING_MEMORY,
                 solidityRequired: true            
             },
             {
                 name: '_burn',
                 params: [{
                     name: 'tokenId',
-                    type: PARAMETER_TYPE.UINT256
+                    type: CONTRACT_TYPES.UINT256
                 }],
                 mandatory: true,
                 content: ['super._burn(tokenId);\n'],

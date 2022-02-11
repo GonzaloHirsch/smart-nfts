@@ -5,7 +5,6 @@ import DatabaseService from './database.service';
 import CreationService from './creation.service';
 // Exceptions
 import NotFoundException from '../exceptions/notFoundException.exception';
-import InvalidContractOptionsException from '../exceptions/invalidContractOptionsException.exception';
 // Others
 import { EXTENSIONS } from '../constants/contract.constants';
 import { customAlphabet } from 'nanoid';

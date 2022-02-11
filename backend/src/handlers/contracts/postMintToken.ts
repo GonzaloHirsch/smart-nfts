@@ -25,11 +25,11 @@ const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyRes
 
     const contract = await instance.getEnforcedContractById(event.pathParameters!.contractId!)
 
-    const result = await InteractionService.getInstance(contract.deployment.network).handleMintCall(contract, formData.methodId as string, formData);
+    const response = await InteractionService.getInstance(contract.deployment.network).handleMintCall(contract, formData.methodId as string, formData);
     
     return {
         statusCode: 201,
-        body: JSON.stringify({result})
+        body: JSON.stringify(response)
     };
 };
 

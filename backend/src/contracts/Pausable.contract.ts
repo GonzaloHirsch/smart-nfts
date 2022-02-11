@@ -1,4 +1,4 @@
-import { EXTENSIONS, PARAMETER_TYPE, VISIBILITY } from "../constants/contract.constants";
+import { EXTENSIONS, CONTRACT_TYPES, VISIBILITY } from "../constants/contract.constants";
 import { IContractExtension, IContractLibrary, IContractMethod, IContractVariable } from "../interfaces/contract.interface";
 import {staticImplements} from '../helpers/global.helper';
 
@@ -40,15 +40,15 @@ export abstract class Pausable {
                 params: [
                     {
                         name: 'from',
-                        type: PARAMETER_TYPE.ADDRESS
+                        type: CONTRACT_TYPES.ADDRESS
                     },
                     {
                         name: 'to',
-                        type: PARAMETER_TYPE.ADDRESS
+                        type: CONTRACT_TYPES.ADDRESS
                     },
                     {
                         name: 'tokenId',
-                        type: PARAMETER_TYPE.UINT256
+                        type: CONTRACT_TYPES.UINT256
                     }
                 ],
                 mandatory: true,

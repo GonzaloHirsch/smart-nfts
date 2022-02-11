@@ -1,4 +1,4 @@
-import { EXTENSIONS, PARAMETER_TYPE, STATE_MUTABILITY, VISIBILITY } from "../constants/contract.constants";
+import { EXTENSIONS, CONTRACT_TYPES, STATE_MUTABILITY, VISIBILITY } from "../constants/contract.constants";
 import { IContractExtension, IContractLibrary, IContractMethod, IContractVariable } from "../interfaces/contract.interface";
 import {staticImplements} from '../helpers/global.helper';
 
@@ -23,11 +23,11 @@ export abstract class Mintable {
             params: [
                 {
                     name: 'to',
-                    type: PARAMETER_TYPE.ADDRESS
+                    type: CONTRACT_TYPES.ADDRESS
                 },
                 {
                     name: 'tokenId',
-                    type: PARAMETER_TYPE.UINT256
+                    type: CONTRACT_TYPES.UINT256
                 }
             ],
             mandatory: true,

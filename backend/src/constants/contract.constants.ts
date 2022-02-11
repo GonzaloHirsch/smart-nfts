@@ -24,7 +24,7 @@ export enum METHOD_TYPE {
     CONSTRUCTOR = 'constructor'
 }
 
-export enum PARAMETER_TYPE {
+export enum CONTRACT_TYPES {
     ADDRESS = 'address',
     STRING_MEMORY = 'string memory',
     UINT256 = 'uint256',
@@ -32,7 +32,8 @@ export enum PARAMETER_TYPE {
     BOOL = 'bool',
     STRING = 'string',
     BYTES = 'bytes',
-    BYTES4 = 'bytes4'
+    BYTES4 = 'bytes4',
+    TRANSACTION_HASH = 'transactionHash',
 }
 
 export enum VISIBILITY {
@@ -74,6 +75,9 @@ export const EXTENSION_MAP: Map<string, IContractExtension> = new Map([
 ]);
 
 export const REQUIRE_KEYWORD = 'require';
+
+// METADATA
+export const DEFAULT_METADATA_FIELDS = ['name', 'description'];
 
 export enum METADATA_TYPES {
     NUMBER = 'number',

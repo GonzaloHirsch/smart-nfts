@@ -29,11 +29,11 @@ const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyRes
 
     const contract = await instance.getEnforcedContractById(event.pathParameters!.contractId!)
 
-    const result = await InteractionService.getInstance(contract.deployment.network).handleMethodCall(contract, methodId, inputs)
+    const response = await InteractionService.getInstance(contract.deployment.network).handleMethodCall(contract, methodId, inputs)
 
     return {
         statusCode: 200,
-        body: JSON.stringify({result: result})
+        body: JSON.stringify(response)
     };
 };
 

@@ -1,3 +1,4 @@
+import { CONTRACT_TYPES } from "../constants/contract.constants";
 
 export interface ITransactionConfig {
     from?: string | number;
@@ -11,4 +12,9 @@ export interface ITransactionConfig {
     nonce?: number;
     chainId?: number;
     chain?: string;
+}
+
+export interface IInteractResponse {
+    result: any,
+    resultType: CONTRACT_TYPES | CONTRACT_TYPES[]
 }

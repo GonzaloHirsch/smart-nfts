@@ -1,6 +1,6 @@
 import { Document, model, models, Schema } from 'mongoose';
 import { IMetadata } from '../interfaces/metadata.interface';
-import { METHOD_TYPE, STATE_MUTABILITY, PARAMETER_TYPE, METADATA_TYPES, METADATA_DISPLAY_TYPES, SUPPORTED_NETWORKS } from '../constants/contract.constants';
+import { METHOD_TYPE, STATE_MUTABILITY, CONTRACT_TYPES, METADATA_TYPES, METADATA_DISPLAY_TYPES, SUPPORTED_NETWORKS } from '../constants/contract.constants';
 import { IAbi } from '../interfaces/abi.interface';
 
 export interface IStoredContract extends Document {
@@ -38,14 +38,14 @@ const StoredConstractSchema = new Schema({
             name: { type: String, required: false },
             type: { type: String, required: true },
             indexed: { type: Boolean, required: false },
-            internalType: { type: String, enum: PARAMETER_TYPE }
+            internalType: { type: String, enum: CONTRACT_TYPES }
             }
         ],
         outputs: [
             {
             name: { type: String, required: false },
             type: { type: String, required: true },
-            internalType: { type: String, enum: PARAMETER_TYPE }
+            internalType: { type: String, enum: CONTRACT_TYPES }
             }
         ]
     }],

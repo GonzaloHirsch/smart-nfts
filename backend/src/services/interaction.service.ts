@@ -3,19 +3,18 @@ import { FileData, MultipartFormData } from 'aws-multipart-parser/dist/models';
 // Model
 import { IStoredContract } from '../models/storedContract.model';
 // Constants, interfaces, helpers
-import { DEFAULT_METADATA_FIELDS, ropstenNetwork } from '../constants/general.constants';
+import { IInteractResponse } from '../interfaces/blockchain.interface';
 import { IArguments } from '../interfaces/general.interface';
 import { IAbiInput } from '../interfaces/abi.interface';
 import { IAbiMethod } from '../interfaces/abi.interface';
 import { IMetadata } from '../interfaces/metadata.interface';
-import { EXTENSIONS, METADATA_TYPES, STATE_MUTABILITY } from '../constants/contract.constants';
+import { CONTRACT_TYPES, DEFAULT_METADATA_FIELDS, EXTENSIONS, METADATA_TYPES, STATE_MUTABILITY } from '../constants/contract.constants';
 import { typeValidations } from '../helpers/validations.helper';
 // Services
 import TransactionService from './transaction.service';
 import AbiService from './abi.service';
 import IpfsService from './ipfs.service';
 // Exceptions
-import MethodInputException from '../exceptions/invalidInput.exception';
 import BlockchainInteractException from '../exceptions/blockchainInteract.exception';
 import ContractNotDeployedException from '../exceptions/contractNotDeployed.exception';
 import InvalidInputException from '../exceptions/invalidInput.exception';
@@ -38,7 +37,10 @@ class InteractionService {
         return InteractionService.instance;
     };
 
-    handleMintCall = async (storedContract: IStoredContract, methodId: string, formData: MultipartFormData): Promise<number> => {
+    handleMintCall = async (
+        storedContract: IStoredContract, methodId: string, formData: MultipartFormData
+    ): Promise<IInteractResponse> => {
+        
         if (!storedContract.deployment || !storedContract.deployment.address) {
             throw new ContractNotDeployedException(storedContract.id);
         }
@@ -85,7 +87,10 @@ class InteractionService {
         return await this.handleMethodCall(storedContract, methodId, methodArgs);
     };
 
-    handleMethodCall = async (storedContract: IStoredContract, methodId: string, args: IArguments): Promise<any> => {
+    handleMethodCall = async (
+        storedContract: IStoredContract, methodId: string, args: IArguments
+    ): Promise<IInteractResponse> => {
+
         if (!storedContract.deployment || !storedContract.deployment.address) {
             throw new ContractNotDeployedException(storedContract.id);
         }
@@ -102,7 +107,9 @@ class InteractionService {
         const contract = new this.web3.eth.Contract(storedContract.abi as any, address);
 
         // Different calls for read and write methods
-        return this._isReadMethod(method) ? this._handleReadMethod(contract, method, args) : this._handleWriteMethod(storedContract.deployment.network, contract, address, method, args);
+        return this._isReadMethod(method) 
+            ? this._handleReadMethod(contract, method, args) 
+            : this._handleWriteMethod(storedContract.deployment.network, contract, address, method, args);
     };
 
     private _checkValidMetadata = (metadataDef: IMetadata, metaArgs: IArguments, hasImage: boolean): void => {
@@ -171,26 +178,49 @@ class InteractionService {
         return method.stateMutability === STATE_MUTABILITY.PURE || method.stateMutability === STATE_MUTABILITY.VIEW;
     };
 
-    private _handleReadMethod = async (contract: any, method: IAbiMethod, args: IArguments): Promise<any> => {
+    private _handleReadMethod = async (contract: any, method: IAbiMethod, args: IArguments): Promise<IInteractResponse> => {
         const argsValues = Object.values(args);
 
-        return await contract.methods[method.name!](...argsValues)
+        const returnType = method.outputs.length === 1
+            ? method.outputs[0].type as CONTRACT_TYPES
+            : method.outputs.map(o => o.type as CONTRACT_TYPES);
+
+        const result = await contract.methods[method.name!](...argsValues)
             .call({ from: this.deploymentAddress })
             .catch((err: any) => {
                 console.log(err);
                 throw new BlockchainInteractException(err.message);
             });
+
+        return {
+            result: result,
+            resultType: returnType
+        }
     };
 
-    private _handleWriteMethod = async (network :string, contract: any, contractAddress: string, method: IAbiMethod, args: IArguments): Promise<any> => {
+    private _handleWriteMethod = async (
+        network: string, 
+        contract: any, 
+        contractAddress: string, 
+        method: IAbiMethod, 
+        args: IArguments
+    ): Promise<IInteractResponse> => {
+
         const argsValues = Object.values(args);
+
+        const instance = TransactionService.getInstance(network);
 
         const data = contract.methods[method.name!](...argsValues).encodeABI();
 
         // TODO - gas fees
-        const tx = await TransactionService.getInstance(network).createTransaction(data, 300000, this.deploymentAddress, contractAddress);
+        const tx = await instance.createTransaction(data, 300000, this.deploymentAddress, contractAddress);
 
-        return await TransactionService.getInstance(network).signAndSendTransaction(tx);
+        const transactionHash = await instance.signAndSendTransaction(tx);
+
+        return {
+            result: transactionHash,
+            resultType: CONTRACT_TYPES.TRANSACTION_HASH
+        };
     };
 }
 
