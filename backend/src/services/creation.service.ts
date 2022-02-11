@@ -154,6 +154,8 @@ class CreationService {
         // Mandatory methods hold the base of the method so give priority to these
         methods.sort(getSortFn<IContractMethod>((m) => m.mandatory));
 
+        let overrideIsUndefined = true;
+
         const methodName = methods[0].name;
         const overrideHashMap: { [hash: number]: EXTENSIONS } = {};
         const optionsHashMap: { [hash: number]: string } = {};
@@ -187,6 +189,9 @@ class CreationService {
 
         // Get all unique overrides
         methods.forEach((m) => {
+            if (m.overrides != null) {
+                overrideIsUndefined = false;
+            }
             m.overrides?.forEach((o) => {
                 const hash = hashString(o);
                 if (!overrideHashMap[hash]) {
@@ -204,7 +209,7 @@ class CreationService {
             visibility: getMergedMethodVisibility(methods.map((m) => m.visibility)),
             stateMutability: getMergedMethodStateMutability(methods.map((m) => m.stateMutability)),
             solidityRequired: methods.every(m => m.solidityRequired === true),
-            overrides: Object.values(overrideHashMap)
+            overrides: overrideIsUndefined ? undefined : Object.values(overrideHashMap)
         };
     };
 }

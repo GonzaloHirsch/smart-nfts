@@ -94,6 +94,12 @@ export const getFunctionOverrides = (overrides?: EXTENSIONS[]): string => {
     return indexContent(`override${overrideString}\n`);
 }
 
+export const getFunctionReturnType = (returns?: string): string => {
+    return returns != null
+        ? indexContent(`returns (${returns})\n`)
+        : '';
+}
+
 export const getFunctionContent = (content: string[]): string => {
     return `{` + newLine() +
         content.map(line => indexContent(line)).join('') +

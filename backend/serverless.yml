@@ -148,3 +148,14 @@ functions:
           cors: true
     tags:
       app: pf
+  getCompiledContract:
+    handler: src/handlers/contracts/getCompiledContract.handler
+    memorySize: 1024 # Probably more memory-intensive process than the rest
+    timeout: 30 # More timeout because it needs more time to make the request
+    events:
+      - http:
+          path: /contracts/{contractId}/compile
+          method: get
+          cors: true
+    tags:
+      app: pf

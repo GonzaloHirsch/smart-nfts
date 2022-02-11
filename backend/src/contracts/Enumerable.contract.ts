@@ -36,7 +36,7 @@ export abstract class Enumerable {
                     },
                 ],
                 mandatory: true,
-                content: ['return super.supportsInterface(interfaceId);\n'],
+                content: ['super._beforeTokenTransfer(from, to, tokenId);\n'],
                 visibility: VISIBILITY.INTERNAL,
                 overrides: [EXTENSIONS.ERC721, EXTENSIONS.ERC721Enumerable],
                 solidityRequired: true
