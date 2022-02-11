@@ -7,7 +7,7 @@ import { IInteractResponse } from '../interfaces/blockchain.interface';
 import { IArguments } from '../interfaces/general.interface';
 import { IAbiInput } from '../interfaces/abi.interface';
 import { IAbiMethod } from '../interfaces/abi.interface';
-import { IMetadata } from '../interfaces/metadata.interface';
+import { IMetadata, IStandardMetadata, IStandardMetadataAttribute } from '../interfaces/metadata.interface';
 import { CONTRACT_TYPES, DEFAULT_METADATA_FIELDS, EXTENSIONS, METADATA_TYPES, STATE_MUTABILITY } from '../constants/contract.constants';
 import { typeValidations } from '../helpers/validations.helper';
 // Services
@@ -47,15 +47,11 @@ class InteractionService {
 
         const fileData = formData.token as FileData;
 
-        console.log('FILE DATA: ', fileData);
-
         // Parse the inputs and check if its a valid JSON
         let methodArgs: IArguments;
         let metadataArgs: IArguments;
 
         try {
-            // @ts-ignore
-            console.log(formData.inputs, formData.metadata);
             methodArgs = JSON.parse((formData.inputs as string) ?? '{}') as IArguments;
             metadataArgs = JSON.parse((formData.metadata as string) ?? '{}') as IArguments;
         } catch (err) {
@@ -70,18 +66,18 @@ class InteractionService {
                 throw new InvalidContractOptionsException(storedContract._id);
             }
             // check metadata input is correct
-            this._checkValidMetadata(metadataDef, metadataArgs, fileData != null);
+            const standardMetadata = this._checkAndMapToStandardMetadata(
+                metadataDef, metadataArgs, fileData != null
+            );
 
             // Upload the metadata
             const pinnedMetadata = metadataDef.hasImage
-                ? await IpfsService.getInstance().addMetadataWithFileToIPFS(metadataArgs, fileData.content, fileData.filename)
-                : await IpfsService.getInstance().addJSONToIPFS(metadataArgs, metadataArgs.name);
+                ? await IpfsService.getInstance().addMetadataWithFileToIPFS(standardMetadata, fileData.content, fileData.filename)
+                : await IpfsService.getInstance().addJSONToIPFS(standardMetadata, metadataArgs.name);
 
             // Set the uri to pass to the method call
             methodArgs.uri = pinnedMetadata.ipfsHash;
         }
-
-        console.log(methodArgs);
 
         // Call the minter method
         return await this.handleMethodCall(storedContract, methodId, methodArgs);
@@ -112,8 +108,10 @@ class InteractionService {
             : this._handleWriteMethod(storedContract.deployment.network, contract, address, method, args);
     };
 
-    private _checkValidMetadata = (metadataDef: IMetadata, metaArgs: IArguments, hasImage: boolean): void => {
-        
+    private _checkAndMapToStandardMetadata = (
+        metadataDef: IMetadata, metaArgs: IArguments, hasImage: boolean
+    ): IStandardMetadata => {
+
         // If the attributes received and the attributes in def is different throw error
         const recievedInputCount = Object.keys(metaArgs.attributes ?? {}).length;
         if (metadataDef.attributes.length !== recievedInputCount) {
@@ -132,24 +130,44 @@ class InteractionService {
             }
         }
 
+        const standardMetadata: IStandardMetadata = {
+            name: metaArgs.name,
+            description: metaArgs.description,
+            attributes: []
+        };
+
         // Check custom attributes are valid and present
         for (const attributeDef of metadataDef.attributes) {
-            console.log(metadataDef, attributeDef);
-            const argumentType = attributeDef.traitFormat === METADATA_TYPES.STRING ? attributeDef.traitFormat : attributeDef.displayType;
+            // If number, use the display type
+            const argumentType = attributeDef.traitFormat === METADATA_TYPES.STRING ? attributeDef.traitFormat : attributeDef.displayType!;
 
             const argumentValue = metaArgs.attributes[attributeDef.traitType];
             const typeValidator = typeValidations[argumentType];
 
-            console.log(argumentValue, argumentType);
+            // If no value is present for attribute --> Error
             if (argumentValue == null) {
                 throw InvalidInputException.Missing(attributeDef.traitType, argumentType);
             }
 
+            // If value is present but it is not the correct type --> Error
             if (typeValidator == null || !typeValidator(argumentValue)) {
-                console.log('INVALID METADATA TYPE');
                 throw InvalidInputException.Type(attributeDef.traitType, argumentType, argumentValue);
             }
+
+            // Create the standard attribute with the input received
+            const standardAttribute: IStandardMetadataAttribute = {
+                traitType: attributeDef.traitType,
+                value:  argumentValue
+            }
+
+            if (attributeDef.displayType != null) {
+                standardAttribute.displayType = attributeDef.displayType;
+            }
+
+            standardMetadata.attributes.push(standardAttribute);
         }
+
+        return standardMetadata;
     };
 
     private _checkValidInputs = (methodInputs: IAbiInput[], args: IArguments): void => {
@@ -162,13 +180,11 @@ class InteractionService {
             const argumentValue = args[inputDef.name];
             const typeValidator = typeValidations[inputDef.type];
 
-            console.log(argumentValue, typeValidator);
             if (argumentValue == null) {
                 throw InvalidInputException.Missing(inputDef.name, inputDef.type);
             }
 
             if (typeValidator == null || !typeValidator(argumentValue)) {
-                console.log('INVALID  PARAM TYPE');
                 throw InvalidInputException.Type(inputDef.name, inputDef.type, argumentValue);
             }
         }
