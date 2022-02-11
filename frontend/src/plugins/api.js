@@ -45,7 +45,7 @@ const api = {
         });
     },
     downloadContract: async (contractId) => {
-        return instance.get(`contracts/${contractId}/contents`, {responseType: 'blob'}).then(res => {
+        return instance.get(`contracts/${contractId}/contents`, { responseType: 'blob' }).then(res => {
             const filename = res.headers['content-disposition'].split('filename=')[1];
             fileDownload(res.data, filename);
             return res;
@@ -55,6 +55,13 @@ const api = {
         return instance.post(`contracts/${contractId}/interact`, {
             methodId: methodId,
             inputs: inputs
+        }).then(res => {
+            return res;
+        });
+    },
+    mintWithContract: async (contractId, formData) => {
+        return instance.post(`contracts/${contractId}/mint`, formData, {
+            "Content-Type": "multipart/form-data"
         }).then(res => {
             return res;
         });
