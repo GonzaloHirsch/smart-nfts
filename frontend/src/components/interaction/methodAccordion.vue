@@ -196,9 +196,40 @@ const callMethod = () => {
     }
 };
 
-//
-
-const handleMintCall = (contractId) => {};
+const handleMintCall = (contractId) => {
+    isLoading.value = true;
+    // Create the form data object
+    const apiData = new FormData();
+    // Required data
+    apiData.append('methodId', props.method._id);
+    // Inputs
+    apiData.append('inputs', JSON.stringify(inputs.value));
+    // Metadata
+    if (props.metadata) apiData.append('metadata', JSON.stringify({
+        ...detailInputs.value,
+        attributes: {
+            ...metadataInputs.value
+        }
+    }));
+    if (props.metadata.hasImage) apiData.append('token', metadataImage.value);
+    // Send the request
+    api.mintWithContract(contractId, apiData)
+        .then((res) => {
+            console.log(res);
+            callResult.value = res.data.result;
+            callError.value = undefined;
+            isLoading.value = false;
+        })
+        .catch((err) => {
+            if (err.response && err.response.status === 400) {
+                callError.value = err.response.data.message;
+            } else {
+                callError.value = 'Internal error';
+            }
+            callResult.value = undefined;
+            isLoading.value = false;
+        });
+};
 
 const handleMethodCall = (contractId) => {
     isLoading.value = true;
