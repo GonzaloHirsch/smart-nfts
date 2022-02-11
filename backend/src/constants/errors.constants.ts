@@ -7,7 +7,9 @@ export const HTTP_ERRORS = {
         CONTRACT: { status: 400, internalStatus: 'INVALID_CONTRACT', message: 'Invalid contract. Data missing.' },
         MISSING_DEPLOY: { status: 400, internalStatus: 'MISSING_DEPLOY', message: 'Contract must be deployed.' },
         INVALID_INTERACTION: { status: 400, internalStatus: 'INVALID_INTERACTION', message: 'Blockchain error when interacting.' },
-        INVALID_INPUTS: { status: 400, internalStatus: 'INVALID_INPUTS', message: 'Invalid input for method or metadata.' },
+        INVALID_INPUT_COUNT: { status: 400, internalStatus: 'INVALID_INPUT_COUNT', message: 'Input amount does not match param amount.' },
+        INVALID_INPUT_MISSING: { status: 400, internalStatus: 'INVALID_INPUT_MISSING', message: 'Inputs are missing.' },
+        INVALID_INPUT_TYPE: { status: 400, internalStatus: 'INVALID_INPUT_TYPE', message: 'Input types are incorrect.' },
     },
     FORBIDDEN: {
         GENERAL: { status: 403, internalStatus: 'FORBIDDEN', message: 'Forbidden.' },
@@ -40,7 +42,10 @@ export const EXCEPTION_NAMES = {
     MISSING_EXTENSION: 'MissingExtensionException',
     NO_NETWORK: 'NoNetworkException',
     BLOCKCHAIN_INTERACT: 'BlockchainException',
-    INVALID_INPUT: 'InvalidInputException',
+    INVALID_INPUT_COUNT: 'InvalidInputCountException',
+    INVALID_INPUT_MISSING: 'InvalidInputMissingException',
+    INVALID_INPUT_TYPE: 'InvalidInputTypeException',
+    
 }
 
 export const EXCEPTION_TO_HTTP_MAP = new Map<string, IHttpErrorData>([
@@ -54,5 +59,7 @@ export const EXCEPTION_TO_HTTP_MAP = new Map<string, IHttpErrorData>([
     [EXCEPTION_NAMES.MISSING_EXTENSION, HTTP_ERRORS.SERVER.EXTENSION],
     [EXCEPTION_NAMES.NO_NETWORK, HTTP_ERRORS.SERVER.CONFIGURATION],
     [EXCEPTION_NAMES.BLOCKCHAIN_INTERACT, HTTP_ERRORS.BAD_REQUEST.INVALID_INTERACTION],
-    [EXCEPTION_NAMES.INVALID_INPUT, HTTP_ERRORS.BAD_REQUEST.INVALID_INPUTS],
+    [EXCEPTION_NAMES.INVALID_INPUT_COUNT, HTTP_ERRORS.BAD_REQUEST.INVALID_INPUT_COUNT],
+    [EXCEPTION_NAMES.INVALID_INPUT_MISSING, HTTP_ERRORS.BAD_REQUEST.INVALID_INPUT_MISSING],
+    [EXCEPTION_NAMES.INVALID_INPUT_TYPE, HTTP_ERRORS.BAD_REQUEST.INVALID_INPUT_TYPE],
 ]);

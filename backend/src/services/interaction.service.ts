@@ -106,20 +106,22 @@ class InteractionService {
     };
 
     private _checkValidMetadata = (metadataDef: IMetadata, metaArgs: IArguments, hasImage: boolean): void => {
+        
         // If the attributes received and the attributes in def is different throw error
-        if (metadataDef.attributes.length !== Object.keys(metaArgs.attributes ?? {}).length) {
-            throw new Error('TODO');
+        const recievedInputCount = Object.keys(metaArgs.attributes ?? {}).length;
+        if (metadataDef.attributes.length !== recievedInputCount) {
+            throw InvalidInputException.Count(metadataDef.attributes.length, recievedInputCount);
         }
 
         // Metadata def must indicate whether or not to accept image
         if (metadataDef.hasImage !== hasImage) {
-            throw new InvalidInputException('hasImage', 'boolean');
+            throw InvalidInputException.Type('hasImage', metadataDef.hasImage.toString(), hasImage);
         }
 
         // Check valid default fields are present
         for (const defaultField of DEFAULT_METADATA_FIELDS) {
             if (!metaArgs[defaultField] || typeValidations.string(!metaArgs[defaultField])) {
-                throw new InvalidInputException(defaultField, 'string');
+                throw InvalidInputException.Missing(defaultField, 'string');
             }
         }
 
@@ -133,12 +135,12 @@ class InteractionService {
 
             console.log(argumentValue, argumentType);
             if (argumentValue == null) {
-                throw new InvalidInputException(attributeDef.traitType, argumentType);
+                throw InvalidInputException.Missing(attributeDef.traitType, argumentType);
             }
 
             if (typeValidator == null || !typeValidator(argumentValue)) {
                 console.log('INVALID METADATA TYPE');
-                throw new InvalidInputException(attributeDef.traitType, argumentType, argumentValue);
+                throw InvalidInputException.Type(attributeDef.traitType, argumentType, argumentValue);
             }
         }
     };
@@ -146,7 +148,7 @@ class InteractionService {
     private _checkValidInputs = (methodInputs: IAbiInput[], args: IArguments): void => {
         
         if (methodInputs.length !== Object.keys(args).length) {
-            throw new Error('TODO: input sizes differ');
+            throw InvalidInputException.Count(methodInputs.length, Object.keys(args).length);
         }
         
         for (const inputDef of methodInputs) {
@@ -155,12 +157,12 @@ class InteractionService {
 
             console.log(argumentValue, typeValidator);
             if (argumentValue == null) {
-                throw new MethodInputException(inputDef.name, inputDef.type);
+                throw InvalidInputException.Missing(inputDef.name, inputDef.type);
             }
 
             if (typeValidator == null || !typeValidator(argumentValue)) {
                 console.log('INVALID  PARAM TYPE');
-                throw new MethodInputException(inputDef.name, inputDef.type, argumentValue);
+                throw InvalidInputException.Type(inputDef.name, inputDef.type, argumentValue);
             }
         }
     };
