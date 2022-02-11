@@ -1,21 +1,20 @@
 <template>
-    <div class="overflow-x-auto overflow-y-auto code-viewer justify-start items-start rounded-md bg-slate-800 text-white relative">
-        <pre v-if="!props.loading" class="p-sm flex">
+    <div class="relative code-viewer rounded-md bg-slate-800 text-white">
+        <div class="overflow-x-auto overflow-y-auto justify-start items-start relative">
+            <pre v-if="!props.loading" class="p-sm flex">
       <code ref="contractCode" class="language-solidity">
         {{props.code}}
       </code>
     </pre>
-        <div v-else class="w-full flex flex-col items-center justify-center h-full">
-            <RefreshIcon class="h-12 w-12 animate-spin-reverse mx-auto my-auto" />
         </div>
         <div v-if="!props.loading && props.canDownload" class="absolute flex top-0 right-0">
             <div
                 @click="!props.loadingCopy ? copyContract() : undefined"
                 :class="[
-                    'p-1 border-2 transition duration-200 rounded-l-md',
+                    'p-1 border-2 transition duration-200 rounded-bl-md',
                     props.loadingCopy
                         ? 'bg-gray-500 text-gray-700 border-gray-700 cursor-not-allowed'
-                        : 'border-white text-white hover:text-brand_secondary hover:border-brand_secondary hover:bg-white cursor-pointer'
+                        : 'border-gray-500 bg-gray-400 text-gray-500 hover:text-brand_secondary hover:border-brand_secondary hover:bg-white cursor-pointer'
                 ]"
                 :aria-label="$t('aria.copyContract')"
                 :aria-disabled="props.loadingCopy"
@@ -29,7 +28,7 @@
                     'p-1 border-2 transition duration-200',
                     props.loadingDownload
                         ? 'bg-gray-500 text-gray-700 border-gray-700 cursor-not-allowed'
-                        : 'border-white text-white hover:text-brand_secondary hover:border-brand_secondary hover:bg-white cursor-pointer'
+                        : 'border-gray-500 bg-gray-400 text-gray-500 hover:text-brand_secondary hover:border-brand_secondary hover:bg-white cursor-pointer'
                 ]"
                 :aria-label="$t('aria.downloadContract')"
                 :aria-disabled="props.loadingDownload"
@@ -38,6 +37,9 @@
                 <RefreshIcon v-else class="h-8 w-8 animate-spin-reverse" />
             </div>
         </div>
+        <div v-else class="w-full flex flex-col items-center justify-center h-full">
+                <RefreshIcon class="h-12 w-12 animate-spin-reverse mx-auto my-auto" />
+            </div>
     </div>
 </template>
 

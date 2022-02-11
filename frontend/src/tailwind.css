@@ -106,10 +106,13 @@ a {
   Colors: /blob/v0.64.0/lib/css/exports/_stacks-constants-colors.less
 */
 pre code.hljs {
-  @apply text-sm block overflow-x-auto;
+  @apply text-base block overflow-x-auto font-mono !important;
 }
 .hljs {
   @apply text-white bg-slate-800;
+}
+.hljs span {
+  @apply font-mono !important;
 }
 .hljs-subst {
   @apply text-white;
@@ -239,9 +242,9 @@ svg.hero-main-drawing {
 .hero-background-drawing svg,
 svg.hero-background-drawing {
   @apply w-full z-0 absolute top-0 left-0 bottom-0 right-0 overflow-visible;
-  min-width: 1000px;
-  transform: translate(200px, -300px) rotate(-63deg);
-  /* transform: translate(150px, -200px); */
+  min-width: 1500px;
+  max-height: 850px;
+  transform: translate(25%, 25%);
 }
 
 /* HORIZONTAL FACT IMAGES */

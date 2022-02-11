@@ -46,7 +46,7 @@ const formats = computed(() => {
 
 <style scoped>
 .accordion--button-light {
-  @apply bg-light text-typography_secondary shadow-sm;
+  @apply bg-light text-typography_secondary shadow-sm border border-gray-200 !important;
 }
 
 .accordion--content-light {
@@ -54,7 +54,7 @@ const formats = computed(() => {
 }
 
 .accordion--button-white {
-  @apply bg-white text-typography_secondary shadow-sm;
+  @apply bg-white text-typography_secondary shadow-sm border border-gray-200 !important;
 }
 
 .accordion--content-white {
@@ -62,7 +62,7 @@ const formats = computed(() => {
 }
 
 .accordion--button-primary {
-  @apply bg-white text-typography_secondary shadow-sm;
+  @apply bg-white text-typography_secondary shadow-sm border border-gray-200 !important;
 }
 
 .accordion--content-primary {

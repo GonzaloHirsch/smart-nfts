@@ -43,11 +43,15 @@ export const allValidations = {
     },
     "max20": {
         label: "This field can have a maximum of 20 characters",
-        func: (input) => (max20(input)) || "interact.error.parameters.max20"
+        func: (input) => (maxLength(20, input)) || "interact.error.parameters.max20"
     },
     "string": {
-        label: "Invalid string, maximum length is 256 characters.",
-        func: (input) => (max256(input)) || "interact.error.parameters.string"
+        label: "Invalid text, maximum length is 256 characters.",
+        func: (input) => (maxLength(256, input)) || "interact.error.parameters.string"
+    },
+    "long_string": {
+        label: "Invalid text, maximum length is 700 characters.",
+        func: (input) => (maxLength(700, input)) || "interact.error.parameters.long_string"
     },
     "number": {
         label: "Not a valid number",
@@ -137,12 +141,8 @@ const isMetadata = (metadataName) => {
     return /^[a-zA-Z0-9_ ]{0,20}$/i.test(metadataName);
 };
 
-const max20 = (text) => {
-    return text.length <= 20;
-}
-
-const max256 = (text) => {
-    return text.length <= 256;
+const maxLength = (length, text) => {
+    return text.length <= length;
 }
 
 const isPercentage = (num) => {

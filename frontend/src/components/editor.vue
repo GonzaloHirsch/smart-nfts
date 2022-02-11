@@ -1,8 +1,8 @@
 <template>
     <div class="bg-light p-sm rounded-md shadow-lg border border-gray-200">
-        <h2 class="text-center text-brand_secondary">{{$t('editor.contract.features')}}</h2>
+        <!-- <h2 class="text-center text-brand_secondary">{{$t('editor.contract.features')}}</h2> -->
         <div class="divide-y divide-typography_secondary">
-            <div class="form--section">
+            <div class="pb-sm">
                 <h5 class="form--title">{{$t('editor.contract.information')}}<QuestionMarkCircleIcon class="form--title-icon" /></h5>
                 <div class="flex flex-col justify-between">
                     <!-- Set validations for each field and the validation events -->
@@ -32,7 +32,7 @@
                     />
                 </div>
             </div>
-            <div class="form--section">
+            <div class="py-sm">
                 <h5 class="form--title">{{$t('editor.contract.creation')}} <QuestionMarkCircleIcon class="form--title-icon" /></h5>
                 <v-checkbox
                     id="isMintable"
@@ -78,7 +78,7 @@
                     class="w-full md:w-6/12"
                 />
             </div>
-            <div v-if="contractData.isURIStorage" class="form--section">
+            <div v-if="contractData.isURIStorage" class="py-sm">
                 <h5 class="form--title">{{$t('editor.contract.metadata')}} <QuestionMarkCircleIcon class="form--title-icon" /></h5>
                 <p><strong>Note:</strong> By default, all tokens have name & description</p>
                 <p class="text-xl text-brand_secondary mt-sm">Image</p>
@@ -95,10 +95,10 @@
             </div>
         </div>
         <!-- ACTIONS -->
-        <div class="flex flex-col sm:flex-row items-center justify-center">
+        <div class="flex flex-col sm:flex-row items-center justify-center py-xs">
             <v-button
                 v-if="props.canDeploy"
-                format="primary"
+                format="secondary"
                 aria="Deploy the NFT contract"
                 :external="false"
                 :white="false"
@@ -110,7 +110,7 @@
             />
             <v-button
                 v-if="!props.isVerified && props.canVerify"
-                format="primary"
+                format="secondary"
                 aria="Verify the NFT contract"
                 :external="false"
                 :white="false"
@@ -243,14 +243,10 @@ watch(
 
 <style>
 .form--title {
-    @apply text-brand_secondary flex items-center;
+    @apply text-brand_secondary flex items-center mb-xs;
 }
 
 .form--title-icon {
     @apply h-6 w-6 text-brand_tertiary ml-xs;
-}
-
-.form--section {
-    @apply py-sm;
 }
 </style>

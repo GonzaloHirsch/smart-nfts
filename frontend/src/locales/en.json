@@ -156,7 +156,8 @@
                 "max20": "This field can have a maximum of 20 characters",
                 "number": "Not a valid number",
                 "boost_percentage": "Invalid percentage, must be between 0 and 100 (without %)",
-                "string": "Invalid string, maximum length is 256 characters."
+                "string": "Invalid text, maximum length is 256 characters.",
+                "long_string": "Invalid text, maximum length is 700 characters."
             }
         },
         "buttons": {
@@ -170,16 +171,19 @@
             "bytes4": "0x11AAFF44",
             "bytes": "0x11FFA4...",
             "bool": "true or false",
-            "string": "String - The quick brown fox...",
+            "string": "Text - The quick brown fox...",
             "boost_number": "Number - 1234567890",
             "boost_percentage": "Percentage - 0 ... 100",
             "number": "Number - 1234567890",
-            "image": "Drop the image here or <span class=\"underline\">click here</span> to select it..."
+            "image": "Drop the image here or <span class=\"underline\">click here</span> to select it...",
+            "long_string": "Long text - Write your long text here"
         },
         "text": {
             "boost_number": "Boost Number",
             "boost_percentage": "Boost Percentage",
             "number": "Plain Number",
+            "string": "Text",
+            "long_string": "Long Text",
             "image": "File: {0}"
         }
     },

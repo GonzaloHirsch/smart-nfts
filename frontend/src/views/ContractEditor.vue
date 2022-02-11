@@ -24,7 +24,7 @@
 
     <v-section :noPadding="true" class="bg-typography_primary">
         <div v-if="!isLoadingEditor" class="flex flex-col md:flex-row">
-            <div class="flex flex-col w-full md:w-6/12 lg:w-5/12 xl:w-4/12 p-sm h-fit" ref="editorContainer" :key="lastSaved">
+            <div class="flex flex-col w-full md:w-6/12 lg:w-5/12 xl:w-4/12 py-sm pr-xs pl-sm h-fit" ref="editorContainer" :key="lastSaved">
                 <v-editor
                     @contractChanged="handleContractChange"
                     @deployContract="handleDeployContract"
@@ -76,7 +76,7 @@
                     /></router-link>
                 </v-editor>
             </div>
-            <div class="flex w-full md:w-6/12 lg:w-7/12 xl:w-8/12 p-sm" :style="`min-height: ${editorHeight}px; max-height: ${editorHeight}px`">
+            <div class="flex w-full md:w-6/12 lg:w-7/12 xl:w-8/12 py-sm pr-sm pl-xs" :style="`min-height: ${editorHeight}px; max-height: ${editorHeight}px`">
                 <v-code-viewer
                     @downloadContract="handleDownloadContract"
                     :key="contract"

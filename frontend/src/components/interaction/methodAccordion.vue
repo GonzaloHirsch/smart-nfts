@@ -25,7 +25,9 @@
                     <template v-for="(input, index) in props.method.inputs" :key="index">
                         <!-- Add the validations as the required one and the type check -->
                         <!-- Receive the events for input validity -->
+                        <!-- Hide the uri field, we take care of that -->
                         <v-input
+                            v-if="!props.metadata || !isUriField(input)"
                             :id="`${props.method.name}-${input.name}`"
                             :name="input.name"
                             :label="`${input.name} (${input.type})`"
@@ -46,27 +48,56 @@
                         <p class="text-h5">Metadata</p>
                         <p v-if="props.metadata.hasImage" class="text-lg mt-sm">Image</p>
                         <v-file-input v-if="props.metadata.hasImage" v-model="metadataImage"></v-file-input>
+                        <p class="text-lg mt-sm">Details</p>
+                        <v-input
+                            :id="`${props.method.name}-metadata-name`"
+                            :name="`metadata-name`"
+                            :label="`Name (string)`"
+                            :hideLabel="false"
+                            :placeholder="$t(getParameterPlaceholder('string'))"
+                            v-model="detailInputs.name"
+                            :continuousInput="false"
+                            :validations="['required', 'string']"
+                            @validInput="() => handleValidDetailsInput('name')"
+                            @invalidInput="(error) => handleInvalidDetailsInput('name', error)"
+                            format="primary-white"
+                            class="mb-xs"
+                        />
+                        <v-textarea
+                            :id="`${props.method.name}-metadata-description`"
+                            :name="`metadata-description`"
+                            :label="`Description (long string)`"
+                            :hideLabel="false"
+                            :placeholder="$t(getParameterPlaceholder('long string'))"
+                            v-model="detailInputs.description"
+                            :continuousInput="false"
+                            :validations="['required', 'long_string']"
+                            @validInput="() => handleValidDetailsInput('description')"
+                            @invalidInput="(error) => handleInvalidDetailsInput('description', error)"
+                            format="primary-white"
+                            class="mb-xs"
+                        />
                         <p v-if="props.metadata.attributes.length > 0" class="text-lg mt-sm">Fields</p>
                         <template v-for="(metadataField, index) in props.metadata.attributes" :key="index">
                             <v-input
-                                :id="`${props.method.name}-metadata-${metadataField.trait_type}`"
-                                :name="`metadata-${metadataField.trait_type}`"
-                                :label="`${metadataField.trait_type} (${metadataField.trait_format}${
-                                    metadataField.display_type ? ' - ' + $t(`inputs.text.${metadataField.display_type}`) : ''
+                                :id="`${props.method.name}-metadata-${metadataField.traitType}`"
+                                :name="`metadata-${metadataField.traitType}`"
+                                :label="`${metadataField.traitType} (${metadataField.traitFormat}${
+                                    metadataField.displayType ? ' - ' + $t(`inputs.text.${metadataField.displayType}`) : ''
                                 })`"
                                 :hideLabel="false"
                                 :placeholder="
-                                    $t(getParameterPlaceholder(metadataField.display_type ? metadataField.display_type : metadataField.trait_format))
+                                    $t(getParameterPlaceholder(metadataField.displayType ? metadataField.displayType : metadataField.traitFormat))
                                 "
-                                v-model="metadataInputs[metadataField.trait_type]"
+                                v-model="metadataInputs[metadataField.traitType]"
                                 :continuousInput="false"
                                 :validations="
-                                    metadataField.display_type
-                                        ? ['required', metadataField.trait_format, metadataField.display_type]
-                                        : ['required', metadataField.trait_format]
+                                    metadataField.displayType
+                                        ? ['required', metadataField.traitFormat, metadataField.displayType]
+                                        : ['required', metadataField.traitFormat]
                                 "
-                                @validInput="() => handleValidMetadataInput(metadataField.trait_type)"
-                                @invalidInput="(error) => handleInvalidMetadataInput(metadataField.trait_type, error)"
+                                @validInput="() => handleValidMetadataInput(metadataField.traitType)"
+                                @invalidInput="(error) => handleInvalidMetadataInput(metadataField.traitType, error)"
                                 format="primary-white"
                                 class="mb-xs"
                             />
@@ -96,6 +127,7 @@
 <script setup>
 import vAccordion from '@/components/accordion.vue';
 import vInput from '@/components/editor/input.vue';
+import vTextarea from '@/components/editor/textarea.vue';
 import vFileInput from '@/components/editor/fileInput.vue';
 import vButton from '@/components/button.vue';
 import { QuestionMarkCircleIcon, DocumentDuplicateIcon } from '@heroicons/vue/solid';
@@ -123,9 +155,11 @@ const props = defineProps({
 import { ref } from 'vue';
 const inputs = ref({});
 const metadataInputs = ref({});
+const detailInputs = ref({});
 const metadataImage = ref(undefined);
 const inputsErrors = ref({});
 const metadataInputsErrors = ref({});
+const detailsInputsErrors = ref({});
 const errors = ref(undefined);
 
 const callResult = ref(undefined);
@@ -178,7 +212,7 @@ const handleMethodCall = (contractId) => {
             if (err.response && err.response.status === 400) {
                 callError.value = err.response.data.message;
             } else {
-                callError.value = "Internal error"
+                callError.value = 'Internal error';
             }
             callResult.value = undefined;
             isLoading.value = false;
@@ -191,22 +225,25 @@ const performValidations = () => {
     let hasError = false;
     // Normal inputs verification
     props.method.inputs.forEach((input) => {
-        // Check if the input is empty, cannot bypass this one, in case the user directly calls the method without touching the inputs
-        if (
-            !(
-                input.name in inputs.value &&
-                inputs.value[input.name] !== '' &&
-                inputs.value[input.name] !== null &&
-                inputs.value[input.name] !== undefined
-            )
-        ) {
-            hasError = hasError || true;
-            errors.value = t('interact.error.missingParameter', [input.name, input.type]);
-        }
-        // Verify with the emitted errors from the inputs
-        else if (inputsErrors.value[input.name] !== undefined) {
-            hasError = hasError || true;
-            errors.value = `${t(inputsErrors.value[input.name])} - ${input.name}`;
+        // Don't evaluate uri method
+        if (!props.metadata || !isUriField(input)) {
+            // Check if the input is empty, cannot bypass this one, in case the user directly calls the method without touching the inputs
+            if (
+                !(
+                    input.name in inputs.value &&
+                    inputs.value[input.name] !== '' &&
+                    inputs.value[input.name] !== null &&
+                    inputs.value[input.name] !== undefined
+                )
+            ) {
+                hasError = hasError || true;
+                errors.value = t('interact.error.missingParameter', [input.name, input.type]);
+            }
+            // Verify with the emitted errors from the inputs
+            else if (inputsErrors.value[input.name] !== undefined) {
+                hasError = hasError || true;
+                errors.value = `${t(inputsErrors.value[input.name])} - ${input.name}`;
+            }
         }
     });
     // Metadata verification
@@ -216,28 +253,62 @@ const performValidations = () => {
             // Check if the input is empty, cannot bypass this one, in case the user directly calls the method without touching the inputs
             if (
                 !(
-                    metadataField.trait_type in metadataInputs.value &&
-                    metadataInputs.value[metadataField.trait_type] !== '' &&
-                    metadataInputs.value[metadataField.trait_type] !== null &&
-                    metadataInputs.value[metadataField.trait_type] !== undefined
+                    metadataField.traitType in metadataInputs.value &&
+                    metadataInputs.value[metadataField.traitType] !== '' &&
+                    metadataInputs.value[metadataField.traitType] !== null &&
+                    metadataInputs.value[metadataField.traitType] !== undefined
                 )
             ) {
                 hasError = hasError || true;
                 errors.value = t('interact.error.missingParameter', [
-                    metadataField.trait_type,
-                    metadataField.trait_type ? metadataField.trait_type : metadataField.trait_format
+                    metadataField.traitType,
+                    t(`inputs.text.${metadataField.displayType ? metadataField.displayType : metadataField.traitFormat}`)
                 ]);
             }
             // Verify with the emitted errors from the inputs
-            else if (metadataInputsErrors.value[metadataField.trait_type] !== undefined) {
+            else if (metadataInputsErrors.value[metadataField.traitType] !== undefined) {
                 hasError = hasError || true;
-                errors.value = `${t(metadataInputsErrors.value[metadataField.trait_type])} - ${metadataField.trait_type}`;
+                errors.value = `${t(metadataInputsErrors.value[metadataField.traitType])} - ${t(`inputs.text.${metadataField.displayType ? metadataField.displayType : metadataField.traitFormat}`)}`;
             }
         });
         // Verify image is there
         if (props.metadata.hasImage && !metadataImage.value) {
             hasError = true;
             errors.value = t('interact.error.missingImage');
+        }
+        // Verify name & description
+        // Check if the input is empty, cannot bypass this one, in case the user directly calls the method without touching the inputs
+        if (
+            !(
+                'name' in detailInputs.value &&
+                detailInputs.value['name'] !== '' &&
+                detailInputs.value['name'] !== null &&
+                detailInputs.value['name'] !== undefined
+            )
+        ) {
+            hasError = hasError || true;
+            errors.value = t('interact.error.missingParameter', ['name', t(`inputs.text.string`)]);
+        }
+        // Verify with the emitted errors from the inputs
+        else if (detailsInputsErrors.value['name'] !== undefined) {
+            hasError = hasError || true;
+            errors.value = `${t(detailsInputsErrors.value['name'])} - ${t(`inputs.text.string`)}`;
+        }
+        if (
+            !(
+                'description' in detailInputs.value &&
+                detailInputs.value['description'] !== '' &&
+                detailInputs.value['description'] !== null &&
+                detailInputs.value['description'] !== undefined
+            )
+        ) {
+            hasError = hasError || true;
+            errors.value = t('interact.error.missingParameter', ['description', t(`inputs.text.long_string`)]);
+        }
+        // Verify with the emitted errors from the inputs
+        else if (detailsInputsErrors.value['description'] !== undefined) {
+            hasError = hasError || true;
+            errors.value = `${t(detailsInputsErrors.value['description'])} - ${t(`inputs.text.long_string`)}`;
         }
     }
     return hasError;
@@ -258,6 +329,19 @@ const handleValidMetadataInput = (name) => {
 
 const handleInvalidMetadataInput = (name, error) => {
     metadataInputsErrors.value[name] = error;
+};
+
+const handleValidDetailsInput = (name) => {
+    detailsInputsErrors.value[name] = undefined;
+};
+
+const handleInvalidDetailsInput = (name, error) => {
+    detailsInputsErrors.value[name] = error;
+};
+
+// Determine if the field is an URI field
+const isUriField = (field) => {
+    return field.name === 'uri';
 };
 
 const getHelp = () => {

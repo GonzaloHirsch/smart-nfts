@@ -132,7 +132,7 @@ const handleInvalidInput = (error) => {
 
 const handleInputChange = () => {
     if (!metadataField.value.error) {
-        if (metadataField.value.name in props.names && props.names[metadataField.value.name] > 1) {
+        if (metadataField.value.name in props.names && props.names[metadataField.value.name] > 0) {
             metadataField.value.error = 'editor.error.nameUsed';
         } else {
             emit('update:name', metadataField.value.name);

@@ -18,6 +18,8 @@ export const getParameterPlaceholder = (type) => {
             return 'inputs.placeholder.boost_percentage'
         case 'number':
             return 'inputs.placeholder.number'
+        case 'long string':
+            return 'inputs.placeholder.long_string'
     }
     return '';
 }

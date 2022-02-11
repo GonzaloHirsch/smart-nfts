@@ -1,5 +1,6 @@
 import { EXTENSIONS } from '@/js/constants';
 
+// Front --> API
 export const mapFormToApiData = (formData) => {
     const data = {
         name: formData.name,
@@ -24,6 +25,7 @@ export const mapFormToApiData = (formData) => {
     return data;
 };
 
+// API --> Front
 export const mapApiExtensionsToForm = (extensions) => {
     const mappedExtensions = {};
     // Mapped extensions that are present
@@ -41,6 +43,7 @@ export const mapApiExtensionsToForm = (extensions) => {
     return mappedExtensions;
 }
 
+// API --> Front
 export const mapApiMetadataToForm = (metadata) => {
     return [metadata.hasImage, metadata.attributes.map(field => {
         return {
