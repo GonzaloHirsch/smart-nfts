@@ -144,6 +144,11 @@ class InteractionService {
     };
 
     private _checkValidInputs = (methodInputs: IAbiInput[], args: IArguments): void => {
+        
+        if (methodInputs.length !== Object.keys(args).length) {
+            throw new Error('TODO: input sizes differ');
+        }
+        
         for (const inputDef of methodInputs) {
             const argumentValue = args[inputDef.name];
             const typeValidator = typeValidations[inputDef.type];
