@@ -17,6 +17,7 @@ export const HTTP_ERRORS = {
     NOT_FOUND: {
         GENERAL: { status: 404, internalStatus: 'NOT_FOUND', message: 'Not found.' },
         CONTRACT: { status: 404, internalStatus: "CONTACT_NF", message: 'Contract not found.' },
+        METHOD: { status: 404, internalStatus: "METHOD_NF", message: 'Method not found.' },
     },
     CONFLICT: {
         VERIFICATION: {status: 409, internalStatus: "VERIFICATION_CONFLICT", message: 'Contract already verified' },
@@ -33,6 +34,7 @@ export const HTTP_ERRORS = {
 
 export const EXCEPTION_NAMES = {
     CONTRACT_NOT_FOUND: 'ContractNotFoundException',
+    METHOD_NOT_FOUND: 'MethodNotFoundException',
     VERIFICATION_FAILED: 'VerificationFailedException',
     INSUFFICIENT_GAS: 'InsufficientGasException',
     COMPILATION_ERROR: 'CompilationException',
@@ -51,6 +53,7 @@ export const EXCEPTION_NAMES = {
 export const EXCEPTION_TO_HTTP_MAP = new Map<string, IHttpErrorData>([
     [EXCEPTION_NAMES.CONTRACT_NOT_DEPLOYED, HTTP_ERRORS.BAD_REQUEST.MISSING_DEPLOY],
     [EXCEPTION_NAMES.CONTRACT_NOT_FOUND, HTTP_ERRORS.NOT_FOUND.CONTRACT],
+    [EXCEPTION_NAMES.METHOD_NOT_FOUND, HTTP_ERRORS.NOT_FOUND.METHOD],
     [EXCEPTION_NAMES.VERIFICATION_DUPLICATION, HTTP_ERRORS.CONFLICT.VERIFICATION],
     [EXCEPTION_NAMES.VERIFICATION_FAILED, HTTP_ERRORS.SERVER.BLOCKCHAIN],
     [EXCEPTION_NAMES.INSUFFICIENT_GAS, HTTP_ERRORS.SERVER.BLOCKCHAIN],

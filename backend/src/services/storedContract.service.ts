@@ -4,7 +4,7 @@ import StoredContract, { IStoredContract } from '../models/storedContract.model'
 import DatabaseService from './database.service';
 import CreationService from './creation.service';
 // Exceptions
-import ContractNotFoundException from '../exceptions/contractNotFound.exception';
+import NotFoundException from '../exceptions/notFoundException.exception';
 import InvalidContractOptionsException from '../exceptions/invalidContractOptionsException.exception';
 // Others
 import { EXTENSIONS } from '../constants/contract.constants';
@@ -42,7 +42,7 @@ class StoredContractService {
         // Find contract in the DB
         const contract = await this.getContractById(contractId);
         // Verify not null
-        if (contract == null) throw new ContractNotFoundException(contractId);
+        if (contract == null) throw NotFoundException.Contract(contractId);
 
         return contract;            
     }

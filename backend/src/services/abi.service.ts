@@ -1,6 +1,7 @@
 import { arrayGetFirstMatch } from "../helpers/collection.helper";
 import { METHOD_TYPE } from "../constants/contract.constants";
 import { IAbi, IAbiMethod } from "../interfaces/abi.interface";
+import NotFoundException from "../exceptions/notFoundException.exception";
 
 class AbiService {
 
@@ -25,7 +26,7 @@ class AbiService {
         );
 
         if (method == null) {
-            throw new Error('TODO');
+            throw NotFoundException.Method(methodId);
         }
 
         return method;
