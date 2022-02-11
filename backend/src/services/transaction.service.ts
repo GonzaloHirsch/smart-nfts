@@ -10,26 +10,26 @@ class TransactionService {
     private web3;
     private deploymentAddress = process.env.DEPLOYMENT_ADDRESS!;
 
-    constructor() {
+    constructor(network: string) {
         // Create web3 instance
-        this.web3 = new Web3(new Web3.providers.HttpProvider(this.getNetwork()!));
+        this.web3 = new Web3(new Web3.providers.HttpProvider(TransactionService.getNetwork(network)!));
     }
 
-    static getInstance = () => {
+    static getInstance = (network: string) => {
         if (!TransactionService.instance) {
-            TransactionService.instance = new TransactionService();
+            TransactionService.instance = new TransactionService(network);
         }
         return TransactionService.instance;
     };
 
-    private getNetwork = (): string | undefined => {
-        switch (process.env.DEPLOYMENT_NETWORK) {
+    static getNetwork = (network: string): string | undefined => {
+        switch (network) {
             case SUPPORTED_NETWORKS.RINKEBY:
                 return rinkebyNetwork(process.env.INFURA_PROJECT_ID);
             case SUPPORTED_NETWORKS.ROPSTEN:
                 return ropstenNetwork(process.env.INFURA_PROJECT_ID);
         }
-        throw new NoNetworkException(process.env.DEPLOYMENT_NETWORK);
+        throw new NoNetworkException(network);
     };
 
     createTransaction = async (

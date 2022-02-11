@@ -118,7 +118,8 @@
         },
         "deploy": {
             "loading": "Deploying contract, please wait...",
-            "message": "Your contract is now deployed on address <strong>{0}</strong>. You will be able to see it in the blockchain (it may take a couple of minutes for the block to be mined). You can now verify it, but please wait until the contract is visible. If you edit the contract, you will have to deploy it again."
+            "message": "Your contract is now deployed on address <strong>{0}</strong>. You will be able to see it in the blockchain (it may take a couple of minutes for the block to be mined). You can now verify it, but please wait until the contract is visible. If you edit the contract, you will have to deploy it again.",
+            "error": "Error deploying contract. If the Smart NFTs' address is out of gas, please contact the owners of the site, otherwise the transaction hash will provide more information if used in Etherscan."
         },
         "verify": {
             "loading": "Verifying contract, please wait...",

@@ -12,10 +12,11 @@ class DeploymentService {
     private deploymentAddress = process.env.DEPLOYMENT_ADDRESS!;
     private transactionService;
 
+    // This service should use the env.var. for the network
     constructor() {
-        // Create web3 instance
-        this.transactionService = TransactionService.getInstance();
-        this.web3 = new Web3(new Web3.providers.HttpProvider(this.getNetwork()!));
+        // Create web3 instance using the process env
+        this.transactionService = TransactionService.getInstance(process.env.DEPLOYMENT_NETWORK!);
+        this.web3 = new Web3(new Web3.providers.HttpProvider(TransactionService.getNetwork(process.env.DEPLOYMENT_NETWORK!)!));
     }
 
     static getInstance = () => {
@@ -23,16 +24,6 @@ class DeploymentService {
             DeploymentService.instance = new DeploymentService();
         }
         return DeploymentService.instance;
-    };
-
-    private getNetwork = (): string | undefined => {
-        switch (process.env.DEPLOYMENT_NETWORK) {
-            case SUPPORTED_NETWORKS.RINKEBY:
-                return rinkebyNetwork(process.env.INFURA_PROJECT_ID);
-            case SUPPORTED_NETWORKS.ROPSTEN:
-                return ropstenNetwork(process.env.INFURA_PROJECT_ID);
-        }
-        throw new NoNetworkException(process.env.DEPLOYMENT_NETWORK);
     };
 
     /**
@@ -57,6 +48,7 @@ class DeploymentService {
         contract.deployment.date = new Date();
         contract.deployment.compilerVersion = compiledContract.compilerVersion;
         contract.markModified('deployment');
+        contract.markModified('abi');
         await contract.save();
 
         return contract;

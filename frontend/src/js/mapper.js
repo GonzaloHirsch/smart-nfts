@@ -9,9 +9,9 @@ export const mapFormToApiData = (formData) => {
             hasImage: formData.hasImage,
             attributes: formData.metadata.map(field => {
             return {
-                trait_type: field.name,
-                display_type: field.display,
-                trait_format: field.type
+                traitType: field.name,
+                displayType: field.display,
+                traitFormat: field.type
             }
         })}
     };

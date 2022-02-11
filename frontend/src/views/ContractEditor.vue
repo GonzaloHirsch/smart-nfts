@@ -15,7 +15,8 @@
             </div>
         </template>
         <template v-else>
-            <p v-if="modalType === 'deploy'" class="break-words" v-html="$t('editor.deploy.message', [storedContract.deployment.address])"></p>
+            <p v-if="modalType === 'deploy' && !modalError" class="break-words" v-html="$t('editor.deploy.message', [storedContract.deployment.address])"></p>
+            <p v-if="modalType === 'deploy' && modalError" class="break-words" v-html="$t('editor.deploy.error')"></p>
             <p v-else-if="modalType === 'verify' && !modalError" class="break-words" v-html="$t('editor.verify.message')"></p>
             <p v-else-if="modalType === 'verify' && modalError" class="break-words" v-html="$t('editor.verify.error')"></p>
         </template>
@@ -231,8 +232,8 @@ const handleDeployContract = () => {
             isLoadingModal.value = false;
         })
         .catch((err) => {
-            console.log(err);
             isLoadingModal.value = false;
+            modalError.value = err.response.data;
         });
 };
 

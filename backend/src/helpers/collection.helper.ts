@@ -10,13 +10,13 @@ export const enumHasKeys = (enumData: any, keys: string[]): boolean => {
 
 // Flatten array
 export const flattenArray = <T>(array: T[][]): T[] => {
-    return array.reduce((prev, curr) => prev.concat(curr), [])
-}
+    return array.reduce((prev, curr) => prev.concat(curr), []);
+};
 
 // Sort method
 export const getSortFn = <T>(condition: (input: T) => boolean) => {
-    return (a: T, b: T) => condition(a) === condition(b) ? 0 : condition(a) ? -1 : 1;
-}
+    return (a: T, b: T) => (condition(a) === condition(b) ? 0 : condition(a) ? -1 : 1);
+};
 
 // Objects
 export const objectHasKey = <O>(obj: O, key: keyof any): key is keyof O => {
