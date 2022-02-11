@@ -101,7 +101,6 @@ class TemplateService {
             .map(param => `${param.type} ${param.name}`)
             .join(', ');
         
-            console.log(method, method.overrides)
         return Template.newLine() +
             Template.getFunctionStarter(method.name, params) +
             Template.getFunctionDetails([method.visibility, method.options, method.stateMutability]) +

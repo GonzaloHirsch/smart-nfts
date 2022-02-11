@@ -44,9 +44,9 @@ export const mapApiExtensionsToForm = (extensions) => {
 export const mapApiMetadataToForm = (metadata) => {
     return [metadata.hasImage, metadata.attributes.map(field => {
         return {
-            name: field.trait_type,
-            type: field.trait_format,
-            display: field.display_type
+            name: field.traitType,
+            type: field.traitFormat,
+            display: field.displayType
         }
     })];
 };
