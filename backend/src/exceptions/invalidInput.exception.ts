@@ -1,6 +1,7 @@
 import { EXCEPTION_NAMES } from "../constants/errors.constants";
+import CustomException from "./custom.exception";
 
-class InvalidInputException extends Error {
+class InvalidInputException extends CustomException {
 
     private constructor (msg: string) {
         super(msg);

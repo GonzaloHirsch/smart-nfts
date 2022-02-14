@@ -2,6 +2,7 @@ import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import { setHttpErrorMsg } from '../helpers/errors.helper';
 import { EXCEPTION_TO_HTTP_MAP } from '../constants/errors.constants';
 import HttpException from '../exceptions/http.exception';
+import CustomException from '../exceptions/custom.exception';
 
 // Reference https://github.com/dbartholomae/lambda-middleware/blob/main/packages/http-error-handler/src/ErrorHandler.ts
 // Reference https://github.com/dbartholomae/lambda-middleware/blob/main/packages/utils/src/PromiseHandler.ts
@@ -33,7 +34,7 @@ export const errorHandler = () =>
                 })
             };
             
-        } else if (err instanceof Error) {
+        } else if (err instanceof CustomException ) {
             
             // Custom errors
             if (EXCEPTION_TO_HTTP_MAP.has(err.name)) {
@@ -43,7 +44,8 @@ export const errorHandler = () =>
                     statusCode: httpError.status,
                     body: JSON.stringify({
                         internalStatus: httpError.internalStatus,
-                        message: err.message
+                        message: err.message,
+                        data: err.data
                     })
                 };
             }

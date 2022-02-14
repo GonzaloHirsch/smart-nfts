@@ -1,6 +1,7 @@
 import { EXCEPTION_NAMES } from "../constants/errors.constants";
+import CustomException from "./custom.exception";
 
-class NotFoundException extends Error {
+class NotFoundException extends CustomException {
     private constructor (msg: string) {
         super(msg);
     }
