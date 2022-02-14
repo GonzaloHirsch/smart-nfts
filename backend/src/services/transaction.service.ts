@@ -71,7 +71,7 @@ class TransactionService {
                 return sentTx;
             })
             .then((receipt) => {
-                console.log(receipt);
+                // console.log(receipt);
                 if (isDeploy) {
                     return receipt.contractAddress;
                 }
@@ -79,7 +79,7 @@ class TransactionService {
             })
             .catch((err) => {
                 console.log(err)
-                throw new BlockchainInteractException(err.message);
+                throw new BlockchainInteractException(err.message, err.receipt);
             });
     }
 }

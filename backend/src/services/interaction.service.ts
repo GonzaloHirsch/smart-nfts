@@ -8,7 +8,8 @@ import { IArguments } from '../interfaces/general.interface';
 import { IAbiInput } from '../interfaces/abi.interface';
 import { IAbiMethod } from '../interfaces/abi.interface';
 import { IMetadata, IStandardMetadata, IStandardMetadataAttribute } from '../interfaces/metadata.interface';
-import { CONTRACT_TYPES, DEFAULT_METADATA_FIELDS, EXTENSIONS, METADATA_TYPES, STATE_MUTABILITY } from '../constants/contract.constants';
+import { CONTRACT_TYPES, EXTENSIONS, STATE_MUTABILITY } from '../constants/contract.constants';
+import { DEFAULT_METADATA_FIELDS, METADATA_TYPES } from '../constants/metadata.constants';
 import { typeValidations } from '../helpers/validations.helper';
 // Services
 import TransactionService from './transaction.service';

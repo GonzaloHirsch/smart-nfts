@@ -1,7 +1,8 @@
 import { Document, model, models, Schema } from 'mongoose';
 import { IMetadata } from '../interfaces/metadata.interface';
-import { METHOD_TYPE, STATE_MUTABILITY, CONTRACT_TYPES, METADATA_TYPES, METADATA_DISPLAY_TYPES, SUPPORTED_NETWORKS } from '../constants/contract.constants';
+import { METHOD_TYPE, STATE_MUTABILITY, CONTRACT_TYPES, SUPPORTED_NETWORKS } from '../constants/contract.constants';
 import { IAbi } from '../interfaces/abi.interface';
+import { METADATA_DISPLAY_TYPES, METADATA_TYPES } from '../constants/metadata.constants';
 
 export interface IStoredContract extends Document {
     id: string; // Ids propios o de mongo?

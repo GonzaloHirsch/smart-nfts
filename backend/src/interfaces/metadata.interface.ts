@@ -1,4 +1,4 @@
-import { METADATA_DISPLAY_TYPES, METADATA_TYPES } from "../constants/contract.constants";
+import { METADATA_DISPLAY_TYPES, METADATA_TYPES } from "../constants/metadata.constants";
 
 // Our metadata definitions
 export type IMetadata = {
