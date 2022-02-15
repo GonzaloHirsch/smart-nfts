@@ -10,6 +10,7 @@ import { IAbiMethod } from '../interfaces/abi.interface';
 import { IMetadata, IStandardMetadata, IStandardMetadataAttribute } from '../interfaces/metadata.interface';
 import { CONTRACT_TYPES, EXTENSIONS, STATE_MUTABILITY } from '../constants/contract.constants';
 import { DEFAULT_METADATA_FIELDS, METADATA_TYPES } from '../constants/metadata.constants';
+import { MINT_GAS } from '../constants/general.constants';
 import { typeValidations } from '../helpers/validations.helper';
 // Services
 import TransactionService from './transaction.service';
@@ -230,7 +231,7 @@ class InteractionService {
         const data = contract.methods[method.name!](...argsValues).encodeABI();
 
         // TODO - gas fees
-        const tx = await instance.createTransaction(data, 300000, this.deploymentAddress, contractAddress);
+        const tx = await instance.createTransaction(data, MINT_GAS, this.deploymentAddress, contractAddress);
 
         const transactionHash = await instance.signAndSendTransaction(tx);
 

@@ -29,6 +29,8 @@ export const typeValidations: { [key: string]: (input: any) => boolean } = {
     number: (input: any) => (isNumber(input)),
     boost_number: (input: any) => (isNumber(input)),
     boost_percentage: (input) => (isPercentage(input)),
+    name: (input: any) => (max256(input) && isName(input)),
+    symbol: (input: any) => (max256(input) && isSymbol(input)),
 }
 
 /**
@@ -38,7 +40,7 @@ export const typeValidations: { [key: string]: (input: any) => boolean } = {
  * @param {String} address the given HEX adress
  * @return {Boolean}
 */
-const isChecksumAddress = (address: string) => {
+const isChecksumAddress = (address: string): boolean => {
     // Check each case
     address = address.replace('0x', '');
     // Need to reset the hash in order to avoid errors
@@ -62,7 +64,7 @@ const isChecksumAddress = (address: string) => {
  * @param {String} address the given HEX adress
  * @return {Boolean}
 */
-const isAddress = (address: string) => {
+const isAddress = (address: string): boolean => {
     if (!/^(0x)?[0-9a-f]{40}$/i.test(address)) {
         // check if it has the basic requirements of an address
         return false;
@@ -75,36 +77,44 @@ const isAddress = (address: string) => {
     }
 };
 
-const isUint256 = (num: number) => {
+const isUint256 = (num: number): boolean => {
     if (isNaN(num)) return false;
     return num >= 0 && num <= uint256Limit;
 };
 
-const isBytes4 = (bytes: string) => {
+const isBytes4 = (bytes: string): boolean => {
     return /^(0x)?[0-9a-fA-F]{8}$/i.test(bytes);
 };
 
-const isBytes = (bytes: string) => {
+const isBytes = (bytes: string): boolean => {
     return /^(0x)?[0-9a-fA-F]+$/i.test(bytes);
 };
 
-const isBool = (bool: string | boolean) => {
+const isBool = (bool: string | boolean): boolean => {
     return bool === true || bool === false || bool === 'true' || bool === 'false';
 };
 
-const max256 = (text: string) => {
+const max256 = (text: string): boolean => {
     return text.length <= 256;
 }
 
-const isNumber = (num: any) => {
+const isNumber = (num: any): boolean=> {
     const stringNum = num.toString();
     const onlyNumbers = /^[0-9]+[\.]?[0-9]*$/i.test(stringNum)
     const floatNum = parseFloat(stringNum);
     return !isNaN(floatNum) && onlyNumbers;
 };
 
-const isPercentage = (num: any) => {
+const isPercentage = (num: any): boolean => {
     if (!isNumber(num)) return false;
     let _num = parseFloat(num.toString());
     return _num >= 0 && _num <= 100;
+};
+
+const isName = (name: string): boolean => {
+    return /^[a-zA-Z0-9_]+$/i.test(name);
+};
+
+const isSymbol = (symbol: string): boolean => {
+    return /^[a-zA-Z0-9_]+$/i.test(symbol);
 };
