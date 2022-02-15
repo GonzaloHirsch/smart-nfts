@@ -60,29 +60,29 @@
         "facts": {
             "wallet": {
                 "title": "No Wallet",
-                "description": "Lorem ipsum wallet Lorem ipsum wallet Lorem ipsum wallet Lorem ipsum wallet Lorem ipsum wallet"
+                "description": "No setup is needed to create or interact with the contracts!"
             },
             "gas": {
                 "title": "No Gas Fees",
-                "description": "Lorem ipsum gas fees Lorem ipsum gas fees Lorem ipsum gas fees Lorem ipsum gas fees Lorem ipsum gas fees"
+                "description": "No Ethereum or upfront fees are required to use this application!"
             },
             "coding": {
                 "title": "No Coding",
-                "description": "Lorem ipsum coding Lorem ipsum coding Lorem ipsum coding Lorem ipsum coding Lorem ipsum coding"
+                "description": "Zero coding is required to create the contract or mint NFTs!"
             }
         },
         "verticalFacts": {
             "step": {
                 "title": "Step by step explanations",
-                "description": "Lorem ipsum wallet Lorem ipsum wallet Lorem ipsum wallet Lorem ipsum wallet Lorem ipsum wallet"
+                "description": "Each option has a guide, and changes become visible seconds after making them."
             },
             "simple": {
                 "title": "Simple and Quick",
-                "description": "Lorem ipsum gas fees Lorem ipsum gas fees Lorem ipsum gas fees Lorem ipsum gas fees Lorem ipsum gas fees"
+                "description": "In less than 5 minutes, you can have your custom ERC721 smart contract deployed, verified, and ready to start minting tokens with custom metadata."
             },
             "centralized": {
                 "title": "All in One",
-                "description": "Lorem ipsum coding Lorem ipsum coding Lorem ipsum coding Lorem ipsum coding Lorem ipsum coding"
+                "description": "You can find everything you might need here! Creation, compilation, verification, adding metadata, contract interaction, and your own NFT gallery."
             }
         }
     },
