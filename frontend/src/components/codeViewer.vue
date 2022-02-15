@@ -1,6 +1,6 @@
 <template>
-    <div class="relative code-viewer rounded-md bg-slate-800 text-white">
-        <div class="overflow-x-auto overflow-y-auto justify-start items-start relative">
+    <div class="relative code-viewer rounded-md bg-slate-800 text-white h-full">
+        <div class="overflow-x-auto overflow-y-auto justify-start items-start relative h-full">
             <pre v-if="!props.loading" class="p-sm flex">
       <code ref="contractCode" class="language-solidity">
         {{props.code}}
@@ -37,7 +37,7 @@
                 <RefreshIcon v-else class="h-8 w-8 animate-spin-reverse" />
             </div>
         </div>
-        <div v-else class="w-full flex flex-col items-center justify-center h-full">
+        <div v-else-if="props.loading" class="w-full flex flex-col items-center justify-center h-full">
                 <RefreshIcon class="h-12 w-12 animate-spin-reverse mx-auto my-auto" />
             </div>
     </div>

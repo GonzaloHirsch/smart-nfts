@@ -13,6 +13,7 @@
     "clean": "rimraf .serverless/* .build/* .webpack/* ./*.sol",
     "tsc": "tsc",
     "deploy": "npm run clean && serverless deploy",
+    "deploy-local": "source .env.production_deploy . && npm run clean && serverless config credentials --provider aws --key $AWS_ACCESS_KEY_ID --secret $AWS_SECRET_ACCESS_KEY -n backendProdProfile -o && serverless deploy --aws-profile backendProdProfile",
     "package": "serverless package"
   },
   "dependencies": {
