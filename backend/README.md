@@ -78,6 +78,27 @@ In order to deploy it, just running the following will deploy the infrastructure
 npm run deploy
 ```
 
+### Locally Deploying to Production
+
+#### Configuration
+
+A `.env.production_deploy` file is required to have the following environment variables:
+```
+AWS_ACCESS_KEY_ID=Access key ID for a user with backend deployment permissions
+AWS_SECRET_ACCESS_KEY=Secret access key for a user with backend deployment permissions
+```
+
+#### Deployment
+
+To run a deploy, just run:
+```
+npm run deploy-local
+```
+
+#### What it does?
+
+This will set the appropriate environment variables and run the `serverless deploy` command.
+
 ## Ethereum Funds
 
 In order to get test ethereum for Rinkeby, the following pages can be used:

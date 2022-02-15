@@ -57,3 +57,10 @@ package-lock.json
 .[w|W]ebpack
 
 *.sol
+frontend/.env.production_deploy
+
+backend/.env.production_deploy
+
+docs/api-spec/.env.production_deploy
+
+frontend/.env.production

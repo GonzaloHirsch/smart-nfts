@@ -1,0 +1,15 @@
+{
+  "name": "api-spec",
+  "version": "1.0.0",
+  "description": "",
+  "main": "swagger-ui-bundle.js",
+  "scripts": {
+    "deploy-local": "&& npm run deploy-configure && npm run deploy-cache && npm run deploy-wout-cache && npm run deploy-invalidate",
+    "deploy-configure": "source .env.production_deploy . && aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID --profile docsProdProfile && aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY --profile docsProdProfile",
+    "deploy-cache": "source .env.production_deploy . aws s3 sync dist \"s3://${S3_BUCKET}/\" --cache-control max-age=31536000 --region us-east-1 --exclude=smart-nfts-spec.json --profile docsProdProfile",
+    "deploy-wout-cache": "source .env.production_deploy . && aws s3 sync dist \"s3://${S3_BUCKET}/\" --cache-control no-cache --region us-east-1 --profile docsProdProfile",
+    "deploy-invalidate": "source .env.production_deploy . && aws cloudfront create-invalidation --distribution-id $DISTRIBUTION_ID --paths \"/*\" --region us-east-1 --profile docsProdProfile"
+  },
+  "author": "",
+  "license": "ISC"
+}
