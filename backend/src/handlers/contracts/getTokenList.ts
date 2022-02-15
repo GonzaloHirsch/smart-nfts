@@ -17,11 +17,11 @@ const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyRes
 
     const contract = await instance.getEnforcedContractById(event.pathParameters!.contractId!)
 
-    await InteractionService.getInstance(contract.deployment.network).listTokensOfOwner(contract);
+    const listing = await InteractionService.getInstance(contract.deployment.network).listTokenOwners(contract);
 
     return {
         statusCode: 200,
-        body: ''
+        body: JSON.stringify({listing})
     };
 };
 

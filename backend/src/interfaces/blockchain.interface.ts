@@ -18,3 +18,24 @@ export interface IInteractResponse {
     result: any,
     resultType: CONTRACT_TYPES | CONTRACT_TYPES[]
 }
+
+export interface IEventDataReturnValues {
+    [key: string]: any;
+}
+
+// Taken from Web3 library
+export interface IEventData {
+    returnValues: IEventDataReturnValues;
+    raw: {
+        data: string;
+        topics: string[];
+    };
+    event: string;
+    signature: string;
+    logIndex: number;
+    transactionIndex: number;
+    transactionHash: string;
+    blockHash: string;
+    blockNumber: number;
+    address: string;
+}

@@ -3,7 +3,7 @@ import { FileData, MultipartFormData } from 'aws-multipart-parser/dist/models';
 // Model
 import { IStoredContract } from '../models/storedContract.model';
 // Constants, interfaces, helpers
-import { IInteractResponse } from '../interfaces/blockchain.interface';
+import { IEventData, IEventDataReturnValues, IInteractResponse } from '../interfaces/blockchain.interface';
 import { IArguments } from '../interfaces/general.interface';
 import { IAbiInput } from '../interfaces/abi.interface';
 import { IAbiMethod } from '../interfaces/abi.interface';
@@ -241,17 +241,56 @@ class InteractionService {
         };
     };
 
-    listTokensOfOwner = async (storedContract: IStoredContract) => {
+    listTokenOwners = async (
+        storedContract: IStoredContract
+    ): Promise<{ [tokenId: string]: string }> => {
         
         const contract = new this.web3.eth.Contract(storedContract.abi as any, storedContract.deployment.address);
         
         // Generate a list of IDs
         // Filter from block 1 as per: https://ethereum.stackexchange.com/questions/71307/mycontract-getpasteventsallevents-returns-empty-array
-        console.log(Object.keys((await contract.getPastEvents('Transfer', { fromBlock: 1})).reduce((accum, event) => {
+        const eventData = await contract.getPastEvents('Transfer', { fromBlock: 1});
+
+        // List tokenIds
+        console.log(Object.keys((eventData).reduce((accum, event) => {
             // @ts-ignore
             accum[event.returnValues.tokenId] = true;
             return accum;
         }, {})));
+
+        // Sort from oldest to newest events
+        const sortedEventData = eventData
+            .sort(
+                (a: IEventData, b: IEventData) =>
+                    a.blockNumber - b.blockNumber ||
+                    a.transactionIndex - b.transactionIndex,
+                );
+
+        const eventDataByTokenId: {[tokenId: string]: IEventDataReturnValues[]} = {};
+        const tokenIdOwners: {[tokenId: string]: string} = {};
+
+        // Separate events by the tokenId involved
+        sortedEventData.forEach((event: IEventData) => {
+            // If new token, declare an empty array to start
+            if (!eventDataByTokenId[event.returnValues.tokenId]) {
+                eventDataByTokenId[event.returnValues.tokenId] = [];
+            }
+            // Add the return values for Transfer event
+            eventDataByTokenId[event.returnValues.tokenId].push(event.returnValues);
+        });
+
+        // Get the last transaction to know where the token ended up
+        Object.keys(eventDataByTokenId).forEach((tokenId: string) => {
+            const totalTransfers = eventDataByTokenId[tokenId].length;
+            const lastTransfer = eventDataByTokenId[tokenId][totalTransfers - 1];
+            console.log('LAST TRANSFER = ', lastTransfer)
+            tokenIdOwners[tokenId] = lastTransfer.to;
+        });
+
+        console.log(JSON.stringify(tokenIdOwners));
+
+        return tokenIdOwners;
+
 
         /*
         Response format, array of:
