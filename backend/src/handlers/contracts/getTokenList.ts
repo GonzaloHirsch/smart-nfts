@@ -3,7 +3,6 @@ import { errorHandler } from '../../middleware/errorHandler.middleware';
 import { corsHandler } from '../../middleware/corsHandler.middleware';
 import StoredContractService from '../../services/storedContract.service';
 import { isEmptyPathParams, validContractId } from '../../helpers/validations.helper';
-import { generateContractZip } from '../../helpers/compression.helper';
 import GenericException from '../../exceptions/generic.exception';
 import { HTTP_ERRORS } from '../../constants/errors.constants';
 import InteractionService from '../../services/interaction.service';
@@ -18,7 +17,7 @@ const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyRes
 
     const contract = await instance.getEnforcedContractById(event.pathParameters!.contractId!)
 
-    InteractionService.getInstance(contract.deployment.network).listTokensOfOwner(contract);
+    await InteractionService.getInstance(contract.deployment.network).listTokensOfOwner(contract);
 
     return {
         statusCode: 200,
