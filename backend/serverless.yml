@@ -161,3 +161,14 @@ functions:
           cors: true
     tags:
       app: pf
+  getTokenList:
+    handler: src/handlers/contracts/getTokenList.handler
+    memorySize: 1024 # Probably more memory-intensive process than the rest
+    timeout: 30 # More timeout because it needs more time to make the request
+    events:
+      - http:
+          path: /contracts/{contractId}/tokens
+          method: get
+          cors: true
+    tags:
+      app: pf

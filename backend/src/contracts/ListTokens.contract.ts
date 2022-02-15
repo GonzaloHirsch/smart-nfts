@@ -32,20 +32,6 @@ export abstract class Enumerable {
                 overrides: [EXTENSIONS.ERC721, EXTENSIONS.ERC721Enumerable],
                 solidityRequired: true
             },
-            {
-                name: 'supportsInterface',
-                params: [{
-                    name: 'interfaceId',
-                    type: CONTRACT_TYPES.BYTES4
-                }],
-                mandatory: true,
-                content: ['return super.supportsInterface(interfaceId);\n'],
-                visibility: VISIBILITY.PUBLIC,
-                stateMutability: STATE_MUTABILITY.VIEW,
-                overrides: [EXTENSIONS.ERC721, EXTENSIONS.ERC721Enumerable],
-                returns: CONTRACT_TYPES.BOOL,
-                solidityRequired: true            
-            },
         ];
     }    
     public static getParentExtension(): EXTENSIONS | null {
