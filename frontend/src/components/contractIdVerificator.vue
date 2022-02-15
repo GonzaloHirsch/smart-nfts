@@ -10,6 +10,7 @@
             :continuousInput="true"
             format="primary-white"
             class="mb-xs md:mr-sm md:mb-0"
+            :size="props.button.size"
             autocomplete="contractId"
         />
         <v-button
@@ -20,7 +21,7 @@
             :text="$t(props.button.text)"
             :disabled="editDisabled"
             :loading="isLoading"
-            :sizeMobile="props.button.sizeMobile"
+            :size="props.button.size"
             @click="handleClick"
         />
     </form>

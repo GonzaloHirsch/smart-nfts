@@ -8,7 +8,7 @@
                 <div class="flex flex-row justify-between items-center">
                     <div class="flex">
                         <h2 class="text-left text-brand_secondary">{{hasContract && contractIsDeployed && !isLoading && getAbiMint(contract.abi).length > 0 ? 'Create Token' : 'Contract'}}</h2>
-                        <v-button v-if="hasContract && contractIsDeployed && !isLoading" format="primary" :href="`/create/${contractId}`" target="_self" aria="Edit this contract" :external="false" :white="false" text="EDIT CONTRACT" size="small" sizeMobile="xsmall" class="h-fit my-auto ml-sm"/>
+                        <v-button v-if="hasContract && contractIsDeployed && !isLoading" format="primary" :href="`/create/${contractId}`" target="_self" aria="Edit this contract" :external="false" :white="false" text="EDIT CONTRACT" size="small" class="h-fit my-auto ml-sm"/>
                     </div>
                     <v-input
                         id="contract_id"
