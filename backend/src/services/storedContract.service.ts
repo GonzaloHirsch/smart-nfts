@@ -12,6 +12,8 @@ import { customAlphabet } from 'nanoid';
 import { FilterQuery } from 'mongoose';
 import { IMetadata } from '../interfaces/metadata.interface';
 import { typeValidations } from '../helpers/validations.helper';
+import { SHA3 } from 'sha3';
+const hash = new SHA3(512);
 const nanoid = customAlphabet('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz', 15);
 
 
@@ -91,6 +93,11 @@ class StoredContractService {
 
         // Generate updated contract
         const contractString = CreationService.getInstance().genContract(name, symbol, extensions as EXTENSIONS[]);
+        
+        // Digest the content    
+        hash.reset();
+        hash.update(contractString);
+        const contractDigest = hash.digest('hex');
       
         // Store the new selection
         contract.name = name;
@@ -98,6 +105,7 @@ class StoredContractService {
         contract.extensions = extensionCopy;
         contract.metadata.hasImage = metadata.hasImage;
         contract.metadata.attributes = metadata.attributes;
+        contract.digest = contractDigest;
         contract.markModified('metadata');
         await contract.save();
 

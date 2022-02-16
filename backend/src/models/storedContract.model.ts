@@ -9,6 +9,7 @@ export interface IStoredContract extends Document {
     name: string;
     symbol: string;
     extensions: Array<string>;
+    digest: string;
     deployment: {
         address: string;
         date: Date;
@@ -16,6 +17,7 @@ export interface IStoredContract extends Document {
         network: SUPPORTED_NETWORKS;
         abi: IAbi;
         extensions: Array<string>;
+        digest: string;
     };
     verification: {
         verified: boolean;
@@ -30,6 +32,7 @@ const StoredConstractSchema = new Schema({
     name: { type: String },
     symbol: { type: String },
     extensions: [{ type: String }],
+    digest: { type: String },
     deployment: {
         address: { type: String, required: false },
         date: {
@@ -46,6 +49,10 @@ const StoredConstractSchema = new Schema({
             enum: SUPPORTED_NETWORKS
         },
         extensions: [{ type: String }],
+        digest: {
+            type: String,
+            required: false
+        },
         abi: [{
             name: { type: String, required: false },
             type: { type: String, required: true, enum: METHOD_TYPE },

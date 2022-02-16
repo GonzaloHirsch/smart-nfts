@@ -42,6 +42,7 @@ class DeploymentService {
         contractAddress = await this._deployCompiledContract(compiledContract.abi, compiledContract.bytecode);
 
         // Update inner state
+        contract.deployment.digest = contract.digest;
         contract.deployment.abi = compiledContract.abi;
         contract.deployment.extensions = [...contract.extensions];
         contract.deployment.network = process.env.DEPLOYMENT_NETWORK as SUPPORTED_NETWORKS;
