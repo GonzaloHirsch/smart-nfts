@@ -61,19 +61,32 @@ class ListingService {
             ownerListing[tokenId] = event.returnValues.to;
         });
 
-        const tokenIdsOfPage = Object.keys(ownerListing)
+        // Remove the tokens that have been burned (to = null address)
+        const finalOwnerListing = Object.keys(ownerListing)
+            .reduce((acc: {[tokenId: string]: string}, tokenId: string) => {
+                if (ownerListing[tokenId] !== NULL_ADDRESS) {
+                    acc[tokenId] = ownerListing[tokenId]
+                }
+                return acc;
+            }, {});
+
+        // Get the token ids that will be shown on the specified page
+        const tokenIdsOfPage = Object.keys(finalOwnerListing)
             .filter((_: string, idx: number) => start <= idx && idx < end);
 
         await Promise.all(
             tokenIdsOfPage.map(async (tokenId: string) => {
                 tokenListing[tokenId] = {
-                    owner: ownerListing[tokenId],
-                    uriHash: await contract.methods.tokenURI(tokenId)
+                    owner: finalOwnerListing[tokenId],
+                }
+                // Get the uri token if they have any
+                if (storedContract.extensions.includes(EXTENSIONS.ERC721URIStorage)) {
+                    tokenListing[tokenId].uriHash = await contract.methods.tokenURI(tokenId)
                         .call({ from: this.deploymentAddress })
                         .catch((err: any) => {
                             console.log(err);
                             throw new BlockchainInteractException(err.message);
-                        })
+                        });
                 }
             })
         );
