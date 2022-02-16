@@ -3,12 +3,6 @@ const defaultTheme = require('tailwindcss/defaultTheme');
 /** @type {import("@types/tailwindcss/tailwind-config").TailwindConfig } */
 module.exports = {
   content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
-  safelist: [
-    {
-      pattern: /^button--size*/,
-      variants: ['lg', 'md', 'sm'],
-    }
-  ],
   theme: {
     extend: {
       colors: {

@@ -21,6 +21,7 @@
             @invalidInput="(error) => handleInvalidInput(error)"
             @change="handleInputChange"
             class="col-span-3 text-sm"
+            size="base"
         />
         <v-select
             :name="`type-${props.id}`"

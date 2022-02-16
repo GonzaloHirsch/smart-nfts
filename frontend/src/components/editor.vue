@@ -80,8 +80,7 @@
             </div>
             <div v-if="contractData.isURIStorage" class="py-sm">
                 <h5 class="form--title">{{$t('editor.contract.metadata')}} <QuestionMarkCircleIcon class="form--title-icon" /></h5>
-                <p><strong>Note:</strong> By default, all tokens have name & description</p>
-                <p class="text-xl text-brand_secondary mt-sm">Image</p>
+                <p class="text-xl text-brand_secondary">Image</p>
                 <v-checkbox
                     id="hasImage"
                     name="hasImage"
@@ -92,6 +91,7 @@
                 />
                 <p class="text-xl text-brand_secondary mt-sm">Fields</p>
                 <v-metadata v-model="contractData.metadata"/>
+                <p class="mt-xs text-body_xs"><strong>Note:</strong> By default, all tokens have name & description</p>
             </div>
         </div>
         <!-- ACTIONS -->
@@ -102,8 +102,7 @@
                 aria="Deploy the NFT contract"
                 :external="false"
                 :white="false"
-                size="large"
-                sizeMobile="medium"
+                size="medium"
                 :text="$t('editor.buttons.deploy').toUpperCase()"
                 class="mt-sm sm:ml-sm sm:mt-0"
                 @click="deployContract"
@@ -114,8 +113,7 @@
                 aria="Verify the NFT contract"
                 :external="false"
                 :white="false"
-                size="large"
-                sizeMobile="medium"
+                size="medium"
                 :text="$t('editor.buttons.verify').toUpperCase()"
                 class="mt-sm sm:ml-sm sm:mt-0"
                 @click="verifyContract"

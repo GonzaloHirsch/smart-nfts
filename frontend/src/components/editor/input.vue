@@ -1,12 +1,18 @@
 <template>
-    <div class="flex flex-col">
+    <div :class="{
+            'flex flex-col': true,
+            'input--size-large': props.size === 'large',
+            'input--size-medium': props.size === 'medium',
+            'input--size-small': props.size === 'small',
+            'input--size-xsmall': props.size === 'xsmall'
+        }">
         <label v-show="!props.hideLabel" :aria-hidden="hideLabel" :class="['mb-1', error ? 'text-error' : '']" :for="props.id">{{
             props.label
         }}</label>
         <!-- If continuous input, it will use the @input to trigger on each key -->
         <input
             v-if="continuousInput"
-            :class="['rounded-lg transition-colors duration-300', classes, error ? 'input-error' : '']"
+            :class="['rounded-lg transition-colors duration-300', classes, error ? 'input-error' : '', 'text-input']"
             type="text"
             :name="props.name"
             :id="props.id"
@@ -18,7 +24,7 @@
         <!-- Otherwise use a discrete approach, just event when focus is lost -->
         <input
             v-else
-            :class="['rounded-lg transition-colors duration-300', classes, error ? 'input-error' : '']"
+            :class="['rounded-lg transition-colors duration-300', classes, error ? 'input-error' : '', 'text-input']"
             type="text"
             :name="props.name"
             :id="props.id"
@@ -81,6 +87,10 @@ const props = defineProps({
     autocomplete: {
         type: String,
         default: undefined
+    },
+    size: {
+        type: String,
+        default: 'small'
     }
 });
 
