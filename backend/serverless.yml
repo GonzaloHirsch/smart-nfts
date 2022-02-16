@@ -41,6 +41,7 @@ provider:
     DEPLOYMENT_NETWORK: ${env:DEPLOYMENT_NETWORK}
     PINATA_API_KEY: ${env:PINATA_API_KEY}
     PINATA_API_SECRET: ${env:PINATA_API_SECRET}
+    RECAPTCHA_SECRET_KEY: ${env:RECAPTCHA_SECRET_KEY}
 
 custom:
   serverless-offline:
@@ -158,6 +159,17 @@ functions:
       - http:
           path: /contracts/{contractId}/compile
           method: get
+          cors: true
+    tags:
+      app: pf
+  postVerifyRecaptchaToken:
+    handler: src/handlers/security/postVerifyRecaptchaToken.handler
+    memorySize: 512 # Probably more memory-intensive process than the rest
+    timeout: 30 # More timeout because it needs more time to make the request
+    events:
+      - http:
+          path: /security/verify
+          method: post
           cors: true
     tags:
       app: pf

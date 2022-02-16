@@ -8,6 +8,7 @@ import { createMetaManager } from 'vue-meta';
 import locales from '@/locales';
 
 // Custom plugins
+import { recaptchaPlugin } from './plugins/recaptcha';
 import { apiPlugin } from './plugins/api';
 import { notificationsPlugin } from './plugins/notifications';
 
@@ -59,5 +60,6 @@ app.use(meta);
 // Custom plugins
 app.use(apiPlugin);
 app.use(notificationsPlugin);
+app.use(recaptchaPlugin);
 
 app.mount('#app');

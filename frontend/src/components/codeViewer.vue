@@ -1,13 +1,14 @@
 <template>
     <div class="relative code-viewer rounded-md bg-slate-800 text-white h-full">
-        <div class="overflow-x-auto overflow-y-auto justify-start items-start relative h-full">
-            <pre v-if="!props.loading" class="p-sm flex">
-      <code ref="contractCode" class="language-solidity">
-        {{props.code}}
-      </code>
-    </pre>
+        <div :class="['overflow-x-auto overflow-y-auto justify-start items-start relative', props.loading ? '' : 'h-full']">
+            <pre v-if="!props.loading" class="p-sm flex h-full">
+                <code ref="contractCode" class="language-solidity">
+                    {{props.code}}
+                </code>
+            </pre>
         </div>
         <div v-if="!props.loading && props.canDownload" class="absolute flex top-0 right-0">
+            <!-- <div v-if="!props.loading && props.canDownload" class="absolute flex top-0 right-0"> -->
             <div
                 @click="!props.loadingCopy ? copyContract() : undefined"
                 :class="[
@@ -38,8 +39,8 @@
             </div>
         </div>
         <div v-else-if="props.loading" class="w-full flex flex-col items-center justify-center h-full">
-                <RefreshIcon class="h-12 w-12 animate-spin-reverse mx-auto my-auto" />
-            </div>
+            <RefreshIcon class="h-12 w-12 animate-spin-reverse mx-auto my-auto" />
+        </div>
     </div>
 </template>
 
