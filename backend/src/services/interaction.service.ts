@@ -60,7 +60,7 @@ class InteractionService {
             throw new Error('Invalid JSON input');
         }
 
-        if (storedContract.extensions.includes(EXTENSIONS.ERC721URIStorage)) {
+        if (storedContract.deployment.extensions.includes(EXTENSIONS.ERC721URIStorage)) {
             // Get the metadata definition
             const metadataDef = storedContract.metadata;
 
@@ -96,13 +96,13 @@ class InteractionService {
         const address = storedContract.deployment.address;
 
         // Get the method definition from the ABI
-        const method = AbiService.getInstance().getContractMethod(storedContract.abi, methodId);
+        const method = AbiService.getInstance().getContractMethod(storedContract.deployment.abi, methodId);
 
         // Check the arguments match the inputs of the methods
         this._checkValidInputs(method.inputs, args);
 
         // Get the web3 Contract
-        const contract = new this.web3.eth.Contract(storedContract.abi as any, address);
+        const contract = new this.web3.eth.Contract(storedContract.deployment.abi as any, address);
 
         // Different calls for read and write methods
         return this._isReadMethod(method) 
