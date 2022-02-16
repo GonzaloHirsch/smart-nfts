@@ -1,8 +1,8 @@
 <template>
-    <div class="relative code-viewer rounded-md bg-slate-800 text-white h-full">
+    <div class="relative code-viewer rounded-md bg-slate-800 text-white h-full overflow-hidden">
         <div :class="['overflow-x-auto overflow-y-auto justify-start items-start relative', props.loading ? '' : 'h-full']">
-            <pre v-if="!props.loading" class="p-sm flex h-full">
-                <code ref="contractCode" class="language-solidity">
+            <pre v-if="!props.loading" class="flex h-full">
+                <code ref="contractCode" class="language-solidity w-full p-sm ">
                     {{props.code}}
                 </code>
             </pre>
