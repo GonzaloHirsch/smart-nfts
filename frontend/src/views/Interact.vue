@@ -7,7 +7,7 @@
             <div class="col-span-full entire-panel">
                 <div class="flex flex-row justify-between items-center">
                     <div class="flex">
-                        <h2 class="text-left text-brand_secondary">{{hasContract && contractIsDeployed && !isLoading && getAbiMint(contract.abi).length > 0 ? 'Create Token' : 'Contract'}}</h2>
+                        <h2 class="text-left text-brand_secondary">{{hasContract && contractIsDeployed && !isLoading && getAbiMint(contract.deployment.abi).length > 0 ? 'Create Token' : 'Contract'}}</h2>
                         <v-button v-if="hasContract && contractIsDeployed && !isLoading" format="primary" :href="`/create/${contractId}`" target="_self" aria="Edit this contract" :external="false" :white="false" text="EDIT CONTRACT" size="small" class="h-fit my-auto ml-sm"/>
                     </div>
                     <v-input
@@ -22,7 +22,7 @@
                     />
                 </div>
                 <v-interacter
-                    :abi="getAbiMint(contract.abi)"
+                    :abi="getAbiMint(contract.deployment.abi)"
                     :metadata="hasMetadata ? contract.metadata : undefined"
                     :validContract="validContract"
                     :contractDeployed="contractIsDeployed"
@@ -35,7 +35,7 @@
                 <div class="col-span-full lg:col-span-5 entire-panel">
                     <h3 class="text-left text-brand_secondary">Read</h3>
                     <v-interacter
-                        :abi="getAbiRead(contract.abi)"
+                        :abi="getAbiRead(contract.deployment.abi)"
                         :metadata="undefined"
                         :validContract="validContract"
                         :contractDeployed="contractIsDeployed"
@@ -46,7 +46,7 @@
                 <div class="col-span-full lg:col-span-5 entire-panel">
                     <h3 class="text-left text-brand_secondary">Write</h3>
                     <v-interacter
-                        :abi="getAbiWrite(contract.abi)"
+                        :abi="getAbiWrite(contract.deployment.abi)"
                         :metadata="undefined"
                         :validContract="validContract"
                         :contractDeployed="contractIsDeployed"
@@ -243,7 +243,7 @@ const contract = ref({});
 const hasContract = computed(() => !(contractId.value === '' || contractId.value === null || contractId.value === undefined));
 const contractIsDeployed = computed(() => hasContract.value && contract.value.deployment?.address !== null && contract.value.deployment?.address !== undefined && contract.value.deployment?.address !== '');
 const hasMetadata = computed(() =>
-    contract.value && contract.value.extensions ? contract.value.extensions.includes(EXTENSIONS.URI_STORAGE) : undefined
+    contract.value && contract.value.deployment && contract.value.deployment.extensions ? contract.value.deployment.extensions.includes(EXTENSIONS.URI_STORAGE) : undefined
 );
 
 watch(

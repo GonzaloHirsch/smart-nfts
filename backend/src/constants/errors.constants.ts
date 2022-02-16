@@ -6,6 +6,7 @@ export const HTTP_ERRORS = {
         PARAMS: { status: 400, internalStatus: 'INVALID_PARAMS', message: 'Invalid parameters.' },
         CONTRACT: { status: 400, internalStatus: 'INVALID_CONTRACT', message: 'Invalid contract. Data missing.' },
         MISSING_DEPLOY: { status: 400, internalStatus: 'MISSING_DEPLOY', message: 'Contract must be deployed.' },
+        ALREADY_DEPLOYED: { status: 400, internalStatus: 'ALREADY_DEPLOYED', message: 'Contract has already been deployed.' },
         INVALID_INTERACTION: { status: 400, internalStatus: 'INVALID_INTERACTION', message: 'Blockchain error when interacting.' },
         INVALID_INPUT_COUNT: { status: 400, internalStatus: 'INVALID_INPUT_COUNT', message: 'Input amount does not match param amount.' },
         INVALID_INPUT_MISSING: { status: 400, internalStatus: 'INVALID_INPUT_MISSING', message: 'Inputs are missing.' },
@@ -40,6 +41,7 @@ export const EXCEPTION_NAMES = {
     COMPILATION_ERROR: 'CompilationException',
     VERIFICATION_DUPLICATION: 'VerificationDuplicationException',
     CONTRACT_NOT_DEPLOYED: 'ContractNotDeployedException',
+    CONTRACT_ALREADY_DEPLOYED: 'ContractAlreadyDeployedException',
     INVALID_CONTRACT_OPTIONS: 'InvalidContractOptionsException',
     MISSING_EXTENSION: 'MissingExtensionException',
     NO_NETWORK: 'NoNetworkException',
@@ -52,6 +54,7 @@ export const EXCEPTION_NAMES = {
 
 export const EXCEPTION_TO_HTTP_MAP = new Map<string, IHttpErrorData>([
     [EXCEPTION_NAMES.CONTRACT_NOT_DEPLOYED, HTTP_ERRORS.BAD_REQUEST.MISSING_DEPLOY],
+    [EXCEPTION_NAMES.CONTRACT_ALREADY_DEPLOYED, HTTP_ERRORS.BAD_REQUEST.ALREADY_DEPLOYED],
     [EXCEPTION_NAMES.CONTRACT_NOT_FOUND, HTTP_ERRORS.NOT_FOUND.CONTRACT],
     [EXCEPTION_NAMES.METHOD_NOT_FOUND, HTTP_ERRORS.NOT_FOUND.METHOD],
     [EXCEPTION_NAMES.VERIFICATION_DUPLICATION, HTTP_ERRORS.CONFLICT.VERIFICATION],

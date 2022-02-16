@@ -19,6 +19,8 @@ const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyRes
 
     if (contractString == null) {
         throw new GenericException(HTTP_ERRORS.BAD_REQUEST.CONTRACT);
+    } else if (contract.digest === contract.deployment.digest) {
+        throw new GenericException(HTTP_ERRORS.BAD_REQUEST.ALREADY_DEPLOYED);
     }
     
     contract = await DeploymentService.getInstance().deployContract(contract, contractString);

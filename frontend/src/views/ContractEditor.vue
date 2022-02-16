@@ -259,7 +259,7 @@ const canDeploy = computed(() => {
         storedContract.value.name !== undefined &&
         storedContract.value.name !== null &&
         storedContract.value.name !== ''
-    );
+    ) && (storedContract.value.digest !== storedContract.value?.deployment?.digest);
 });
 const canDownload = computed(() => {
     return (

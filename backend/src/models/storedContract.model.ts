@@ -9,12 +9,15 @@ export interface IStoredContract extends Document {
     name: string;
     symbol: string;
     extensions: Array<string>;
-    abi: IAbi;
+    digest: string;
     deployment: {
         address: string;
         date: Date;
         compilerVersion: string;
         network: SUPPORTED_NETWORKS;
+        abi: IAbi;
+        extensions: Array<string>;
+        digest: string;
     };
     verification: {
         verified: boolean;
@@ -29,27 +32,7 @@ const StoredConstractSchema = new Schema({
     name: { type: String },
     symbol: { type: String },
     extensions: [{ type: String }],
-    abi: [{
-        name: { type: String, required: false },
-        type: { type: String, required: true, enum: METHOD_TYPE },
-        stateMutability: { type: String, required: false, enum: STATE_MUTABILITY },
-        anonymous: { type: Boolean, required: false },
-        inputs: [
-            {
-            name: { type: String, required: false },
-            type: { type: String, required: true },
-            indexed: { type: Boolean, required: false },
-            internalType: { type: String, enum: CONTRACT_TYPES }
-            }
-        ],
-        outputs: [
-            {
-            name: { type: String, required: false },
-            type: { type: String, required: true },
-            internalType: { type: String, enum: CONTRACT_TYPES }
-            }
-        ]
-    }],
+    digest: { type: String },
     deployment: {
         address: { type: String, required: false },
         date: {
@@ -64,7 +47,33 @@ const StoredConstractSchema = new Schema({
             type: String,
             required: false,
             enum: SUPPORTED_NETWORKS
-        }
+        },
+        extensions: [{ type: String }],
+        digest: {
+            type: String,
+            required: false
+        },
+        abi: [{
+            name: { type: String, required: false },
+            type: { type: String, required: true, enum: METHOD_TYPE },
+            stateMutability: { type: String, required: false, enum: STATE_MUTABILITY },
+            anonymous: { type: Boolean, required: false },
+            inputs: [
+                {
+                name: { type: String, required: false },
+                type: { type: String, required: true },
+                indexed: { type: Boolean, required: false },
+                internalType: { type: String, enum: CONTRACT_TYPES }
+                }
+            ],
+            outputs: [
+                {
+                name: { type: String, required: false },
+                type: { type: String, required: true },
+                internalType: { type: String, enum: CONTRACT_TYPES }
+                }
+            ]
+        }],
     },
     verification: {
         verified: {
