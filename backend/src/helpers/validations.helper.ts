@@ -5,6 +5,10 @@ export const isEmptyPathParams = (pathParameters: any) => {
   return pathParameters == null;
 };
 
+export const isEmptyQueryParams = (queryParameters: any) => {
+  return queryParameters == null;
+};
+
 export const isEmptyBody = (body: any) => {
   return body == null;
 };

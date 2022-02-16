@@ -68,3 +68,5 @@ frontend/.env.production
 backend/.env.production
 
 backend/.env.development
+
+backend/.env.production_template_deploy

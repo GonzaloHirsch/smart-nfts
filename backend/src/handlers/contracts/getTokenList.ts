@@ -2,7 +2,7 @@ import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import { errorHandler } from '../../middleware/errorHandler.middleware';
 import { corsHandler } from '../../middleware/corsHandler.middleware';
 import StoredContractService from '../../services/storedContract.service';
-import { isEmptyPathParams, typeValidations, validContractId } from '../../helpers/validations.helper';
+import { isEmptyPathParams, isEmptyQueryParams, typeValidations, validContractId } from '../../helpers/validations.helper';
 import GenericException from '../../exceptions/generic.exception';
 import { HTTP_ERRORS } from '../../constants/errors.constants';
 import ListingService from '../../services/listing.service';
@@ -10,7 +10,7 @@ import { TOKENS_PER_PAGE } from '../../constants/general.constants';
 
 const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   
-    if (isEmptyPathParams(event.pathParameters) || !validContractId(event.pathParameters!.contractId)) {
+    if (isEmptyPathParams(event.pathParameters) || !validContractId(event.pathParameters!.contractId) || isEmptyQueryParams(event.queryStringParameters)) {
         throw new GenericException(HTTP_ERRORS.BAD_REQUEST.PARAMS);
     }
 
