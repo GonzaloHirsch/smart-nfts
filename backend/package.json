@@ -13,7 +13,7 @@
     "clean": "rimraf .serverless/* .build/* .webpack/* ./*.sol",
     "tsc": "tsc",
     "deploy": "npm run clean && serverless deploy",
-    "deploy-local": "source .env.production_deploy . && npm run clean && serverless config credentials --provider aws --key $AWS_ACCESS_KEY_ID --secret $AWS_SECRET_ACCESS_KEY -n backendProdProfile -o && serverless deploy --aws-profile backendProdProfile",
+    "deploy-local": "source .env.production_deploy . && source .env.production . && npm run clean && serverless config credentials --provider aws --key $AWS_ACCESS_KEY_ID --secret $AWS_SECRET_ACCESS_KEY -n backendProdProfile -o && NODE_ENV=production serverless deploy --aws-profile backendProdProfile",
     "package": "serverless package"
   },
   "dependencies": {
@@ -29,6 +29,7 @@
     "qs": "^6.5.3",
     "serverless-apigw-binary": "^0.4.4",
     "serverless-apigwy-binary": "^1.0.1",
+    "serverless-dotenv-plugin": "^3.12.2",
     "serverless-plugin-typescript": "^2.1.0",
     "serverless-webpack": "^5.6.0",
     "sha3": "^2.1.4",

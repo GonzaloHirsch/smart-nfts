@@ -64,3 +64,7 @@ backend/.env.production_deploy
 docs/api-spec/.env.production_deploy
 
 frontend/.env.production
+
+backend/.env.production
+
+backend/.env.development

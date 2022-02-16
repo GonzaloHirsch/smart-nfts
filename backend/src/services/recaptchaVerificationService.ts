@@ -30,6 +30,8 @@ class RecaptchaVerificationService {
                 })
             )
             .then((res) => {
+                // Always log response for record keeping
+                console.log(res.data)
                 return {
                     success: res.data.success && res.data.score > 0.5,
                     timestamp: res.data.challenge_ts,

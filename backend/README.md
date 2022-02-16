@@ -57,6 +57,12 @@ PINATA_API_KEY=API Key ID for Pinata
 PINATA_API_SECRET=API secret for Pinata
 ```
 
+Also a `.env.development` file is required to have the following environment variables:
+```
+RECAPTCHA_SECRET_KEY=Private Recaptcha V3 key
+```
+This variable will only be used locally for development.
+
 Configuring AWS IAM credentials is also required, with AWS CLI run the following and follow the instructions to configure it:
 ```bash
 aws configure
@@ -87,6 +93,12 @@ A `.env.production_deploy` file is required to have the following environment va
 AWS_ACCESS_KEY_ID=Access key ID for a user with backend deployment permissions
 AWS_SECRET_ACCESS_KEY=Secret access key for a user with backend deployment permissions
 ```
+
+A `.env.production` file is required to have the following environment variables:
+```
+RECAPTCHA_SECRET_KEY=Private Recaptcha V3 key
+```
+This file has environment variables that will be used when deploying the site.
 
 #### Deployment
 

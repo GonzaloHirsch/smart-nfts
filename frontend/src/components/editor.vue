@@ -231,7 +231,6 @@ watch(
     () => contractData.value,
     () => {
         // Need to verify that both are selected not to emit a fake event
-        console.log(contractData.value, validMetadata.value);
         if (((contractData.value.isAutoIncrementIds && contractData.value.isMintable) || !contractData.value.isAutoIncrementIds) && validMetadata.value) {
             // Don't send the update event if the name or symbol are invalid
             if (!inputsErrors.value['name'] && !inputsErrors.value['symbol']) {

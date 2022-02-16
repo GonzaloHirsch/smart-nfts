@@ -43,7 +43,6 @@ onMounted(() => {
     // Dynamically create the recaptcha key script
     const recaptchaKey = import.meta.env.VITE_RECAPTCHA_KEY;
     if (!recaptchaKey) console.error('Missing Google Recaptcha Key');
-    console.log(document.getElementById(recaptchaKey));
     if (!document.getElementById(recaptchaKey)) {
         const script = document.createElement('script');
         script.id = recaptchaKey;

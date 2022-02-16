@@ -61,7 +61,6 @@ const handleAddField = () => {
 
 const handleRemoveField = (index) => {
     props.modelValue.splice(index, 1);
-    console.log(props.modelValue);
     emit('update:modelValue', props.modelValue);
 };
 </script>
