@@ -215,7 +215,6 @@ const handleMintCall = (contractId) => {
     // Send the request
     api.mintWithContract(contractId, apiData)
         .then((res) => {
-            console.log(res);
             callResult.value = res.data.result;
             callError.value = undefined;
             isLoading.value = false;

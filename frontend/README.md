@@ -48,6 +48,7 @@ DISTRIBUTION_ID=Cloudfront Distribution ID for the frontend
 A `.env.production` file is required to have the following environment variables:
 ```
 VITE_API_URL=https://api.smart-nfts.gonzalohirsch.com/
+VITE_RECAPTCHA_KEY=Public Recaptcha v3 key
 ```
 This file has environment variables that will be used when deploying the site.
 

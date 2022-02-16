@@ -98,25 +98,29 @@
         <div class="flex flex-col sm:flex-row items-center justify-center py-xs">
             <v-button
                 v-if="props.canDeploy"
-                format="secondary"
+                :format="isLoading ? 'disabled' : 'secondary'"
                 aria="Deploy the NFT contract"
                 :external="false"
                 :white="false"
                 size="medium"
+                :loading="isLoading"
+                :disabled="isLoading"
                 :text="$t('editor.buttons.deploy').toUpperCase()"
                 class="mt-sm sm:ml-sm sm:mt-0"
-                @click="deployContract"
+                @click="isLoading ? undefined : deployContract()"
             />
             <v-button
                 v-if="!props.isVerified && props.canVerify"
-                format="secondary"
+                :format="isLoading ? 'disabled' : 'secondary'"
                 aria="Verify the NFT contract"
                 :external="false"
                 :white="false"
                 size="medium"
+                :loading="isLoading"
+                :disabled="isLoading"
                 :text="$t('editor.buttons.verify').toUpperCase()"
                 class="mt-sm sm:ml-sm sm:mt-0"
-                @click="verifyContract"
+                @click="isLoading ? undefined : verifyContract()"
             />
         </div>
         <slot />
@@ -134,6 +138,12 @@ import { mapApiExtensionsToForm, mapApiMetadataToForm } from '@/js/mapper.js';
 
 import { useApi } from '@/plugins/api';
 const api = useApi();
+
+import { useRecaptcha } from '@/plugins/recaptcha';
+const recaptcha = useRecaptcha();
+
+import { useNotifications } from '@/plugins/notifications';
+const { setSnackbar } = useNotifications();
 
 const props = defineProps({
     name: {
@@ -186,10 +196,20 @@ const contractData = ref({
     metadata: mappedMetadata ?? []
 });
 const inputsErrors = ref({});
+const isLoading = ref(false);
 
 const emit = defineEmits(['contractChanged', 'verifyContract', 'deployContract']);
 const deployContract = () => {
-    emit('deployContract');
+    isLoading.value = true;
+    recaptcha.challengeInput(api, (recaptchaResponse) => {
+        if (recaptchaResponse.data.success) {
+            emit('deployContract');
+            isLoading.value = false;
+        } else {
+            setSnackbar('You are not human, cannot use this!', 'error', 5);
+            isLoading.value = false;
+        }
+    });
 };
 const verifyContract = () => {
     emit('verifyContract');
@@ -211,7 +231,6 @@ watch(
     () => contractData.value,
     () => {
         // Need to verify that both are selected not to emit a fake event
-        console.log(contractData.value, validMetadata.value);
         if (((contractData.value.isAutoIncrementIds && contractData.value.isMintable) || !contractData.value.isAutoIncrementIds) && validMetadata.value) {
             // Don't send the update event if the name or symbol are invalid
             if (!inputsErrors.value['name'] && !inputsErrors.value['symbol']) {

@@ -65,6 +65,13 @@ const api = {
         }).then(res => {
             return res;
         });
+    },
+    verifyRecaptchaToken: async (token) => {
+        return instance.post(`security/verify`, {
+            token: token
+        }).then(res => {
+            return res;
+        });
     }
 }
 

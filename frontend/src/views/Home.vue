@@ -65,7 +65,12 @@
                     </template>
                     <template #bottom>
                         <v-contract-id-verificator
-                            :button="{ text: 'home.tabs.buttons.edit.text', aria: 'home.tabs.buttons.edit.aria', format: 'secondary', size: 'medium' }"
+                            :button="{
+                                text: 'home.tabs.buttons.edit.text',
+                                aria: 'home.tabs.buttons.edit.aria',
+                                format: 'secondary',
+                                size: 'medium'
+                            }"
                             @validId="handleValidEditId"
                         />
                     </template>
@@ -86,7 +91,12 @@
                     </template>
                     <template #bottom>
                         <v-contract-id-verificator
-                            :button="{ text: 'home.tabs.buttons.interact.text', aria: 'home.tabs.buttons.interact.aria', format: 'secondary', size: 'medium' }"
+                            :button="{
+                                text: 'home.tabs.buttons.interact.text',
+                                aria: 'home.tabs.buttons.interact.aria',
+                                format: 'secondary',
+                                size: 'medium'
+                            }"
                             @validId="handleValidInteractId"
                         />
                     </template>
@@ -148,6 +158,9 @@ const router = useRouter();
 import { useApi } from '@/plugins/api';
 const api = useApi();
 
+import { useRecaptcha } from '@/plugins/recaptcha';
+const recaptcha = useRecaptcha();
+
 import { useNotifications } from '@/plugins/notifications';
 const { setSnackbar } = useNotifications();
 
@@ -162,13 +175,20 @@ const handleValidInteractId = (id) => {
 const isLoading = ref(false);
 const handleCreateContract = () => {
     isLoading.value = true;
-    // Call API & wait for the response
-    api.createContract().then((res) => {
-        // Don't make it stop loading if it's ok, it's better for the experience
-        // isLoading.value = false;
-        if (res.data && res.data.id) {
-            router.push(`/create/${res.data.id}`);
+    recaptcha.challengeInput(api, (recaptchaResponse) => {
+        if (recaptchaResponse.data.success) {
+            // Call API & wait for the response
+            api.createContract().then((res) => {
+                // Don't make it stop loading if it's ok, it's better for the experience
+                // isLoading.value = false;
+                if (res.data && res.data.id) {
+                    router.push(`/create/${res.data.id}`);
+                } else {
+                    isLoading.value = false;
+                }
+            });
         } else {
+            setSnackbar('You are not human, cannot use this!', 'error', 5);
             isLoading.value = false;
         }
     });

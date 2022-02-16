@@ -61,7 +61,6 @@ const handleClick = () => {
     .getContract(contractId.value)
     .then(() => {
       // Don't make it stop loading, otherwise it doesn't look good
-      console.log("SUCCESS");
       emit('validId', contractId.value);
     })
     .catch(() => {
