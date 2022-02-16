@@ -2,14 +2,15 @@ import Web3 from 'web3';
 // Model
 import { IStoredContract } from '../models/storedContract.model';
 // Constants, interfaces, helpers
-import { IEventData, IEventDataReturnValues } from '../interfaces/blockchain.interface';
+import { IEventData } from '../interfaces/blockchain.interface';
 import { ITokenListing } from '../interfaces/general.interface';
-// Services
-import TransactionService from './transaction.service';
 import { EXTENSIONS } from '../constants/contract.constants';
 import { NULL_ADDRESS, TOKENS_PER_PAGE } from '../constants/general.constants';
-import BlockchainInteractException from '../exceptions/blockchainInteract.exception';
+// Services
+import TransactionService from './transaction.service';
 // Exceptions
+import BlockchainInteractException from '../exceptions/blockchainInteract.exception';
+import ContractNotDeployedException from '../exceptions/contractNotDeployed.exception';
 
 class ListingService {
     private static instance: ListingService;
@@ -34,10 +35,18 @@ class ListingService {
         perPage: number | null = TOKENS_PER_PAGE
     ): Promise<ITokenListing> => {
         
+        const deployment = storedContract.deployment;
         const start = (perPage ?? TOKENS_PER_PAGE) * ((page ?? 1) - 1);
         const end = (perPage ?? TOKENS_PER_PAGE) * (page ?? 1);
 
-        const contract = new this.web3.eth.Contract(storedContract.abi as any, storedContract.deployment.address);
+        if (deployment == null) {
+            throw new ContractNotDeployedException(storedContract.id);
+        }
+
+        const contract = new this.web3.eth.Contract(
+            deployment.abi as any, 
+            deployment.address
+        );
         
         // Filter from block 1 as per: https://ethereum.stackexchange.com/questions/71307/mycontract-getpasteventsallevents-returns-empty-array
         const eventData = await contract.getPastEvents('Transfer', { fromBlock: 1});
@@ -80,7 +89,7 @@ class ListingService {
                     owner: finalOwnerListing[tokenId],
                 }
                 // Get the uri token if they have any
-                if (storedContract.extensions.includes(EXTENSIONS.ERC721URIStorage)) {
+                if (deployment.extensions.includes(EXTENSIONS.ERC721URIStorage)) {
                     tokenListing[tokenId].uriHash = await contract.methods.tokenURI(tokenId)
                         .call({ from: this.deploymentAddress })
                         .catch((err: any) => {
