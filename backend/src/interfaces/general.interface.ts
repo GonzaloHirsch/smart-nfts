@@ -8,3 +8,10 @@ export interface IParameter {
 export interface IArguments {
     [name: string]: any
 }
+
+export interface ITokenListing {
+    [tokenId: string]: {
+        uriHash?: string,
+        owner: string
+    }
+}

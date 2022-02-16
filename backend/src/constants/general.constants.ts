@@ -1,6 +1,6 @@
 
 // BLOCKCHAIN
-export const NULL_ADDRESS = '0x0';
+export const NULL_ADDRESS = '0x0000000000000000000000000000000000000000';
 
 export const BASE_URI = 'https://ipfs.io/ipfs/';
 export const DEPLOY_GAS = 10000000;
@@ -13,3 +13,6 @@ export const rinkebyNetwork = (projectId: string | undefined) => `https://rinkeb
 export const rinkebyEtherscan = (type: string, hash: string) => `Etherscan: https://rinkeby.etherscan.io/${type}/${hash}`;
 export const ropstenNetwork = (projectId: string | undefined) => `https://ropsten.infura.io/v3/${projectId}`;
 export const ropstenEtherscan = (type: string, hash: string) => `Etherscan: https://ropsten.etherscan.io/${type}/${hash}`;
+
+// OTHERS
+export const TOKENS_PER_PAGE = 6;

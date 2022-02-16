@@ -2,16 +2,16 @@ import { Keccak } from 'sha3';
 const hash = new Keccak(256);
 
 export const isEmptyPathParams = (pathParameters: any) => {
-  return pathParameters === null || pathParameters === undefined;
+  return pathParameters == null;
 };
 
 export const isEmptyBody = (body: any) => {
-  return body === null || body === undefined;
+  return body == null;
 };
 
 // TODO: We can check for the format or the length too to avoid DB calls
 export const validContractId = (contractId: string | null | undefined) => {
-  return contractId !== null && contractId !== undefined && contractId.trim().length > 0;
+  return contractId != null && contractId.trim().length > 0;
 };
 
 
@@ -99,6 +99,7 @@ const max256 = (text: string): boolean => {
 }
 
 const isNumber = (num: any): boolean=> {
+    if (num == null) return false;
     const stringNum = num.toString();
     const onlyNumbers = /^[0-9]+[\.]?[0-9]*$/i.test(stringNum)
     const floatNum = parseFloat(stringNum);
