@@ -6,6 +6,7 @@ import { AutoIncrementIds } from "../contracts/AutoIncrementIds.contract";
 import { Mintable } from "../contracts/Mintable.contract";
 import { URIStorage } from "../contracts/URIStorage.contract";
 import { Enumerable } from "../contracts/Enumerable.contract";
+import { UniqueStorage } from "../contracts/UniqueStorage.contract";
 
 export const SOLIDITY_VERSION = '0.8.2';
 export const CONTRACT_LICENSE = 'MIT';
@@ -52,6 +53,7 @@ export enum EXTENSIONS {
     Mintable = 'Mintable',
     AutoIncrementIds = 'AutoIncrementIds',
     Ownable = 'Ownable',
+    UniqueStorage = 'UniqueStorage',
 }
 
 export enum FINAL_EXTENSIONS {
@@ -71,6 +73,7 @@ export const EXTENSION_MAP: Map<string, IContractExtension> = new Map([
     [EXTENSIONS.AutoIncrementIds, AutoIncrementIds],
     [EXTENSIONS.ERC721URIStorage, URIStorage],
     [EXTENSIONS.ERC721Enumerable, Enumerable],
+    [EXTENSIONS.UniqueStorage, UniqueStorage],
 ]);
 
 export const REQUIRE_KEYWORD = 'require';
