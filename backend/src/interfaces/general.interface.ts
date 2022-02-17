@@ -15,3 +15,9 @@ export interface ITokenListing {
         owner: string
     }
 }
+
+export interface ITokenData {
+    tokenId: string,
+    uriHash?: string,
+    owner: string
+}

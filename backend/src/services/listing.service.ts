@@ -3,7 +3,7 @@ import Web3 from 'web3';
 import { IStoredContract } from '../models/storedContract.model';
 // Constants, interfaces, helpers
 import { IEventData } from '../interfaces/blockchain.interface';
-import { ITokenListing } from '../interfaces/general.interface';
+import { ITokenData, ITokenListing } from '../interfaces/general.interface';
 import { EXTENSIONS } from '../constants/contract.constants';
 import { NULL_ADDRESS, TOKENS_PER_PAGE } from '../constants/general.constants';
 // Services
@@ -33,7 +33,7 @@ class ListingService {
         storedContract: IStoredContract,
         page: number | null = 1,
         perPage: number | null = TOKENS_PER_PAGE
-    ): Promise<ITokenListing> => {
+    ): Promise<ITokenData[]> => {
         
         const deployment = storedContract.deployment;
         const start = (perPage ?? TOKENS_PER_PAGE) * ((page ?? 1) - 1);
@@ -100,8 +100,13 @@ class ListingService {
             })
         );
 
-        return tokenListing;
-
+        return Object.keys(tokenListing).map((tokenId: string) => {
+            return {
+                tokenId: tokenId,
+                owner: tokenListing[tokenId].owner,
+                uriHash: tokenListing[tokenId].uriHash
+            }
+        });
 
         /*
         Response format, array of:

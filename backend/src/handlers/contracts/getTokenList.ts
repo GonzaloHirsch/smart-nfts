@@ -6,7 +6,6 @@ import { isEmptyPathParams, isEmptyQueryParams, typeValidations, validContractId
 import GenericException from '../../exceptions/generic.exception';
 import { HTTP_ERRORS } from '../../constants/errors.constants';
 import ListingService from '../../services/listing.service';
-import { TOKENS_PER_PAGE } from '../../constants/general.constants';
 
 const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   

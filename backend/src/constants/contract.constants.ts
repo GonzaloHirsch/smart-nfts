@@ -52,7 +52,6 @@ export enum EXTENSIONS {
     Mintable = 'Mintable',
     AutoIncrementIds = 'AutoIncrementIds',
     Ownable = 'Ownable',
-    ListTokens = 'ListTokens',
 }
 
 export enum FINAL_EXTENSIONS {
