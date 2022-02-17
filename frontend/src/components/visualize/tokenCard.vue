@@ -1,20 +1,19 @@
 <template>
     <div class="flex flex-col items-center bg-white rounded-lg border border-gray-200 token--wrapper overflow-hidden">
         <div class="token--image-wrapper">
-            <!-- <template v-if="tokenInfo.image && (!isLoadingImage || !startedLoadingImage)"> -->
             <template v-if="tokenInfo.image && imageUrl">
                 <img class="token--image" :src="imageUrl" :alt="`Image for the ${tokenInfo.name} token`" />
             </template>
             <template v-else>
-                <div :class="['token--image w-full p-xl', imageError ? 'bg-error/25' : 'bg-light']">
+                <div :class="['token--image w-full p-xl', loadingImage ? 'bg-light animate-pulse' : (imageError ? 'bg-error/25' : 'bg-light')]">
                     <v-ethereum class="w-fit" />
                 </div>
             </template>
         </div>
         <div class="p-sm text-sm flex flex-col items-center w-full">
             <div class="flex flex-row w-full items-center justify-between">
-                <span :class="['text-sm', loadingContent ? 'loading--text loading--name' : '']">{{ tokenInfo.name || null }}</span>
-                <span v-if="props.id" class="text-sm text-brand_secondary">#{{ props.id }}</span>
+                <span :class="['text-lg', loadingContent ? 'loading--text loading--name' : '']">{{ tokenInfo.name || null }}</span>
+                <span v-if="props.id" class="text-lg text-brand_secondary">#{{ props.id }}</span>
             </div>
             <p
                 :class="[
@@ -56,6 +55,8 @@ import { onMounted, ref } from 'vue';
 
 import { useIpfs } from '@/plugins/ipfs';
 const ipfs = useIpfs();
+
+const emit = defineEmits(['ipfsError']);
 
 const props = defineProps({
     owner: {
@@ -115,8 +116,12 @@ onMounted(() => {
                 .catch((err) => {
                     console.error(err);
                     imageError.value = true;
+                    emit('ipfsError');
                 });
         }
+    }).catch(err => {
+        console.error(err);
+        emit('ipfsError');
     });
 });
 
@@ -151,7 +156,7 @@ const handleImageLoad = () => {
 }
 
 .loading--name {
-    @apply h-5 mr-xl;
+    @apply h-7 mr-xl;
 }
 
 .loading--description {

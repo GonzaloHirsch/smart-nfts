@@ -270,9 +270,12 @@ pre.code {
     @apply underline decoration-brand_secondary inline-block italic;
 }
 
-
 /* RECAPTCHA HIDE BADGE */
 
 .grecaptcha-badge { 
     @apply invisible;
+}
+
+.section--full {
+    height: 100vh;
 }

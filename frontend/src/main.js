@@ -12,6 +12,7 @@ import { recaptchaPlugin } from './plugins/recaptcha';
 import { apiPlugin } from './plugins/api';
 import { notificationsPlugin } from './plugins/notifications';
 import { ipfsPlugin } from './plugins/ipfs';
+import { clickOutsidePlugin } from './plugins/clickOutside';
 
 const app = createApp(App)
 
@@ -63,5 +64,6 @@ app.use(apiPlugin);
 app.use(notificationsPlugin);
 app.use(recaptchaPlugin);
 app.use(ipfsPlugin);
+app.use(clickOutsidePlugin);
 
 app.mount('#app');
