@@ -1,6 +1,7 @@
 import { inject } from 'vue';
 import axios from 'axios';
 import fileDownload from 'js-file-download';
+import {PAGINATION_PER_PAGE} from '../js/constants';
 
 // Constant plugin key
 const PLUGIN_KEY = 'pf-api';
@@ -27,6 +28,11 @@ const api = {
     getContract: async (contractId) => {
         return instance.get(`contracts/${contractId}`).then(res => {
             return res
+        })
+    },
+    getTokens: async (contractId, page = 1) => {
+        return instance.get(`contracts/${contractId}/tokens?page=${page}&perPage=${PAGINATION_PER_PAGE}`).then(res => {
+            return res;
         })
     },
     createContract: async () => {

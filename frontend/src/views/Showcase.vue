@@ -6,7 +6,10 @@
         <form class="grid grid-cols-10 gap-sm p-sm" autocomplete="off">
             <div class="col-span-full entire-panel">
                 <div class="flex flex-row justify-between items-center">
-                    <h2 class="text-left text-brand_secondary">Contract</h2>
+                    <div class="flex">
+                        <h2 class="text-left text-brand_secondary">{{hasContract && contractIsDeployed && !isLoading && validContract ? contract.name : 'Tokens'}}</h2>
+                        <v-button v-if="hasContract && contractIsDeployed && !isLoading" format="primary" :href="`/create/${contractId}`" target="_self" aria="Edit this contract" :external="false" :white="false" text="EDIT CONTRACT" size="small" class="h-fit my-auto ml-sm"/>
+                    </div>
                     <v-input
                         id="contract_id"
                         name="contract_id"
@@ -23,10 +26,20 @@
     </v-section>
 
     <v-section :noPadding="true" v-if="hasContract && contractIsDeployed && !isLoading && validContract">
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 w-full gap-sm p-sm">
-            <template v-for="(token, index) in tokens" :key="index">
-                <v-token-card :token="token" class="col-span-1"/>
+        <div v-if="tokens && tokens.length > 0" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 w-full gap-sm p-sm">
+            <template v-for="(token, index) in tokens" :key="token.id">
+                <v-token-card :owner="token.owner" :hash="token.uriHash" :id="token.id" :contractAddress="contract.deployment.address" :showOpensea="contract.deployment.network === 'rinkeby'" :network="contract.deployment.network" class="col-span-1"/>
             </template>
+        </div>
+    </v-section>
+    
+    <v-section :noPadding="true" v-if="isLoading">
+        <div class="flex flex-row items-center justify-center p-xs md:p-md">
+            <div class="bg-brand_secondary w-full rounded-lg text-typography_primary">
+                <h4 class="flex items-center justify-center my-base py-xl">
+                    {{ $t('showcase.prepare') }} <RefreshIcon class="h-10 w-10 animate-spin-reverse transform rotate-180" />
+                </h4>
+            </div>
         </div>
     </v-section>
 </template>
@@ -38,6 +51,7 @@ import vInput from '@/components/editor/input.vue';
 import vTokenCard from '@/components/visualize/tokenCard.vue';
 import vSection from '@/components/section.vue';
 import { NAV_HEIGHT, EXTENSIONS } from '@/js/constants.js';
+import { RefreshIcon } from '@heroicons/vue/solid';
 
 // Router
 import { useRoute, useRouter } from 'vue-router';
@@ -57,13 +71,8 @@ const validContract = ref(true);
 const contractId = ref(undefined);
 const contract = ref({});
 const hasContract = computed(() => !(contractId.value === '' || contractId.value === null || contractId.value === undefined));
-const contractIsDeployed = computed(
-    () =>
-        hasContract.value &&
-        contract.value.deployment?.address !== null &&
-        contract.value.deployment?.address !== undefined &&
-        contract.value.deployment?.address !== ''
-);
+const contractIsDeployed = computed(() => hasContract.value && contract.value.deployment?.address !== null && contract.value.deployment?.address !== undefined && contract.value.deployment?.address !== '');
+const tokens = ref([]);
 
 watch(
     () => contractId.value,
@@ -89,9 +98,25 @@ watch(
                     .then((res) => {
                         contract.value = res.data;
                         validContract.value = true;
-                        isLoading.value = false;
+                        // Todo: verify the contract is mintable
                         if (!contractIsDeployed.value) {
                             setSnackbar('Contract has not been deployed yet!', 'error', 5);
+                        } else {
+                            // Load tokens
+                            api.getTokens(contractId.value, 1).then(res => {
+                                tokens.value = []
+                                for (const [id, info] of Object.entries(res.data?.listing)) {
+                                    tokens.value.push({
+                                        id: id,
+                                        ...info
+                                    });
+                                }
+                                isLoading.value = false;
+                            }).catch(res => {
+                                tokens.value = [];
+                                console.error(res)
+                                isLoading.value = false;
+                            })
                         }
                     })
                     .catch((err) => {
@@ -109,174 +134,11 @@ watch(
     { immediate: true }
 );
 
-const tokens = [
-    {
-        image: 'https://picsum.photos/200/300',
-        name: 'Test 1',
-        id: 1,
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        metadata: [
-            {
-                traitType: 'Family',
-                value: 'Testensons'
-            },
-            {
-                traitType: 'Generation',
-                value: 34,
-                displayType: 'number'
-            },
-            {
-                traitType: 'Strength',
-                value: 23,
-                displayType: 'boost_number'
-            },
-            {
-                traitType: 'Intelligence',
-                value: 77,
-                displayType: 'boost_percentage'
-            }
-        ]
-    },
-    {
-        image: 'https://picsum.photos/200/300',
-        name: 'Test 2',
-        id: 2,
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        metadata: [
-            {
-                traitType: 'Family',
-                value: 'Testensons'
-            },
-            {
-                traitType: 'Generation',
-                value: 34,
-                displayType: 'number'
-            },
-            {
-                traitType: 'Strength',
-                value: 23,
-                displayType: 'boost_number'
-            },
-            {
-                traitType: 'Intelligence',
-                value: 77,
-                displayType: 'boost_percentage'
-            }
-        ]
-    },
-    {
-        name: 'Test 3',
-        id: 3,
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        metadata: [
-            {
-                traitType: 'Family',
-                value: 'Testensons'
-            },
-            {
-                traitType: 'Generation',
-                value: 34,
-                displayType: 'number'
-            },
-            {
-                traitType: 'Strength',
-                value: 23,
-                displayType: 'boost_number'
-            },
-            {
-                traitType: 'Intelligence',
-                value: 77,
-                displayType: 'boost_percentage'
-            }
-        ]
-    },
-    {
-        image: 'https://picsum.photos/200/300',
-        name: 'Test 4',
-        id: 4,
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        metadata: [
-            {
-                traitType: 'Family',
-                value: 'Testensons'
-            },
-            {
-                traitType: 'Generation',
-                value: 34,
-                displayType: 'number'
-            },
-            {
-                traitType: 'Strength',
-                value: 23,
-                displayType: 'boost_number'
-            },
-            {
-                traitType: 'Intelligence',
-                value: 77,
-                displayType: 'boost_percentage'
-            }
-        ]
-    },
-    {
-        name: 'Test 5',
-        id: 5,
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        metadata: [
-            {
-                traitType: 'Family',
-                value: 'Testensons'
-            },
-            {
-                traitType: 'Generation',
-                value: 34,
-                displayType: 'number'
-            },
-            {
-                traitType: 'Strength',
-                value: 23,
-                displayType: 'boost_number'
-            },
-            {
-                traitType: 'Intelligence',
-                value: 77,
-                displayType: 'boost_percentage'
-            }
-        ]
-    },
-    {
-        image: 'https://picsum.photos/200/300',
-        name: 'Test 6',
-        id: 6,
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        metadata: [
-            {
-                traitType: 'Family',
-                value: 'Testensons'
-            },
-            {
-                traitType: 'Generation',
-                value: 34,
-                displayType: 'number'
-            },
-            {
-                traitType: 'Strength',
-                value: 23,
-                displayType: 'boost_number'
-            },
-            {
-                traitType: 'Intelligence',
-                value: 77,
-                displayType: 'boost_percentage'
-            }
-        ]
-    }
-];
-
 // Meta
 import { useMeta } from 'vue-meta';
 useMeta({
-    title: 'Visualize Tokens',
-    description: ''
+    title: 'Token Showcase',
+    description: 'This is the homepage to our project'
 });
 </script>
 

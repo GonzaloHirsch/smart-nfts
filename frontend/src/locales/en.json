@@ -130,6 +130,9 @@
         "last_saved": "Last saved: {0}",
         "saving": "Saving..."
     },
+    "showcase": {
+        "prepare": "Fetching tokens, please wait..."
+    },
     "interact": {
         "loading": {
             "contract": "Loading contract...",

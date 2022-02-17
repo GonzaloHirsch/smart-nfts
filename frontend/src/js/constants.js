@@ -10,3 +10,5 @@ export const EXTENSIONS = {
 };
 
 export const NAVBAR_SCROLL_LIMIT = 10;
+
+export const PAGINATION_PER_PAGE = 8;
