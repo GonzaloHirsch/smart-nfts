@@ -1,9 +1,9 @@
 <template>
-    <div class="flex flex-col items-center justify-center h-auto py-xs px-base bg-brand_primary border border-brand_secondary rounded-md w-fit">
+    <div class="flex flex-col items-center justify-center h-auto p-xs bg-brand_tertiary/10 border border-brand_secondary rounded-md token-boost">
         <div class="relative">
             <svg :height="props.radius * 2" :width="props.radius * 2" class="stroke-brand_secondary">
                 <circle
-                    stroke="#f0f0f0"
+                    stroke="#C0C0C0"
                     stroke-dasharray="360 360"
                     :style="{ zIndex: 1 }"
                     :stroke-width="props.stroke"
@@ -74,3 +74,9 @@ const strokeDashoffset = computed(() => {
     return calculations.value.circumference - value / 100 * calculations.value.circumference;
 })
 </script>
+
+<style scoped>
+.token-boost {
+    @apply shadow-md shadow-brand_primary !important;
+}
+</style>

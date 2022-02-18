@@ -13,7 +13,7 @@
         </template>
     </v-floating-icon>
 
-    <v-modal v-if="enlargedToken" :showModal="isOpen" @close="handleModalClose">
+    <v-modal v-if="enlargedToken" maxWidth="md" :showModal="isOpen" @close="handleModalClose" :noPadding="true" :noScrollbar="true" :darkMode="true">
         <v-token-card
             :owner="enlargedToken.owner"
             :hash="enlargedToken.uriHash"

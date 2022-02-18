@@ -42,8 +42,8 @@
         </div>
     </div>
     <div v-else class="flex flex-col items-center bg-transparent token-enlarged--wrapper">
-        <div class="grid grid-cols-10 gap-sm">
-            <div class="token-enlarged--image-wrapper col-span-full md:col-span-4">
+        <div class="flex flex-col w-full items-center">
+            <div class="token-enlarged--image-wrapper w-full bg-brand_secondary relative">
                 <template v-if="tokenInfo.image && imageUrl">
                     <img class="token--image" :src="imageUrl" :alt="`Image for the ${tokenInfo.name} token`" />
                 </template>
@@ -52,92 +52,76 @@
                         <v-ethereum class="w-fit" />
                     </div>
                 </template>
-                <div
-                    v-if="props.id && props.contractAddress"
-                    class="border-2 rounded-b-lg border-gray-400 w-full px-xs py-xs flex flex-row -mt-[2px] justify-between"
-                >
-                    <div class="flex">
-                        <span
-                            @click.stop="handleNavigation(`https://${props.network}.etherscan.io/token/${props.contractAddress}?a=${props.id}`)"
-                            class="block"
-                        >
-                            <v-etherscan-logo class="w-6 h-6 text-black/40 hover:text-brand_secondary transition duration-200 cursor-pointer" />
-                        </span>
-                        <span
-                            v-if="props.showOpensea"
-                            @click.stop="handleNavigation(`https://testnets.opensea.io/assets/${props.contractAddress}/${props.id}`)"
-                            class="block ml-xs"
-                        >
-                            <v-opensea-logo class="w-6 h-6 text-black/40 hover:text-brand_secondary transition duration-200 cursor-pointer" />
-                        </span>
-                    </div>
-                    <div class="flex">
-                        <span
-                            v-if="props.hash"
-                            @click.stop="handleNavigation(`${getIpfsLink(props.hash)}`)"
-                            class="block ml-xs"
-                        >
-                            <CodeIcon class="w-6 h-6 text-black/40 hover:text-brand_secondary transition duration-200 cursor-pointer" />
-                        </span>
-                        <span
-                            v-if="tokenInfo.image"
-                            @click.stop="handleNavigation(`${getIpfsLink(tokenInfo.image)}`)"
-                            class="block ml-xs"
-                        >
-                            <LinkIcon class="w-6 h-6 text-black/40 hover:text-brand_secondary transition duration-200 cursor-pointer" />
-                        </span>
-                    </div>
-                </div>
+                <span v-if="props.id" class="text-h4 text-white absolute top-0 left-0 pt-sm pl-sm">#{{ props.id }}</span>
             </div>
-            <div class="text-sm flex flex-col items-center justify-between w-full col-span-full md:col-span-6">
-                <div class="flex flex-col w-full">
-                    <div class="flex flex-row w-full items-center justify-between">
-                        <span :class="['text-h5', loadingContent ? 'loading--text loading--name' : '']">{{ tokenInfo.name || null }}</span>
-                        <span v-if="props.id" class="text-h5 text-brand_secondary">#{{ props.id }}</span>
-                    </div>
-                    <p :class="['text-lg mt-xs w-full card--description line-clamp-6', loadingContent ? 'loading--text loading--description' : '']">
-                        {{ tokenInfo.description || null }}
-                    </p>
-                </div>
-                <p class="break-all text-left w-full mt-xs">
-                    Owned by
-                    <a
-                        class="text-brand_secondary underline"
-                        :href="`https://${props.network}.etherscan.io/address/${props.owner}`"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        >{{ props.owner.slice(0, 16) }}...</a
-                    >
+            <div class="flex flex-col items-center w-full px-sm">
+                <span :class="['text-h4 mt-sm', loadingContent ? 'loading--text loading-enlarged--name' : '']">{{ tokenInfo.name || null }}</span>
+                <p :class="['text-lg text-center my-base w-full text-gray-500', loadingContent ? 'loading--text loading--description' : '']">
+                    {{ tokenInfo.description || null }}
                 </p>
+                <div v-if="props.id && props.contractAddress" class="w-full flex flex-row justify-between px-sm mb-base">
+                    <span
+                        @click.stop="handleNavigation(`https://${props.network}.etherscan.io/token/${props.contractAddress}?a=${props.id}`)"
+                        class="block"
+                    >
+                        <v-etherscan-logo class="token-enlarged--icon" />
+                    </span>
+                    <span
+                        v-if="props.showOpensea"
+                        @click.stop="handleNavigation(`https://testnets.opensea.io/assets/${props.contractAddress}/${props.id}`)"
+                        class="block ml-xs"
+                    >
+                        <v-opensea-logo class="token-enlarged--icon" />
+                    </span>
+                    <span
+                        v-if="props.owner"
+                        @click.stop="handleNavigation(`https://${props.network}.etherscan.io/address/${props.owner}`)"
+                        class="block ml-xs"
+                    >
+                        <UserCircleIcon class="token-enlarged--icon" />
+                    </span>
+                    <span v-if="props.hash" @click.stop="handleNavigation(`${getIpfsLink(props.hash)}`)" class="block ml-xs">
+                        <CodeIcon class="token-enlarged--icon" />
+                    </span>
+                    <span v-if="tokenInfo.image" @click.stop="handleNavigation(`${getIpfsLink(tokenInfo.image)}`)" class="block ml-xs">
+                        <LinkIcon class="token-enlarged--icon" />
+                    </span>
+                </div>
             </div>
-            <div v-if="properties" class="col-span-full">
-                <p class="text-lg mb-xs"><strong>Properties</strong></p>
-                <div class="flex flex-row flex-wrap">
+
+            <div v-if="properties" class="w-full">
+                <div class="token-enlarged--metadata-field">Properties</div>
+                <div class="flex flex-row flex-wrap items-center justify-center">
                     <template v-for="(property, index) in properties" :key="index">
-                        <v-token-trait :value="property.value" :name="property.trait_type" class="mr-xs mb-xs" />
+                        <div class="w-6/12 md:w-4/12 p-xs">
+                            <v-token-trait :value="property.value" :name="property.trait_type" />
+                        </div>
                     </template>
                 </div>
             </div>
-            <div v-if="stats" class="col-span-full">
-                <p class="text-lg mb-xs"><strong>Stats</strong></p>
-                <div class="flex flex-row flex-wrap">
+            <div v-if="stats" class="w-full">
+                <div class="token-enlarged--metadata-field">Stats</div>
+                <div class="flex flex-row flex-wrap items-center justify-center">
                     <template v-for="(property, index) in stats" :key="index">
-                        <v-token-trait :value="property.value" :name="property.trait_type" class="mr-xs mb-xs" />
+                        <div class="w-6/12 md:w-4/12 p-xs">
+                            <v-token-trait :value="property.value" :name="property.trait_type" />
+                        </div>
                     </template>
                 </div>
             </div>
-            <div v-if="boosts" class="col-span-full">
-                <p class="text-lg mb-xs"><strong>Boosts</strong></p>
-                <div class="flex flex-row flex-wrap">
+            <div v-if="boosts" class="w-full mb-sm">
+                <div class="token-enlarged--metadata-field">Boosts</div>
+                <div class="flex flex-row flex-wrap items-center justify-center">
                     <template v-for="(property, index) in boosts" :key="index">
-                        <v-token-boost
-                            :value="property.value"
-                            :name="property.trait_type"
-                            :isPercentage="property.display_type === 'boost_percentage'"
-                            :radius="50"
-                            :stroke="8"
-                            class="mx-auto md:ml-0 md:mr-xs mb-xs"
-                        />
+                        <div class="w-6/12 md:w-4/12 p-xs">
+                            <v-token-boost
+                                :value="property.value"
+                                :name="property.trait_type"
+                                :isPercentage="property.display_type === 'boost_percentage'"
+                                :radius="50"
+                                :stroke="8"
+                            />
+                        </div>
                     </template>
                 </div>
             </div>
@@ -151,7 +135,7 @@ import vOpenseaLogo from '@/assets/images/icons/opensea.svg?component';
 import vEtherscanLogo from '@/assets/images/icons/etherscan.svg?component';
 import vTokenTrait from '@/components/visualize/tokenTrait.vue';
 import vTokenBoost from '@/components/visualize/tokenBoost.vue';
-import { CodeIcon, LinkIcon } from '@heroicons/vue/solid';
+import { CodeIcon, LinkIcon, UserCircleIcon } from '@heroicons/vue/solid';
 
 import { onMounted, ref, computed } from 'vue';
 
@@ -251,7 +235,7 @@ const handleNavigation = (url) => {
 
 const getIpfsLink = (hash) => {
     return ipfs.getImageUri(ipfs.clearGateUri(hash));
-}
+};
 </script>
 
 <style scoped>
@@ -285,24 +269,53 @@ const getIpfsLink = (hash) => {
 }
 
 /* ENLARGED */
+.loading-enlarged--name {
+    @apply h-7;
+}
+
+.token-enlarged--icon {
+    @apply w-10 h-10 text-black/40 hover:text-brand_secondary transition duration-200 cursor-pointer;
+}
+
+.token-enlarged--metadata-field {
+    @apply w-full py-xs text-lg font-semibold bg-brand_primary my-sm text-center;
+}
+
 .token-enlarged--wrapper .card--description {
     min-height: 56px;
+}
+
+.token-enlarged--image-wrapper .token--image {
+    @apply rounded-lg;
+}
+
+.token-enlarged--image-wrapper .token--image {
+        @apply mx-auto translate-y-1/2 rounded-lg;
+        min-width: 150px;
+        width: 45%;
+    }
+
+    .token-enlarged--image-wrapper {
+        @apply max-w-md;
+        margin-bottom: 25%;
+    }
+
+@screen md {
+    .token-enlarged--image-wrapper .token--image {
+        @apply mx-auto translate-y-1/2;
+        min-width: 150px;
+        width: 45%;
+    }
+
+    .token-enlarged--image-wrapper {
+        @apply max-w-md;
+        margin-bottom: 25%;
+    }
 }
 
 @screen md {
     .token-enlarged--wrapper .card--description {
         min-height: 168px;
-    }
-}
-
-.token-enlarged--image-wrapper {
-    @apply overflow-hidden rounded-lg;
-    max-width: 350px;
-}
-
-@screen md {
-    .token-enlarged--image-wrapper {
-        max-width: 400px;
     }
 }
 </style>
