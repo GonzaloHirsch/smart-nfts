@@ -12,7 +12,7 @@
     </DisclosureButton>
     <DisclosurePanel
       v-if="$slots.content"
-      :class="[formats.content, 'px-base py-sm rounded-md transform -translate-y-sm relative']"
+      :class="[formats.content, 'px-base py-sm rounded-md transform accordion--panel relative']"
       style="z-index: 1"
     >
       <slot name="content" />
@@ -67,5 +67,9 @@ const formats = computed(() => {
 
 .accordion--content-primary {
   @apply bg-brand_primary text-typography_primary;
+}
+
+.accordion--panel {
+  @apply -translate-y-sm;
 }
 </style>

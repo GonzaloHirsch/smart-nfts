@@ -42,7 +42,13 @@ const selectedFile = ref(undefined);
 
 const handleChangeFile = () => {
     selectedFile.value = fileInput.value.files[0];
-    emit('update:modelValue', fileInput.value.files[0]);
+    // Limit 5MB
+    if (selectedFile.value.size > 5 * 1024) {
+        selectedFile.value = undefined;
+        setSnackbar('File too large, limit is 5MB', 'error', 5);
+    } else {
+        emit('update:modelValue', fileInput.value.files[0]);
+    }
 };
 
 // Handles drag and drop logic
@@ -53,6 +59,8 @@ const handleFileDrag = (e) => {
         setSnackbar('Cannot upload more than 1 file', 'error', 5);
     } else if (!/^image\/.*$/.test(e.dataTransfer.files[0].type)) {
         setSnackbar('Invalid file type, only images are supported', 'error', 5);
+    } else if (e.dataTransfer.files[0].type > 5 * 1024) {
+        setSnackbar('File too large, limit is 5MB', 'error', 5);
     } else {
         fileInput.value.files = e.dataTransfer.files;
         // Manual trigger of the change file

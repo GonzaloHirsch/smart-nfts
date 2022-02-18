@@ -34,7 +34,7 @@ const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyRes
         .getInstance(contract.deployment.network)
         .listTokenOwners(contract, page, perPage);
 
-    const getUrl = (page: number, perPage: number) => `/${contract.id}?page=${page}&perPage=${perPage}`;
+    const getUrl = (page: number, perPage: number) => `/contracts/${contract.id}/tokens?page=${page}&perPage=${perPage}`;
 
     return {
         statusCode: 200,
@@ -46,10 +46,10 @@ const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyRes
                 totalCount: totalTokens,
                 Links: {
                     self: getUrl(page, perPage),
-                    first: getUrl(1, perPage),
-                    previous: (page - 1) > 0 ? getUrl(page - 1, perPage) : null,
-                    next: (page + 1) <= pageCount ? getUrl(page + 1, perPage) : null,
-                    last: getUrl(pageCount, perPage),
+                    first: page > 1 ? getUrl(1, perPage) : null,
+                    previous: page > 1 ? getUrl(page - 1, perPage) : null,
+                    next: page < pageCount ? getUrl(page + 1, perPage) : null,
+                    last: page < pageCount ? getUrl(pageCount, perPage) : null,
                 }
             },
             records: results

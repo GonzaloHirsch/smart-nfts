@@ -28,6 +28,7 @@
 /* Smooth scrolling https://www.w3schools.com/howto/howto_css_smooth_scroll.asp */
 html {
     scroll-behavior: smooth;
+    padding: 0 !important;
 }
 
 h1 {
@@ -270,9 +271,12 @@ pre.code {
     @apply underline decoration-brand_secondary inline-block italic;
 }
 
-
 /* RECAPTCHA HIDE BADGE */
 
 .grecaptcha-badge { 
     @apply invisible;
+}
+
+.section--full {
+    height: 100vh;
 }

@@ -1,7 +1,7 @@
 <template>
     <header
         id="header"
-        :class="['sticky top-0 left-0 px-sm md:px-base lg:px-xl py-sm bg-white w-full z-10 transition duration-300', isScrolled ? 'shadow-lg' : '']"
+        :class="['sticky top-0 left-0 px-sm md:px-base lg:px-xl py-sm bg-white w-full z-50 transition duration-300', isScrolled ? 'shadow-lg' : '']"
     >
         <nav class="flex flex-row justify-between items-center" aria-labelledby="header">
             <router-link to="/" @click="handleTopScroll" class="text-h5 text-brand_secondary font-semibold">{{ $t('app.name') }}</router-link>
@@ -32,6 +32,10 @@ const links = [
     {
         to: '/interact',
         text: 'nav.interact'
+    },
+    {
+        to: '/tokens',
+        text: 'nav.list'
     }
 ];
 

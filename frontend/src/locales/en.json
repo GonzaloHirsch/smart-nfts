@@ -91,7 +91,8 @@
         "interact": "Interact",
         "edit": "Edit",
         "features": "Features",
-        "contact": "Contact"
+        "contact": "Contact",
+        "list": "List"
     },
     "editor": {
         "contract": {
@@ -129,6 +130,11 @@
         "prepare": "Preparing the editor, hang tight...",
         "last_saved": "Last saved: {0}",
         "saving": "Saving..."
+    },
+    "showcase": {
+        "prepare": "Fetching tokens, please wait...",
+        "preparePage": "Fetching more tokens, please wait...",
+        "noTokens": "No more tokens found"
     },
     "interact": {
         "loading": {
@@ -186,6 +192,9 @@
             "long_string": "Long Text",
             "image": "File: {0}"
         }
+    },
+    "pagination": {
+        "results": "Showing {0} to {1} of {2} results"
     },
     "404": {
         "hero": {
