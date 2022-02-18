@@ -65,7 +65,8 @@
                 <p v-if="loadingContent || tokenInfo.description" :class="['text-lg text-center my-base w-full text-gray-500', loadingContent ? 'loading--text loading--description' : '']">
                     {{ tokenInfo.description || null }}
                 </p>
-                <div v-if="props.id && props.contractAddress" class="w-full flex flex-row justify-between px-sm mt-sm mb-base">
+                <p v-if="!props.hash" class="text-lg text-center my-base w-full text-gray-500">This token has no metadata, click on the icons below to explore it on third-party services or view the owner.</p>
+                <div v-if="props.id && props.contractAddress" class="w-full flex flex-row justify-between px-sm mb-base">
                     <span
                         @click.stop="handleNavigation(`https://${props.network}.etherscan.io/token/${props.contractAddress}?a=${props.id}`)"
                         class="block"

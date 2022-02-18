@@ -146,6 +146,7 @@ const contractIsDeployed = computed(
         contract.value.deployment?.address !== ''
 );
 const tokens = ref([]);
+const pagination = ref({});
 
 const hasIpfsError = ref(false);
 const handleIpfsError = () => {
@@ -193,7 +194,8 @@ watch(
                             hasIpfsError.value = false;
                             api.getTokens(contractId.value, 1)
                                 .then((res) => {
-                                    tokens.value = res.data;
+                                    tokens.value = res.data.records;
+                                    pagination.value = res.data._metadata;
                                     isLoading.value = false;
                                 })
                                 .catch((res) => {
