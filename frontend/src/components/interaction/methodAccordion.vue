@@ -211,7 +211,7 @@ const handleMintCall = (contractId) => {
             ...metadataInputs.value
         }
     }));
-    if (props.metadata.hasImage) apiData.append('token', metadataImage.value);
+    if (props?.metadata?.hasImage) apiData.append('token', metadataImage.value);
     // Send the request
     api.mintWithContract(contractId, apiData)
         .then((res) => {
