@@ -77,6 +77,16 @@
                     v-model="contractData.isURIStorage"
                     class="w-full md:w-6/12"
                 />
+                <div class="flex flex-row">
+                    <span class="border-l-2 border-black mx-xs"></span>
+                    <v-checkbox
+                        id="isUniqueStorage"
+                        name="isUniqueStorage"
+                        placeholder="Unique Storage"
+                        label="Unique Storage"
+                        v-model="contractData.isUniqueStorage"
+                    />
+                </div>
             </div>
             <div v-if="contractData.isURIStorage" class="py-sm">
                 <h5 class="form--title">{{$t('editor.contract.metadata')}} <QuestionMarkCircleIcon class="form--title-icon" /></h5>
@@ -192,6 +202,7 @@ const contractData = ref({
     isAutoIncrementIds: mappedExtensions.isAutoIncrementIds ?? false,
     isEnumerable: mappedExtensions.isEnumerable ?? false,
     isURIStorage: mappedExtensions.isURIStorage ?? false,
+    isUniqueStorage: mappedExtensions.isUniqueStorage ?? false,
     hasImage: hasImage ?? true,
     metadata: mappedMetadata ?? []
 });
@@ -231,7 +242,9 @@ watch(
     () => contractData.value,
     () => {
         // Need to verify that both are selected not to emit a fake event
-        if (((contractData.value.isAutoIncrementIds && contractData.value.isMintable) || !contractData.value.isAutoIncrementIds) && validMetadata.value) {
+        if (((contractData.value.isAutoIncrementIds && contractData.value.isMintable) || !contractData.value.isAutoIncrementIds)
+        && ((contractData.value.isUniqueStorage && contractData.value.isURIStorage) || !contractData.value.isUniqueStorage) 
+        && validMetadata.value) {
             // Don't send the update event if the name or symbol are invalid
             if (!inputsErrors.value['name'] && !inputsErrors.value['symbol']) {
                 emit('contractChanged', contractData.value);
@@ -253,6 +266,22 @@ watch(
     () => {
         if (!contractData.value.isMintable) {
             contractData.value.isAutoIncrementIds = false;
+        }
+    }
+);
+watch(
+    () => contractData.value.isUniqueStorage,
+    () => {
+        if (contractData.value.isUniqueStorage) {
+            contractData.value.isURIStorage = true;
+        }
+    }
+);
+watch(
+    () => contractData.value.isURIStorage,
+    () => {
+        if (!contractData.value.isURIStorage) {
+            contractData.value.isUniqueStorage = false;
         }
     }
 );

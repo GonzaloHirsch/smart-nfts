@@ -22,6 +22,7 @@ export const mapFormToApiData = (formData) => {
     if (formData.isAutoIncrementIds) data.extensions.push(EXTENSIONS.AUTO_INCREMENT_IDS);
     if (formData.isEnumerable) data.extensions.push(EXTENSIONS.ENUMERABLE);
     if (formData.isURIStorage) data.extensions.push(EXTENSIONS.URI_STORAGE);
+    if (formData.isUniqueStorage) data.extensions.push(EXTENSIONS.UNIQUE_STORAGE);
     return data;
 };
 
@@ -40,6 +41,7 @@ export const mapApiExtensionsToForm = (extensions) => {
     if (EXTENSIONS.AUTO_INCREMENT_IDS in map) mappedExtensions.isAutoIncrementIds = true;
     if (EXTENSIONS.ENUMERABLE in map) mappedExtensions.isEnumerable = true;
     if (EXTENSIONS.URI_STORAGE in map) mappedExtensions.isURIStorage = true;
+    if (EXTENSIONS.UNIQUE_STORAGE in map) mappedExtensions.isUniqueStorage = true;
     return mappedExtensions;
 }
 

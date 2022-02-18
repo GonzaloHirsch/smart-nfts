@@ -7,6 +7,7 @@ export const EXTENSIONS = {
     AUTO_INCREMENT_IDS: 'AutoIncrementIds',
     URI_STORAGE: 'ERC721URIStorage',
     ENUMERABLE: 'ERC721Enumerable',
+    UNIQUE_STORAGE: 'UniqueStorage',
 };
 
 export const NAVBAR_SCROLL_LIMIT = 10;
