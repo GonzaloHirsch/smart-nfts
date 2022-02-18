@@ -1,3 +1,4 @@
+import ObjectHash from 'object-hash';
 import { FileData, MultipartFormData } from 'aws-multipart-parser/dist/models';
 // Model
 import { IStoredContract } from '../models/storedContract.model';
@@ -37,6 +38,7 @@ class MintingService {
         }
 
         const fileData = formData.token as FileData;
+        const extensions = storedContract.deployment.extensions;
 
         // Parse the inputs and check if its a valid JSON
         let methodArgs: IArguments;
@@ -49,7 +51,7 @@ class MintingService {
             throw new Error('Invalid JSON input');
         }
 
-        if (storedContract.deployment.extensions.includes(EXTENSIONS.ERC721URIStorage)) {
+        if (extensions.includes(EXTENSIONS.ERC721URIStorage)) {
             // Get the metadata definition
             const metadataDef = storedContract.metadata;
 
@@ -68,6 +70,13 @@ class MintingService {
 
             // Set the uri to pass to the method call
             methodArgs.uri = pinnedMetadata.ipfsHash;
+
+            // Add the metadata hash to the args if contract includes unique storage
+            if (extensions.includes(EXTENSIONS.UniqueStorage)) {
+                methodArgs.hash = this._createMetadataHash(standardMetadata);
+                console.log(methodArgs.hash);
+            }
+
         }
 
         // Call the minter method
@@ -137,6 +146,10 @@ class MintingService {
 
         return standardMetadata;
     };
+
+    private _createMetadataHash = (metadata: IStandardMetadata): string => {
+        return ObjectHash(metadata, {algorithm: 'sha1'});
+    }
 }
 
 export default MintingService;
