@@ -7,7 +7,7 @@ import { setHttpErrorMsg } from '../../helpers/errors.helper';
 import { HTTP_ERRORS } from '../../constants/errors.constants';
 import { parse } from 'aws-multipart-parser'
 import StoredContractService from '../../services/storedContract.service';
-import InteractionService from '../../services/interaction.service';
+import MintingService from '../../services/minting.service';
 
 const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     
@@ -25,7 +25,7 @@ const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyRes
 
     const contract = await instance.getEnforcedContractById(event.pathParameters!.contractId!)
 
-    const response = await InteractionService.getInstance(contract.deployment.network).handleMintCall(contract, formData.methodId as string, formData);
+    const response = await MintingService.getInstance().handleMintCall(contract, formData.methodId as string, formData);
     
     return {
         statusCode: 201,

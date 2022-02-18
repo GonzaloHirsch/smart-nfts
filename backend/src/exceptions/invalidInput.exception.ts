@@ -27,6 +27,13 @@ class InvalidInputException extends CustomException {
         exception.name = EXCEPTION_NAMES.INVALID_INPUT_COUNT;
         return exception;
     }
+
+    static Extension() {
+        const msg = `Invalid extensions combination!`;
+        const exception = new InvalidInputException(msg);
+        exception.name = EXCEPTION_NAMES.INVALID_INPUT_COUNT;
+        return exception;
+    }
 }
 
 export default InvalidInputException;

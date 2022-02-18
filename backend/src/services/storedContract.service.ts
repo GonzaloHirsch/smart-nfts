@@ -88,6 +88,14 @@ class StoredContractService {
 
         // Find contract in the DB
         const contract = await this.getEnforcedContractById(contractId);
+
+        const extHas = (extension: EXTENSIONS) => extensions.includes(extension);
+
+        // Throw if there is an invalid extension combination
+        if ((extHas(EXTENSIONS.AutoIncrementIds) && !extHas(EXTENSIONS.Mintable))
+        || (extHas(EXTENSIONS.UniqueStorage) && !extHas(EXTENSIONS.ERC721URIStorage))) {
+            throw InvalidInputException.Extension();
+        }
       
         const extensionCopy = [...extensions];
 
