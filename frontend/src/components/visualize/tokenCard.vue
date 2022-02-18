@@ -52,20 +52,41 @@
                         <v-ethereum class="w-fit" />
                     </div>
                 </template>
-                <div v-if="props.id && props.contractAddress" class="border-2 rounded-b-lg border-gray-400 w-full px-xs py-xs flex flex-row -mt-[2px]">
-                    <span
-                        @click.stop="handleNavigation(`https://${props.network}.etherscan.io/token/${props.contractAddress}?a=${props.id}`)"
-                        class="block"
-                    >
-                        <v-etherscan-logo class="w-6 h-6 text-black/40 hover:text-brand_secondary transition duration-200 cursor-pointer" />
-                    </span>
-                    <span
-                        v-if="props.showOpensea"
-                        @click.stop="handleNavigation(`https://testnets.opensea.io/assets/${props.contractAddress}/${props.id}`)"
-                        class="block ml-xs"
-                    >
-                        <v-opensea-logo class="w-6 h-6 text-black/40 hover:text-brand_secondary transition duration-200 cursor-pointer" />
-                    </span>
+                <div
+                    v-if="props.id && props.contractAddress"
+                    class="border-2 rounded-b-lg border-gray-400 w-full px-xs py-xs flex flex-row -mt-[2px] justify-between"
+                >
+                    <div class="flex">
+                        <span
+                            @click.stop="handleNavigation(`https://${props.network}.etherscan.io/token/${props.contractAddress}?a=${props.id}`)"
+                            class="block"
+                        >
+                            <v-etherscan-logo class="w-6 h-6 text-black/40 hover:text-brand_secondary transition duration-200 cursor-pointer" />
+                        </span>
+                        <span
+                            v-if="props.showOpensea"
+                            @click.stop="handleNavigation(`https://testnets.opensea.io/assets/${props.contractAddress}/${props.id}`)"
+                            class="block ml-xs"
+                        >
+                            <v-opensea-logo class="w-6 h-6 text-black/40 hover:text-brand_secondary transition duration-200 cursor-pointer" />
+                        </span>
+                    </div>
+                    <div class="flex">
+                        <span
+                            v-if="props.hash"
+                            @click.stop="handleNavigation(`${getIpfsLink(props.hash)}`)"
+                            class="block ml-xs"
+                        >
+                            <CodeIcon class="w-6 h-6 text-black/40 hover:text-brand_secondary transition duration-200 cursor-pointer" />
+                        </span>
+                        <span
+                            v-if="tokenInfo.image"
+                            @click.stop="handleNavigation(`${getIpfsLink(tokenInfo.image)}`)"
+                            class="block ml-xs"
+                        >
+                            <LinkIcon class="w-6 h-6 text-black/40 hover:text-brand_secondary transition duration-200 cursor-pointer" />
+                        </span>
+                    </div>
                 </div>
             </div>
             <div class="text-sm flex flex-col items-center justify-between w-full col-span-full md:col-span-6">
@@ -130,6 +151,7 @@ import vOpenseaLogo from '@/assets/images/icons/opensea.svg?component';
 import vEtherscanLogo from '@/assets/images/icons/etherscan.svg?component';
 import vTokenTrait from '@/components/visualize/tokenTrait.vue';
 import vTokenBoost from '@/components/visualize/tokenBoost.vue';
+import { CodeIcon, LinkIcon } from '@heroicons/vue/solid';
 
 import { onMounted, ref, computed } from 'vue';
 
@@ -219,12 +241,6 @@ onMounted(() => {
         });
 });
 
-const getImageUri = (hash) => {
-    startedLoadingImage.value = true;
-    loadingImage.value = true;
-    return ipfs.getImageUri(ipfs.clearGateUri(hash));
-};
-
 const handleCardClick = () => {
     emit('cardClicked', props.id);
 };
@@ -232,6 +248,10 @@ const handleCardClick = () => {
 const handleNavigation = (url) => {
     window.open(url, '_blank').focus();
 };
+
+const getIpfsLink = (hash) => {
+    return ipfs.getImageUri(ipfs.clearGateUri(hash));
+}
 </script>
 
 <style scoped>
