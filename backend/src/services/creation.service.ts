@@ -1,7 +1,7 @@
 import MissingExtensionException from '../exceptions/missingExtension.exception';
 import { EXTENSIONS, EXTENSION_MAP, REQUIRE_KEYWORD } from '../constants/contract.constants';
 import { CustomContract } from '../contracts/custom.contract';
-import { flattenArray, getSortFn } from '../helpers/collection.helper';
+import { arrayFindAndRemoveValue, flattenArray, getSortFn } from '../helpers/collection.helper';
 import { getExtensionAdditions, getMergedMethodStateMutability, getMergedMethodVisibility } from '../helpers/creation.helper';
 import { hashString } from '../helpers/string.helper';
 import { IContractExtension, IContractLibrary, IContractMethod, IContractVariable } from '../interfaces/contract.interface';
@@ -26,6 +26,11 @@ class CreationService {
             extensions.unshift(EXTENSIONS.ERC721);
         }
 
+        if (extensions.includes(EXTENSIONS.UniqueStorage) 
+        && (!extensions.includes(EXTENSIONS.Mintable) || !extensions.includes(EXTENSIONS.ERC721URIStorage))) {
+            extensions = arrayFindAndRemoveValue(extensions, EXTENSIONS.UniqueStorage);
+        }
+
         // Fetch the extension classes
         const classExtensions = extensions.map((extensionName) => {
             if (!EXTENSION_MAP.has(extensionName)) {
@@ -36,6 +41,7 @@ class CreationService {
 
         extensions = getExtensionAdditions(extensions);
 
+        console.log(extensions)
         const contract = new CustomContract(
             this.genContractImports(classExtensions),
             name,

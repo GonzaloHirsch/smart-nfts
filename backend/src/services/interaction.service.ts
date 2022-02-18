@@ -133,8 +133,8 @@ class InteractionService {
         }
 
         const standardMetadata: IStandardMetadata = {
-            name: metaArgs.name,
-            description: metaArgs.description,
+            name: metaArgs.name.trim(),
+            description: metaArgs.description.trim(),
             attributes: []
         };
 
@@ -158,7 +158,7 @@ class InteractionService {
 
             // Create the standard attribute with the input received
             const standardAttribute: IStandardMetadataAttribute = {
-                trait_type: attributeDef.traitType,
+                trait_type: attributeDef.traitType.trim(),
                 value:  argumentValue
             }
 

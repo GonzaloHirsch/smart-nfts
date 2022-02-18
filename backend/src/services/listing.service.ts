@@ -31,13 +31,13 @@ class ListingService {
 
     listTokenOwners = async (
         storedContract: IStoredContract,
-        page: number | null = 1,
-        perPage: number | null = TOKENS_PER_PAGE
-    ): Promise<ITokenData[]> => {
+        page: number = 1,
+        perPage: number = TOKENS_PER_PAGE
+    ): Promise<{pageCount: number, totalTokens: number, results: ITokenData[]}> => {
         
         const deployment = storedContract.deployment;
-        const start = (perPage ?? TOKENS_PER_PAGE) * ((page ?? 1) - 1);
-        const end = (perPage ?? TOKENS_PER_PAGE) * (page ?? 1);
+        const start = perPage * (page - 1);
+        const end = perPage * page;
 
         if (deployment == null) {
             throw new ContractNotDeployedException(storedContract.id);
@@ -79,6 +79,9 @@ class ListingService {
                 return acc;
             }, {});
 
+        // Token count in all the contract
+        const totalTokens = Object.keys(finalOwnerListing).length
+
         // Get the token ids that will be shown on the specified page
         const tokenIdsOfPage = Object.keys(finalOwnerListing)
             .filter((_: string, idx: number) => start <= idx && idx < end);
@@ -100,13 +103,19 @@ class ListingService {
             })
         );
 
-        return Object.keys(tokenListing).map((tokenId: string) => {
+        const results = Object.keys(tokenListing).map((tokenId: string) => {
             return {
                 tokenId: tokenId,
                 owner: tokenListing[tokenId].owner,
                 uriHash: tokenListing[tokenId].uriHash
             }
         });
+
+        return {
+            pageCount: Math.ceil(totalTokens / perPage),
+            totalTokens: totalTokens,
+            results: results
+        }
 
         /*
         Response format, array of:

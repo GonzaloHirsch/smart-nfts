@@ -6,6 +6,7 @@ import { isEmptyPathParams, isEmptyQueryParams, typeValidations, validContractId
 import GenericException from '../../exceptions/generic.exception';
 import { HTTP_ERRORS } from '../../constants/errors.constants';
 import ListingService from '../../services/listing.service';
+import { TOKENS_PER_PAGE } from '../../constants/general.constants';
 
 const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   
@@ -22,20 +23,37 @@ const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyRes
         throw new GenericException(HTTP_ERRORS.BAD_REQUEST.PARAMS);
     }
 
-    const page = queryParams!.page == null ? null : parseInt(queryParams!.page as string);
-    const perPage = queryParams!.perPage == null ? null : parseInt(queryParams!.perPage as string);
+    const page = queryParams!.page == null ? 1 : parseInt(queryParams!.page as string);
+    const perPage = queryParams!.perPage == null ? TOKENS_PER_PAGE : parseInt(queryParams!.perPage as string);
 
     const instance = await StoredContractService.getInstance();
 
     const contract = await instance.getEnforcedContractById(event.pathParameters!.contractId!)
 
-    const listing = await ListingService
+    const {pageCount, totalTokens, results} = await ListingService
         .getInstance(contract.deployment.network)
         .listTokenOwners(contract, page, perPage);
 
+    const getUrl = (page: number, perPage: number) => `/${contract.id}?page=${page}&perPage=${perPage}`;
+
     return {
         statusCode: 200,
-        body: JSON.stringify(listing)
+        body: JSON.stringify({
+            _metadata: {
+                page: page,
+                perPage: perPage,
+                pageCount: pageCount,
+                totalCount: totalTokens,
+                Links: {
+                    self: getUrl(page, perPage),
+                    first: getUrl(1, perPage),
+                    previous: (page - 1) > 0 ? getUrl(page - 1, perPage) : null,
+                    next: (page + 1) <= pageCount ? getUrl(page + 1, perPage) : null,
+                    last: getUrl(pageCount, perPage),
+                }
+            },
+            records: results
+        })
     };
 };
 
