@@ -156,6 +156,7 @@ const hasContract = computed(() => !(contractId.value === '' || contractId.value
 const contractIsDeployed = computed(
     () =>
         hasContract.value &&
+        contract.value.deployment && 
         contract.value.deployment?.address !== null &&
         contract.value.deployment?.address !== undefined &&
         contract.value.deployment?.address !== ''
@@ -210,9 +211,11 @@ watch(
                         if (!contractIsDeployed.value) {
                             setSnackbar('Contract has not been deployed yet!', 'error', 5);
                             validContract.value = false;
+                            isLoading.value = false;
                         } else if (!contract.value.deployment.extensions.includes(EXTENSIONS.MINTABLE)) {
                             setSnackbar('Contract cannot mint tokens!', 'error', 5);
                             validContract.value = false;
+                            isLoading.value = false;
                         } else {
                             validContract.value = true;
                             // Load tokens

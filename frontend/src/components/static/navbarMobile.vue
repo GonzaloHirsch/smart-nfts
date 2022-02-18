@@ -46,6 +46,10 @@ const links = [
     {
         to: '/interact',
         text: 'nav.interact'
+    },
+    {
+        to: '/tokens',
+        text: 'nav.list'
     }
 ];
 

@@ -40,6 +40,9 @@
                     <li class="mt-xs">
                         <router-link to="/interact" class="text-lg font-medium">{{ $t('nav.interact') }}</router-link>
                     </li>
+                    <li class="mt-xs">
+                        <router-link to="/tokens" class="text-lg font-medium">{{ $t('nav.list') }}</router-link>
+                    </li>
                 </ul>
             </div>
             <div class="col-span-2 my-sm md:my-0">

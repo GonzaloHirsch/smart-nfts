@@ -91,7 +91,8 @@
         "interact": "Interact",
         "edit": "Edit",
         "features": "Features",
-        "contact": "Contact"
+        "contact": "Contact",
+        "list": "List"
     },
     "editor": {
         "contract": {
