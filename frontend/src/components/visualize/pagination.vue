@@ -121,7 +121,7 @@ const handleGoPage = (pageUrl) => {
 }
 
 .pagination--item--inactive {
-    @apply bg-gray-300 cursor-not-allowed border-gray-600;
+    @apply bg-gray-300 cursor-not-allowed border-gray-600 invisible;
 }
 
 /* ICONS */
