@@ -13,9 +13,8 @@
         </template>
     </v-floating-icon>
 
-    <v-modal :showModal="isOpen" @close="handleModalClose">
+    <v-modal v-if="enlargedToken" :showModal="isOpen" @close="handleModalClose">
         <v-token-card
-            v-if="enlargedToken"
             :owner="enlargedToken.owner"
             :hash="enlargedToken.uriHash"
             :id="enlargedToken.tokenId"
@@ -129,7 +128,9 @@ const showModal = () => {
 };
 const handleModalClose = () => {
     isOpen.value = false;
-    enlargedToken.value = undefined;
+    setTimeout(() => {
+        enlargedToken.value = undefined;
+    }, 500);
 };
 
 const isLoading = ref(false);
