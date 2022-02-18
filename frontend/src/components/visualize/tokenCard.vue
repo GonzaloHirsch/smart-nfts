@@ -66,31 +66,31 @@
                     {{ tokenInfo.description || null }}
                 </p>
                 <p v-if="!props.hash" class="text-lg text-center my-base w-full text-gray-500">This token has no metadata, click on the icons below to explore it on third-party services or view the owner.</p>
-                <div v-if="props.id && props.contractAddress" class="w-full flex flex-row justify-between px-sm mb-base">
+                <div v-if="props.id && props.contractAddress" class="w-full flex flex-row justify-center items-center mt-sm px-sm mb-base">
                     <span
                         @click.stop="handleNavigation(`https://${props.network}.etherscan.io/token/${props.contractAddress}?a=${props.id}`)"
-                        class="block"
+                        class="token-enlarged--link-icon"
                     >
                         <v-etherscan-logo class="token-enlarged--icon" />
                     </span>
                     <span
                         v-if="props.showOpensea"
                         @click.stop="handleNavigation(`https://testnets.opensea.io/assets/${props.contractAddress}/${props.id}`)"
-                        class="block ml-xs"
+                        class="token-enlarged--link-icon"
                     >
                         <v-opensea-logo class="token-enlarged--icon" />
                     </span>
                     <span
                         v-if="props.owner"
                         @click.stop="handleNavigation(`https://${props.network}.etherscan.io/address/${props.owner}`)"
-                        class="block ml-xs"
+                        class="token-enlarged--link-icon"
                     >
                         <UserCircleIcon class="token-enlarged--icon" />
                     </span>
-                    <span v-if="props.hash" @click.stop="handleNavigation(`${getIpfsLink(props.hash)}`)" class="block ml-xs">
+                    <span v-if="props.hash" @click.stop="handleNavigation(`${getIpfsLink(props.hash)}`)" class="token-enlarged--link-icon">
                         <CodeIcon class="token-enlarged--icon" />
                     </span>
-                    <span v-if="tokenInfo.image" @click.stop="handleNavigation(`${getIpfsLink(tokenInfo.image)}`)" class="block ml-xs">
+                    <span v-if="tokenInfo.image" @click.stop="handleNavigation(`${getIpfsLink(tokenInfo.image)}`)" class="token-enlarged--link-icon">
                         <LinkIcon class="token-enlarged--icon" />
                     </span>
                 </div>
@@ -222,12 +222,14 @@ onMounted(() => {
                         })
                         .catch((err) => {
                             console.error(err);
+                            loadingImage.value = false;
                             imageError.value = true;
                             emit('ipfsError');
                         });
                 }
             })
             .catch((err) => {
+                loadingContent.value = false;
                 console.error(err);
                 emit('ipfsError');
             });
@@ -291,6 +293,18 @@ const getIpfsLink = (hash) => {
 
 .token-enlarged--icon {
     @apply w-10 h-10 text-black/40 hover:text-brand_secondary transition duration-200 cursor-pointer;
+}
+
+.token-enlarged--link-icon:first-of-type {
+    @apply mr-sm;
+}
+
+.token-enlarged--link-icon:last-of-type {
+    @apply ml-sm;
+}
+
+.token-enlarged--link-icon:not(:first-of-type):not(:last-of-type) {
+    @apply mx-sm;
 }
 
 .token-enlarged--metadata-field {

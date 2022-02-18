@@ -67,7 +67,7 @@
         </form>
     </v-section>
 
-    <v-section :noPadding="true" v-if="hasContract && contractIsDeployed && !isLoading && validContract">
+    <v-section :noPadding="true" v-if="hasContract && contractIsDeployed && !isLoadingPage && !isLoading && validContract">
         <div v-if="tokens && tokens.length > 0" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 w-full gap-sm p-sm relative">
             <template v-for="token in tokens" :key="token.tokenId">
                 <v-token-card
@@ -83,13 +83,25 @@
                 />
             </template>
         </div>
+        <div v-else-if="!isLoading">
+            <div class="flex flex-row items-center justify-center p-xs md:p-md">
+                <div class="bg-brand_secondary w-full rounded-lg text-typography_primary">
+                    <h4 class="flex items-center justify-center my-base py-xl">
+                        {{$t('showcase.noTokens')}}
+                    </h4>
+                </div>
+            </div>
+        </div>
+        <div v-if="tokens && tokens.length > 0" class="flex flex-col items-center justify-center my-base">
+            <v-pagination :pagination="pagination" />
+        </div>
     </v-section>
 
-    <v-section :noPadding="true" v-if="isLoading">
+    <v-section :noPadding="true" v-if="isLoading || isLoadingPage">
         <div class="flex flex-row items-center justify-center p-xs md:p-md">
             <div class="bg-brand_secondary w-full rounded-lg text-typography_primary">
                 <h4 class="flex items-center justify-center my-base py-xl">
-                    {{ $t('showcase.prepare') }} <RefreshIcon class="h-10 w-10 animate-spin-reverse transform rotate-180" />
+                    {{ $t(isLoadingPage ? 'showcase.preparePage' : 'showcase.prepare') }} <RefreshIcon class="h-10 w-10 animate-spin-reverse transform rotate-180" />
                 </h4>
             </div>
         </div>
@@ -102,9 +114,11 @@ import vButton from '@/components/button.vue';
 import vInput from '@/components/editor/input.vue';
 import vTokenCard from '@/components/visualize/tokenCard.vue';
 import vSection from '@/components/section.vue';
-import { NAV_HEIGHT, EXTENSIONS } from '@/js/constants.js';
-import { RefreshIcon, InformationCircleIcon, ExclamationCircleIcon } from '@heroicons/vue/solid';
 import vFloatingIcon from '@/components/floatingIcon.vue';
+import vPagination from '@/components/visualize/pagination.vue';
+
+import { NAV_HEIGHT, EXTENSIONS, PAGINATION_PARAM } from '@/js/constants.js';
+import { RefreshIcon, InformationCircleIcon, ExclamationCircleIcon } from '@heroicons/vue/solid';
 
 // Router
 import { useRoute, useRouter } from 'vue-router';
@@ -134,6 +148,7 @@ const handleModalClose = () => {
 };
 
 const isLoading = ref(false);
+const isLoadingPage = ref(false);
 const validContract = ref(true);
 const contractId = ref(undefined);
 const contract = ref({});
@@ -158,11 +173,21 @@ const handleCardClicked = (token) => {
     isOpen.value = true;
 };
 
+// Get current displayed page
+const currentPage = computed(() => {
+    let _page = route.query[PAGINATION_PARAM];
+    if (_page && !isNaN(_page)) {
+        return parseInt(_page, 10);
+    }
+    return 1;
+});
+
 watch(
     () => contractId.value,
     () => {
         router.replace({
-            path: contractId.value ? `/tokens/${contractId.value}` : '/tokens'
+            path: contractId.value ? `/tokens/${contractId.value}` : '/tokens',
+            query: { ...route.query }
         });
     }
 );
@@ -192,7 +217,7 @@ watch(
                             validContract.value = true;
                             // Load tokens
                             hasIpfsError.value = false;
-                            api.getTokens(contractId.value, 1)
+                            api.getTokens(contractId.value, currentPage.value)
                                 .then((res) => {
                                     tokens.value = res.data.records;
                                     pagination.value = res.data._metadata;
@@ -219,6 +244,36 @@ watch(
         }
     },
     { immediate: true }
+);
+// Cannot be immediate, otherwise there's a race condition there
+watch(
+    () => route.query?.[PAGINATION_PARAM],
+    () => {
+        if (route.path.includes('/tokens')) {
+            if (!(route.params.id === '' || route.params.id === null || route.params.id === undefined)) {
+                // Load tokens
+                hasIpfsError.value = false;
+                isLoadingPage.value = true;
+                api.getTokens(contractId.value, currentPage.value)
+                    .then((res) => {
+                        tokens.value = res.data.records;
+                        pagination.value = res.data._metadata;
+                        isLoading.value = false;
+                        isLoadingPage.value = false;
+                    })
+                    .catch((res) => {
+                        tokens.value = [];
+                        console.error(res);
+                        isLoading.value = false;
+                        isLoadingPage.value = false;
+                    });
+            } else {
+                contractId.value = undefined;
+                contract.value = {};
+                validContract.value = true;
+            }
+        }
+    }
 );
 
 // Meta
