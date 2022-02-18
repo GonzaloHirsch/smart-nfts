@@ -3,7 +3,7 @@
         v-if="isOpen"
         v-click-outside="handleClickOutside"
         :class="[
-            'fixed bottom-0 right-0 mb-14 mr-xs shadow-2xl p-xs rounded-md icon--content',
+            'fixed bottom-0 right-0 mb-14 mr-xs shadow-2xl p-xs rounded-md icon--content z-5',
             props.format === 'error' ? 'bg-red-500' : '',
             props.format === 'primary' ? 'bg-brand_tertiary' : ''
         ]"
@@ -12,7 +12,7 @@
     </div>
     <div
         :class="[
-            'fixed text-lg bottom-0 right-0 mb-xs mr-xs h-10 w-10 rounded-full flex items-center justify-center shadow-lg cursor-pointer duration-300',
+            'fixed text-lg bottom-0 right-0 mb-xs mr-xs h-10 w-10 rounded-full flex items-center justify-center shadow-lg cursor-pointer duration-300 z-5',
             props.format === 'error' ? 'bg-red-400 hover:bg-red-600' : '',
             props.format === 'primary' ? 'bg-brand_tertiary hover:bg-brand_secondary hover:text-white' : '',
             !isOpen ? '' : ''

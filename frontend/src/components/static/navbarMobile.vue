@@ -2,7 +2,7 @@
     <header
         id="header"
         :class="[
-            'sticky top-0 left-0 px-sm md:px-base lg:px-xl py-sm bg-white w-full z-10 transition duration-300',
+            'sticky top-0 left-0 px-sm md:px-base lg:px-xl py-sm bg-white w-full z-50 transition duration-300',
             isScrolled ? 'menu--shadow' : ''
         ]"
     >

@@ -13,6 +13,19 @@
         </template>
     </v-floating-icon>
 
+    <v-modal :showModal="isOpen" @close="handleModalClose">
+        <v-token-card
+            v-if="enlargedToken"
+            :owner="enlargedToken.owner"
+            :hash="enlargedToken.uriHash"
+            :id="enlargedToken.tokenId"
+            :contractAddress="contract.deployment.address"
+            :showOpensea="contract.deployment.network === 'rinkeby'"
+            :network="contract.deployment.network"
+            :enlarged="true"
+        />
+    </v-modal>
+
     <v-section
         :noPadding="true"
         :class="[
@@ -56,16 +69,17 @@
     </v-section>
 
     <v-section :noPadding="true" v-if="hasContract && contractIsDeployed && !isLoading && validContract">
-        <div v-if="tokens && tokens.length > 0" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 w-full gap-sm p-sm">
-            <template v-for="token in tokens" :key="token.id">
+        <div v-if="tokens && tokens.length > 0" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 w-full gap-sm p-sm relative">
+            <template v-for="token in tokens" :key="token.tokenId">
                 <v-token-card
                     :owner="token.owner"
                     :hash="token.uriHash"
-                    :id="token.id"
+                    :id="token.tokenId"
                     :contractAddress="contract.deployment.address"
                     :showOpensea="contract.deployment.network === 'rinkeby'"
                     :network="contract.deployment.network"
                     @ipfsError="handleIpfsError"
+                    @cardClicked="() => handleCardClicked(token)"
                     class="col-span-1"
                 />
             </template>
@@ -106,6 +120,18 @@ const api = useApi();
 import { useNotifications } from '@/plugins/notifications';
 const { setSnackbar } = useNotifications();
 
+// Modal
+import vModal from '@/components/modal.vue';
+const isOpen = ref(false);
+const enlargedToken = ref(undefined);
+const showModal = () => {
+    isOpen.value = !isOpen.value;
+};
+const handleModalClose = () => {
+    isOpen.value = false;
+    enlargedToken.value = undefined;
+};
+
 const isLoading = ref(false);
 const validContract = ref(true);
 const contractId = ref(undefined);
@@ -123,6 +149,11 @@ const tokens = ref([]);
 const hasIpfsError = ref(false);
 const handleIpfsError = () => {
     hasIpfsError.value = true;
+};
+
+const handleCardClicked = (token) => {
+    enlargedToken.value = token;
+    isOpen.value = true;
 };
 
 watch(
@@ -161,13 +192,7 @@ watch(
                             hasIpfsError.value = false;
                             api.getTokens(contractId.value, 1)
                                 .then((res) => {
-                                    tokens.value = [];
-                                    for (const [id, info] of Object.entries(res.data?.listing)) {
-                                        tokens.value.push({
-                                            id: id,
-                                            ...info
-                                        });
-                                    }
+                                    tokens.value = res.data;
                                     isLoading.value = false;
                                 })
                                 .catch((res) => {

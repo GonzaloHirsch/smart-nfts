@@ -60,6 +60,10 @@ module.exports = {
             transform: 'rotate(360deg)'
           }
         }
+      },
+      zIndex: {
+        '5': '5',
+        '100': '100'
       }
     },
   },

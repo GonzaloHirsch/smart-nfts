@@ -28,6 +28,7 @@
 /* Smooth scrolling https://www.w3schools.com/howto/howto_css_smooth_scroll.asp */
 html {
     scroll-behavior: smooth;
+    padding: 0 !important;
 }
 
 h1 {

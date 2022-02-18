@@ -1,6 +1,6 @@
 <template>
   <TransitionRoot appear as="template" :show="showModal">
-    <Dialog :open="showModal" @close="emitClose" class="fixed inset-0 z-10 overflow-y-auto">
+    <Dialog :open="showModal" @close="emitClose" class="fixed inset-0 overflow-y-auto z-100">
       <div class="flex items-center justify-center min-h-screen">
         <DialogOverlay class="fixed inset-0 bg-black opacity-50" />
         <TransitionChild
@@ -11,7 +11,7 @@
           leave-from="opacity-100 scale-100"
           leave-to="opacity-0 scale-95"
         >
-          <div class="relative max-w-3xl mx-auto bg-white rounded-md px-md py-base">
+          <div class="relative max-w-3xl mx-auto bg-white rounded-md px-md py-base overflow-y-auto modal--inner">
             <DialogTitle><slot name="title" /></DialogTitle>
             <DialogDescription v-if="$slots.description"><slot name="description" /></DialogDescription>
             <slot />
@@ -41,3 +41,10 @@ const emitClose = () => {
   emit('close');
 };
 </script>
+
+<style scoped>
+.modal--inner {
+  max-height: 95vh;
+  max-width: 95vw;
+}
+</style>
