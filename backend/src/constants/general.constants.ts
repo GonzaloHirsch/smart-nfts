@@ -3,10 +3,10 @@
 export const NULL_ADDRESS = '0x0000000000000000000000000000000000000000';
 
 export const BASE_URI = 'https://ipfs.io/ipfs/';
-export const DEPLOY_GAS = 10000000;
-export const MINT_GAS = 3000000;
+export const DEPLOY_GAS = 5000000;
+export const MINT_GAS = 1500000;
 export const BASE_URI_GAS = 350000;
-export const TRANSFER_GAS = 400000;
+export const INTERACT_GAS = 500000;
 export const GAS_PRICE = '13'; // https://ethgasstation.info/ --> STANDARD
 
 export const rinkebyNetwork = (projectId: string | undefined) => `https://rinkeby.infura.io/v3/${projectId}`;

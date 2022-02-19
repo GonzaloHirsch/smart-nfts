@@ -31,7 +31,7 @@ export abstract class UniqueStorage {
                     type: CONTRACT_TYPES.STRING_MEMORY
                 }],
                 mandatory: false,
-                content: ['require(!_hashExists[_hash], \'Minting an exisiting hash\');\n','_hashExists[hash] = true;\n'],
+                content: ['require(!_hashExists[hash], \'Minting an exisiting hash\');\n','_hashExists[hash] = true;\n'],
                 visibility: VISIBILITY.PUBLIC,
                 options: ''
             },

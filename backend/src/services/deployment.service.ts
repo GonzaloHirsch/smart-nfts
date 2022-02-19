@@ -1,10 +1,9 @@
 import { compileContract } from '../helpers/compiler.helper';
 import { IStoredContract } from '../models/storedContract.model';
 import Web3 from 'web3';
-import { ropstenNetwork, rinkebyNetwork, DEPLOY_GAS } from '../constants/general.constants';
+import { DEPLOY_GAS } from '../constants/general.constants';
 import TransactionService from './transaction.service';
 import { SUPPORTED_NETWORKS } from '../constants/contract.constants';
-import NoNetworkException from '../exceptions/noNetwork.exception';
 
 class DeploymentService {
     private static instance: DeploymentService;
