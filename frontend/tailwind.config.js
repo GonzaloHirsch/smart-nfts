@@ -62,6 +62,7 @@ module.exports = {
         }
       },
       zIndex: {
+        '1': '1',
         '5': '5',
         '100': '100'
       }
@@ -74,3 +75,4 @@ module.exports = {
     require('@tailwindcss/aspect-ratio'),
   ],
 }
+

@@ -1,9 +1,9 @@
 <template>
-    <div class="bg-light p-sm rounded-md shadow-lg border border-gray-200">
+    <div class="bg-light pt-sm rounded-md shadow-lg border border-gray-200">
         <!-- <h2 class="text-center text-brand_secondary">{{$t('editor.contract.features')}}</h2> -->
-        <div class="divide-y divide-typography_secondary">
+        <div class="divide-y divide-typography_secondary px-sm">
             <div class="pb-sm">
-                <h5 class="form--title">{{$t('editor.contract.information')}}<QuestionMarkCircleIcon class="form--title-icon" /></h5>
+                <h5 class="form--title">{{ $t('editor.contract.information') }}<QuestionMarkCircleIcon class="form--title-icon" /></h5>
                 <div class="flex flex-col justify-between">
                     <!-- Set validations for each field and the validation events -->
                     <v-input
@@ -33,7 +33,7 @@
                 </div>
             </div>
             <div class="py-sm">
-                <h5 class="form--title">{{$t('editor.contract.creation')}} <QuestionMarkCircleIcon class="form--title-icon" /></h5>
+                <h5 class="form--title">{{ $t('editor.contract.creation') }} <QuestionMarkCircleIcon class="form--title-icon" /></h5>
                 <v-checkbox
                     id="isMintable"
                     name="isMintable"
@@ -68,7 +68,14 @@
                     v-model="contractData.isBurnable"
                     class="w-full md:w-6/12"
                 />
-                <v-checkbox id="isEnumerable" name="isEnumerable" placeholder="Enumerable" label="Enumerable" v-model="contractData.isEnumerable" class="w-full md:w-6/12" />
+                <v-checkbox
+                    id="isEnumerable"
+                    name="isEnumerable"
+                    placeholder="Enumerable"
+                    label="Enumerable"
+                    v-model="contractData.isEnumerable"
+                    class="w-full md:w-6/12"
+                />
                 <v-checkbox
                     id="isURIStorage"
                     name="isURIStorage"
@@ -89,7 +96,7 @@
                 </div>
             </div>
             <div v-if="contractData.isURIStorage" class="py-sm">
-                <h5 class="form--title">{{$t('editor.contract.metadata')}} <QuestionMarkCircleIcon class="form--title-icon" /></h5>
+                <h5 class="form--title">{{ $t('editor.contract.metadata') }} <QuestionMarkCircleIcon class="form--title-icon" /></h5>
                 <p class="text-xl text-brand_secondary">Image</p>
                 <v-checkbox
                     id="hasImage"
@@ -100,12 +107,12 @@
                     class="w-full md:w-6/12"
                 />
                 <p class="text-xl text-brand_secondary mt-sm">Fields</p>
-                <v-metadata v-model="contractData.metadata"/>
+                <v-metadata v-model="contractData.metadata" />
                 <p class="mt-xs text-body_xs"><strong>Note:</strong> By default, all tokens have name & description</p>
             </div>
         </div>
         <!-- ACTIONS -->
-        <div class="flex flex-col sm:flex-row items-center justify-center py-xs">
+        <div class="flex flex-col sm:flex-row items-center justify-center py-xs px-sm mt-sm">
             <v-button
                 v-if="props.canDeploy"
                 :format="isLoading ? 'disabled' : 'secondary'"
@@ -116,7 +123,7 @@
                 :loading="isLoading"
                 :disabled="isLoading"
                 :text="$t('editor.buttons.deploy').toUpperCase()"
-                class="mt-sm sm:ml-sm sm:mt-0"
+                class="editor--button"
                 @click="isLoading ? undefined : deployContract()"
             />
             <v-button
@@ -129,11 +136,23 @@
                 :loading="isLoading"
                 :disabled="isLoading"
                 :text="$t('editor.buttons.verify').toUpperCase()"
-                class="mt-sm sm:ml-sm sm:mt-0"
+                class="editor--button"
                 @click="isLoading ? undefined : verifyContract()"
             />
         </div>
-        <slot />
+        <div :class="['flex flex-row items-center justify-center relative border-t py-xs mt-sm border-gray-600', isExpanded ? 'border-b' : '']">
+            <slot name="expandableHead" />
+            <ChevronUpIcon
+                :class="[
+                    'w-10 h-10 text-typography_secondary transform duration-200 cursor-pointer absolute right-0 mr-xs',
+                    isExpanded ? 'rotate-0' : 'rotate-180'
+                ]"
+                @click="toggleExpanded"
+            />
+        </div>
+        <div v-if="isExpanded" class="px-sm py-xs md:py-sm flex flex-col">
+            <slot name="expandableContent" />
+        </div>
     </div>
 </template>
 
@@ -142,7 +161,7 @@ import vButton from '@/components/button.vue';
 import vInput from '@/components/editor/input.vue';
 import vMetadata from '@/components/editor/metadata/metadata.vue';
 import vCheckbox from '@/components/editor/checkbox.vue';
-import { QuestionMarkCircleIcon } from '@heroicons/vue/solid';
+import { QuestionMarkCircleIcon, ChevronUpIcon } from '@heroicons/vue/solid';
 import { ref, watch, computed } from 'vue';
 import { mapApiExtensionsToForm, mapApiMetadataToForm } from '@/js/mapper.js';
 
@@ -236,15 +255,17 @@ const handleInvalidInput = (name, error) => {
 };
 
 const validMetadata = computed(() => {
-    return contractData.value.metadata.filter(field => field.name === '' || field.name === null || field.name === undefined).length === 0;
+    return contractData.value.metadata.filter((field) => field.name === '' || field.name === null || field.name === undefined).length === 0;
 });
 watch(
     () => contractData.value,
     () => {
         // Need to verify that both are selected not to emit a fake event
-        if (((contractData.value.isAutoIncrementIds && contractData.value.isMintable) || !contractData.value.isAutoIncrementIds)
-        && ((contractData.value.isUniqueStorage && contractData.value.isURIStorage) || !contractData.value.isUniqueStorage) 
-        && validMetadata.value) {
+        if (
+            ((contractData.value.isAutoIncrementIds && contractData.value.isMintable) || !contractData.value.isAutoIncrementIds) &&
+            ((contractData.value.isUniqueStorage && contractData.value.isURIStorage) || !contractData.value.isUniqueStorage) &&
+            validMetadata.value
+        ) {
             // Don't send the update event if the name or symbol are invalid
             if (!inputsErrors.value['name'] && !inputsErrors.value['symbol']) {
                 emit('contractChanged', contractData.value);
@@ -285,6 +306,12 @@ watch(
         }
     }
 );
+
+// Expandable section
+const isExpanded = ref(false);
+const toggleExpanded = () => {
+    isExpanded.value = !isExpanded.value;
+};
 </script>
 
 <style>
@@ -294,5 +321,23 @@ watch(
 
 .form--title-icon {
     @apply h-6 w-6 text-brand_tertiary ml-xs;
+}
+
+.editor--button {
+    @apply sm:ml-sm sm:mt-0;
+}
+
+@screen sm {
+    .editor--button:not(:first-of-type):not(:last-of-type) {
+        @apply mx-sm mt-0;
+    }
+    
+    .editor--button:first-of-type {
+        @apply mr-sm mt-0;
+    }
+    
+    .editor--button:last-of-type {
+        @apply ml-sm mt-0;
+    }
 }
 </style>

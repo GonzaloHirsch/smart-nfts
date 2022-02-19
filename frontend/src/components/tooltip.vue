@@ -38,12 +38,16 @@ const props = defineProps({
     @apply relative inline-block;
 }
 
+.tooltip-container .tooltip {
+    @apply hidden;
+}
+
 .tooltip-container:hover .tooltip {
-    @apply opacity-100;
+    @apply block opacity-100 !important;
 }
 
 .tooltip {
-    @apply text-white text-center py-1 px-0 rounded w-32 -ml-16 opacity-0 duration-300 absolute bg-gray-800;
+    @apply text-white text-center p-1 rounded w-32 -ml-16 opacity-0 duration-300 absolute bg-gray-800;
     z-index: 1;
 }
 

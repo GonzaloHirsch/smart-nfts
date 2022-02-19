@@ -102,7 +102,12 @@
         "contract": {
             "empty": "Start by completing the contract name and symbol...",
             "id": "Your contract ID is:",
+            "idCopy": "Copy your contract ID",
+            "idFull": "Your contract ID is {0}",
+            "idSimple": "Contract ID",
+            "deployCopy": "Copy your deployed contract address",
             "deploy": "Your contract is deployed on address:",
+            "deploySimple": "Deployed at",
             "verified": "Your contract is verified!",
             "view": "View on Etherscan",
             "interact": "Interact with this contract",
@@ -143,7 +148,8 @@
             "button": "Send Email"
         },
         "prepare": "Preparing the editor, hang tight...",
-        "last_saved": "Last saved: {0}",
+        "lastSaved": "Last saved: {0}",
+        "lastSavedSimple": "Last saved",
         "saving": "Saving..."
     },
     "showcase": {
@@ -223,5 +229,6 @@
             "title": "500 - Internal Error",
             "subtitle": "There was an internal error, please go back home and start over."
         }
-    }
+    },
+    "date": "{0}"
 }

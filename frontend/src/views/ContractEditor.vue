@@ -14,12 +14,7 @@
         :showModal="isOpen"
         @close="handleModalClose"
     />
-    <v-remind-contract-modal
-        v-if="modalType === 'email'"
-        :contractId="route.params.id"
-        :showModal="isOpen"
-        @close="handleEmailModalClose"
-    />
+    <v-remind-contract-modal v-if="modalType === 'email'" :contractId="route.params.id" :showModal="isOpen" @close="handleEmailModalClose" />
 
     <v-section :noPadding="true" class="bg-typography_primary">
         <div v-if="!isLoadingEditor" class="flex flex-col md:flex-row">
@@ -37,48 +32,81 @@
                     :canDeploy="canDeploy"
                     :id="route.params.id"
                 >
-                    <span v-if="!isLoading && contractEdited" class="flex items-center mt-sm text-sm">{{
-                        $t('editor.last_saved', [$d(lastSaved, 'short')])
-                    }}</span>
-                    <span v-else-if="isLoading" class="flex items-center mt-sm text-sm"
-                        >{{ $t('editor.saving') }} <RefreshIcon class="h-4 w-4 animate-spin-reverse transform rotate-180"
-                    /></span>
-                    <span class="flex items-center mt-xs text-sm"
-                        >{{ $t('editor.contract.id') }}<strong class="ml-1">{{ route.params.id }}</strong
-                        ><DocumentDuplicateIcon
-                            @click="copyContractId"
-                            class="h-5 w-5 block ml-1 cursor-pointer hover:text-brand_secondary transition duration-300"
-                    /></span>
-                    <span v-if="isDeployed" class="items-center mt-xs text-sm break-all block"
-                        >{{ $t('editor.contract.deploy') }}<strong class="ml-1 break-all">{{ storedContract.deployment.address }}</strong
-                        ><DocumentDuplicateIcon
-                            @click="copyContractAddress"
-                            class="inline h-5 w-5 block ml-1 cursor-pointer hover:text-brand_secondary transition duration-300"
-                    /></span>
-                    <span v-if="isVerified" class="flex items-center mt-xs text-sm"
-                        >{{ $t('editor.contract.verified') }}<BadgeCheckIcon class="h-5 w-5 block ml-1 text-brand_secondary"
-                    /></span>
-                    <a
-                        v-if="isDeployed && storedContract.deployment.network"
-                        class="flex items-center mt-xs text-sm hover:text-brand_secondary transition-colors duration-300"
-                        :href="`https://${storedContract.deployment.network}.etherscan.io/address/${storedContract.deployment.address}`"
-                        aria-label="View on Etherscan"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        >{{ $t('editor.contract.view') }} <ExternalLinkIcon class="h-5 w-5 block ml-1"
-                    /></a>
-                    <router-link
-                        v-if="isDeployed"
-                        class="flex items-center mt-xs text-sm hover:text-brand_secondary transition-colors duration-300"
-                        :to="`/interact/${storedContract.id}`"
-                        >{{ $t('editor.contract.interact') }}<PlayIcon class="h-5 w-5 block ml-1"
-                    /></router-link>
-                    <span
-                        v-if="canSendEmail"
-                        class="flex items-center mt-xs text-sm hover:text-brand_secondary transition-colors duration-300 w-fit cursor-pointer"
-                        @click="openContractReminderModal"
-                        >{{ $t('editor.contract.reminder') }}<MailIcon class="h-5 w-5 block ml-1"
-                    /></span>
+                    <template #expandableHead>
+                        <v-tooltip v-if="contractEdited" :text="!isLoading ? $t('editor.lastSaved', [$d(lastSaved, 'short')]) : $t('editor.saving')">
+                            <span class="expandable-head--icon-wrapper">
+                                <CloudUploadIcon v-if="!isLoading" class="expandable-head--icon" />
+                                <RefreshIcon v-else class="expandable-head--icon animate-spin-reverse" />
+                            </span>
+                        </v-tooltip>
+                        <v-tooltip :text="$t('editor.contract.idCopy')">
+                            <span @click="copyContractId" class="expandable-head--icon-wrapper hover:cursor-pointer hover:text-brand_secondary">
+                                <DocumentIcon class="expandable-head--icon" />
+                            </span>
+                        </v-tooltip>
+                        <v-tooltip v-if="isDeployed" :text="$t('editor.contract.deployCopy')">
+                            <span @click="copyContractAddress" class="expandable-head--icon-wrapper hover:cursor-pointer hover:text-brand_secondary"
+                                ><GlobeAltIcon class="expandable-head--icon"
+                            /></span>
+                        </v-tooltip>
+                        <v-tooltip v-if="isVerified" :text="$t('editor.contract.verified')">
+                            <span class="expandable-head--icon-wrapper"><BadgeCheckIcon class="expandable-head--icon" /></span>
+                        </v-tooltip>
+                        <v-tooltip v-if="isDeployed" :text="$t('editor.contract.interact')">
+                            <router-link
+                                class="expandable-head--icon-wrapper hover:cursor-pointer hover:text-brand_secondary"
+                                :to="`/interact/${storedContract.id}`"
+                                ><PlayIcon class="expandable-head--icon"
+                            /></router-link>
+                        </v-tooltip>
+                    </template>
+                    <template #expandableContent>
+                        <div class="my-xs">
+                            <v-information-item
+                                :title="isLoading ? $t('editor.saving') : $t('editor.lastSavedSimple')"
+                                :description="isLoading ? undefined : $t('date', [$d(lastSaved, 'short')])"
+                            >
+                                <template #icon>
+                                    <CloudUploadIcon v-if="!isLoading" class="expandable-content--icon" />
+                                    <RefreshIcon v-else class="expandable-content--icon animate-spin-reverse" />
+                                </template>
+                            </v-information-item>
+                        </div>
+                        <div class="my-xs">
+                            <v-information-item :showActions="true" :title="$t('editor.contract.idSimple')" :description="route.params.id">
+                                <template #icon>
+                                    <DocumentIcon class="expandable-content--icon" />
+                                </template>
+                                <template #actions>
+                                    <DocumentDuplicateIcon @click="copyContractId" class="expandable-content--icon-action" />
+                                    <MailIcon v-if="canSendEmail" @click="openContractReminderModal" class="expandable-content--icon-action ml-xs" />
+                                </template>
+                            </v-information-item>
+                        </div>
+                        <div class="my-xs">
+                            <v-information-item
+                                v-if="isDeployed"
+                                :showActions="true"
+                                :title="$t('editor.contract.deploySimple')"
+                                :description="storedContract.deployment.address"
+                            >
+                                <template #icon>
+                                    <GlobeAltIcon class="expandable-content--icon" />
+                                </template>
+                                <template #actions>
+                                    <DocumentDuplicateIcon @click="copyContractAddress" class="expandable-content--icon-action" />
+                                    <a
+                                        class="expandable-content--icon-action ml-xs"
+                                        :href="`https://${storedContract.deployment.network}.etherscan.io/address/${storedContract.deployment.address}`"
+                                        aria-label="View on Etherscan"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        ><v-etherscan-logo class="expandable-content--icon-action"
+                                    /></a>
+                                </template>
+                            </v-information-item>
+                        </div>
+                    </template>
                 </v-editor>
             </div>
             <div
@@ -147,21 +175,26 @@
 import vCodeViewer from '@/components/codeViewer.vue';
 import vEditor from '@/components/editor.vue';
 import vModal from '@/components/modal.vue';
+import vSection from '@/components/section.vue';
 
 import vDeployContractModal from '@/components/modals/deployContractModal.vue';
 import vVerifyContractModal from '@/components/modals/verifyContractModal.vue';
 import vRemindContractModal from '@/components/modals/remindContractModal.vue';
+import vInformationItem from '@/components/editor/informationItem.vue';
 
-import vSection from '@/components/section.vue';
 import {
     QuestionMarkCircleIcon,
     RefreshIcon,
     DocumentDuplicateIcon,
+    DocumentIcon,
     BadgeCheckIcon,
     ExternalLinkIcon,
     PlayIcon,
-    MailIcon
+    MailIcon,
+    CloudUploadIcon,
+    GlobeAltIcon
 } from '@heroicons/vue/solid';
+import vEtherscanLogo from '@/assets/images/icons/etherscan.svg?component';
 
 import { useNotifications } from '@/plugins/notifications';
 const { setSnackbar } = useNotifications();
@@ -305,10 +338,10 @@ const canDownload = computed(() => {
     );
 });
 const canSendEmail = computed(() => {
-    if (!(storedContract.value?.reminder)) return true;
+    if (!storedContract.value?.reminder) return true;
     let diff = (new Date().getTime() - new Date(storedContract.value?.reminder?.date).getTime()) / (1000 * 60 * 60);
     return diff >= 8;
-})
+});
 const handleVerifyContract = () => {
     modalType.value = 'verify';
     isLoadingModal.value = true;
@@ -392,5 +425,53 @@ const editorHeight = computed(() => {
 
 .form--section {
     @apply py-sm;
+}
+
+.expandable-head--icon {
+    @apply w-6 h-6;
+}
+
+@screen md {
+    .expandable-head--icon {
+        @apply w-8 h-8;
+    }
+}
+
+.expandable-content--icon {
+    @apply w-6 h-6;
+}
+
+@screen md {
+    .expandable-content--icon {
+        @apply w-8 h-8;
+    }
+}
+
+.expandable-content--icon-action {
+    @apply h-6 w-6 cursor-pointer duration-300;
+}
+
+.expandable-content--icon-action-small {
+    @apply h-4 w-4 cursor-pointer duration-300;
+}
+
+.expandable-content--icon-action:hover {
+    @apply text-brand_secondary;
+}
+
+.expandable-head--icon-wrapper {
+    @apply flex items-center text-sm p-1 transition-colors duration-300;
+}
+
+.expandable-head--icon-wrapper:not(:first-of-type):not(:last-of-type) {
+    @apply mx-1;
+}
+
+.expandable-head--icon-wrapper:first-of-type {
+    @apply mr-1;
+}
+
+.expandable-head--icon-wrapper:last-of-type {
+    @apply ml-1;
 }
 </style>
