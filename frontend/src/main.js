@@ -14,6 +14,8 @@ import { notificationsPlugin } from './plugins/notifications';
 import { ipfsPlugin } from './plugins/ipfs';
 import { clickOutsidePlugin } from './plugins/clickOutside';
 
+import vTooltip from '@/components/tooltip.vue';
+
 const app = createApp(App)
 
 const router = createRouter({
@@ -65,5 +67,7 @@ app.use(notificationsPlugin);
 app.use(recaptchaPlugin);
 app.use(ipfsPlugin);
 app.use(clickOutsidePlugin);
+
+app.component('v-tooltip', vTooltip);
 
 app.mount('#app');
