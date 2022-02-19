@@ -102,7 +102,7 @@ const classes = computed(() => {
         case 'primary':
             return `input--${props.format} border-2 border-brand_secondary focus:border-brand_secondary focus:ring-brand_secondary bg-transparent`;
         case 'primary-white':
-            return `input--${props.format} border-2 border-white focus:border-white bg-white focus:ring-brand_secondary text-typography_secondary`;
+            return `input--${props.format} border border-gray-400 focus:border-white bg-white focus:ring-brand_secondary text-typography_secondary`;
     }
 });
 
