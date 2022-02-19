@@ -7,7 +7,7 @@
             <h5 class="text-lg">{{ props.title }}</h5>
             <p v-if="props.description" class="mt-1 text-sm break-all">{{ props.description }}</p>
         </div>
-        <div v-if="props.showActions" class="flex flex-row items-center justify-end px-sm">
+        <div v-if="props.showActions" class="flex flex-row items-center justify-end pl-sm">
             <slot name="actions" />
         </div>
     </div>

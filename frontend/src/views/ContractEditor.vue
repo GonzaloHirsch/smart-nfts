@@ -18,7 +18,12 @@
 
     <v-section :noPadding="true" class="bg-typography_primary">
         <div v-if="!isLoadingEditor" class="flex flex-col md:flex-row">
-            <div class="flex flex-col w-full md:w-6/12 lg:w-5/12 xl:w-4/12 py-sm pr-xs pl-sm h-fit" ref="editorContainer" :key="lastSaved">
+            <div
+                class="flex flex-col w-full md:w-6/12 lg:w-5/12 xl:w-4/12 py-sm pr-xs pl-sm h-fit"
+                id="editorContainer"
+                ref="editorContainer"
+                :key="lastSaved"
+            >
                 <v-editor
                     @contractChanged="handleContractChange"
                     @deployContract="handleDeployContract"
@@ -209,7 +214,7 @@ const route = useRoute(),
 import { useApi } from '@/plugins/api';
 const api = useApi();
 
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted, nextTick } from 'vue';
 const isOpen = ref(false);
 const modalType = ref(undefined);
 const modalError = ref(undefined);
@@ -260,11 +265,20 @@ const loadContract = (showLoading = true) => {
                 contract.value = res.data.contract;
             }
             if (showLoading) isLoadingEditor.value = false;
+            nextTick().then(() => {
+                startWatchingHeight();
+            });
         })
         .catch((err) => {
-            router.replace({
-                path: '/404'
-            });
+            if (err.response.status >= 500) {
+                router.replace({
+                    path: '/500'
+                });
+            } else {
+                router.replace({
+                    path: '/404'
+                });
+            }
         });
 };
 loadContract();
@@ -408,10 +422,14 @@ const openContractReminderModal = () => {
 };
 
 // Container heights
+const editorHeight = ref(undefined);
 const editorContainer = ref(null);
-const editorHeight = computed(() => {
-    return editorContainer.value?.clientHeight;
-});
+const startWatchingHeight = () => {
+    const resizeObserver = new ResizeObserver(() => {
+        editorHeight.value = editorContainer.value?.clientHeight;
+    });
+    resizeObserver.observe(editorContainer.value);
+};
 </script>
 
 <style>
