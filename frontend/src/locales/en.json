@@ -54,6 +54,10 @@
                 "interact": {
                     "text": "Go Interact",
                     "aria": "Interact with a deployed contract"
+                },
+                "view": {
+                    "text": "View Listing",
+                    "aria": "View contract tokens"
                 }
             }
         },

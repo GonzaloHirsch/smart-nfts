@@ -24,7 +24,7 @@
 
     <v-section id="features" class="bg-typography_primary">
         <h2 class="mb-base text-brand_secondary">{{ $t('home.tabs.title') }}</h2>
-        <v-tabs :tabs="['Create', 'Edit', 'Interact']">
+        <v-tabs :tabs="['Create', 'Edit', 'Interact', 'View']">
             <template #Create>
                 <v-feature-content>
                     <template #content>
@@ -105,6 +105,32 @@
                     </template>
                 </v-feature-content>
             </template>
+            <template #View>
+                <v-feature-content>
+                    <template #content>
+                        <p>
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque
+                            cupiditate, modi corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit. Lorem ipsum dolor sit
+                            amet, consectetur adipisicing elit. Impedit dicta dolorum perferendis cum quia ducimus? Quas cumque provident aliquam! Hic
+                            accusantium numquam assumenda sequi mollitia dicta, at iusto obcaecati doloremque.
+                        </p>
+                    </template>
+                    <template #bottom>
+                        <v-contract-id-verificator
+                            :button="{
+                                text: 'home.tabs.buttons.view.text',
+                                aria: 'home.tabs.buttons.view.aria',
+                                format: 'secondary',
+                                size: 'medium'
+                            }"
+                            @validId="handleValidViewId"
+                        />
+                    </template>
+                    <template #image>
+                        <v-view-drawing />
+                    </template>
+                </v-feature-content>
+            </template>
         </v-tabs>
     </v-section>
 
@@ -144,6 +170,7 @@ import { ref } from 'vue';
 import vCreateDrawing from '@/assets/images/Create-Drawing.svg?component';
 import vEditDrawing from '@/assets/images/Edit-Drawing.svg?component';
 import vInteractDrawing from '@/assets/images/Interact-Drawing.svg?component';
+import vViewDrawing from '@/assets/images/View-Drawing.svg?component';
 import vContractDrawing from '@/assets/images/Contract-Drawing.svg?component';
 import vIconNoWallet from '@/assets/images/icons/Icon-No-Wallet.svg?component';
 import vIconNoGas from '@/assets/images/icons/Icon-No-Gas.svg?component';
@@ -170,6 +197,10 @@ const handleValidEditId = (id) => {
 
 const handleValidInteractId = (id) => {
     router.push(`/interact/${id}`);
+};
+
+const handleValidViewId = (id) => {
+    router.push(`/tokens/${id}`);
 };
 
 const isLoading = ref(false);
