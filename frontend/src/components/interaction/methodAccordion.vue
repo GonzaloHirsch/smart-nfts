@@ -27,7 +27,7 @@
                         <!-- Receive the events for input validity -->
                         <!-- Hide the uri field, we take care of that -->
                         <v-input
-                            v-if="!props.metadata || !isUriField(input)"
+                            v-if="!props.metadata || !isRestrictiveField(input)"
                             :id="`${props.method.name}-${input.name}`"
                             :name="input.name"
                             :label="`${input.name} (${input.type})`"
@@ -256,7 +256,7 @@ const performValidations = () => {
     // Normal inputs verification
     props.method.inputs.forEach((input) => {
         // Don't evaluate uri method
-        if (!props.metadata || !isUriField(input)) {
+        if (!props.metadata || !isRestrictiveField(input)) {
             // Check if the input is empty, cannot bypass this one, in case the user directly calls the method without touching the inputs
             if (
                 !(
@@ -369,9 +369,9 @@ const handleInvalidDetailsInput = (name, error) => {
     detailsInputsErrors.value[name] = error;
 };
 
-// Determine if the field is an URI field
-const isUriField = (field) => {
-    return field.name === 'uri';
+// Determine if the field must be restricted
+const isRestrictiveField = (field) => {
+    return field.name === 'uri' || field.name === 'hash';
 };
 
 const getHelp = () => {
