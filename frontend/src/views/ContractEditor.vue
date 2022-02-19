@@ -1,26 +1,25 @@
 <template>
-    <v-modal :showModal="isOpen" @close="handleModalClose">
-        <template #title>
-            <h3 v-if="modalType === 'deploy'" class="text-brand_secondary">Deploy Contract</h3>
-            <h3 v-else-if="modalType === 'verify'" class="text-brand_secondary">Verify Contract</h3>
-        </template>
-        <template v-if="isLoadingModal">
-            <div class="w-full rounded-lg text-brand_secondary">
-                <h4 v-if="modalType === 'deploy'" class="flex items-center justify-center my-base py-xl">
-                    {{ $t('editor.deploy.loading') }} <RefreshIcon class="h-10 w-10 animate-spin-reverse transform rotate-180" />
-                </h4>
-                <h4 v-else-if="modalType === 'verify'" class="flex items-center justify-center my-base py-xl">
-                    {{ $t('editor.verify.loading') }} <RefreshIcon class="h-10 w-10 animate-spin-reverse transform rotate-180" />
-                </h4>
-            </div>
-        </template>
-        <template v-else>
-            <p v-if="modalType === 'deploy' && !modalError" class="break-words" v-html="$t('editor.deploy.message', [storedContract.deployment.address])"></p>
-            <p v-if="modalType === 'deploy' && modalError" class="break-words" v-html="$t('editor.deploy.error')"></p>
-            <p v-else-if="modalType === 'verify' && !modalError" class="break-words" v-html="$t('editor.verify.message')"></p>
-            <p v-else-if="modalType === 'verify' && modalError" class="break-words" v-html="$t('editor.verify.error')"></p>
-        </template>
-    </v-modal>
+    <v-deploy-contract-modal
+        v-if="modalType === 'deploy'"
+        :isLoadingModal="isLoadingModal"
+        :modalError="modalError"
+        :deployedAddress="storedContract?.deployment?.address"
+        :showModal="isOpen"
+        @close="handleModalClose"
+    />
+    <v-verify-contract-modal
+        v-if="modalType === 'verify'"
+        :isLoadingModal="isLoadingModal"
+        :modalError="modalError"
+        :showModal="isOpen"
+        @close="handleModalClose"
+    />
+    <v-remind-contract-modal
+        v-if="modalType === 'email'"
+        :contractId="route.params.id"
+        :showModal="isOpen"
+        @close="handleEmailModalClose"
+    />
 
     <v-section :noPadding="true" class="bg-typography_primary">
         <div v-if="!isLoadingEditor" class="flex flex-col md:flex-row">
@@ -74,12 +73,21 @@
                         :to="`/interact/${storedContract.id}`"
                         >{{ $t('editor.contract.interact') }}<PlayIcon class="h-5 w-5 block ml-1"
                     /></router-link>
+                    <span
+                        v-if="canSendEmail"
+                        class="flex items-center mt-xs text-sm hover:text-brand_secondary transition-colors duration-300 w-fit cursor-pointer"
+                        @click="openContractReminderModal"
+                        >{{ $t('editor.contract.reminder') }}<MailIcon class="h-5 w-5 block ml-1"
+                    /></span>
                 </v-editor>
             </div>
-            <div class="flex w-full md:w-6/12 lg:w-7/12 xl:w-8/12 py-sm pr-sm pl-xs" :style="`min-height: ${editorHeight}px; max-height: ${editorHeight}px`">
+            <div
+                class="flex w-full md:w-6/12 lg:w-7/12 xl:w-8/12 py-sm pr-sm pl-xs"
+                :style="`min-height: ${editorHeight}px; max-height: ${editorHeight}px`"
+            >
                 <v-code-viewer
                     @downloadContract="handleDownloadContract"
-                    :key="contract"
+                    :key="contract.digest"
                     class="flex flex-col w-full"
                     :code="contract"
                     :loading="isLoading"
@@ -139,8 +147,21 @@
 import vCodeViewer from '@/components/codeViewer.vue';
 import vEditor from '@/components/editor.vue';
 import vModal from '@/components/modal.vue';
+
+import vDeployContractModal from '@/components/modals/deployContractModal.vue';
+import vVerifyContractModal from '@/components/modals/verifyContractModal.vue';
+import vRemindContractModal from '@/components/modals/remindContractModal.vue';
+
 import vSection from '@/components/section.vue';
-import { QuestionMarkCircleIcon, RefreshIcon, DocumentDuplicateIcon, BadgeCheckIcon, ExternalLinkIcon, PlayIcon } from '@heroicons/vue/solid';
+import {
+    QuestionMarkCircleIcon,
+    RefreshIcon,
+    DocumentDuplicateIcon,
+    BadgeCheckIcon,
+    ExternalLinkIcon,
+    PlayIcon,
+    MailIcon
+} from '@heroicons/vue/solid';
 
 import { useNotifications } from '@/plugins/notifications';
 const { setSnackbar } = useNotifications();
@@ -164,9 +185,20 @@ const showModal = () => {
 };
 const handleModalClose = () => {
     isOpen.value = false;
-    modalType.value = undefined;
-    modalError.value = undefined;
-    isLoadingModal.value = false;
+    setTimeout(() => {
+        modalType.value = undefined;
+        modalError.value = undefined;
+        isLoadingModal.value = false;
+    }, 500);
+};
+const handleEmailModalClose = () => {
+    loadContract(false);
+    isOpen.value = false;
+    setTimeout(() => {
+        modalType.value = undefined;
+        modalError.value = undefined;
+        isLoadingModal.value = false;
+    }, 500);
 };
 
 import { useMeta } from 'vue-meta';
@@ -184,8 +216,8 @@ const isLoadingDownload = ref(false);
 const lastSaved = ref(undefined);
 const contractEdited = ref(false);
 
-const loadContract = () => {
-    isLoadingEditor.value = true;
+const loadContract = (showLoading = true) => {
+    if (showLoading) isLoadingEditor.value = true;
     api.getContract(route.params.id)
         .then((res) => {
             storedContract.value = res.data;
@@ -194,7 +226,7 @@ const loadContract = () => {
                 lastSaved.value = new Date();
                 contract.value = res.data.contract;
             }
-            isLoadingEditor.value = false;
+            if (showLoading) isLoadingEditor.value = false;
         })
         .catch((err) => {
             router.replace({
@@ -258,8 +290,9 @@ const canDeploy = computed(() => {
         storedContract.value.name !== '' &&
         storedContract.value.name !== undefined &&
         storedContract.value.name !== null &&
-        storedContract.value.name !== ''
-    ) && (storedContract.value.digest !== storedContract.value?.deployment?.digest);
+        storedContract.value.name !== '' &&
+        storedContract.value.digest !== storedContract.value?.deployment?.digest
+    );
 });
 const canDownload = computed(() => {
     return (
@@ -271,6 +304,11 @@ const canDownload = computed(() => {
         storedContract.value.symbol !== ''
     );
 });
+const canSendEmail = computed(() => {
+    if (!(storedContract.value?.reminder)) return true;
+    let diff = (new Date().getTime() - new Date(storedContract.value?.reminder?.date).getTime()) / (1000 * 60 * 60);
+    return diff >= 8;
+})
 const handleVerifyContract = () => {
     modalType.value = 'verify';
     isLoadingModal.value = true;
@@ -329,6 +367,11 @@ const copyContractAddress = () => {
             console.error(err);
             setSnackbar('Cannot copy contract address to clipboard!', 'error', 5);
         });
+};
+
+const openContractReminderModal = () => {
+    modalType.value = 'email';
+    showModal();
 };
 
 // Container heights
