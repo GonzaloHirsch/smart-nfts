@@ -175,7 +175,7 @@ const handleValidInteractId = (id) => {
 const isLoading = ref(false);
 const handleCreateContract = () => {
     isLoading.value = true;
-    recaptcha.challengeInput(api, (recaptchaResponse) => {
+    recaptcha.challengeInput("CREATE_CONTRACT", api, (recaptchaResponse) => {
         if (recaptchaResponse.data.success) {
             // Call API & wait for the response
             api.createContract().then((res) => {

@@ -185,3 +185,13 @@ functions:
           cors: true
     tags:
       app: pf
+  postSendContractReminder:
+    handler: src/handlers/contracts/postSendContractReminder.handler
+    timeout: 30 # More timeout because it needs more time to make the request
+    events:
+      - http:
+          path: /contracts/{contractId}/reminder
+          method: post
+          cors: true
+    tags:
+      app: pf

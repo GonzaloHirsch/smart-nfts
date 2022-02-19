@@ -1,4 +1,3 @@
-
 // BLOCKCHAIN
 export const NULL_ADDRESS = '0x0000000000000000000000000000000000000000';
 
@@ -16,3 +15,15 @@ export const ropstenEtherscan = (type: string, hash: string) => `Etherscan: http
 
 // OTHERS
 export const TOKENS_PER_PAGE = 6;
+
+export const ACCEPTED_LANGUAGES_MAP: {
+    [key: string]: boolean;
+} = {
+    en: true,
+    es: true
+};
+
+export enum ACCEPTED_LANGUAGES {
+    EN = 'en',
+    ES = 'es'
+};

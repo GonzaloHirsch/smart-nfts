@@ -35,6 +35,7 @@ export const typeValidations: { [key: string]: (input: any) => boolean } = {
     boost_percentage: (input) => (isPercentage(input)),
     name: (input: any) => (max256(input) && isName(input)),
     symbol: (input: any) => (max256(input) && isSymbol(input)),
+    email: (input: any) => (isEmail(input)),
 }
 
 /**
@@ -100,6 +101,10 @@ const isBool = (bool: string | boolean): boolean => {
 
 const max256 = (text: string): boolean => {
     return text.length <= 256;
+}
+
+const isEmail = (email: string) : boolean => {
+    return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
 }
 
 const isNumber = (num: any): boolean=> {

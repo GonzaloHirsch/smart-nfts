@@ -106,7 +106,8 @@
             "features": "Features",
             "creation": "Creation",
             "metadata": "Metadata",
-            "hasImage": "Has image?"
+            "hasImage": "Has image?",
+            "reminder": "Send a contract ID reminder"
         },
         "error": {
             "nameUsed": "Name for property already in use"
@@ -118,14 +119,24 @@
             "download": "Download"
         },
         "deploy": {
+            "title": "Deploy Contract",
             "loading": "Deploying contract, please wait...",
             "message": "Your contract is now deployed on address <strong>{0}</strong>. You will be able to see it in the blockchain (it may take a couple of minutes for the block to be mined). You can now verify it, but please wait until the contract is visible. If you edit the contract, you will have to deploy it again.",
             "error": "Error deploying contract. If the Smart NFTs' address is out of gas, please contact the owners of the site, otherwise the transaction hash will provide more information if used in Etherscan."
         },
         "verify": {
+            "title": "Verify Contract",
             "loading": "Verifying contract, please wait...",
             "message": "Your contract is now verified. Be mindful, if you edit the contract you will have to deploy it and verify it again.",
             "error": "Error verifying contract. If the contract was deployed in the last 5 minutes, please verify the transaction is mined on Etherscan and try again."
+        },
+        "email": {
+            "title": "Contract Reminder",
+            "loading": "Sending email, please wait...",
+            "message": "You should receive an email, it might take a couple of minutes. Check your spam folder just in case.",
+            "inputMessage": "We'll send a reminder email with your contract ID. Be careful which email you choose, you can send reminders every 8hs.",
+            "error": "Error sending email, you exceeded the allowed quota per contract. Quota is one email every 8 hours.",
+            "button": "Send Email"
         },
         "prepare": "Preparing the editor, hang tight...",
         "last_saved": "Last saved: {0}",
@@ -163,7 +174,8 @@
                 "number": "Not a valid number",
                 "boost_percentage": "Invalid percentage, must be between 0 and 100 (without %)",
                 "string": "Invalid text, maximum length is 256 characters.",
-                "long_string": "Invalid text, maximum length is 700 characters."
+                "long_string": "Invalid text, maximum length is 700 characters.",
+                "email": "Invalid email."
             }
         },
         "buttons": {

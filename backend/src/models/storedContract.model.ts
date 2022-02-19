@@ -1,6 +1,7 @@
 import { Document, model, models, Schema } from 'mongoose';
 import { IMetadata } from '../interfaces/metadata.interface';
 import { METHOD_TYPE, STATE_MUTABILITY, CONTRACT_TYPES, SUPPORTED_NETWORKS } from '../constants/contract.constants';
+import { ACCEPTED_LANGUAGES } from '../constants/general.constants';
 import { IAbi } from '../interfaces/abi.interface';
 import { METADATA_DISPLAY_TYPES, METADATA_TYPES } from '../constants/metadata.constants';
 
@@ -24,86 +25,103 @@ export interface IStoredContract extends Document {
         verifiedAddress: string;
         date: Date;
     };
-    metadata: IMetadata
+    reminder: {
+        date: Date;
+        language: ACCEPTED_LANGUAGES;
+    };
+    metadata: IMetadata;
 }
 
-const StoredConstractSchema = new Schema({
-    id: { type: String, unique: true, required: true },
-    name: { type: String },
-    symbol: { type: String },
-    extensions: [{ type: String }],
-    digest: { type: String },
-    deployment: {
-        address: { type: String, required: false },
-        date: {
-            type: Date,
-            required: false
-        },
-        compilerVersion: {
-            type: String,
-            required: false
-        },
-        network: {
-            type: String,
-            required: false,
-            enum: SUPPORTED_NETWORKS
-        },
+const StoredConstractSchema = new Schema(
+    {
+        id: { type: String, unique: true, required: true },
+        name: { type: String },
+        symbol: { type: String },
         extensions: [{ type: String }],
-        digest: {
-            type: String,
-            required: false
-        },
-        abi: [{
-            name: { type: String, required: false },
-            type: { type: String, required: true, enum: METHOD_TYPE },
-            stateMutability: { type: String, required: false, enum: STATE_MUTABILITY },
-            anonymous: { type: Boolean, required: false },
-            inputs: [
+        digest: { type: String },
+        deployment: {
+            address: { type: String, required: false },
+            date: {
+                type: Date,
+                required: false
+            },
+            compilerVersion: {
+                type: String,
+                required: false
+            },
+            network: {
+                type: String,
+                required: false,
+                enum: SUPPORTED_NETWORKS
+            },
+            extensions: [{ type: String }],
+            digest: {
+                type: String,
+                required: false
+            },
+            abi: [
                 {
-                name: { type: String, required: false },
-                type: { type: String, required: true },
-                indexed: { type: Boolean, required: false },
-                internalType: { type: String, enum: CONTRACT_TYPES }
-                }
-            ],
-            outputs: [
-                {
-                name: { type: String, required: false },
-                type: { type: String, required: true },
-                internalType: { type: String, enum: CONTRACT_TYPES }
+                    name: { type: String, required: false },
+                    type: { type: String, required: true, enum: METHOD_TYPE },
+                    stateMutability: { type: String, required: false, enum: STATE_MUTABILITY },
+                    anonymous: { type: Boolean, required: false },
+                    inputs: [
+                        {
+                            name: { type: String, required: false },
+                            type: { type: String, required: true },
+                            indexed: { type: Boolean, required: false },
+                            internalType: { type: String, enum: CONTRACT_TYPES }
+                        }
+                    ],
+                    outputs: [
+                        {
+                            name: { type: String, required: false },
+                            type: { type: String, required: true },
+                            internalType: { type: String, enum: CONTRACT_TYPES }
+                        }
+                    ]
                 }
             ]
-        }],
-    },
-    verification: {
-        verified: {
-            type: Boolean,
-            required: false
         },
-        verifiedAddress: {
-            type: String,
-            required: false
+        verification: {
+            verified: {
+                type: Boolean,
+                required: false
+            },
+            verifiedAddress: {
+                type: String,
+                required: false
+            },
+            date: {
+                type: Date,
+                required: false
+            }
         },
-        date: {
-            type: Date,
-            required: false
+        reminder: {
+            date: {
+                type: Date,
+                required: false
+            },
+            language: { type: String, required: false, enum: ACCEPTED_LANGUAGES }
+        },
+        metadata: {
+            hasImage: {
+                type: Boolean,
+                required: false,
+                default: true
+            },
+            attributes: [
+                {
+                    traitType: { type: String, required: true },
+                    displayType: { type: String, required: false, enum: METADATA_DISPLAY_TYPES },
+                    traitFormat: { type: String, required: true, enum: METADATA_TYPES }
+                }
+            ]
         }
     },
-    metadata: {
-        hasImage: {
-            type: Boolean,
-            required: false,
-            default: true
-        },
-        attributes: [{
-            traitType: { type: String, required: true },
-            displayType: { type: String, required: false, enum: METADATA_DISPLAY_TYPES },
-            traitFormat: { type: String, required: true, enum: METADATA_TYPES },
-        }]
+    {
+        timestamps: true
     }
-},
-{
-  timestamps: true
-});
+);
 
 export default models.StoredContract || model<IStoredContract>('StoredContract', StoredConstractSchema);
