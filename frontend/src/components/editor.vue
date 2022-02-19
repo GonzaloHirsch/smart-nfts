@@ -212,7 +212,7 @@ const isLoading = ref(false);
 const emit = defineEmits(['contractChanged', 'verifyContract', 'deployContract']);
 const deployContract = () => {
     isLoading.value = true;
-    recaptcha.challengeInput(api, (recaptchaResponse) => {
+    recaptcha.challengeInput('DEPLOY_CONTRACT', api, (recaptchaResponse) => {
         if (recaptchaResponse.data.success) {
             emit('deployContract');
             isLoading.value = false;

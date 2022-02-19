@@ -64,6 +64,10 @@ export const allValidations = {
     "boost_percentage": {
         label: "Invalid percentage, must be between 0 and 100 (without %)",
         func: (input) => (isPercentage(input)) || "interact.error.parameters.boost_percentage"
+    },
+    "email": {
+        label: "Invalid email",
+        func: (input) => (isEmail(input)) || "interact.error.parameters.email"
     }
 }
 
@@ -155,6 +159,10 @@ const isNumber = (num) => {
     if (isNaN(num)) return false;
     return true;
 };
+
+const isEmail = (email) => {
+    return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
+}
 
 export const applyValidations = (input, validations) => {
     if (!(validations)) return undefined;

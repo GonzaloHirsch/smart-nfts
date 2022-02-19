@@ -78,6 +78,13 @@ const api = {
         }).then(res => {
             return res;
         });
+    },
+    sendEmailReminder: async (contractId, email) => {
+        return instance.post(`contracts/${contractId}/reminder`, {
+            email: email
+        }).then(res => {
+            return res;
+        });
     }
 }
 
