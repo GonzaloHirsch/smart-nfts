@@ -4,12 +4,14 @@
             <div
                 :class="['pagination--item', hasFirst ? 'pagination--item--active' : 'pagination--item--inactive']"
                 @click="hasFirst ? handleGoPage(props.pagination.Links.first) : undefined"
+                :aria-label="$t('pagination.aria.first')"
             >
                 <ChevronDoubleLeftIcon class="pagination--item-icon" />
             </div>
             <div
                 :class="['pagination--item', hasPrev ? 'pagination--item--active' : 'pagination--item--inactive']"
                 @click="hasPrev ? handleGoPage(props.pagination.Links.previous) : undefined"
+                :aria-label="$t('pagination.aria.prev')"
             >
                 <ChevronLeftIcon class="pagination--item-icon" />
             </div>
@@ -19,25 +21,35 @@
             <div
                 :class="['pagination--item', hasNext ? 'pagination--item--active' : 'pagination--item--inactive']"
                 @click="hasNext ? handleGoPage(props.pagination.Links.next) : undefined"
+                :aria-label="$t('pagination.aria.next')"
             >
                 <ChevronRightIcon class="pagination--item-icon" />
             </div>
             <div
                 :class="['pagination--item', hasLast ? 'pagination--item--active' : 'pagination--item--inactive']"
                 @click="hasLast ? handleGoPage(props.pagination.Links.last) : undefined"
+                :aria-label="$t('pagination.aria.last')"
             >
                 <ChevronDoubleRightIcon class="pagination--item-icon" />
             </div>
         </div>
         <div class="mt-xs text-sm">
-            ({{$t('pagination.results', [((props.pagination.page - 1) * props.pagination.perPage) + 1, props.pagination.page * props.pagination.perPage > props.pagination.totalCount ? props.pagination.totalCount : props.pagination.page * props.pagination.perPage, props.pagination.totalCount])}})
+            ({{
+                $t('pagination.results', [
+                    (props.pagination.page - 1) * props.pagination.perPage + 1,
+                    props.pagination.page * props.pagination.perPage > props.pagination.totalCount
+                        ? props.pagination.totalCount
+                        : props.pagination.page * props.pagination.perPage,
+                    props.pagination.totalCount
+                ])
+            }})
         </div>
     </div>
 </template>
 
 <script setup>
 import { useRoute, useRouter } from 'vue-router';
-import { watch, ref, computed } from 'vue';
+import { computed } from 'vue';
 import { PAGINATION_PARAM, API_PAGINATION_PARAM_PAGE } from '@/js/constants.js';
 
 import { ChevronLeftIcon, ChevronRightIcon, ChevronDoubleLeftIcon, ChevronDoubleRightIcon } from '@heroicons/vue/solid';

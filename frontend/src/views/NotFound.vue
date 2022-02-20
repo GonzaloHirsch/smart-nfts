@@ -15,7 +15,6 @@
 <script setup>
 import vButton from '@/components/button.vue';
 import vHero from '@/components/hero.vue';
-import { useMeta } from 'vue-meta';
 
 import { useRouter } from 'vue-router';
 const router = useRouter();
@@ -26,5 +25,6 @@ const handleGoHome = () => {
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
 
+import { useMeta } from 'vue-meta';
 useMeta({ title: t('404.meta.title'), description: t('404.meta.description') });
 </script>

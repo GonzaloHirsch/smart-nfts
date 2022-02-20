@@ -29,7 +29,7 @@
                             <slot />
                             <button
                                 :class="['absolute top-0 right-0', props.darkMode ? 'text-white' : '']"
-                                aria-label="Close the modal"
+                                :aria-label="$t('modal.aria')"
                                 @click="emitClose"
                             >
                                 <XIcon class="h-5 w-5 cursor-pointer mt-xs mr-xs" />

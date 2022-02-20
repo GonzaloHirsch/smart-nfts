@@ -214,12 +214,55 @@
         "saving": "Saving..."
     },
     "showcase": {
+        "title": "Tokens",
         "prepare": "Fetching tokens, please wait...",
         "preparePage": "Fetching more tokens, please wait...",
         "noTokens": "No more tokens found",
         "buttons": {
             "edit": "Edit contract",
             "interact": "Interact with contract"
+        },
+        "floatingInfo": {
+            "error": "The IPFS has returned some errors, you won't see all the information for your tokens. Click on the OpenSea or Etherscan links to see more about each token.",
+            "info": "It might take a while for the tokens and their information to load, it depends on the IPFS service, not us."
+        },
+        "cards": {
+            "noMetadata": "This token has no metadata, click on the icons below to explore it on third-party services or view the owner.",
+            "expandCard": "View more details about this token",
+            "image": {
+                "aria": "Image for the {0} token"
+            },
+            "links": {
+                "etherscan": {
+                    "aria": "See this token on Etherscan",
+                    "tooltip": "View this token on Etherscan"
+                },
+                "opensea": {
+                    "aria": "See this token on OpenSea",
+                    "tooltip": "View this token on OpenSea"
+                },
+                "owner": {
+                    "aria": "See the token owner on Etherscan",
+                    "tooltip": "View the token owner on Etherscan"
+                },
+                "metadata": {
+                    "aria": "See the raw token metadata in Pinata",
+                    "tooltip": "View the raw token metadata in Pinata"
+                },
+                "image": {
+                    "aria": "See the raw token image in Pinata",
+                    "tooltip": "View the raw token image in Pinata"
+                }
+            },
+            "attributes": {
+                "boosts": "Boosts",
+                "stats": "Stats",
+                "properties": "Properties"
+            }
+        },
+        "meta": {
+            "title": "Token Listing",
+            "description": "View all the NFTs created with your contract. All tokens are visible in Etherscan and OpenSea also!"
         }
     },
     "interact": {
@@ -276,7 +319,8 @@
             "boost_percentage": "Percentage - 0 ... 100",
             "number": "Number - 1234567890",
             "image": "Drop the image here or <span class=\"underline\">click here</span> to select it...",
-            "long_string": "Long text - Write your long text here"
+            "long_string": "Long text - Write your long text here",
+            "contractId": "Contract ID..."
         },
         "text": {
             "boost_number": "Boost Number",
@@ -284,7 +328,8 @@
             "number": "Plain Number",
             "string": "Text",
             "long_string": "Long Text",
-            "image": "File: {0}"
+            "image": "File: {0}",
+            "contractId": "Contract ID"
         }
     },
     "status": {
@@ -325,7 +370,19 @@
         }
     },
     "pagination": {
-        "results": "Showing {0} to {1} of {2} results"
+        "results": "Showing {0} to {1} of {2} results",
+        "aria": {
+            "prev": "Go to previous page",
+            "next": "Go to next page",
+            "first": "Go to first page",
+            "last": "Go to last page"
+        }
+    },
+    "modal": {
+        "aria": "Close the modal"
+    },
+    "notifications": {
+        "aria": "Close this notification"
     },
     "404": {
         "hero": {
@@ -361,6 +418,11 @@
     },
     "date": "{0}",
     "errors": {
-        "robot": "You are not human, cannot use this!"
+        "robot": "You are not human, cannot use this!",
+        "contract": {
+            "notExist": "Contract doesn't exist!",
+            "notMint": "Contract cannot mint tokens!",
+            "notDeployed": "Contract has not been deployed yet!"
+        }
     }
 }

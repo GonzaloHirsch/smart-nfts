@@ -5,10 +5,9 @@
             <ExclamationCircleIcon v-else-if="hasIpfsError" class="h-6 w-6" />
         </template>
         <template #content>
-            <p v-if="!hasIpfsError">It might take a while for the tokens and their information to load, it depends on the IPFS service, not us.</p>
+            <p v-if="!hasIpfsError">{{ $t('showcase.floatingInfo.info') }}</p>
             <p v-else-if="hasIpfsError">
-                The IPFS has returned some errors, you won't see all the information for your tokens. Click on the OpenSea or Etherscan links to see
-                more about each token.
+                {{ $t('showcase.floatingInfo.error') }}
             </p>
         </template>
     </v-floating-icon>
@@ -37,16 +36,16 @@
                 <div class="flex flex-col sm:flex-row justify-between items-center">
                     <div class="flex">
                         <h2 class="text-left text-brand_secondary">
-                            {{ hasContract && contractIsDeployed && !isLoading && validContract ? contract.name : 'Tokens' }}
+                            {{ hasContract && contractIsDeployed && !isLoading && validContract ? contract.name : $t('showcase.title') }}
                         </h2>
                     </div>
                     <div class="flex mt-xs sm:mt-0">
                         <v-input
                             id="contract_id"
                             name="contract_id"
-                            label="Contract ID"
+                            :label="$t('inputs.text.contractId')"
                             :hideLabel="true"
-                            placeholder="Contract ID..."
+                            :placeholder="$t('inputs.placeholder.contractId')"
                             v-model="contractId"
                             :continuousInput="false"
                             format="primary-white"
@@ -126,8 +125,11 @@ import vSection from '@/components/section.vue';
 import vFloatingIcon from '@/components/floatingIcon.vue';
 import vPagination from '@/components/visualize/pagination.vue';
 
-import { NAV_HEIGHT, EXTENSIONS, PAGINATION_PARAM } from '@/js/constants.js';
+import { EXTENSIONS, PAGINATION_PARAM } from '@/js/constants.js';
 import { RefreshIcon, InformationCircleIcon, ExclamationCircleIcon, CursorClickIcon, PencilAltIcon } from '@heroicons/vue/solid';
+
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
 
 // Router
 import { useRoute, useRouter } from 'vue-router';
@@ -164,11 +166,11 @@ const contract = ref({});
 const hasContract = computed(() => !(contractId.value === '' || contractId.value === null || contractId.value === undefined));
 const contractIsDeployed = computed(
     () =>
-        hasContract.value &&
-        contract.value.deployment &&
-        contract.value.deployment?.address !== null &&
-        contract.value.deployment?.address !== undefined &&
-        contract.value.deployment?.address !== ''
+        hasContract?.value &&
+        contract.value?.deployment &&
+        contract.value?.deployment?.address !== null &&
+        contract.value?.deployment?.address !== undefined &&
+        contract.value?.deployment?.address !== ''
 );
 const tokens = ref([]);
 const pagination = ref({});
@@ -218,11 +220,11 @@ watch(
                         contract.value = res.data;
                         // Todo: verify the contract is mintable
                         if (!contractIsDeployed.value) {
-                            setSnackbar('Contract has not been deployed yet!', 'error', 5);
+                            setSnackbar(t('errors.contract.notDeployed'), 'error', 5);
                             validContract.value = false;
                             isLoading.value = false;
                         } else if (!contract.value.deployment.extensions.includes(EXTENSIONS.MINTABLE)) {
-                            setSnackbar('Contract cannot mint tokens!', 'error', 5);
+                            setSnackbar(t('errors.contract.notMint'), 'error', 5);
                             validContract.value = false;
                             isLoading.value = false;
                         } else {
@@ -245,7 +247,7 @@ watch(
                     .catch((err) => {
                         console.error(err);
                         validContract.value = false;
-                        setSnackbar("Contract doesn't exist!", 'error', 5);
+                        setSnackbar(t('errors.contract.notExist'), 'error', 5);
                         isLoading.value = false;
                     });
             } else {
@@ -288,11 +290,10 @@ watch(
     }
 );
 
-// Meta
 import { useMeta } from 'vue-meta';
 useMeta({
-    title: 'Token Showcase',
-    description: 'This is the homepage to our project'
+    title: t('showcase.meta.title'),
+    description: t('showcase.meta.description')
 });
 </script>
 

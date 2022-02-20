@@ -3,26 +3,34 @@
         v-if="!props.enlarged"
         class="flex flex-col items-center bg-white rounded-lg border border-gray-200 token--wrapper overflow-hidden hover:shadow-xl hover:-translate-y-1 duration-200 transform cursor-pointer"
         @click="handleCardClick"
+        :aria-label="$t('showcase.cards.expandCard')"
     >
         <div class="token--image-wrapper">
             <template v-if="tokenInfo.image && imageUrl">
-                <img class="token--image" :src="imageUrl" :alt="`Image for the ${tokenInfo.name} token`" />
+                <img class="token--image" :src="imageUrl" :alt="$t('showcase.cards.image.aria', [tokenInfo?.name])" />
             </template>
             <template v-else>
-                <div :class="['token--image w-full p-xl', loadingImage && hasImage ? 'bg-light animate-pulse' : imageError ? 'bg-error/25' : 'bg-light']">
+                <div
+                    :class="[
+                        'token--image w-full p-xl',
+                        loadingImage && hasImage ? 'bg-light animate-pulse' : imageError ? 'bg-error/25' : 'bg-light'
+                    ]"
+                >
                     <v-ethereum class="w-fit" />
                 </div>
             </template>
         </div>
         <div class="p-sm text-sm flex flex-col items-center w-full" v-if="props.hash">
             <div class="flex flex-row w-full items-center justify-between">
-                <span :class="['text-lg', loadingContent ? 'loading--text loading--name' : (contentError ? 'error--text loading--name' : '')]">{{ tokenInfo.name || null }}</span>
+                <span :class="['text-lg', loadingContent ? 'loading--text loading--name' : contentError ? 'error--text loading--name' : '']">{{
+                    tokenInfo.name || null
+                }}</span>
                 <span v-if="props.id" class="text-lg text-brand_secondary">#{{ props.id }}</span>
             </div>
             <p
                 :class="[
                     'text-sm mt-xs line-clamp-none sm:line-clamp-3 w-full card--description',
-                    loadingContent ? 'loading--text loading--description' : (contentError ? 'error--text loading--description' : '')
+                    loadingContent ? 'loading--text loading--description' : contentError ? 'error--text loading--description' : ''
                 ]"
             >
                 {{ tokenInfo.description || null }}
@@ -33,6 +41,7 @@
                 <span
                     @click.stop="handleNavigation(`https://${props.network}.etherscan.io/token/${props.contractAddress}?a=${props.id}`)"
                     class="block"
+                    :aria-label="$t('showcase.cards.links.etherscan.aria')"
                 >
                     <v-etherscan-logo class="w-6 h-6 text-black/40 hover:text-brand_secondary transition duration-200 cursor-pointer" />
                 </span>
@@ -40,6 +49,7 @@
                     v-if="props.showOpensea"
                     @click.stop="handleNavigation(`https://testnets.opensea.io/assets/${props.contractAddress}/${props.id}`)"
                     class="block ml-xs"
+                    :aria-label="$t('showcase.cards.links.opensea.aria')"
                 >
                     <v-opensea-logo class="w-6 h-6 text-black/40 hover:text-brand_secondary transition duration-200 cursor-pointer" />
                 </span>
@@ -51,53 +61,75 @@
         <div class="flex flex-col w-full items-center">
             <div :class="['token-enlarged--image-wrapper bg-brand_secondary relative', tokenInfo.image && imageUrl ? 'w-full' : 'w-[450px]']">
                 <template v-if="tokenInfo.image && imageUrl">
-                    <img class="token--image token-enlarged--image" :src="imageUrl" :alt="`Image for the ${tokenInfo.name} token`" />
+                    <img class="token--image token-enlarged--image" :src="imageUrl" :alt="$t('showcase.cards.image.aria', [tokenInfo?.name])" />
                 </template>
                 <template v-else>
-                    <div :class="['token--image token-enlarged--image w-full p-xl', loadingImage && hasImage ? 'bg-light animate-pulse' : imageError ? 'bg-error/25' : 'bg-light']">
+                    <div
+                        :class="[
+                            'token--image token-enlarged--image w-full p-xl',
+                            loadingImage && hasImage ? 'bg-light animate-pulse' : imageError ? 'bg-error/25' : 'bg-light'
+                        ]"
+                    >
                         <v-ethereum class="w-fit" />
                     </div>
                 </template>
                 <span v-if="props.id" class="text-h4 text-white absolute top-0 left-0 pt-sm pl-sm">#{{ props.id }}</span>
             </div>
             <div class="flex flex-col items-center w-full px-sm">
-                <span v-if="loadingContent || tokenInfo.name" :class="['text-h4 mt-sm', loadingContent ? 'loading--text loading-enlarged--name' : '']">{{ tokenInfo.name || null }}</span>
-                <p v-if="loadingContent || tokenInfo.description" :class="['text-lg text-center my-base w-full text-gray-500', loadingContent ? 'loading--text loading--description' : '']">
+                <span
+                    v-if="loadingContent || tokenInfo.name"
+                    :class="['text-h4 mt-sm', loadingContent ? 'loading--text loading-enlarged--name' : '']"
+                    >{{ tokenInfo.name || null }}</span
+                >
+                <p
+                    v-if="loadingContent || tokenInfo.description"
+                    :class="['text-lg text-center my-base w-full text-gray-500', loadingContent ? 'loading--text loading--description' : '']"
+                >
                     {{ tokenInfo.description || null }}
                 </p>
-                <p v-if="!props.hash" class="text-lg text-center my-base w-full text-gray-500">This token has no metadata, click on the icons below to explore it on third-party services or view the owner.</p>
+                <p v-if="!props.hash" class="text-lg text-center my-base w-full text-gray-500">
+                    {{ $t('showcase.cards.noMetadata') }}
+                </p>
                 <div v-if="props.id && props.contractAddress" class="w-full flex flex-row justify-center items-center mt-sm px-sm mb-base">
-                    <span
-                        @click.stop="handleNavigation(`https://${props.network}.etherscan.io/token/${props.contractAddress}?a=${props.id}`)"
-                        class="token-enlarged--link-icon"
-                    >
-                        <v-etherscan-logo class="token-enlarged--icon" />
-                    </span>
-                    <span
-                        v-if="props.showOpensea"
-                        @click.stop="handleNavigation(`https://testnets.opensea.io/assets/${props.contractAddress}/${props.id}`)"
-                        class="token-enlarged--link-icon"
-                    >
-                        <v-opensea-logo class="token-enlarged--icon" />
-                    </span>
-                    <span
-                        v-if="props.owner"
-                        @click.stop="handleNavigation(`https://${props.network}.etherscan.io/address/${props.owner}`)"
-                        class="token-enlarged--link-icon"
-                    >
-                        <UserCircleIcon class="token-enlarged--icon" />
-                    </span>
-                    <span v-if="props.hash" @click.stop="handleNavigation(`${getIpfsLink(props.hash)}`)" class="token-enlarged--link-icon">
-                        <CodeIcon class="token-enlarged--icon" />
-                    </span>
-                    <span v-if="tokenInfo.image" @click.stop="handleNavigation(`${getIpfsLink(tokenInfo.image)}`)" class="token-enlarged--link-icon">
-                        <LinkIcon class="token-enlarged--icon" />
-                    </span>
+                    <v-tooltip :text="$t('showcase.cards.links.etherscan.tooltip')" class="token-enlarged--link-icon">
+                        <span
+                            @click.stop="handleNavigation(`https://${props.network}.etherscan.io/token/${props.contractAddress}?a=${props.id}`)"
+                            :aria-label="$t('showcase.cards.links.etherscan.aria')"
+                        >
+                            <v-etherscan-logo class="token-enlarged--icon" />
+                        </span>
+                    </v-tooltip>
+                    <v-tooltip v-if="props.showOpensea" :text="$t('showcase.cards.links.opensea.tooltip')" class="token-enlarged--link-icon">
+                        <span
+                            @click.stop="handleNavigation(`https://testnets.opensea.io/assets/${props.contractAddress}/${props.id}`)"
+                            :aria-label="$t('showcase.cards.links.opensea.aria')"
+                        >
+                            <v-opensea-logo class="token-enlarged--icon" />
+                        </span>
+                    </v-tooltip>
+                    <v-tooltip v-if="props.owner" :text="$t('showcase.cards.links.owner.tooltip')" class="token-enlarged--link-icon">
+                        <span
+                            @click.stop="handleNavigation(`https://${props.network}.etherscan.io/address/${props.owner}`)"
+                            :aria-label="$t('showcase.cards.links.owner.aria')"
+                        >
+                            <UserCircleIcon class="token-enlarged--icon" />
+                        </span>
+                    </v-tooltip>
+                    <v-tooltip v-if="props.hash" :text="$t('showcase.cards.links.metadata.tooltip')" class="token-enlarged--link-icon">
+                        <span @click.stop="handleNavigation(`${getIpfsLink(props.hash)}`)" :aria-label="$t('showcase.cards.links.metadata.aria')">
+                            <CodeIcon class="token-enlarged--icon" />
+                        </span>
+                    </v-tooltip>
+                    <v-tooltip v-if="tokenInfo.image" :text="$t('showcase.cards.links.image.tooltip')" class="token-enlarged--link-icon">
+                        <span @click.stop="handleNavigation(`${getIpfsLink(tokenInfo.image)}`)" :aria-label="$t('showcase.cards.links.image.aria')">
+                            <LinkIcon class="token-enlarged--icon" />
+                        </span>
+                    </v-tooltip>
                 </div>
             </div>
 
             <div v-if="properties && properties.length > 0" class="w-full">
-                <div class="token-enlarged--metadata-field">Properties</div>
+                <div class="token-enlarged--metadata-field">{{ $t('showcase.cards.attributes.properties') }}</div>
                 <div class="flex flex-row flex-wrap items-center justify-center">
                     <template v-for="(property, index) in properties" :key="index">
                         <div class="w-6/12 md:w-4/12 p-xs">
@@ -107,7 +139,7 @@
                 </div>
             </div>
             <div v-if="stats && stats.length > 0" class="w-full">
-                <div class="token-enlarged--metadata-field">Stats</div>
+                <div class="token-enlarged--metadata-field">{{ $t('showcase.cards.attributes.stats') }}</div>
                 <div class="flex flex-row flex-wrap items-center justify-center">
                     <template v-for="(property, index) in stats" :key="index">
                         <div class="w-6/12 md:w-4/12 p-xs">
@@ -117,7 +149,7 @@
                 </div>
             </div>
             <div v-if="boosts && boosts.length > 0" class="w-full mb-sm">
-                <div class="token-enlarged--metadata-field">Boosts</div>
+                <div class="token-enlarged--metadata-field">{{ $t('showcase.cards.attributes.boosts') }}</div>
                 <div class="flex flex-row flex-wrap items-center justify-center">
                     <template v-for="(property, index) in boosts" :key="index">
                         <div class="w-6/12 md:w-4/12 p-xs">

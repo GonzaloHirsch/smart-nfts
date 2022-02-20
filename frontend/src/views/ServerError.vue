@@ -23,7 +23,6 @@
 <script setup>
 import vButton from '@/components/button.vue';
 import vHero from '@/components/hero.vue';
-import { useMeta } from 'vue-meta';
 
 import { useRouter } from 'vue-router';
 const router = useRouter();
@@ -37,5 +36,6 @@ const handleGoStatus = () => {
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
 
+import { useMeta } from 'vue-meta';
 useMeta({ title: t('500.meta.title'), description: t('500.meta.description') });
 </script>
