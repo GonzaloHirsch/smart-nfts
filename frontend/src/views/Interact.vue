@@ -3,7 +3,7 @@
         :noPadding="true"
         :class="[(!validContract || (!contractIsDeployed && hasContract)) && !isLoading ? 'bg-gradient-to-b from-error to-white' : '']"
     >
-        <form class="grid grid-cols-10 gap-sm p-sm" autocomplete="off">
+        <div class="grid grid-cols-10 gap-sm p-sm" autocomplete="off">
             <div class="col-span-full entire-panel">
                 <div class="flex flex-col sm:flex-row mb-sm sm:mb-0 justify-between items-center">
                     <div class="flex">
@@ -86,7 +86,7 @@
                     />
                 </div>
             </template>
-        </form>
+        </div>
     </v-section>
 
     <v-section v-if="validContract && contractIsDeployed && hasContract && !isLoading" :noPadding="true">

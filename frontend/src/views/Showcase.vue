@@ -32,7 +32,7 @@
             (!hasContract || !contractIsDeployed || !validContract) && !isLoading ? 'section--full' : ''
         ]"
     >
-        <form class="grid grid-cols-10 gap-sm p-sm" autocomplete="off">
+        <div class="grid grid-cols-10 gap-sm p-sm" autocomplete="off">
             <div class="col-span-full entire-panel">
                 <div class="flex flex-col sm:flex-row justify-between items-center">
                     <div class="flex">
@@ -72,7 +72,7 @@
                     </div>
                 </div>
             </div>
-        </form>
+        </div>
     </v-section>
 
     <v-section :noPadding="true" v-if="hasContract && contractIsDeployed && !isLoadingPage && !isLoading && validContract">

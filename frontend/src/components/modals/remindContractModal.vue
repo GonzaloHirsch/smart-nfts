@@ -17,7 +17,7 @@
             </template>
             <template v-else>
                 <p class="break-words mb-sm" v-html="$t('editor.email.inputMessage')"></p>
-                <form autocomplete="off">
+                <div autocomplete="off">
                     <v-input
                         id="email"
                         name="email"
@@ -44,7 +44,7 @@
                         class="mt-sm"
                         @click="!canSendEmail ? undefined : sendEmail()"
                     />
-                </form>
+                </div>
             </template>
         </template>
     </v-modal>
