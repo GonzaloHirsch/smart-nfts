@@ -9,20 +9,20 @@
                 <img class="token--image" :src="imageUrl" :alt="`Image for the ${tokenInfo.name} token`" />
             </template>
             <template v-else>
-                <div :class="['token--image w-full p-xl', loadingImage ? 'bg-light animate-pulse' : imageError ? 'bg-error/25' : 'bg-light']">
+                <div :class="['token--image w-full p-xl', loadingImage && hasImage ? 'bg-light animate-pulse' : imageError ? 'bg-error/25' : 'bg-light']">
                     <v-ethereum class="w-fit" />
                 </div>
             </template>
         </div>
         <div class="p-sm text-sm flex flex-col items-center w-full" v-if="props.hash">
             <div class="flex flex-row w-full items-center justify-between">
-                <span :class="['text-lg', loadingContent ? 'loading--text loading--name' : '']">{{ tokenInfo.name || null }}</span>
+                <span :class="['text-lg', loadingContent ? 'loading--text loading--name' : (contentError ? 'error--text loading--name' : '')]">{{ tokenInfo.name || null }}</span>
                 <span v-if="props.id" class="text-lg text-brand_secondary">#{{ props.id }}</span>
             </div>
             <p
                 :class="[
                     'text-sm mt-xs line-clamp-none sm:line-clamp-3 w-full card--description',
-                    loadingContent ? 'loading--text loading--description' : ''
+                    loadingContent ? 'loading--text loading--description' : (contentError ? 'error--text loading--description' : '')
                 ]"
             >
                 {{ tokenInfo.description || null }}
@@ -54,7 +54,7 @@
                     <img class="token--image token-enlarged--image" :src="imageUrl" :alt="`Image for the ${tokenInfo.name} token`" />
                 </template>
                 <template v-else>
-                    <div :class="['token--image token-enlarged--image w-full p-xl', loadingImage ? 'bg-light animate-pulse' : imageError ? 'bg-error/25' : 'bg-light']">
+                    <div :class="['token--image token-enlarged--image w-full p-xl', loadingImage && hasImage ? 'bg-light animate-pulse' : imageError ? 'bg-error/25' : 'bg-light']">
                         <v-ethereum class="w-fit" />
                     </div>
                 </template>
@@ -191,6 +191,7 @@ const loadingContent = ref(true);
 const imageUrl = ref(undefined);
 const loadingImage = ref(true);
 const imageError = ref(false);
+const contentError = ref(false);
 
 const properties = computed(() => (tokenInfo.value.attributes ? tokenInfo.value.attributes.filter((att) => !att.display_type) : []));
 const stats = computed(() => (tokenInfo.value.attributes ? tokenInfo.value.attributes.filter((att) => att.display_type === 'number') : []));
@@ -199,6 +200,7 @@ const boosts = computed(() =>
         ? tokenInfo.value.attributes.filter((att) => att.display_type === 'boost_number' || att.display_type === 'boost_percentage')
         : []
 );
+const hasImage = computed(() => tokenInfo.value?.image);
 
 onMounted(() => {
     if (props.hash) {
@@ -207,6 +209,7 @@ onMounted(() => {
             .then((res) => {
                 tokenInfo.value = res.data;
                 loadingContent.value = false;
+                contentError.value = false;
                 // Load image if in the object
                 if (tokenInfo.value.image) {
                     loadingImage.value = true;
@@ -230,6 +233,8 @@ onMounted(() => {
             })
             .catch((err) => {
                 loadingContent.value = false;
+                contentError.value = true;
+                imageError.value = true;
                 console.error(err);
                 emit('ipfsError');
             });
@@ -276,6 +281,10 @@ const getIpfsLink = (hash) => {
 
 .loading--description {
     height: 60px;
+}
+
+.error--text {
+    @apply bg-red-400 w-full rounded-sm;
 }
 
 .card--description {

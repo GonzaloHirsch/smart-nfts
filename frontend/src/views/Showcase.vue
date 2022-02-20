@@ -34,34 +34,42 @@
     >
         <form class="grid grid-cols-10 gap-sm p-sm" autocomplete="off">
             <div class="col-span-full entire-panel">
-                <div class="flex flex-row justify-between items-center">
+                <div class="flex flex-col sm:flex-row justify-between items-center">
                     <div class="flex">
                         <h2 class="text-left text-brand_secondary">
                             {{ hasContract && contractIsDeployed && !isLoading && validContract ? contract.name : 'Tokens' }}
                         </h2>
-                        <v-button
-                            v-if="hasContract && contractIsDeployed && !isLoading"
-                            format="primary"
-                            :href="`/create/${contractId}`"
-                            target="_self"
-                            aria="Edit this contract"
-                            :external="false"
-                            :white="false"
-                            text="EDIT CONTRACT"
-                            size="small"
-                            class="h-fit my-auto ml-sm"
-                        />
                     </div>
-                    <v-input
-                        id="contract_id"
-                        name="contract_id"
-                        label="Contract ID"
-                        :hideLabel="true"
-                        placeholder="Contract ID..."
-                        v-model="contractId"
-                        :continuousInput="false"
-                        format="primary-white"
-                    />
+                    <div class="flex mt-xs sm:mt-0">
+                        <v-input
+                            id="contract_id"
+                            name="contract_id"
+                            label="Contract ID"
+                            :hideLabel="true"
+                            placeholder="Contract ID..."
+                            v-model="contractId"
+                            :continuousInput="false"
+                            format="primary-white"
+                        />
+                        <v-tooltip v-if="hasContract && contractIsDeployed && !isLoading" :text="$t('showcase.buttons.edit')">
+                            <router-link
+                                :to="`/create/${contractId}`"
+                                :aria-label="$t('showcase.buttons.edit')"
+                                class="text-gray-500 hover:text-brand_secondary duration-200 flex items-center justify-center ml-xs"
+                            >
+                                <PencilAltIcon class="action--icon" />
+                            </router-link>
+                        </v-tooltip>
+                        <v-tooltip v-if="hasContract && contractIsDeployed && !isLoading" :text="$t('showcase.buttons.interact')">
+                            <router-link
+                                :to="`/interact/${contractId}`"
+                                :aria-label="$t('showcase.buttons.interact')"
+                                class="text-gray-500 hover:text-brand_secondary duration-200 flex items-center justify-center ml-xs"
+                            >
+                                <CursorClickIcon class="action--icon" />
+                            </router-link>
+                        </v-tooltip>
+                    </div>
                 </div>
             </div>
         </form>
@@ -87,7 +95,7 @@
             <div class="flex flex-row items-center justify-center p-xs md:p-md">
                 <div class="bg-brand_secondary w-full rounded-lg text-typography_primary">
                     <h4 class="flex items-center justify-center my-base py-xl">
-                        {{$t('showcase.noTokens')}}
+                        {{ $t('showcase.noTokens') }}
                     </h4>
                 </div>
             </div>
@@ -101,7 +109,8 @@
         <div class="flex flex-row items-center justify-center p-xs md:p-md">
             <div class="bg-brand_secondary w-full rounded-lg text-typography_primary">
                 <h4 class="flex items-center justify-center my-base py-xl">
-                    {{ $t(isLoadingPage ? 'showcase.preparePage' : 'showcase.prepare') }} <RefreshIcon class="h-10 w-10 animate-spin-reverse transform rotate-180" />
+                    {{ $t(isLoadingPage ? 'showcase.preparePage' : 'showcase.prepare') }}
+                    <RefreshIcon class="h-10 w-10 animate-spin-reverse transform rotate-180" />
                 </h4>
             </div>
         </div>
@@ -118,7 +127,7 @@ import vFloatingIcon from '@/components/floatingIcon.vue';
 import vPagination from '@/components/visualize/pagination.vue';
 
 import { NAV_HEIGHT, EXTENSIONS, PAGINATION_PARAM } from '@/js/constants.js';
-import { RefreshIcon, InformationCircleIcon, ExclamationCircleIcon } from '@heroicons/vue/solid';
+import { RefreshIcon, InformationCircleIcon, ExclamationCircleIcon, CursorClickIcon, PencilAltIcon } from '@heroicons/vue/solid';
 
 // Router
 import { useRoute, useRouter } from 'vue-router';
@@ -156,7 +165,7 @@ const hasContract = computed(() => !(contractId.value === '' || contractId.value
 const contractIsDeployed = computed(
     () =>
         hasContract.value &&
-        contract.value.deployment && 
+        contract.value.deployment &&
         contract.value.deployment?.address !== null &&
         contract.value.deployment?.address !== undefined &&
         contract.value.deployment?.address !== ''
@@ -290,5 +299,9 @@ useMeta({
 <style>
 .entire-panel {
     @apply flex flex-col bg-light rounded-md shadow-lg border border-gray-200 pt-sm pb-sm px-base h-fit;
+}
+
+.action--icon {
+    @apply w-9 h-9 my-auto;
 }
 </style>

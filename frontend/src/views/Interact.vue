@@ -5,21 +5,46 @@
     >
         <form class="grid grid-cols-10 gap-sm p-sm" autocomplete="off">
             <div class="col-span-full entire-panel">
-                <div class="flex flex-row justify-between items-center">
+                <div class="flex flex-col sm:flex-row mb-sm sm:mb-0 justify-between items-center">
                     <div class="flex">
-                        <h2 class="text-left text-brand_secondary">{{hasContract && contractIsDeployed && !isLoading && getAbiMint(contract?.deployment?.abi).length > 0 ? 'Create Token' : 'Contract'}}</h2>
-                        <v-button v-if="hasContract && contractIsDeployed && !isLoading" format="primary" :href="`/create/${contractId}`" target="_self" aria="Edit this contract" :external="false" :white="false" text="EDIT CONTRACT" size="small" class="h-fit my-auto ml-sm"/>
+                        <h2 class="text-left text-brand_secondary">
+                            {{
+                                hasContract && contractIsDeployed && !isLoading && getAbiMint(contract?.deployment?.abi).length > 0
+                                    ? 'Create Token'
+                                    : 'Contract'
+                            }}
+                        </h2>
                     </div>
-                    <v-input
-                        id="contract_id"
-                        name="contract_id"
-                        label="Contract ID"
-                        :hideLabel="true"
-                        placeholder="Contract ID..."
-                        v-model="contractId"
-                        :continuousInput="false"
-                        format="primary-white"
-                    />
+                    <div class="flex mt-xs sm:mt-0">
+                        <v-input
+                            id="contract_id"
+                            name="contract_id"
+                            label="Contract ID"
+                            :hideLabel="true"
+                            placeholder="Contract ID..."
+                            v-model="contractId"
+                            :continuousInput="false"
+                            format="primary-white"
+                        />
+                        <v-tooltip v-if="hasContract && contractIsDeployed && !isLoading" :text="$t('interact.buttons.edit')">
+                            <router-link
+                                :to="`/create/${contractId}`"
+                                :aria-label="$t('interact.buttons.edit')"
+                                class="text-gray-500 hover:text-brand_secondary duration-200 flex items-center justify-center ml-xs"
+                            >
+                                <PencilAltIcon class="action--icon" />
+                            </router-link>
+                        </v-tooltip>
+                        <v-tooltip v-if="hasContract && contractIsDeployed && !isLoading && getAbiMint(contract?.deployment?.abi).length > 0" :text="$t('interact.buttons.view')">
+                            <router-link
+                                :to="`/tokens/${contractId}`"
+                                :aria-label="$t('interact.buttons.view')"
+                                class="text-gray-500 hover:text-brand_secondary duration-200 flex items-center justify-center ml-xs"
+                            >
+                                <CollectionIcon class="action--icon" />
+                            </router-link>
+                        </v-tooltip>
+                    </div>
                 </div>
                 <v-interacter
                     :abi="getAbiMint(contract?.deployment?.abi)"
@@ -63,8 +88,16 @@
 
     <v-section v-if="validContract && contractIsDeployed && hasContract && !isLoading" :noPadding="true">
         <div class="mx-xl mt-xl bg-brand_primary rounded-md p-base">
-        <h4>Important Note</h4>
-        <p class="inline">If you execute the <pre class="code"><code>transferOwnership</code></pre> or <pre class="code"><code>renounceOwnership</code></pre> methods, you will be effectively removing us (the Smart NFTs team) as the owners of your contract, which means that multiple methods will stop working. Be mindful of this action, otherwise you will have to transfer ownership back to us or deploy a new version of this contract.</p>
+            <h4>Important Note</h4>
+            <div class="inline">
+                If you execute the
+                <pre class="code"><code>transferOwnership</code></pre>
+                or
+                <pre class="code"><code>renounceOwnership</code></pre>
+                methods, you will be effectively removing us (the Smart NFTs team) as the owners of your contract, which means that multiple methods
+                will stop working. Be mindful of this action, otherwise you will have to transfer ownership back to us or deploy a new version of this
+                contract.
+            </div>
         </div>
     </v-section>
 
@@ -225,6 +258,7 @@ import vInput from '@/components/editor/input.vue';
 import vInteracter from '@/components/interacter.vue';
 import vSection from '@/components/section.vue';
 import { NAV_HEIGHT, EXTENSIONS } from '@/js/constants.js';
+import { PencilAltIcon, CollectionIcon } from '@heroicons/vue/solid';
 
 // Router
 import { useRoute, useRouter } from 'vue-router';
@@ -244,9 +278,17 @@ const validContract = ref(true);
 const contractId = ref(undefined);
 const contract = ref({});
 const hasContract = computed(() => !(contractId.value === '' || contractId.value === null || contractId.value === undefined));
-const contractIsDeployed = computed(() => hasContract.value && contract.value.deployment?.address !== null && contract.value.deployment?.address !== undefined && contract.value.deployment?.address !== '');
+const contractIsDeployed = computed(
+    () =>
+        hasContract.value &&
+        contract.value.deployment?.address !== null &&
+        contract.value.deployment?.address !== undefined &&
+        contract.value.deployment?.address !== ''
+);
 const hasMetadata = computed(() =>
-    contract.value && contract.value.deployment && contract.value.deployment.extensions ? contract.value.deployment.extensions.includes(EXTENSIONS.URI_STORAGE) : undefined
+    contract.value && contract.value.deployment && contract.value.deployment.extensions
+        ? contract.value.deployment.extensions.includes(EXTENSIONS.URI_STORAGE)
+        : undefined
 );
 
 watch(
@@ -328,5 +370,9 @@ useMeta({
 <style>
 .entire-panel {
     @apply flex flex-col bg-light rounded-md shadow-lg border border-gray-200 pt-sm pb-sm px-base h-fit;
+}
+
+.action--icon {
+    @apply w-9 h-9 my-auto;
 }
 </style>

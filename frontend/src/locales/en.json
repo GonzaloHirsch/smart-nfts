@@ -156,7 +156,11 @@
     "showcase": {
         "prepare": "Fetching tokens, please wait...",
         "preparePage": "Fetching more tokens, please wait...",
-        "noTokens": "No more tokens found"
+        "noTokens": "No more tokens found",
+        "buttons": {
+            "edit": "Edit contract",
+            "interact": "Interact with contract"
+        }
     },
     "interact": {
         "loading": {
@@ -195,7 +199,9 @@
             }
         },
         "buttons": {
-            "execute": "Execute"
+            "execute": "Execute",
+            "edit": "Edit contract",
+            "view": "View collection"
         }
     },
     "inputs": {
