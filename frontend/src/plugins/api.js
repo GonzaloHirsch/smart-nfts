@@ -10,14 +10,9 @@ const PLUGIN_KEY = 'pf-api';
 let instance;
 
 const api = {
-    healthCheck: () => {
-        instance.get('contracts/example').then(res => {
-            console.log(res);
-        })
-    },
-    loadContract: async () => {
-        return instance.get('contracts/example').then(res => {
-            return res.data.contract;
+    getStatus: async () => {
+        return instance.get('').then(res => {
+            return res
         })
     },
     editContract: async (contractId, data) => {

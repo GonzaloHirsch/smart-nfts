@@ -31,6 +31,7 @@ export const HTTP_ERRORS = {
         BLOCKCHAIN: { status: 500, internalStatus: 'BLOCKCHAIN_ERROR', message: 'Blockchain error.' },
         COMPILATION: { status: 500, internalStatus: 'COMPILATION_ERROR', message: 'Compilation error.' },
         EXTENSION: { status: 500, internalStatus: 'EXTENSION_ERROR', message: 'Extension error.' },
+        ETHERSCAN: { status: 500, internalStatus: 'ETHERSCAN_ERROR', message: 'Etherscan error.' },
     },
 };
 
@@ -50,7 +51,8 @@ export const EXCEPTION_NAMES = {
     INVALID_INPUT_COUNT: 'InvalidInputCountException',
     INVALID_INPUT_MISSING: 'InvalidInputMissingException',
     INVALID_INPUT_TYPE: 'InvalidInputTypeException',
-    INVALID_INPUT_EXTENSIONS: 'InvalidInputExtensionsException',    
+    INVALID_INPUT_EXTENSIONS: 'InvalidInputExtensionsException',
+    ETHERSCAN_ERROR: 'EtherscanErrorException',
 }
 
 export const EXCEPTION_TO_HTTP_MAP = new Map<string, IHttpErrorData>([
@@ -70,4 +72,5 @@ export const EXCEPTION_TO_HTTP_MAP = new Map<string, IHttpErrorData>([
     [EXCEPTION_NAMES.INVALID_INPUT_MISSING, HTTP_ERRORS.BAD_REQUEST.INVALID_INPUT_MISSING],
     [EXCEPTION_NAMES.INVALID_INPUT_TYPE, HTTP_ERRORS.BAD_REQUEST.INVALID_INPUT_TYPE],
     [EXCEPTION_NAMES.INVALID_INPUT_EXTENSIONS, HTTP_ERRORS.BAD_REQUEST.INVALID_INPUT_EXTENSIONS],
+    [EXCEPTION_NAMES.ETHERSCAN_ERROR, HTTP_ERRORS.SERVER.ETHERSCAN],
 ]);

@@ -5,34 +5,38 @@ import VerificationDuplicationException from '../exceptions/verificationDuplicat
 import axios, { AxiosRequestConfig } from 'axios';
 import VerificationFailedException from '../exceptions/verificationFailed.exception';
 import qs from 'qs';
+import EtherscanErrorException from '../exceptions/etherscanError.exception';
+import { weiToEth } from '../helpers/units.helper';
 
-class VerificationService {
-    private static instance: VerificationService;
+class EtherscanService {
+    private static instance: EtherscanService;
 
     static getInstance = () => {
-        if (!VerificationService.instance) {
-            VerificationService.instance = new VerificationService();
+        if (!EtherscanService.instance) {
+            EtherscanService.instance = new EtherscanService();
         }
-        return VerificationService.instance;
+        return EtherscanService.instance;
     };
 
-    public verifyDeployedContract = async (
-        contract: IStoredContract, 
-        contractString: string
-    ) : Promise<IStoredContract> => {
-
+    public verifyDeployedContract = async (contract: IStoredContract, contractString: string): Promise<IStoredContract> => {
         if (!contract.deployment || !contract.deployment.address) {
             throw new ContractNotDeployedException(contract.id);
         } else if (contract.deployment && contract.verification.verified && contract.verification.verifiedAddress === contract.deployment.address) {
             throw new VerificationDuplicationException(contract.deployment.address);
         }
-        
+
         // Flatten contract
         const flatContract = await flattenContract(contractString);
-       
+
         // Verify the contract
-        const verificationId = await this._verifyContract(flatContract, contract.name, contract.deployment.address, contract.deployment.compilerVersion, contract.deployment.network);
-       
+        const verificationId = await this._verifyContract(
+            flatContract,
+            contract.name,
+            contract.deployment.address,
+            contract.deployment.compilerVersion,
+            contract.deployment.network
+        );
+
         // Updating the state
         contract.verification.verified = true;
         contract.verification.verifiedAddress = contract.deployment.address;
@@ -41,12 +45,35 @@ class VerificationService {
         await contract.save();
 
         return contract;
-    }
+    };
+
+    public getAddressBalance = async (address : string) : Promise<Number> => {
+        const data = qs.stringify({
+            apikey: `${process.env.ETHERSCAN_API_KEY}`,
+            module: 'account',
+            action: 'balance',
+            address: address,
+            tag: 'latest'
+        });
+        // Config for request as per what Postman says
+        const config = this._getApiConfig(undefined);
+        config.data = data;
+        return await axios(config)
+            .then((res) => {
+                if (res.data.status === '0') throw new EtherscanErrorException();
+                return weiToEth(res.data.result);
+            })
+            .catch((err) => {
+                console.log(err);
+                throw new EtherscanErrorException();
+            });
+        return 0;
+    } 
 
     private _verifyContract = async (
-        contract: string, 
-        contractName: string, 
-        contractAddress: string, 
+        contract: string,
+        contractName: string,
+        contractAddress: string,
         compilerVersion: string,
         contractNetwork: string
     ) => {
@@ -63,15 +90,8 @@ class VerificationService {
             sourceCode: contract
         });
         // Config for request as per what Postman says
-        const url = process.env.ETHERSCAN_API_URL?.replace('NETWORK', contractNetwork);
-        const config: AxiosRequestConfig = {
-            method: 'post',
-            url: `${url}api`,
-            headers: { 
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            data : data
-        };
+        const config = this._getApiConfig(contractNetwork);
+        config.data = data;
         // Making the request itself
         return await axios(config)
             .then((res) => {
@@ -80,11 +100,23 @@ class VerificationService {
                 return res.data.result;
             })
             .catch((err) => {
-                console.log(err)
+                console.log(err);
                 throw new VerificationFailedException(contractAddress);
             });
-      };
-      
+    };
+
+    private _getApiConfig = (network: string | undefined): AxiosRequestConfig => {
+        let _network = network || process.env.DEPLOYMENT_NETWORK;
+        const url = process.env.ETHERSCAN_API_URL?.replace('NETWORK', _network!);
+        const config: AxiosRequestConfig = {
+            method: 'post',
+            url: `${url}api`,
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        };
+        return config;
+    };
 }
 
-export default VerificationService;
+export default EtherscanService;

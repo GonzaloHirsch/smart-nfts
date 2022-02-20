@@ -4,6 +4,7 @@ import Home from './views/Home.vue';
 const ContractEditor = () => import('./views/ContractEditor.vue');
 const Interact = () => import('./views/Interact.vue');
 const Showcase = () => import('./views/Showcase.vue');
+const Status = () => import('./views/Status.vue');
 const NotFound = () => import('./views/NotFound.vue');
 const ServerError = () => import('./views/ServerError.vue');
 
@@ -24,6 +25,11 @@ export const routes = [
     path: '/tokens/:id?',
     meta: { title: 'Tokens' },
     component: Showcase,
+  },
+  {
+    path: '/status',
+    meta: { title: 'Status' },
+    component: Status,
   },
   {
     path: '/500',

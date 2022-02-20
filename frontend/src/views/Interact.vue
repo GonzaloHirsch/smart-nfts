@@ -35,7 +35,10 @@
                                 <PencilAltIcon class="action--icon" />
                             </router-link>
                         </v-tooltip>
-                        <v-tooltip v-if="hasContract && contractIsDeployed && !isLoading && getAbiMint(contract?.deployment?.abi).length > 0" :text="$t('interact.buttons.view')">
+                        <v-tooltip
+                            v-if="hasContract && contractIsDeployed && !isLoading && getAbiMint(contract?.deployment?.abi).length > 0"
+                            :text="$t('interact.buttons.view')"
+                        >
                             <router-link
                                 :to="`/tokens/${contractId}`"
                                 :aria-label="$t('interact.buttons.view')"

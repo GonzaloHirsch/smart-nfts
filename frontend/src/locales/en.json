@@ -287,6 +287,43 @@
             "image": "File: {0}"
         }
     },
+    "status": {
+        "title": "Service Status",
+        "status": {
+            "ok": "Backend Ok",
+            "notOk": "Backend Error",
+            "timestamp": "Verification time: <strong>{0}</strong>",
+            "wallet": {
+                "address": {
+                    "title": "Wallet",
+                    "copy": "Copy wallet address",
+                    "copyOk": "Copied wallet address to clipboard!"
+                },
+                "balance": {
+                    "title": "Balance",
+                    "lowBalance": "The wallet is running out of Ethereum"
+                },
+                "network": {
+                    "using": "Network used:"
+                }
+            }
+        },
+        "contribute": {
+            "addBalance": "Does it show a low balance, or do you want to add Ethereum to the Smart NFTs wallet? Go to the <a class=\"underline hover:text-brand_secondary duration-300\" href=\"https://faucet.rinkeby.io/\" target=\"_blank\" rel=\"noopener noreferer\">Faucet</a> and follow the instructions to request Ethereum for the Smart NFTs account.",
+            "disclaimer": "Do not transfer real Ethereum into the displayed wallet address; it can result in irrecoverable losses. We are not responsible for any transactions you make."
+        },
+        "errors": {
+            "copyAddress": "Couldn't copy wallet address to clipboard.",
+            "noWallet": "No Wallet",
+            "noBalance": "No Balance",
+            "noNetwork": "No Network"
+        },
+        "prepare": "Checking backend status, please wait...",
+        "meta": {
+            "title": "Status",
+            "description": "View the status of our services, wallet address, and account balance."
+        }
+    },
     "pagination": {
         "results": "Showing {0} to {1} of {2} results"
     },

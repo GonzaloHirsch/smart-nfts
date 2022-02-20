@@ -40,7 +40,7 @@ const i18n = createI18n({
       },
       long: {
         year: 'numeric', month: 'short', day: 'numeric',
-        weekday: 'short', hour: 'numeric', minute: 'numeric'
+        weekday: 'short', hour: 'numeric', minute: 'numeric', second: 'numeric'
       }
     },
     'es': {
@@ -49,7 +49,7 @@ const i18n = createI18n({
       },
       long: {
         year: 'numeric', month: 'short', day: 'numeric',
-        weekday: 'short', hour: 'numeric', minute: 'numeric'
+        weekday: 'short', hour: 'numeric', minute: 'numeric', second: 'numeric'
       }
     }
   }

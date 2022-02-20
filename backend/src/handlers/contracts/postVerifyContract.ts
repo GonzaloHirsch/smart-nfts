@@ -5,7 +5,7 @@ import { corsHandler } from '../../middleware/corsHandler.middleware';
 import { isEmptyPathParams, validContractId } from '../../helpers/validations.helper';
 import { HTTP_ERRORS } from '../../constants/errors.constants';
 import GenericException from '../../exceptions/generic.exception';
-import VerificationService from '../../services/verification.service';
+import EtherscanService from '../../services/etherscan.service';
 
 const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     if (isEmptyPathParams(event.pathParameters) || !validContractId(event.pathParameters!.contractId)) 
@@ -19,7 +19,7 @@ const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyRes
         throw new GenericException(HTTP_ERRORS.BAD_REQUEST.CONTRACT);
     }
     
-    contract = await VerificationService.getInstance().verifyDeployedContract(contract, contractString);
+    contract = await EtherscanService.getInstance().verifyDeployedContract(contract, contractString);
 
     return {
         statusCode: 200,
