@@ -10,8 +10,8 @@
                         <h2 class="text-left text-brand_secondary">
                             {{
                                 hasContract && contractIsDeployed && !isLoading && getAbiMint(contract?.deployment?.abi).length > 0
-                                    ? 'Create Token'
-                                    : 'Contract'
+                                    ? $t('interact.title.create')
+                                    : $t('interact.title.default')
                             }}
                         </h2>
                     </div>
@@ -19,9 +19,9 @@
                         <v-input
                             id="contract_id"
                             name="contract_id"
-                            label="Contract ID"
+                            :label="$t('inputs.text.contractId')"
                             :hideLabel="true"
-                            placeholder="Contract ID..."
+                            :placeholder="$t('inputs.placeholder.contractId')"
                             v-model="contractId"
                             :continuousInput="false"
                             format="primary-white"
@@ -62,7 +62,7 @@
             </div>
             <template v-if="hasContract && contractIsDeployed && !isLoading && validContract">
                 <div class="col-span-full lg:col-span-5 entire-panel">
-                    <h3 class="text-left text-brand_secondary">Read</h3>
+                    <h3 class="text-left text-brand_secondary">{{ $t('interact.read.title') }}</h3>
                     <v-interacter
                         :abi="getAbiRead(contract?.deployment?.abi)"
                         :metadata="undefined"
@@ -74,7 +74,7 @@
                     />
                 </div>
                 <div class="col-span-full lg:col-span-5 entire-panel">
-                    <h3 class="text-left text-brand_secondary">Write</h3>
+                    <h3 class="text-left text-brand_secondary">{{ $t('interact.write.title') }}</h3>
                     <v-interacter
                         :abi="getAbiWrite(contract?.deployment?.abi)"
                         :metadata="undefined"
@@ -91,21 +91,13 @@
 
     <v-section v-if="validContract && contractIsDeployed && hasContract && !isLoading" :noPadding="true">
         <div class="mx-xl mt-xl bg-brand_primary rounded-md p-base">
-            <h4>Important Note</h4>
-            <div class="inline">
-                If you execute the
-                <pre class="code"><code>transferOwnership</code></pre>
-                or
-                <pre class="code"><code>renounceOwnership</code></pre>
-                methods, you will be effectively removing us (the Smart NFTs team) as the owners of your contract, which means that multiple methods
-                will stop working. Be mindful of this action, otherwise you will have to transfer ownership back to us or deploy a new version of this
-                contract.
-            </div>
+            <h4>{{ $t('interact.importantNote.title') }}</h4>
+            <div class="inline" v-html="$t('interact.importantNote.content')"></div>
         </div>
     </v-section>
 
     <v-section class="bg-typography_primary">
-        <h2 class="text-center text-brand_secondary mb-base">Methods Explained</h2>
+        <h2 class="text-center text-brand_secondary mb-base">{{ $t('interact.content.title') }}</h2>
         <v-anchored-title type="h3" text="balanceOf" anchor="balanceOf" class="mt-sm" />
         <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
@@ -260,7 +252,7 @@ import vButton from '@/components/button.vue';
 import vInput from '@/components/editor/input.vue';
 import vInteracter from '@/components/interacter.vue';
 import vSection from '@/components/section.vue';
-import { NAV_HEIGHT, EXTENSIONS } from '@/js/constants.js';
+import { EXTENSIONS } from '@/js/constants.js';
 import { PencilAltIcon, CollectionIcon } from '@heroicons/vue/solid';
 
 // Router
@@ -275,6 +267,9 @@ const api = useApi();
 
 import { useNotifications } from '@/plugins/notifications';
 const { setSnackbar } = useNotifications();
+
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
 
 const isLoading = ref(false);
 const validContract = ref(true);
@@ -320,12 +315,12 @@ watch(
                         validContract.value = true;
                         isLoading.value = false;
                         if (!contractIsDeployed.value) {
-                            setSnackbar('Contract has not been deployed yet!', 'error', 5);
+                            setSnackbar(t('errors.contract.notDeployed'), 'error', 5);
                         }
                     })
                     .catch((err) => {
                         validContract.value = false;
-                        setSnackbar("Contract doesn't exist!", 'error', 5);
+                        setSnackbar(t('errors.contract.notExist'), 'error', 5);
                         isLoading.value = false;
                     });
             } else {
@@ -365,8 +360,8 @@ const getAbiMint = (abi) => {
 // Meta
 import { useMeta } from 'vue-meta';
 useMeta({
-    title: 'Contract Interaction',
-    description: 'This is the homepage to our project'
+    title: t('interact.meta.title'),
+    description: t('interact.meta.description')
 });
 </script>
 

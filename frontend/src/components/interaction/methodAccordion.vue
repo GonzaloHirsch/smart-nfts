@@ -9,11 +9,11 @@
                 :format="isLoading ? 'disabled' : 'primary'"
                 :disabled="isLoading"
                 :loading="isLoading"
-                :aria="`Execute the ${props.method.name} method`"
+                :aria="$t('interact.buttons.execute.aria', [props.method.name])"
                 :external="false"
                 :white="false"
                 size="xsmall"
-                :text="$t('interact.buttons.execute').toUpperCase()"
+                :text="$t('interact.buttons.execute.text').toUpperCase()"
                 @click.native.stop="callMethod"
                 class="ml-auto mr-sm"
             />
@@ -45,14 +45,14 @@
                 </div>
                 <template v-if="props.metadata">
                     <div class="mt-sm pt-sm">
-                        <p class="text-h5">Metadata</p>
-                        <p v-if="props.metadata.hasImage" class="text-lg mt-sm">Image</p>
+                        <p class="text-h5">{{ $t('interact.methods.fields.metadata.title') }}</p>
+                        <p v-if="props.metadata.hasImage" class="text-lg mt-sm">{{ $t('interact.methods.fields.metadata.image') }}</p>
                         <v-file-input v-if="props.metadata.hasImage" v-model="metadataImage"></v-file-input>
-                        <p class="text-lg mt-sm">Details</p>
+                        <p class="text-lg mt-sm">{{ $t('interact.methods.fields.metadata.details') }}</p>
                         <v-input
                             :id="`${props.method.name}-metadata-name`"
                             :name="`metadata-name`"
-                            :label="`Name (string)`"
+                            :label="$t('inputs.text.name')"
                             :hideLabel="false"
                             :placeholder="$t(getParameterPlaceholder('string'))"
                             v-model="detailInputs.name"
@@ -66,7 +66,7 @@
                         <v-textarea
                             :id="`${props.method.name}-metadata-description`"
                             :name="`metadata-description`"
-                            :label="`Description (long string)`"
+                            :label="$t('inputs.text.description')"
                             :hideLabel="false"
                             :placeholder="$t(getParameterPlaceholder('long string'))"
                             v-model="detailInputs.description"
@@ -77,7 +77,7 @@
                             format="primary-white"
                             class="mb-xs"
                         />
-                        <p v-if="props.metadata.attributes.length > 0" class="text-lg mt-sm">Fields</p>
+                        <p v-if="props.metadata.attributes.length > 0" class="text-lg mt-sm">{{ $t('interact.methods.fields.title') }}</p>
                         <template v-for="(metadataField, index) in props.metadata.attributes" :key="index">
                             <v-input
                                 :id="`${props.method.name}-metadata-${metadataField.traitType}`"
@@ -106,7 +106,7 @@
                 </template>
                 <template v-if="callResult || callError">
                     <div :class="[props.metadata || (props.method.inputs && props.method.inputs.length > 0) ? 'mt-sm pt-sm' : '']">
-                        <p class="text-h5">Result</p>
+                        <p class="text-h5">{{ $t('interact.methods.result.title') }}</p>
                         <div class="w-full bg-white rounded-md p-xs mt-sm pr-base relative break-words">
                             <p v-if="callResult" class="text-typography_secondary">
                                 {{ callResultType === 'transactionHash' ? $t('interact.success.transactionDisplay', [callResult]) : callResult }}
@@ -117,6 +117,7 @@
                             <div
                                 class="absolute right-0 top-0 text-black hover:text-brand_secondary hover:bg-brand_primary cursor-pointer p-1 border border-black rounded-md transition duration-200"
                                 @click="() => copyResponse(callResult || callError)"
+                                :aria-label="$t('interact.methods.result.copyResponse')"
                             >
                                 <DocumentDuplicateIcon class="h-5 w-5" />
                             </div>

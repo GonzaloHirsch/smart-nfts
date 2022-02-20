@@ -7,67 +7,67 @@ const uint256Limit = (2 ** 256) - 1;
 export const allValidations = {
     "required": {
         label: "Field is required",
-        func: (input) => (input !== null && input !== undefined && input !== '' && input.trim() !== '') || "interact.error.parameters.required"
+        func: (input) => (input !== null && input !== undefined && input !== '' && input.trim() !== '') || "inputs.errors.required"
     },
     "address": {
         label: "Field must be valid address",
-        func: (input) => (isAddress(input)) || "interact.error.parameters.address"
+        func: (input) => (isAddress(input)) || "inputs.errors.address"
     },
     "uint256": {
         label: "Field must be valid uint256 number",
-        func: (input) => (isUint256(input)) || "interact.error.parameters.uint256"
+        func: (input) => (isUint256(input)) || "inputs.errors.uint256"
     },
     "bytes4": {
         label: "Field must be valid bytes4",
-        func: (input) => (isBytes4(input)) || "interact.error.parameters.bytes4"
+        func: (input) => (isBytes4(input)) || "inputs.errors.bytes4"
     },
     "bytes": {
         label: "Field must be valid bytes",
-        func: (input) => (isBytes(input)) || "interact.error.parameters.bytes"
+        func: (input) => (isBytes(input)) || "inputs.errors.bytes"
     },
     "bool": {
         label: "Field must be valid boolean (true | false)",
-        func: (input) => (isBool(input)) || "interact.error.parameters.bool"
+        func: (input) => (isBool(input)) || "inputs.errors.bool"
     },
     "name": {
         label: "Name can only contain alphanumeric characters and underscore (_)",
-        func: (input) => (isName(input)) || "interact.error.parameters.name"
+        func: (input) => (isName(input)) || "inputs.errors.name"
     },
     "symbol": {
         label: "Symbol can only contain alphanumeric characters and underscore (_)",
-        func: (input) => (isSymbol(input)) || "interact.error.parameters.symbol"
+        func: (input) => (isSymbol(input)) || "inputs.errors.symbol"
     },
     "metadataName": {
         label: "This field can only contain letters, numbers, and _",
-        func: (input) => (isMetadata(input)) || "interact.error.parameters.metadataName"
+        func: (input) => (isMetadata(input)) || "inputs.errors.metadataName"
     },
     "max20": {
         label: "This field can have a maximum of 20 characters",
-        func: (input) => (maxLength(20, input)) || "interact.error.parameters.max20"
+        func: (input) => (maxLength(20, input)) || "inputs.errors.max20"
     },
     "string": {
         label: "Invalid text, maximum length is 256 characters.",
-        func: (input) => (maxLength(256, input)) || "interact.error.parameters.string"
+        func: (input) => (maxLength(256, input)) || "inputs.errors.string"
     },
     "long_string": {
         label: "Invalid text, maximum length is 700 characters.",
-        func: (input) => (maxLength(700, input)) || "interact.error.parameters.long_string"
+        func: (input) => (maxLength(700, input)) || "inputs.errors.long_string"
     },
     "number": {
         label: "Not a valid number",
-        func: (input) => (isNumber(input)) || "interact.error.parameters.number"
+        func: (input) => (isNumber(input)) || "inputs.errors.number"
     },
     "boost_number": {
         label: "Not a valid number",
-        func: (input) => (isNumber(input)) || "interact.error.parameters.number"
+        func: (input) => (isNumber(input)) || "inputs.errors.number"
     },
     "boost_percentage": {
         label: "Invalid percentage, must be between 0 and 100 (without %)",
-        func: (input) => (isPercentage(input)) || "interact.error.parameters.boost_percentage"
+        func: (input) => (isPercentage(input)) || "inputs.errors.boost_percentage"
     },
     "email": {
         label: "Invalid email",
-        func: (input) => (isEmail(input)) || "interact.error.parameters.email"
+        func: (input) => (isEmail(input)) || "inputs.errors.email"
     }
 }
 

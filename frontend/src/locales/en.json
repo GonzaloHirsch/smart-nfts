@@ -266,6 +266,40 @@
         }
     },
     "interact": {
+        "title": {
+            "default": "Contract",
+            "create": "Create Token"
+        },
+        "read": {
+            "title": "Read"
+        },
+        "write": {
+            "title": "Write"
+        },
+        "importantNote": {
+            "title": "Important Note",
+            "content": "If you execute the <pre class=\"code\"><code>transferOwnership</code></pre> or <pre class=\"code\"><code>renounceOwnership</code></pre> methods, you will be effectively removing us (the Smart NFTs team) as the owners of your contract, which means that multiple methods will stop working. Be mindful of this action, otherwise you will have to transfer ownership back to us or deploy a new version of this contract."
+        },
+        "methods": {
+            "fields": {
+                "title": "Fields",
+                "metadata": {
+                    "title": "Metadata",
+                    "image": "Image",
+                    "details": "Details"
+                }
+            },
+            "result": {
+                "title": "Result",
+                "copyResponse": "Copy this response"
+            }
+        },
+        "content": {
+            "title": "Methods Explained",
+            "methodName": {
+                "content": ""
+            }
+        },
         "loading": {
             "contract": "Loading contract...",
             "method": "",
@@ -282,29 +316,19 @@
             "missingParameter": "Missing parameter {0} ({1})",
             "missingImage": "Missing token image",
             "transactionDisplay": "Blockchain Error - Transaction Hash: {0}",
-            "transactionMoreInfo": "For more information click on the following transaction hash.",
-            "parameters": {
-                "address": "Invalid address",
-                "required": "Parameter is required",
-                "bytes": "Invalid bytes",
-                "bytes4": "Invalid bytes4",
-                "uint256": "Invalid uint256 number",
-                "bool": "Invalid boolean (true | false)",
-                "name": "Name can only contain alphanumeric characters and underscore (_)",
-                "symbol": "Symbol can only contain alphanumeric characters and underscore (_)",
-                "metadataName": "This field can only contain letters, numbers, and _",
-                "max20": "This field can have a maximum of 20 characters",
-                "number": "Not a valid number",
-                "boost_percentage": "Invalid percentage, must be between 0 and 100 (without %)",
-                "string": "Invalid text, maximum length is 256 characters.",
-                "long_string": "Invalid text, maximum length is 700 characters.",
-                "email": "Invalid email."
-            }
+            "transactionMoreInfo": "For more information click on the following transaction hash."
         },
         "buttons": {
-            "execute": "Execute",
+            "execute": {
+                "text": "Execute",
+                "aria": "Execute the {0} method"
+            },
             "edit": "Edit contract",
             "view": "View collection"
+        },
+        "meta": {
+            "title": "Contract Interaction",
+            "description": "Interact with your contract! Create tokens, get contract information, and operate with the smart contract; no wallet or gas required!"
         }
     },
     "inputs": {
@@ -329,7 +353,31 @@
             "string": "Text",
             "long_string": "Long Text",
             "image": "File: {0}",
-            "contractId": "Contract ID"
+            "contractId": "Contract ID",
+            "name": "Name (text)",
+            "description": "Description (long text)"
+        },
+        "errors": {
+            "address": "Invalid address",
+            "required": "Parameter is required",
+            "bytes": "Invalid bytes",
+            "bytes4": "Invalid bytes4",
+            "uint256": "Invalid uint256 number",
+            "bool": "Invalid boolean (true | false)",
+            "name": "Name can only contain alphanumeric characters and underscore (_)",
+            "symbol": "Symbol can only contain alphanumeric characters and underscore (_)",
+            "metadataName": "This field can only contain letters, numbers, and _",
+            "max20": "This field can have a maximum of 20 characters",
+            "number": "Not a valid number",
+            "boost_percentage": "Invalid percentage, must be between 0 and 100 (without %)",
+            "string": "Invalid text, maximum length is 256 characters.",
+            "long_string": "Invalid text, maximum length is 700 characters.",
+            "email": "Invalid email.",
+            "image": {
+                "tooBig": "File too large, limit is 5MB",
+                "countLimit": "Cannot upload more than 1 file",
+                "type": "Invalid file type, only images are supported"
+            }
         }
     },
     "status": {
