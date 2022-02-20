@@ -32,14 +32,37 @@
     "footer": {
         "made": "Made by",
         "madeContinued": "This is a capstone project for our Software Engineering degrees.",
-        "location": "Proyecto Final - Instituto Tecnológico de Buenos Aires (ITBA)",
+        "location": {
+            "text": "Proyecto Final - Instituto Tecnológico de Buenos Aires (ITBA)",
+            "aria": "Learn more about the Instituto Tecnológico de Buenos Aires (ITBA)"
+        },
+        "contact": {
+            "aria": "Contact {0} via email"
+        },
+        "learnMore": {
+            "aria": "Learn more about {0}"
+        },
+        "app": {
+            "aria": "Go to the homepage"
+        },
         "copyright": "© 2022 Smart NFTs"
     },
     "home": {
         "title": "Home",
+        "meta": {
+            "title": "Homepage",
+            "description": "Smart NFTs, create, deploy, test, and view a custom NFT contract in just minutes. Mint tokens and share them with the world. A project by Florencia Petrikovich and Gonzalo Hirsch."
+        },
         "hero": {
             "title": "Create, deploy, and interact with your <strong>custom NFT</strong> contract in just <strong>minutes</strong>",
-            "buttonStart": "Start Now"
+            "button": {
+                "text": "Start Now",
+                "aria": "Start using Smart NFTs now"
+            },
+            "learnMore": {
+                "text": "Learn More",
+                "aria": "Learn more about the possible options you have"
+            }
         },
         "tabs": {
             "title": "Our Features",
@@ -59,6 +82,20 @@
                 "view": {
                     "text": "View Listing",
                     "aria": "View contract tokens"
+                }
+            },
+            "content": {
+                "create": {
+                    "text": "Use our simple editor to create your custom NFT in just minutes (or seconds!). Choose among multiple extensions and define your metadata according to industry standards in just a few clicks. Create, deploy, and verify your very own custom ERC-721 contract. Don't know how to code? Don't worry! For starters, this is a zero-code environment, and everything has explanations. Don't want to deploy it with us? We've got you covered! Create the contract and download it for further customizations or deployment."
+                },
+                "edit": {
+                    "text": "Already have an existing contract you created with us? Use this option to continue working on it (or make some edits if you are coming back). Our contracts can be edited, deployed, and verified an infinite number of times. We even let you edit metadata fields after deploying the contract."
+                },
+                "interact": {
+                    "text": "After deploying your contract, you can interact with it (and no wallet is required!). The only thing you need is your contract ID. Mint tokens, read contract data and write to the contract itself. Everything is in real-time and without costly gas fees. All minted NFTs are visible in Etherscan and OpenSea, and if you make yourself the owner of the contract, you can even create your OpenSea collections with us."
+                },
+                "view": {
+                    "text": "After minting NFTs, the only thing left to do is view them. Access all your minted tokens with our 'View' page; just put the contract ID, and we'll load all your NFTs (along with their metadata). All created NFTs will show the metadata you defined for them, along with the image and options to view the raw data (in case you are a developer or just curious). We'll provide the links to OpenSea and Etherscan so that you share your tokens with the world (and your friends)."
                 }
             }
         },
@@ -92,12 +129,35 @@
         }
     },
     "nav": {
-        "create": "Create",
-        "interact": "Interact",
-        "edit": "Edit",
+        "create": {
+            "text": "Create",
+            "aria": "Go to create"
+        },
+        "interact": {
+            "text": "Interact",
+            "aria": "Go to interact"
+        },
+        "edit": {
+            "text": "Edit",
+            "aria": "Go to edit"
+        },
+        "list": {
+            "text": "View",
+            "aria": "Go to view"
+        },
+        "app": {
+            "aria": "Go to the homepage"
+        },
+        "menu": {
+            "open": {
+                "aria": "Open the menu"
+            },
+            "close": {
+                "aria": "Close the menu"
+            }
+        },
         "features": "Features",
-        "contact": "Contact",
-        "list": "View"
+        "contact": "Contact"
     },
     "editor": {
         "contract": {
@@ -242,5 +302,8 @@
             "subtitle": "There was an internal error, please go back home and start over."
         }
     },
-    "date": "{0}"
+    "date": "{0}",
+    "errors": {
+        "robot": "You are not human, cannot use this!"
+    }
 }

@@ -1,55 +1,67 @@
 <template>
-    <header
-        id="header"
-        :class="[
-            'sticky top-0 left-0 px-sm md:px-base lg:px-xl py-sm bg-white w-full z-50 transition duration-300',
-            isScrolled ? 'menu--shadow' : ''
-        ]"
-    >
+    <v-header>
         <nav class="flex flex-row justify-start items-center" aria-labelledby="header">
-            <MenuIcon @click="toggleMenu" class="w-7 h-7 text-brand_secondary mr-sm cursor-pointer" />
-            <router-link to="/" @click="handleTopScroll(false)" class="text-h5 text-brand_secondary font-semibold">{{ $t('app.name') }}</router-link>
-        </nav>
-        <div :class="['menu--visible', menuVisible ? 'translate-x-0' : 'menu--translated']">
-            <router-link to="/" @click="handleTopScroll(true)" class="text-h5 text-brand_secondary font-semibold text-center">{{
+            <MenuIcon @click="toggleMenu" class="w-7 h-7 text-brand_secondary mr-sm cursor-pointer" :aria-label="$t('nav.menu.open.aria')" />
+            <router-link to="/" @click="handleTopScroll(false)" class="text-h5 text-brand_secondary font-semibold" :aria-label="$t('nav.app.aria')">{{
                 $t('app.name')
             }}</router-link>
-            <XIcon @click="toggleMenu" class="w-8 h-8 text-brand_secondary mr-xs mt-xs cursor-pointer absolute top-0 right-0" />
+        </nav>
+        <div :class="['menu--visible', menuVisible ? 'translate-x-0' : 'menu--translated']">
+            <router-link
+                to="/"
+                @click="handleTopScroll(true)"
+                class="text-h5 text-brand_secondary font-semibold text-center"
+                :aria-label="$t('nav.app.aria')"
+                >{{ $t('app.name') }}</router-link
+            >
+            <XIcon
+                @click="toggleMenu"
+                class="w-8 h-8 text-brand_secondary mr-xs mt-xs cursor-pointer absolute top-0 right-0"
+                :aria-label="$t('nav.menu.close.aria')"
+            />
             <ul class="flex flex-col list-none items-center justify-center mt-base">
                 <template v-for="(link, index) in links" :key="index">
                     <li class="my-sm">
-                        <router-link :to="link.to" @click="toggleMenu" class="text-body_xl text-brand_secondary font-medium">{{
-                            $t(link.text)
-                        }}</router-link>
+                        <router-link
+                            :to="link.to"
+                            @click="toggleMenu"
+                            class="text-body_xl text-brand_secondary font-medium"
+                            :aria-label="$t(link.aria)"
+                            >{{ $t(link.text) }}</router-link
+                        >
                     </li>
                 </template>
             </ul>
         </div>
         <div :class="['menu--overlay', menuVisible ? 'translate-x-0' : 'menu--translated']" @click="toggleMenu" />
-    </header>
+    </v-header>
 </template>
 
 <script setup>
 import { MenuIcon, XIcon } from '@heroicons/vue/solid';
-import { ref, onUnmounted } from 'vue';
-import { NAVBAR_SCROLL_LIMIT } from '@/js/constants.js';
+import { ref } from 'vue';
+import vHeader from '@/components/static/header.vue';
 
 const links = [
     {
         to: '/#Create',
-        text: 'nav.create'
+        text: 'nav.create.text',
+        aria: 'nav.create.aria'
     },
     {
         to: '/#Edit',
-        text: 'nav.edit'
+        text: 'nav.edit.text',
+        aria: 'nav.edit.aria'
     },
     {
         to: '/interact',
-        text: 'nav.interact'
+        text: 'nav.interact.text',
+        aria: 'nav.interact.aria'
     },
     {
         to: '/tokens',
-        text: 'nav.list'
+        text: 'nav.list.text',
+        aria: 'nav.list.aria'
     }
 ];
 
@@ -68,21 +80,11 @@ const toggleMenu = () => {
         document.body.classList.remove('body-noscroll');
     }
 };
-
-const isScrolled = ref(false);
-
-const handleScroll = () => {
-    isScrolled.value = window.scrollY > NAVBAR_SCROLL_LIMIT;
-};
-window.addEventListener('scroll', handleScroll);
-onUnmounted(() => {
-    window.removeEventListener('scroll', handleScroll);
-});
 </script>
 
 <style scoped>
 .menu--overlay {
-    @apply bg-gray-600/25 absolute top-0 left-0 transform transition duration-300 z-10;
+    @apply bg-gray-600/25 absolute top-0 left-0 transform z-10;
     width: 100vw;
     height: 100vh;
 }

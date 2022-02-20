@@ -5,19 +5,19 @@
                 format="secondary"
                 href="/#features"
                 target="_self"
-                aria="Go to create page"
+                :aria="$t('home.hero.button.aria')"
                 :external="false"
                 :white="false"
-                :text="$t('home.hero.buttonStart')"
+                :text="$t('home.hero.button.text')"
                 size="large"
             />
         </template>
         <a
             href="#benefits"
             class="text-brand_secondary text-center mt-sm text-lg md:text-body_xl flex flex-row items-center justify-center"
-            aria-label="Learn more about the possible options you have"
+            :aria-label="$t('home.hero.learnMore.aria')"
         >
-            Learn More
+            {{ $t('home.hero.learnMore.text') }}
             <QuestionMarkCircleIcon class="h-8 w-8 ml-xs" />
         </a>
     </v-left-hero>
@@ -29,10 +29,7 @@
                 <v-feature-content>
                     <template #content>
                         <p>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque
-                            cupiditate, modi corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit. Lorem ipsum dolor sit
-                            amet, consectetur adipisicing elit. Impedit dicta dolorum perferendis cum quia ducimus? Quas cumque provident aliquam! Hic
-                            accusantium numquam assumenda sequi mollitia dicta, at iusto obcaecati doloremque.
+                            {{$t('home.tabs.content.create.text')}}
                         </p>
                     </template>
                     <template #bottom>
@@ -57,10 +54,7 @@
                 <v-feature-content>
                     <template #content>
                         <p>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque
-                            cupiditate, modi corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit. Lorem ipsum dolor sit
-                            amet, consectetur adipisicing elit. Impedit dicta dolorum perferendis cum quia ducimus? Quas cumque provident aliquam! Hic
-                            accusantium numquam assumenda sequi mollitia dicta, at iusto obcaecati doloremque.
+                            {{$t('home.tabs.content.edit.text')}}
                         </p>
                     </template>
                     <template #bottom>
@@ -83,10 +77,7 @@
                 <v-feature-content>
                     <template #content>
                         <p>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque
-                            cupiditate, modi corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit. Lorem ipsum dolor sit
-                            amet, consectetur adipisicing elit. Impedit dicta dolorum perferendis cum quia ducimus? Quas cumque provident aliquam! Hic
-                            accusantium numquam assumenda sequi mollitia dicta, at iusto obcaecati doloremque.
+                            {{$t('home.tabs.content.interact.text')}}
                         </p>
                     </template>
                     <template #bottom>
@@ -109,10 +100,7 @@
                 <v-feature-content>
                     <template #content>
                         <p>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque
-                            cupiditate, modi corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit. Lorem ipsum dolor sit
-                            amet, consectetur adipisicing elit. Impedit dicta dolorum perferendis cum quia ducimus? Quas cumque provident aliquam! Hic
-                            accusantium numquam assumenda sequi mollitia dicta, at iusto obcaecati doloremque.
+                            {{$t('home.tabs.content.view.text')}}
                         </p>
                     </template>
                     <template #bottom>
@@ -191,6 +179,9 @@ const recaptcha = useRecaptcha();
 import { useNotifications } from '@/plugins/notifications';
 const { setSnackbar } = useNotifications();
 
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
+
 const handleValidEditId = (id) => {
     router.push(`/create/${id}`);
 };
@@ -206,7 +197,7 @@ const handleValidViewId = (id) => {
 const isLoading = ref(false);
 const handleCreateContract = () => {
     isLoading.value = true;
-    recaptcha.challengeInput("CREATE_CONTRACT", api, (recaptchaResponse) => {
+    recaptcha.challengeInput('CREATE_CONTRACT', api, (recaptchaResponse) => {
         if (recaptchaResponse.data.success) {
             // Call API & wait for the response
             api.createContract().then((res) => {
@@ -219,14 +210,11 @@ const handleCreateContract = () => {
                 }
             });
         } else {
-            setSnackbar('You are not human, cannot use this!', 'error', 5);
+            setSnackbar(t('errors.robot'), 'error', 5);
             isLoading.value = false;
         }
     });
 };
-
-import { useI18n } from 'vue-i18n';
-const { t } = useI18n();
 
 const facts = [
     {
@@ -265,7 +253,7 @@ const verticalFacts = [
 ];
 
 useMeta({
-    title: 'Homepage',
-    description: 'This is the homepage to our project'
+    title: t('home.meta.title'),
+    description: t('home.meta.description')
 });
 </script>
