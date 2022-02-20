@@ -108,8 +108,12 @@
                     <div :class="[props.metadata || (props.method.inputs && props.method.inputs.length > 0) ? 'mt-sm pt-sm' : '']">
                         <p class="text-h5">Result</p>
                         <div class="w-full bg-white rounded-md p-xs mt-sm pr-base relative break-words">
-                            <p v-if="callResult" class="text-typography_secondary">{{ callResult }}</p>
-                            <p v-if="callError" class="text-error">{{ callError }}</p>
+                            <p v-if="callResult" class="text-typography_secondary">
+                                {{ callResultType === 'transactionHash' ? $t('interact.success.transactionDisplay', [callResult]) : callResult }}
+                            </p>
+                            <p v-if="callError" class="text-error">
+                                {{ errorType === 'transaction' ? $t('interact.error.transactionDisplay', [callError]) : callError }}
+                            </p>
                             <div
                                 class="absolute right-0 top-0 text-black hover:text-brand_secondary hover:bg-brand_primary cursor-pointer p-1 border border-black rounded-md transition duration-200"
                                 @click="() => copyResponse(callResult || callError)"
@@ -117,6 +121,28 @@
                                 <DocumentDuplicateIcon class="h-5 w-5" />
                             </div>
                         </div>
+                        <p v-if="callError && errorType === 'transaction'" class="mt-xs text-error text-sm">
+                            {{ $t('interact.error.transactionMoreInfo') }}
+                            <a
+                                class="underline no-inherit text-sm"
+                                :href="`https://${props.network}.etherscan.io/tx/${callError}`"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                :aria-label="$t('aria.exploreTransactionHash')"
+                                >{{ callError }}</a
+                            >
+                        </p>
+                        <p v-else-if="callResult && callResultType === 'transactionHash'" class="mt-xs text-white text-sm">
+                            {{ $t('interact.error.transactionMoreInfo') }}
+                            <a
+                                class="underline no-inherit text-sm"
+                                :href="`https://${props.network}.etherscan.io/tx/${callResult}`"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                :aria-label="$t('aria.exploreTransactionHash')"
+                                >{{ callResult }}</a
+                            >
+                        </p>
                     </div>
                 </template>
             </div>
@@ -149,6 +175,10 @@ const props = defineProps({
     isMint: {
         type: Boolean,
         default: false
+    },
+    network: {
+        type: String,
+        default: undefined
     }
 });
 
@@ -163,7 +193,9 @@ const detailsInputsErrors = ref({});
 const errors = ref(undefined);
 
 const callResult = ref(undefined);
+const callResultType = ref(undefined);
 const callError = ref(undefined);
+const errorType = ref(undefined);
 const isLoading = ref(false);
 
 import { useApi } from '@/plugins/api';
@@ -205,28 +237,24 @@ const handleMintCall = (contractId) => {
     // Inputs
     apiData.append('inputs', JSON.stringify(inputs.value));
     // Metadata
-    if (props.metadata) apiData.append('metadata', JSON.stringify({
-        ...detailInputs.value,
-        attributes: {
-            ...metadataInputs.value
-        }
-    }));
+    if (props.metadata)
+        apiData.append(
+            'metadata',
+            JSON.stringify({
+                ...detailInputs.value,
+                attributes: {
+                    ...metadataInputs.value
+                }
+            })
+        );
     if (props?.metadata?.hasImage) apiData.append('token', metadataImage.value);
     // Send the request
     api.mintWithContract(contractId, apiData)
         .then((res) => {
-            callResult.value = res.data.result;
-            callError.value = undefined;
-            isLoading.value = false;
+            handleSuccessResults(res);
         })
         .catch((err) => {
-            if (err.response && err.response.status === 400) {
-                callError.value = err.response.data.message;
-            } else {
-                callError.value = 'Internal error';
-            }
-            callResult.value = undefined;
-            isLoading.value = false;
+            handleErrorResults(err);
         });
 };
 
@@ -234,19 +262,32 @@ const handleMethodCall = (contractId) => {
     isLoading.value = true;
     api.interactWithContract(contractId, props.method._id, inputs.value)
         .then((res) => {
-            callResult.value = res.data.result;
-            callError.value = undefined;
-            isLoading.value = false;
+            handleSuccessResults(res);
         })
         .catch((err) => {
-            if (err.response && err.response.status === 400) {
-                callError.value = err.response.data.message;
-            } else {
-                callError.value = 'Internal error';
-            }
-            callResult.value = undefined;
-            isLoading.value = false;
+            handleErrorResults(err);
         });
+};
+
+const handleSuccessResults = (res) => {
+    callResult.value = res.data.result;
+    callResultType.value = res.data.resultType;
+    callError.value = undefined;
+    errorType.value = undefined;
+    isLoading.value = false;
+};
+
+const handleErrorResults = (err) => {
+    if (err.response && err.response.status === 400) {
+        errorType.value = 'transaction';
+        callError.value = err.response?.data?.data?.transactionHash;
+    } else {
+        errorType.value = 'internal';
+        callError.value = 'Internal error';
+    }
+    callResult.value = undefined;
+    callResultType.value = undefined;
+    isLoading.value = false;
 };
 
 // Performs all input validations
@@ -298,7 +339,9 @@ const performValidations = () => {
             // Verify with the emitted errors from the inputs
             else if (metadataInputsErrors.value[metadataField.traitType] !== undefined) {
                 hasError = hasError || true;
-                errors.value = `${t(metadataInputsErrors.value[metadataField.traitType])} - ${t(`inputs.text.${metadataField.displayType ? metadataField.displayType : metadataField.traitFormat}`)}`;
+                errors.value = `${t(metadataInputsErrors.value[metadataField.traitType])} - ${t(
+                    `inputs.text.${metadataField.displayType ? metadataField.displayType : metadataField.traitFormat}`
+                )}`;
             }
         });
         // Verify image is there

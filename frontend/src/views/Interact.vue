@@ -29,6 +29,7 @@
                     :hasContract="hasContract"
                     :isMint="true"
                     :isLoading="isLoading"
+                    :network="contract?.deployment?.network"
                 />
             </div>
             <template v-if="hasContract && contractIsDeployed && !isLoading && validContract">
@@ -41,6 +42,7 @@
                         :contractDeployed="contractIsDeployed"
                         :hasContract="hasContract"
                         :isLoading="isLoading"
+                        :network="contract?.deployment?.network"
                     />
                 </div>
                 <div class="col-span-full lg:col-span-5 entire-panel">
@@ -52,6 +54,7 @@
                         :contractDeployed="contractIsDeployed"
                         :hasContract="hasContract"
                         :isLoading="isLoading"
+                        :network="contract?.deployment?.network"
                     />
                 </div>
             </template>

@@ -202,7 +202,11 @@ const props = defineProps({
 }
 
 .button.button--size-xsmall .button-spinner--wrapper {
-    @apply my-auto pl-1 pr-1 -mr-1;
+    @apply my-auto pl-1 pr-1 -mr-2;
+}
+
+.button.button--size-xsmall .button-spinner {
+    @apply w-3 h-3;
 }
 
 .button.button--size-medium .button-spinner {

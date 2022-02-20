@@ -66,7 +66,7 @@
                         </v-tooltip>
                     </template>
                     <template #expandableContent>
-                        <div class="my-xs">
+                        <div class="my-xs" v-if="contractEdited">
                             <v-information-item
                                 :title="isLoading ? $t('editor.saving') : $t('editor.lastSavedSimple')"
                                 :description="isLoading ? undefined : $t('date', [$d(lastSaved, 'short')])"
@@ -83,14 +83,17 @@
                                     <DocumentIcon class="expandable-content--icon" />
                                 </template>
                                 <template #actions>
-                                    <DocumentDuplicateIcon @click="copyContractId" class="expandable-content--icon-action" />
-                                    <MailIcon v-if="canSendEmail" @click="openContractReminderModal" class="expandable-content--icon-action ml-xs" />
+                                    <v-tooltip :text="$t('editor.contract.idCopy')">
+                                        <DocumentDuplicateIcon @click="copyContractId" class="expandable-content--icon-action" />
+                                    </v-tooltip>
+                                    <v-tooltip v-if="canSendEmail" :text="$t('editor.contract.reminder')" class="ml-xs">
+                                        <MailIcon @click="openContractReminderModal" class="expandable-content--icon-action" />
+                                    </v-tooltip>
                                 </template>
                             </v-information-item>
                         </div>
-                        <div class="my-xs">
+                        <div class="my-xs" v-if="isDeployed">
                             <v-information-item
-                                v-if="isDeployed"
                                 :showActions="true"
                                 :title="$t('editor.contract.deploySimple')"
                                 :description="storedContract.deployment.address"
@@ -99,15 +102,19 @@
                                     <GlobeAltIcon class="expandable-content--icon" />
                                 </template>
                                 <template #actions>
-                                    <DocumentDuplicateIcon @click="copyContractAddress" class="expandable-content--icon-action" />
-                                    <a
-                                        class="expandable-content--icon-action ml-xs"
-                                        :href="`https://${storedContract.deployment.network}.etherscan.io/address/${storedContract.deployment.address}`"
-                                        aria-label="View on Etherscan"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        ><v-etherscan-logo class="expandable-content--icon-action"
-                                    /></a>
+                                    <v-tooltip :text="$t('editor.contract.deployCopy')">
+                                        <DocumentDuplicateIcon @click="copyContractAddress" class="expandable-content--icon-action" />
+                                    </v-tooltip>
+                                    <v-tooltip :text="$t('editor.contract.view')" class=" ml-xs">
+                                        <a
+                                            class="expandable-content--icon-action"
+                                            :href="`https://${storedContract.deployment.network}.etherscan.io/address/${storedContract.deployment.address}`"
+                                            aria-label="View on Etherscan"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            ><v-etherscan-logo class="expandable-content--icon-action"
+                                        /></a>
+                                    </v-tooltip>
                                 </template>
                             </v-information-item>
                         </div>
@@ -265,6 +272,7 @@ const loadContract = (showLoading = true) => {
                 contract.value = res.data.contract;
             }
             if (showLoading) isLoadingEditor.value = false;
+            // Wait until next tick so that the editor is rendered
             nextTick().then(() => {
                 startWatchingHeight();
             });
@@ -294,6 +302,10 @@ const handleContractChange = (contractData) => {
             contractEdited.value = true;
             lastSaved.value = new Date();
             isLoading.value = false;
+            // Wait until next tick so that the editor is rendered
+            nextTick().then(() => {
+                startWatchingHeight();
+            });
         });
     }
 };

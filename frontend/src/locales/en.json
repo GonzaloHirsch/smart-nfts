@@ -6,7 +6,8 @@
         "anchorLinks": "Link to {0}",
         "imageUploadRemove": "Remove the selected image",
         "copyContract": "Copy this contract",
-        "downloadContract": "Download this contract"
+        "downloadContract": "Download this contract",
+        "exploreTransactionHash": "See this transaction hash in Etherscan"
     },
     "placeholders": {
         "contractId": "Contract ID..."
@@ -96,7 +97,7 @@
         "edit": "Edit",
         "features": "Features",
         "contact": "Contact",
-        "list": "List"
+        "list": "View"
     },
     "editor": {
         "contract": {
@@ -165,11 +166,16 @@
             "initial": "Input your contract ID to load it's methods.",
             "initialMethods": "Contract methods will appear here once loaded."
         },
+        "success": {
+            "transactionDisplay": "Success - Transaction Hash: {0}"
+        },
         "error": {
             "invalidContract": "Invalid contract ID",
             "contractNotDeployed": "Contract has not been deployed yet",
             "missingParameter": "Missing parameter {0} ({1})",
             "missingImage": "Missing token image",
+            "transactionDisplay": "Blockchain Error - Transaction Hash: {0}",
+            "transactionMoreInfo": "For more information click on the following transaction hash.",
             "parameters": {
                 "address": "Invalid address",
                 "required": "Parameter is required",
