@@ -143,7 +143,7 @@
                 </v-editor>
             </div>
             <div
-                class="flex w-full md:w-6/12 lg:w-7/12 xl:w-8/12 py-sm pr-sm pl-xs"
+                class="flex w-full md:w-6/12 lg:w-7/12 xl:w-8/12 py-sm pr-sm pl-xs code-viewer--wrapper"
                 :style="`min-height: ${editorHeight}px; max-height: ${editorHeight}px`"
             >
                 <v-code-viewer
@@ -166,40 +166,20 @@
         </div>
     </v-section>
 
-    <v-section class="bg-typography_primary">
-        <h2 class="text-center text-brand_secondary mb-base">Fields Explained</h2>
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
-            corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
-        </p>
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
-            corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
-        </p>
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
-            corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
-        </p>
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
-            corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
-        </p>
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
-            corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
-        </p>
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
-            corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
-        </p>
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
-            corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
-        </p>
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
-            corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
-        </p>
+    <v-section class="bg-typography_primary editor--content">
+        <h2 class="text-center text-brand_secondary mb-base">{{$t('editor.content.title')}}</h2>
+        <v-anchored-title type="h3" :text="$t('editor.content.contractInformation.title')" anchor="contractInformation" class="mb-xs"/>
+        <p v-html="$t('editor.content.contractInformation.copy')"></p>
+        <v-anchored-title type="h3" :text="$t('editor.content.metadata.title')" anchor="metadata" class="mb-xs"/>
+        <p v-html="$t('editor.content.metadata.copy_1')"></p>
+        <p v-html="$t('editor.content.metadata.copy_2')"></p>
+        <p v-html="$t('editor.content.metadata.copy_3')"></p>
+        <p v-html="$t('editor.content.metadata.copy_4')"></p>
+        <v-anchored-title type="h3" :text="$t('editor.content.deploy.title')" anchor="deploy" class="mb-xs"/>
+        <p v-html="$t('editor.content.deploy.copy_1')"></p>
+        <p v-html="$t('editor.content.deploy.copy_2')"></p>
+        <v-anchored-title type="h3" :text="$t('editor.content.verify.title')" anchor="verify" class="mb-xs"/>
+        <p v-html="$t('editor.content.verify.copy')"></p>
     </v-section>
 </template>
 
@@ -209,6 +189,7 @@ import vCodeViewer from '@/components/codeViewer.vue';
 import vEditor from '@/components/editor.vue';
 import vModal from '@/components/modal.vue';
 import vSection from '@/components/section.vue';
+import vAnchoredTitle from '@/components/anchoredTitle.vue';
 
 import vDeployContractModal from '@/components/modals/deployContractModal.vue';
 import vVerifyContractModal from '@/components/modals/verifyContractModal.vue';
@@ -525,5 +506,31 @@ useMeta({
 
 .expandable-head--icon-wrapper:last-of-type {
     @apply ml-1;
+}
+
+.editor--content pre.code {
+    @apply text-brand_secondary bg-brand_tertiary/20 underline italic !important;
+}
+
+.editor--content .link {
+    @apply underline font-bold duration-200;
+}
+
+.editor--content p {
+    @apply mb-sm;
+}
+
+.editor--content .link:hover {
+    @apply text-brand_secondary;
+}
+
+.code-viewer--wrapper {
+    min-height: fit-content !important;
+}
+
+@screen sm {
+    .code-viewer--wrapper {
+        min-height: inherit;
+    }
 }
 </style>

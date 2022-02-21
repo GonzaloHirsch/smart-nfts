@@ -1,9 +1,11 @@
 <template>
     <div class="bg-light pt-sm rounded-md shadow-lg border border-gray-200">
-        <!-- <h2 class="text-center text-brand_secondary">{{$t('editor.contract.features')}}</h2> -->
         <div class="divide-y divide-typography_secondary px-sm">
             <div class="pb-sm">
-                <h5 class="form--title">{{ $t('editor.contract.information') }}<QuestionMarkCircleIcon class="form--title-icon" /></h5>
+                <h5 class="form--title">
+                    {{ $t('editor.contract.information')
+                    }}<QuestionMarkCircleIcon class="form--title-icon cursor-pointer" @click="getHelp('contractInformation')" />
+                </h5>
                 <div class="flex flex-col justify-between">
                     <!-- Set validations for each field and the validation events -->
                     <v-input
@@ -124,7 +126,10 @@
                 </div>
             </div>
             <div v-if="contractData.isURIStorage" class="py-sm">
-                <h5 class="form--title">{{ $t('editor.contract.metadata') }} <QuestionMarkCircleIcon class="form--title-icon" /></h5>
+                <h5 class="form--title">
+                    {{ $t('editor.contract.metadata') }}
+                    <QuestionMarkCircleIcon class="form--title-icon cursor-pointer" @click="getHelp('metadata')" />
+                </h5>
                 <p class="text-xl text-brand_secondary">{{ $t('editor.metadata.image') }}</p>
                 <v-checkbox
                     id="hasImage"
@@ -140,7 +145,7 @@
             </div>
         </div>
         <!-- ACTIONS -->
-        <div class="flex flex-col sm:flex-row items-center justify-center py-xs px-sm mt-sm">
+        <div class="flex flex-row items-center justify-center py-xs px-sm mt-sm">
             <v-button
                 v-if="props.canDeploy"
                 :format="isLoading ? 'disabled' : 'secondary'"
@@ -196,6 +201,9 @@ import { mapApiExtensionsToForm, mapExtensionInputsToForm, mapApiMetadataToForm 
 
 import { useApi } from '@/plugins/api';
 const api = useApi();
+
+import { useRouter } from 'vue-router';
+const router = useRouter();
 
 import { useRecaptcha } from '@/plugins/recaptcha';
 const recaptcha = useRecaptcha();
@@ -376,6 +384,13 @@ watch(
         }
     }
 );
+
+const getHelp = (hash) => {
+    router.push({
+        hash: `#${hash}`
+    });
+};
+
 // Expandable section
 const isExpanded = ref(false);
 const toggleExpanded = () => {
@@ -392,21 +407,15 @@ const toggleExpanded = () => {
     @apply h-6 w-6 text-brand_tertiary ml-xs;
 }
 
-.editor--button {
-    @apply sm:ml-sm sm:mt-0;
+.editor--button:not(:first-of-type):not(:last-of-type) {
+    @apply mx-sm mt-0;
 }
 
-@screen sm {
-    .editor--button:not(:first-of-type):not(:last-of-type) {
-        @apply mx-sm mt-0;
-    }
+.editor--button:first-of-type {
+    @apply mr-sm mt-0;
+}
 
-    .editor--button:first-of-type {
-        @apply mr-sm mt-0;
-    }
-
-    .editor--button:last-of-type {
-        @apply ml-sm mt-0;
-    }
+.editor--button:last-of-type {
+    @apply ml-sm mt-0;
 }
 </style>

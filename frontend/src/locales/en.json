@@ -226,6 +226,29 @@
                 "display": "Display"
             }
         },
+        "content": {
+            "title": "Fields Explained",
+            "contractInformation": {
+                "title": "Contract Information",
+                "copy": "Contract information mainly refers to the <pre class=\"code\"><code>name</code></pre> and <pre class=\"code\"><code>symbol</code></pre> properties of the Smart Contract. <pre class=\"code\"><code>name</code></pre> refers to the collection itself (e.g., the \"CustomTokens\" collection) and will be displayed on most external sites when referring to the Smart Contract. <pre class=\"code\"><code>symbol</code></pre> refers to a way to display the number of tokens in the set (e.g., the symbol for \"CustomTokens\" can be \"CTKN\" and that way, someone can have 3 CTKN)."
+            },
+            "metadata": {
+                "title": "Metadata",
+                "copy_1": "Metadata refers to all other properties that one can add to the token. The <pre class=\"code\"><code>name</code></pre> and <pre class=\"code\"><code>description</code></pre> properties are always required, but any attribute can be added, including images and other files.",
+                "copy_2": "Metadata is stored off-chain because it's expensive to keep it in the chain. That's where the <a class=\"link\" href=\"https://ipfs.io/\" target=\"_blank\" rel=\"noopener noreferer\">InterPlanetary File System</a> (IPFS) comes into play. IPFS is a protocol and a peer-to-peer network for storing and sharing information in a distributed filesystem, basically where we save our metadata. We only keep the link to the metadata in the blockchain, thus reducing the footprint of the contract. Given this, metadata is only allowed when activating the URI Storage extension, indicating the URIs will be stored.",
+                "copy_3": "Extra attributes can be of four types. \"<em>String</em>\" is just plain text (e.g., a color), while \"<em>Number</em>\" can come in 3 different formats. \"<em>Boost Number</em>\" is a number displayed as a booster (e.g., height). \"<em>Boost Percentage</em>\" is a percentage also shown as a booster (e.g., strength). \"<em>Plain Number</em>\" is just a number (e.g., generation).",
+                "copy_4": "You can define the schema that each NFT's metadata will have. Metadata values are filled in when creating a token."
+            },
+            "deploy": {
+                "title": "Deploy",
+                "copy_1": "When you deploy your contract, you are publishing it to the world. Deployments happen in a testnet (a blockchain made for testing), specifically <a class=\"link\" href=\"https://www.rinkeby.io/#stats\" target=\"_blank\" rel=\"noopener noreferer\">Rinkeby</a> or <a class=\"link\" href=\"https://ropsten.etherscan.io/\" target=\"_blank\" rel=\"noopener noreferer\">Ropsten</a> in our case (it will almost always deploy to Rinkeby). Using the deployment address (how to find your smart contract in the blockchain), you can see more information on sites like <a class=\"link\" href=\"https://rinkeby.etherscan.io/\" target=\"_blank\" rel=\"noopener noreferer\">Etherscan</a>.",
+                "copy_2": "All contracts deploy using the Smart NFTs address so that you can fully interact with it. If you want to, you can also transfer ownership to your address, but we won't be capable of interacting with it."
+            },
+            "verify": {
+                "title": "Verify",
+                "copy": "Verifying the contract is used for transparency; you match the compiled contract code with the code itself of the contract. It will allow everyone to see the code you uploaded and interact from sites like <a class=\"link\" href=\"https://rinkeby.etherscan.io/\" target=\"_blank\" rel=\"noopener noreferer\">Etherscan</a>. It's not required in our case to verify the contract before interacting with it, but we offer the option anyways."
+            }
+        },
         "prepare": "Preparing the editor, hang tight...",
         "lastSaved": "Last saved: {0}",
         "lastSavedSimple": "Last saved",
