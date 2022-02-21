@@ -8,6 +8,7 @@ export const EXTENSIONS = {
     URI_STORAGE: 'ERC721URIStorage',
     ENUMERABLE: 'ERC721Enumerable',
     UNIQUE_STORAGE: 'UniqueStorage',
+    LIMIT_SUPPLY: 'LimitSupply',
 };
 
 export const NAVBAR_SCROLL_LIMIT = 10;

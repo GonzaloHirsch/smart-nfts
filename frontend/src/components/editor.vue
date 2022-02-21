@@ -76,6 +76,16 @@
                     v-model="contractData.isEnumerable"
                     class="w-full md:w-6/12"
                 />
+                <div class="flex flex-row">
+                    <span class="border-l-2 border-black mx-xs"></span>
+                    <v-checkbox
+                        id="isLimitSupply"
+                        name="isLimitSupply"
+                        placeholder="Limit Supply"
+                        label="Limit Supply"
+                        v-model="contractData.isLimitSupply"
+                    />
+                </div>
                 <v-checkbox
                     id="isURIStorage"
                     name="isURIStorage"
@@ -220,6 +230,7 @@ const contractData = ref({
     isBurnable: mappedExtensions.isBurnable ?? false,
     isAutoIncrementIds: mappedExtensions.isAutoIncrementIds ?? false,
     isEnumerable: mappedExtensions.isEnumerable ?? false,
+    isLimitSupply: mappedExtensions.isLimitSupply ?? false,
     isURIStorage: mappedExtensions.isURIStorage ?? false,
     isUniqueStorage: mappedExtensions.isUniqueStorage ?? false,
     hasImage: hasImage ?? true,
@@ -263,6 +274,7 @@ watch(
         // Need to verify that both are selected not to emit a fake event
         if (
             ((contractData.value.isAutoIncrementIds && contractData.value.isMintable) || !contractData.value.isAutoIncrementIds) &&
+            ((contractData.value.isLimitSupply && contractData.value.isEnumerable) || !contractData.value.isLimitSupply) &&
             ((contractData.value.isUniqueStorage && contractData.value.isURIStorage) || !contractData.value.isUniqueStorage) &&
             validMetadata.value
         ) {
@@ -306,7 +318,22 @@ watch(
         }
     }
 );
-
+watch(
+    () => contractData.value.isLimitSupply,
+    () => {
+        if (contractData.value.isLimitSupply) {
+            contractData.value.isEnumerable = true;
+        }
+    }
+);
+watch(
+    () => contractData.value.isEnumerable,
+    () => {
+        if (!contractData.value.isEnumerable) {
+            contractData.value.isLimitSupply = false;
+        }
+    }
+);
 // Expandable section
 const isExpanded = ref(false);
 const toggleExpanded = () => {
