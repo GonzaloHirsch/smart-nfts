@@ -1,3 +1,6 @@
+import { customAlphabet } from 'nanoid';
+import { SHA3 } from 'sha3';
+import { FilterQuery } from 'mongoose';
 // Models
 import StoredContract, { IStoredContract } from '../models/storedContract.model';
 // Services
@@ -8,11 +11,10 @@ import NotFoundException from '../exceptions/notFoundException.exception';
 import InvalidInputException from '../exceptions/invalidInput.exception';
 // Others
 import { EXTENSIONS } from '../constants/contract.constants';
-import { customAlphabet } from 'nanoid';
-import { FilterQuery } from 'mongoose';
 import { IMetadata } from '../interfaces/metadata.interface';
+import { IArguments } from '../interfaces/general.interface';
 import { typeValidations } from '../helpers/validations.helper';
-import { SHA3 } from 'sha3';
+
 const hash = new SHA3(512);
 const nanoid = customAlphabet('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz', 15);
 
@@ -60,7 +62,7 @@ class StoredContractService {
         // Generate the contract itself if it has been edited
         let contractString = null;
         if (contract.name) {
-            contractString = CreationService.getInstance().genContract(contract.name, contract.symbol, [...contract.extensions] as EXTENSIONS[]);
+            contractString = CreationService.getInstance().genContract(contract.name, contract.symbol, [...contract.extensions] as EXTENSIONS[], contract.inputs ?? {});
         }
     
         return {contract, contractString};
@@ -71,6 +73,7 @@ class StoredContractService {
         name: string,
         symbol: string,
         extensions: EXTENSIONS[],
+        inputs: IArguments,
         metadata: IMetadata
     ): Promise<{contract: IStoredContract, contractString: string}> => {
         /* Make sure it can add metadata, after reviewing the flow, this shouldn't be validated
@@ -100,7 +103,7 @@ class StoredContractService {
         const extensionCopy = [...extensions];
 
         // Generate updated contract
-        const contractString = CreationService.getInstance().genContract(name, symbol, extensions as EXTENSIONS[]);
+        const contractString = CreationService.getInstance().genContract(name, symbol, extensions as EXTENSIONS[], inputs);
         
         // Digest the content    
         hash.reset();
@@ -113,6 +116,7 @@ class StoredContractService {
         contract.extensions = extensionCopy;
         contract.metadata.hasImage = metadata.hasImage;
         contract.metadata.attributes = metadata.attributes;
+        contract.inputs = inputs;
         contract.digest = contractDigest;
         contract.markModified('metadata');
         await contract.save();

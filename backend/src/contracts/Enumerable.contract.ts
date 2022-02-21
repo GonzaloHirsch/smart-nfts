@@ -8,6 +8,9 @@ export abstract class Enumerable {
     public static getExtensionOZImports(): string[] {
         return ["@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol"];
     }
+    public static getExtensionInputs(): string[] {
+        return [];
+    }
     public static getExtensionName(): EXTENSIONS {
         return EXTENSIONS.ERC721Enumerable;
     }
@@ -15,6 +18,9 @@ export abstract class Enumerable {
         return [];
     }
     public static getExtensionVariables(): IContractVariable[] {
+        return [];
+    }
+    public static getExtensionConstructorContent(): string[] {
         return [];
     }
     public static getExtensionMethods(): IContractMethod[] {

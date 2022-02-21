@@ -8,6 +8,9 @@ export abstract class ERC721 {
     public static getExtensionOZImports(): string[] {
         return ["@openzeppelin/contracts/token/ERC721/ERC721.sol"];
     }
+    public static getExtensionInputs(): string[] {
+        return [];
+    }
     public static getExtensionName(): EXTENSIONS {
         return EXTENSIONS.ERC721;
     }
@@ -15,6 +18,9 @@ export abstract class ERC721 {
         return [];
     }
     public static getExtensionVariables(): IContractVariable[] {
+        return [];
+    }
+    public static getExtensionConstructorContent(): string[] {
         return [];
     }
     public static getExtensionMethods(): IContractMethod[] {

@@ -4,12 +4,14 @@ import { METHOD_TYPE, STATE_MUTABILITY, CONTRACT_TYPES, SUPPORTED_NETWORKS } fro
 import { ACCEPTED_LANGUAGES } from '../constants/general.constants';
 import { IAbi } from '../interfaces/abi.interface';
 import { METADATA_DISPLAY_TYPES, METADATA_TYPES } from '../constants/metadata.constants';
+import { IArguments } from '../interfaces/general.interface';
 
 export interface IStoredContract extends Document {
     id: string; // Ids propios o de mongo?
     name: string;
     symbol: string;
     extensions: Array<string>;
+    inputs: IArguments,
     digest: string;
     deployment: {
         address: string;
@@ -38,6 +40,7 @@ const StoredConstractSchema = new Schema(
         name: { type: String },
         symbol: { type: String },
         extensions: [{ type: String }],
+        input: { type: {}},
         digest: { type: String },
         deployment: {
             address: { type: String, required: false },

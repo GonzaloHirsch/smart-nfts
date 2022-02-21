@@ -21,6 +21,7 @@ const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyRes
     const name = requestBody.name as string;
     const symbol = requestBody.symbol as string;
     const extensions = requestBody.extensions as string[];
+    const inputs = requestBody.inputs as string[] ?? {};
     const metadata = requestBody.metadata as IMetadata;
 
     if (!name || !symbol || !extensions || !enumHasKeys(EXTENSIONS, extensions)) {
@@ -35,6 +36,7 @@ const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyRes
         name, 
         symbol, 
         extensions as EXTENSIONS[],
+        inputs,
         metadata
     );
 

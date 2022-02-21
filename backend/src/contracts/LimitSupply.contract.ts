@@ -3,16 +3,16 @@ import { IContractExtension, IContractLibrary, IContractMethod, IContractVariabl
 import {staticImplements} from '../helpers/global.helper';
 
 @staticImplements<IContractExtension>()
-export abstract class UniqueStorage {
+export abstract class LimitSupply {
     
     public static getExtensionOZImports(): string[] {
         return [];
     }
     public static getExtensionInputs(): string[] {
-        return [];
+        return ['maxSupply'];
     }
     public static getExtensionName(): EXTENSIONS {
-        return EXTENSIONS.UniqueStorage;
+        return EXTENSIONS.LimitSupply;
     }
     public static getExtensionLibs(): IContractLibrary[] {
         return [];
@@ -20,13 +20,13 @@ export abstract class UniqueStorage {
 
     public static getExtensionVariables(): IContractVariable[] {
         return [{
-            name: '_hashExists',
-            type: 'mapping(string => bool)',
+            name: '_maxSupply',
+            type: CONTRACT_TYPES.UINT256,
             visibility: VISIBILITY.PRIVATE
         }];
     }
     public static getExtensionConstructorContent(): string[] {
-        return [];
+        return ['_maxSupply = %maxSupply%;'];
     }
     public static getExtensionMethods(): IContractMethod[] {
         return [
@@ -37,7 +37,7 @@ export abstract class UniqueStorage {
                     type: CONTRACT_TYPES.STRING_MEMORY
                 }],
                 mandatory: false,
-                content: ['require(!_hashExists[hash], \'Minting an exisiting hash\');\n','_hashExists[hash] = true;\n'],
+                content: ['require(_maxSupply < totalSupply(), \'Exceeding max token supply\');\n'],
                 visibility: VISIBILITY.PUBLIC,
                 options: ''
             },

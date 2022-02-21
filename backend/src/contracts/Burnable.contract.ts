@@ -8,6 +8,9 @@ export abstract class Burnable {
     public static getExtensionOZImports(): string[] {
         return ["@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol"];
     }
+    public static getExtensionInputs(): string[] {
+        return [];
+    }
     public static getExtensionName(): EXTENSIONS {
         return EXTENSIONS.ERC721Burnable;
     }
@@ -18,6 +21,9 @@ export abstract class Burnable {
         return [];
     }
     public static getExtensionMethods(): IContractMethod[] {
+        return [];
+    }
+    public static getExtensionConstructorContent(): string[] {
         return [];
     }
     public static getParentExtension(): EXTENSIONS | null {

@@ -1,26 +1,29 @@
 import { FINAL_EXTENSIONS, STATE_MUTABILITY, VISIBILITY } from "../constants/contract.constants";
 import { EXTENSIONS } from "../constants/contract.constants";
-import { IAbi } from "./abi.interface";
-import { IParameter } from "./general.interface";
+import { IArguments, IParameter } from "./general.interface";
 
 export interface IContract {
     // Getters
     getImports(): string[];  
     getExtensions(): EXTENSIONS[];            
-    getFinalExtensions(): FINAL_EXTENSIONS[];            
+    getFinalExtensions(): FINAL_EXTENSIONS[]; 
+    getUserInputs(): IArguments;           
     getName(): string;
     getSymbol(): string;     
     getLibraries(): IContractLibrary[];                 
     getVariables(): IContractVariable[];  
+    getConstructorContent(): string[];      
     getMethods(): IContractMethod[];      
 }
 
 export interface IContractExtension {
     // Static methods
     getExtensionOZImports(): string[];             // import from open zeppling
+    getExtensionInputs(): string[];                // strings that must be replaced by input
     getExtensionName(): EXTENSIONS;                // Name of extension (ex: ERC721URIStorage)
     getExtensionLibs(): IContractLibrary[];        // For including a library within a contract in solidity.
     getExtensionVariables(): IContractVariable[];  // Necessary class variables
+    getExtensionConstructorContent(): string[];    // Content the extension needs in the constructor
     getExtensionMethods(): IContractMethod[];      // Methods to implement with extension
     getParentExtension(): EXTENSIONS | null;       // If extension is adding upon or overriding a parent extension. 
 }

@@ -8,6 +8,9 @@ export abstract class AutoIncrementIds {
     public static getExtensionOZImports(): string[] {
         return ["@openzeppelin/contracts/access/Ownable.sol", "@openzeppelin/contracts/utils/Counters.sol"];
     }
+    public static getExtensionInputs(): string[] {
+        return [];
+    }
     public static getExtensionName(): EXTENSIONS {
         return EXTENSIONS.AutoIncrementIds;
     }
@@ -23,6 +26,9 @@ export abstract class AutoIncrementIds {
             type: 'Counters.Counter',
             visibility: VISIBILITY.PRIVATE
         }];
+    }
+    public static getExtensionConstructorContent(): string[] {
+        return [];
     }
     public static getExtensionMethods(): IContractMethod[] {
         return [{

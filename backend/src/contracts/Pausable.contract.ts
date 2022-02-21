@@ -8,6 +8,9 @@ export abstract class Pausable {
     public static getExtensionOZImports(): string[] {
         return ["@openzeppelin/contracts/security/Pausable.sol", "@openzeppelin/contracts/access/Ownable.sol"];
     }
+    public static getExtensionInputs(): string[] {
+        return [];
+    }
     public static getExtensionName(): EXTENSIONS {
         return EXTENSIONS.Pausable;
     }
@@ -15,6 +18,9 @@ export abstract class Pausable {
         return [];
     }
     public static getExtensionVariables(): IContractVariable[] {
+        return [];
+    }
+    public static getExtensionConstructorContent(): string[] {
         return [];
     }
     public static getExtensionMethods(): IContractMethod[] {

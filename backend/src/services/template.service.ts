@@ -1,6 +1,7 @@
 import { IContract, IContractLibrary, IContractMethod, IContractVariable } from "../interfaces/contract.interface";
 import * as Template from '../helpers/template.helper';
 import { SOLIDITY_VERSION, CONTRACT_LICENSE } from "../constants/contract.constants";
+import { IArguments } from "../interfaces/general.interface";
 
 class TemplateService {
 
@@ -15,10 +16,12 @@ class TemplateService {
     }
 
     generateContract = (contract: IContract): string => {
-        return this.generateContractLicense() + 
+        const stringContract = this.generateContractLicense() + 
             this.generateSolidityVersion() +
             this.generateImports(contract.getImports()) +
             this.generateContractContent(contract);
+
+        return this.replaceUserInputs(stringContract, contract.getUserInputs());
     }
 
     generateSolidityVersion = (): string => {
@@ -52,7 +55,9 @@ class TemplateService {
     }
 
     generateConstructor = (contract: IContract): string => {
-        return Template.newLine() + Template.getConstructor(contract.getName(), contract.getSymbol());
+        return Template.newLine() + Template.getConstructor(
+            contract.getName(), contract.getSymbol(), contract.getConstructorContent()
+        );
     }
 
     generateLibraries = (libraries: IContractLibrary[]): string => {
@@ -107,6 +112,18 @@ class TemplateService {
             Template.getFunctionOverrides(method.overrides) +
             Template.getFunctionReturnType(method.returns) +
             Template.getFunctionContent(method.content);
+    }
+
+    replaceUserInputs = (strContract: string, inputs: IArguments): string => {
+        // Return if nothing to replace
+        if (Object.keys(inputs).length === 0) return strContract;
+        // Create the string regex with all the values to change
+        const strRegexExp = Object.keys(inputs).map(key => `%${key}%`).join('|');
+        // Create the expression - global + case insensitive options
+        const regex = new RegExp(strRegexExp, 'gi');
+        console.log(regex)
+        // Replace the inputs and return the final string
+        return strContract.replace(regex, (matched: string) => inputs[matched.slice(1, -1)] ?? matched);
     }
 }
 

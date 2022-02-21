@@ -8,6 +8,9 @@ export abstract class Mintable {
     public static getExtensionOZImports(): string[] {
         return ["@openzeppelin/contracts/access/Ownable.sol"];
     }
+    public static getExtensionInputs(): string[] {
+        return [];
+    }
     public static getExtensionName(): EXTENSIONS {
         return EXTENSIONS.Mintable;
     }
@@ -15,6 +18,9 @@ export abstract class Mintable {
         return [];
     }
     public static getExtensionVariables(): IContractVariable[] {
+        return [];
+    }
+    public static getExtensionConstructorContent(): string[] {
         return [];
     }
     public static getExtensionMethods(): IContractMethod[] {

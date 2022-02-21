@@ -46,8 +46,9 @@ export const getContractContent = (content: string): string => {
     return `{` + newLine() + indexedContent + newLine() + `}`;
 }
 
-export const getConstructor = (name: string, symbol: string): string => {
-    return `constructor() ERC721("${name}", "${symbol}") {}`+ newLine();
+export const getConstructor = (name: string, symbol: string, content: string[]): string => {
+    const strContent = content.length > 0 ? `\n${indexContent(content.join('\n'))}\n`: '';
+    return `constructor() ERC721("${name}", "${symbol}") {${strContent}}`+ newLine();
 }
 
 export const getLibrary = (library: IContractLibrary): string => {

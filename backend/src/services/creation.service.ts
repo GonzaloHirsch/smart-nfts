@@ -5,7 +5,7 @@ import { arrayFindAndRemoveValue, flattenArray, getSortFn } from '../helpers/col
 import { getExtensionAdditions, getMergedMethodStateMutability, getMergedMethodVisibility } from '../helpers/creation.helper';
 import { hashString } from '../helpers/string.helper';
 import { IContractExtension, IContractLibrary, IContractMethod, IContractVariable } from '../interfaces/contract.interface';
-import { IParameter } from '../interfaces/general.interface';
+import { IArguments, IParameter } from '../interfaces/general.interface';
 import TemplateService from './template.service';
 
 class CreationService {
@@ -20,7 +20,7 @@ class CreationService {
 
     saveContract = async () => {};
 
-    genContract = (name: string, symbol: string, extensions: EXTENSIONS[]): string => {
+    genContract = (name: string, symbol: string, extensions: EXTENSIONS[], userInputs: IArguments): string => {
         // Always add the base ERC721 extension
         if (!(extensions.includes(EXTENSIONS.ERC721))) {
             extensions.unshift(EXTENSIONS.ERC721);
@@ -41,14 +41,15 @@ class CreationService {
 
         extensions = getExtensionAdditions(extensions);
 
-        console.log(extensions)
         const contract = new CustomContract(
             this.genContractImports(classExtensions),
             name,
             symbol,
             extensions,
+            this.genContractInputs(classExtensions, userInputs),
             this.genContractLibraries(classExtensions),
             this.genContractVariables(classExtensions),
+            this.genContractConstructorContent(classExtensions),
             this.genContractMethods(classExtensions)
         );
 
@@ -108,6 +109,29 @@ class CreationService {
         // Return the unique elements
         return Object.values(hashMap);
     };
+
+    //***********************************//
+    //********* CONTRACT INPUTS *********//
+    //***********************************//
+
+    private genContractInputs = (extensions: IContractExtension[], inputs: IArguments): IArguments => {
+        const validInputs = extensions.flatMap(e => e.getExtensionInputs());
+
+        // Filter out any invalid inputs
+        return validInputs
+            .reduce((acc: {[inputName: string]: string}, inputName: string) => {
+                acc[inputName] = inputs[inputName]
+                return acc;
+            }, {});
+    }
+
+    //***********************************//
+    //****** CONTRACT CONSTRUCTOR *******//
+    //***********************************//
+
+    private genContractConstructorContent = (extensions: IContractExtension[]): string[] => {
+        return extensions.flatMap(e => e.getExtensionConstructorContent());
+    }
 
     //***********************************//
     //******** CONTRACT METHODS *********//
