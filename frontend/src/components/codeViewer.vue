@@ -8,7 +8,6 @@
             </pre>
         </div>
         <div v-if="!props.loading && props.canDownload" class="absolute flex top-0 right-0">
-            <!-- <div v-if="!props.loading && props.canDownload" class="absolute flex top-0 right-0"> -->
             <div
                 @click="!props.loadingCopy ? copyContract() : undefined"
                 :class="[
@@ -17,7 +16,7 @@
                         ? 'bg-gray-500 text-gray-700 border-gray-700 cursor-not-allowed'
                         : 'border-gray-500 bg-gray-400 text-gray-500 hover:text-brand_secondary hover:border-brand_secondary hover:bg-white cursor-pointer'
                 ]"
-                :aria-label="$t('aria.copyContract')"
+                :aria-label="$t('editor.copyCode.aria')"
                 :aria-disabled="props.loadingCopy"
             >
                 <DocumentDuplicateIcon v-if="!props.loadingCopy" class="h-8 w-8" />
@@ -31,7 +30,7 @@
                         ? 'bg-gray-500 text-gray-700 border-gray-700 cursor-not-allowed'
                         : 'border-gray-500 bg-gray-400 text-gray-500 hover:text-brand_secondary hover:border-brand_secondary hover:bg-white cursor-pointer'
                 ]"
-                :aria-label="$t('aria.downloadContract')"
+                :aria-label="$t('editor.download.aria')"
                 :aria-disabled="props.loadingDownload"
             >
                 <DownloadIcon v-if="!props.loadingDownload" class="h-8 w-8" />
@@ -50,6 +49,9 @@ import { RefreshIcon, DocumentDuplicateIcon, DownloadIcon } from '@heroicons/vue
 
 import { useNotifications } from '@/plugins/notifications';
 const { setSnackbar } = useNotifications();
+
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
 
 const emit = defineEmits(['downloadContract']);
 const props = defineProps({
@@ -79,18 +81,18 @@ const loadingCopy = ref(false);
 const copyContract = () => {
     loadingCopy.value = true;
     if (!navigator.clipboard) {
-        setSnackbar('Cannot copy contract code to clipboard!', 'error', 5);
+        setSnackbar(t('errors.contract.notCopyCode'), 'error', 5);
         return;
     }
     navigator.clipboard
         .writeText(props.code)
         .then(() => {
-            setSnackbar('Copied to clipboard!', 'default', 5);
+            setSnackbar(t('success.general'), 'default', 5);
             loadingCopy.value = false;
         })
         .catch((err) => {
             console.error(err);
-            setSnackbar('Cannot copy contract code to clipboard!', 'error', 5);
+            setSnackbar(t('errors.contract.notCopyCode'), 'error', 5);
             loadingCopy.value = false;
         });
 };

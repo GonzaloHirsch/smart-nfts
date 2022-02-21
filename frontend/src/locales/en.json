@@ -6,28 +6,14 @@
         "anchorLinks": "Link to {0}",
         "imageUploadRemove": "Remove the selected image",
         "copyContract": "Copy this contract",
-        "downloadContract": "Download this contract",
-        "exploreTransactionHash": "See this transaction hash in Etherscan"
+        "exploreTransactionHash": "See this transaction hash in Etherscan",
+        "removeEntry": "Remove this metadata field"
     },
     "placeholders": {
         "contractId": "Contract ID..."
     },
     "labels": {
         "contractId": "Contract ID"
-    },
-    "create": {
-        "new": {
-            "hero": {
-                "title": "Create an NFT",
-                "subtitle": "Create a <strong>new NFT</strong> or continue the creation of an <strong>existing contract</strong>"
-            }
-        },
-        "existing": {
-            "hero": {
-                "title": "Continue your NFT",
-                "subtitle": "Input the <strong>contract ID</strong> for the contract you want to <strong>continue editing</strong>"
-            }
-        }
     },
     "footer": {
         "made": "Made by",
@@ -183,9 +169,18 @@
             "nameUsed": "Name for property already in use"
         },
         "buttons": {
-            "save": "Save",
-            "deploy": "Deploy",
-            "verify": "Verify",
+            "deploy": {
+                "text": "Deploy",
+                "aria": "Deploy the NFT contract"
+            },
+            "verify": {
+                "text": "Verify",
+                "aria": "Verify the NFT contract"
+            },
+            "expand": {
+                "ariaExpand": "Expand for more information",
+                "ariaContract": "See less information"
+            },
             "download": "Download"
         },
         "deploy": {
@@ -200,6 +195,15 @@
             "message": "Your contract is now verified. Be mindful, if you edit the contract you will have to deploy it and verify it again.",
             "error": "Error verifying contract. If the contract was deployed in the last 5 minutes, please verify the transaction is mined on Etherscan and try again."
         },
+        "download": {
+            "message": "Contract is downloaded!",
+            "error": "Error downloading the contract, please try again later.",
+            "aria": "Download this contract"
+        },
+        "copyCode": {
+            "error": "Error downloading the contract, please try again later.",
+            "aria": "Copy this contract"
+        },
         "email": {
             "title": "Contract Reminder",
             "loading": "Sending email, please wait...",
@@ -208,10 +212,28 @@
             "error": "Error sending email, you exceeded the allowed quota per contract. Quota is one email every 8 hours.",
             "button": "Send Email"
         },
+        "metadata": {
+            "image": "Image",
+            "fields": "Properties",
+            "note": "<strong>Note:</strong> By default, all tokens have name & description",
+            "addAttribute": {
+                "text": "Add Attribute",
+                "aria": "Add another attribute to the schema"
+            },
+            "titles": {
+                "name": "Name",
+                "type": "Type",
+                "display": "Display"
+            }
+        },
         "prepare": "Preparing the editor, hang tight...",
         "lastSaved": "Last saved: {0}",
         "lastSavedSimple": "Last saved",
-        "saving": "Saving..."
+        "saving": "Saving...",
+        "meta": {
+            "title": "Contract Editor",
+            "description": "Create or edit your smart contract, and define the metadata your NFT will have. Deploy, verify, and download the generated NFT Smart Contract."
+        }
     },
     "showcase": {
         "title": "Tokens",
@@ -344,7 +366,9 @@
             "number": "Number - 1234567890",
             "image": "Drop the image here or <span class=\"underline\">click here</span> to select it...",
             "long_string": "Long text - Write your long text here",
-            "contractId": "Contract ID..."
+            "contractId": "Contract ID...",
+            "contractName": "SmartNFTs...",
+            "contractSymbol": "SNFT..."
         },
         "text": {
             "boost_number": "Boost Number",
@@ -354,8 +378,27 @@
             "long_string": "Long Text",
             "image": "File: {0}",
             "contractId": "Contract ID",
+            "contractName": "Contract Name",
+            "contractSymbol": "Contract Symbol",
             "name": "Name (text)",
-            "description": "Description (long text)"
+            "description": "Description (long text)",
+            "extensions": {
+                "mintable": "Mintable",
+                "pausable": "Pausable",
+                "burnable": "Burnable",
+                "enumerable": "Enumerable",
+                "uriStorage": "URIStorage",
+                "uniqueStorage": "Unique Storage",
+                "autoincrementId": "Auto Increment IDs",
+                "metadata": {
+                    "image": "Has Image?"
+                }
+            },
+            "metadata": {
+                "name": "Field Name",
+                "type": "Field Type",
+                "display": "Display Type"
+            }
         },
         "errors": {
             "address": "Invalid address",
@@ -470,7 +513,13 @@
         "contract": {
             "notExist": "Contract doesn't exist!",
             "notMint": "Contract cannot mint tokens!",
-            "notDeployed": "Contract has not been deployed yet!"
+            "notDeployed": "Contract has not been deployed yet!",
+            "notCopyId": "Cannot copy contract ID to clipboard!",
+            "notCopyAddress": "Cannot copy contract address to clipboard!",
+            "notCopyCode": "Cannot copy contract code to clipboard!"
         }
+    },
+    "success": {
+        "copy": "Copied to clipboard!"
     }
 }

@@ -14,7 +14,7 @@
             :validations="['required', 'metadataName', 'max20']"
             :hideLabel="true"
             :hideError="true"
-            :label="'Field Name'"
+            :label="$t('inputs.text.metadata.name')"
             v-model="metadataField.name"
             :value="props.name"
             @validInput="handleValidInput"
@@ -28,7 +28,7 @@
             :id="`type-${props.id}`"
             format="primary-white"
             :hideLabel="true"
-            :label="'Field Type'"
+            :label="$t('inputs.text.metadata.type')"
             v-model="metadataField.type"
             :value="props.type"
             class="col-span-3"
@@ -40,7 +40,7 @@
             :id="`display-${props.id}`"
             format="primary-white"
             :hideLabel="true"
-            :label="'Field Type'"
+            :label="$t('inputs.text.metadata.display')"
             v-model="metadataField.display"
             :value="props.display"
             :disabled="metadataField.type !== 'number'"
@@ -49,7 +49,11 @@
             :options="displayOptions"
         />
         <div class="flex justify-center items-center col-span-1">
-            <XCircleIcon @click="handleRemoveEntry" class="w-8 h-8 cursor-pointer hover:text-error transition duration-200" />
+            <XCircleIcon
+                @click="handleRemoveEntry"
+                :aria-label="$t('aria.removeEntry')"
+                class="w-8 h-8 cursor-pointer hover:text-error transition duration-200"
+            />
         </div>
     </div>
     <span v-if="metadataField.error" class="text-error text-xs">{{ $t(metadataField.error) }}</span>

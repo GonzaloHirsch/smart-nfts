@@ -45,12 +45,19 @@
                             </span>
                         </v-tooltip>
                         <v-tooltip :text="$t('editor.contract.idCopy')">
-                            <span @click="copyContractId" class="expandable-head--icon-wrapper hover:cursor-pointer hover:text-brand_secondary">
+                            <span
+                                @click="copyContractId"
+                                :aria-label="$t('editor.contract.idCopy')"
+                                class="expandable-head--icon-wrapper hover:cursor-pointer hover:text-brand_secondary"
+                            >
                                 <DocumentIcon class="expandable-head--icon" />
                             </span>
                         </v-tooltip>
                         <v-tooltip v-if="isDeployed" :text="$t('editor.contract.deployCopy')">
-                            <span @click="copyContractAddress" class="expandable-head--icon-wrapper hover:cursor-pointer hover:text-brand_secondary"
+                            <span
+                                @click="copyContractAddress"
+                                :aria-label="$t('editor.contract.deployCopy')"
+                                class="expandable-head--icon-wrapper hover:cursor-pointer hover:text-brand_secondary"
                                 ><GlobeAltIcon class="expandable-head--icon"
                             /></span>
                         </v-tooltip>
@@ -59,6 +66,7 @@
                         </v-tooltip>
                         <v-tooltip v-if="isDeployed" :text="$t('editor.contract.interact')">
                             <router-link
+                                :aria-label="$t('editor.contract.interact')"
                                 class="expandable-head--icon-wrapper hover:cursor-pointer hover:text-brand_secondary"
                                 :to="`/interact/${storedContract.id}`"
                                 ><PlayIcon class="expandable-head--icon"
@@ -84,10 +92,18 @@
                                 </template>
                                 <template #actions>
                                     <v-tooltip :text="$t('editor.contract.idCopy')">
-                                        <DocumentDuplicateIcon @click="copyContractId" class="expandable-content--icon-action" />
+                                        <DocumentDuplicateIcon
+                                            @click="copyContractId"
+                                            :aria-label="$t('editor.contract.idCopy')"
+                                            class="expandable-content--icon-action"
+                                        />
                                     </v-tooltip>
                                     <v-tooltip v-if="canSendEmail" :text="$t('editor.contract.reminder')" class="ml-xs">
-                                        <MailIcon @click="openContractReminderModal" class="expandable-content--icon-action" />
+                                        <MailIcon
+                                            @click="openContractReminderModal"
+                                            :aria-label="$t('editor.contract.reminder')"
+                                            class="expandable-content--icon-action"
+                                        />
                                     </v-tooltip>
                                 </template>
                             </v-information-item>
@@ -103,13 +119,17 @@
                                 </template>
                                 <template #actions>
                                     <v-tooltip :text="$t('editor.contract.deployCopy')">
-                                        <DocumentDuplicateIcon @click="copyContractAddress" class="expandable-content--icon-action" />
+                                        <DocumentDuplicateIcon
+                                            @click="copyContractAddress"
+                                            :aria-label="$t('editor.contract.deployCopy')"
+                                            class="expandable-content--icon-action"
+                                        />
                                     </v-tooltip>
-                                    <v-tooltip :text="$t('editor.contract.view')" class=" ml-xs">
+                                    <v-tooltip :text="$t('editor.contract.view')" class="ml-xs">
                                         <a
                                             class="expandable-content--icon-action"
                                             :href="`https://${storedContract.deployment.network}.etherscan.io/address/${storedContract.deployment.address}`"
-                                            aria-label="View on Etherscan"
+                                            :aria-label="$t('editor.contract.view')"
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             ><v-etherscan-logo class="expandable-content--icon-action"
@@ -245,12 +265,6 @@ const handleEmailModalClose = () => {
         isLoadingModal.value = false;
     }, 500);
 };
-
-import { useMeta } from 'vue-meta';
-useMeta({
-    title: 'Contract Editor',
-    description: 'This is the homepage to our project'
-});
 
 const contract = ref(t('editor.contract.empty'));
 const storedContract = ref({});
@@ -388,27 +402,28 @@ const handleDownloadContract = () => {
     api.downloadContract(route.params.id)
         .then((res) => {
             isLoadingDownload.value = false;
-            setSnackbar('Contract is downloaded!', 'default', 5);
+            setSnackbar(t('editor.download.message'), 'default', 5);
         })
         .catch((err) => {
             isLoadingDownload.value = false;
             console.log(err);
+            setSnackbar(t('editor.download.error'), 'error', 5);
         });
 };
 
 const copyContractId = () => {
     if (!navigator.clipboard) {
-        setSnackbar('Cannot copy contract ID to clipboard!', 'error', 5);
+        setSnackbar(t('errors.contract.notCopyId'), 'error', 5);
         return;
     }
     navigator.clipboard
         .writeText(route.params.id)
         .then(() => {
-            setSnackbar('Copied to clipboard!', 'default', 5);
+            setSnackbar(t('success.copy'), 'default', 5);
         })
         .catch((err) => {
             console.error(err);
-            setSnackbar('Cannot copy contract ID to clipboard!', 'error', 5);
+            setSnackbar(t('errors.contract.notCopyId'), 'error', 5);
         });
 };
 
@@ -420,11 +435,11 @@ const copyContractAddress = () => {
     navigator.clipboard
         .writeText(storedContract.value.deployment.address)
         .then(() => {
-            setSnackbar('Copied to clipboard!', 'default', 5);
+            setSnackbar(t('success.copy'), 'default', 5);
         })
         .catch((err) => {
             console.error(err);
-            setSnackbar('Cannot copy contract address to clipboard!', 'error', 5);
+            setSnackbar(t('errors.contract.notCopyAddress'), 'error', 5);
         });
 };
 
@@ -442,6 +457,12 @@ const startWatchingHeight = () => {
     });
     resizeObserver.observe(editorContainer.value);
 };
+
+import { useMeta } from 'vue-meta';
+useMeta({
+    title: t('editor.meta.title'),
+    description: t('editor.meta.description')
+});
 </script>
 
 <style>

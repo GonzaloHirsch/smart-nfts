@@ -10,9 +10,9 @@
                         id="name"
                         name="name"
                         format="primary-white"
-                        placeholder="SmartNFT..."
+                        :placeholder="$t('inputs.placeholder.contractName')"
                         :validations="['required', 'name']"
-                        label="Contract Name"
+                        :label="$t('inputs.text.contractName')"
                         v-model="contractData.name"
                         class="w-full pb-2"
                         @validInput="() => handleValidInput('name')"
@@ -22,9 +22,9 @@
                         id="symbol"
                         name="symbol"
                         format="primary-white"
-                        placeholder="SNFT..."
+                        :placeholder="$t('inputs.placeholder.contractSymbol')"
                         :validations="['required', 'symbol']"
-                        label="Contract Symbol"
+                        :label="$t('inputs.text.contractSymbol')"
                         v-model="contractData.symbol"
                         class="w-full pt-2"
                         @validInput="() => handleValidInput('symbol')"
@@ -37,8 +37,8 @@
                 <v-checkbox
                     id="isMintable"
                     name="isMintable"
-                    placeholder="Mintable"
-                    label="Mintable"
+                    :placeholder="$t('inputs.text.extensions.mintable')"
+                    :label="$t('inputs.text.extensions.mintable')"
                     v-model="contractData.isMintable"
                     class="w-full md:w-6/12"
                 />
@@ -47,40 +47,40 @@
                     <v-checkbox
                         id="isAutoIncrementIds"
                         name="isAutoIncrementIds"
-                        placeholder="Auto Increment IDs"
-                        label="Auto Increment IDs"
+                        :placeholder="$t('inputs.text.extensions.autoincrementId')"
+                        :label="$t('inputs.text.extensions.autoincrementId')"
                         v-model="contractData.isAutoIncrementIds"
                     />
                 </div>
                 <v-checkbox
                     id="isPausable"
                     name="isPausable"
-                    placeholder="Pausable"
-                    label="Pausable"
+                    :placeholder="$t('inputs.text.extensions.pausable')"
+                    :label="$t('inputs.text.extensions.pausable')"
                     v-model="contractData.isPausable"
                     class="w-full md:w-6/12"
                 />
                 <v-checkbox
                     id="isBurnable"
                     name="isBurnable"
-                    placeholder="Burnable"
-                    label="Burnable"
+                    :placeholder="$t('inputs.text.extensions.burnable')"
+                    :label="$t('inputs.text.extensions.burnable')"
                     v-model="contractData.isBurnable"
                     class="w-full md:w-6/12"
                 />
                 <v-checkbox
                     id="isEnumerable"
                     name="isEnumerable"
-                    placeholder="Enumerable"
-                    label="Enumerable"
+                    :placeholder="$t('inputs.text.extensions.enumerable')"
+                    :label="$t('inputs.text.extensions.enumerable')"
                     v-model="contractData.isEnumerable"
                     class="w-full md:w-6/12"
                 />
                 <v-checkbox
                     id="isURIStorage"
                     name="isURIStorage"
-                    placeholder="URIStorage"
-                    label="URIStorage"
+                    :placeholder="$t('inputs.text.extensions.uriStorage')"
+                    :label="$t('inputs.text.extensions.uriStorage')"
                     v-model="contractData.isURIStorage"
                     class="w-full md:w-6/12"
                 />
@@ -89,26 +89,26 @@
                     <v-checkbox
                         id="isUniqueStorage"
                         name="isUniqueStorage"
-                        placeholder="Unique Storage"
-                        label="Unique Storage"
+                        :placeholder="$t('inputs.text.extensions.uniqueStorage')"
+                        :label="$t('inputs.text.extensions.uniqueStorage')"
                         v-model="contractData.isUniqueStorage"
                     />
                 </div>
             </div>
             <div v-if="contractData.isURIStorage" class="py-sm">
                 <h5 class="form--title">{{ $t('editor.contract.metadata') }} <QuestionMarkCircleIcon class="form--title-icon" /></h5>
-                <p class="text-xl text-brand_secondary">Image</p>
+                <p class="text-xl text-brand_secondary">{{$t('editor.metadata.image')}}</p>
                 <v-checkbox
                     id="hasImage"
                     name="hasImage"
-                    placeholder="Has Image?"
+                    :placeholder="$t('inputs.text.extensions.metadata.image')"
                     :label="$t('editor.contract.hasImage')"
                     v-model="contractData.hasImage"
                     class="w-full md:w-6/12"
                 />
-                <p class="text-xl text-brand_secondary mt-sm">Fields</p>
+                <p class="text-xl text-brand_secondary mt-sm">{{$t('editor.metadata.fields')}}</p>
                 <v-metadata v-model="contractData.metadata" />
-                <p class="mt-xs text-body_xs"><strong>Note:</strong> By default, all tokens have name & description</p>
+                <p class="mt-xs text-body_xs" v-html="$t('editor.metadata.note')"></p>
             </div>
         </div>
         <!-- ACTIONS -->
@@ -116,26 +116,26 @@
             <v-button
                 v-if="props.canDeploy"
                 :format="isLoading ? 'disabled' : 'secondary'"
-                aria="Deploy the NFT contract"
+                :aria="$t('editor.buttons.deploy.aria')"
                 :external="false"
                 :white="false"
                 size="medium"
                 :loading="isLoading"
                 :disabled="isLoading"
-                :text="$t('editor.buttons.deploy').toUpperCase()"
+                :text="$t('editor.buttons.deploy.text').toUpperCase()"
                 class="editor--button"
                 @click="isLoading ? undefined : deployContract()"
             />
             <v-button
                 v-if="!props.isVerified && props.canVerify"
                 :format="isLoading ? 'disabled' : 'secondary'"
-                aria="Verify the NFT contract"
+                :aria="$t('editor.buttons.verify.aria')"
                 :external="false"
                 :white="false"
                 size="medium"
                 :loading="isLoading"
                 :disabled="isLoading"
-                :text="$t('editor.buttons.verify').toUpperCase()"
+                :text="$t('editor.buttons.verify.text').toUpperCase()"
                 class="editor--button"
                 @click="isLoading ? undefined : verifyContract()"
             />
@@ -147,6 +147,7 @@
                     'w-10 h-10 text-typography_secondary transform duration-200 cursor-pointer absolute right-0 mr-xs',
                     isExpanded ? 'rotate-0' : 'rotate-180'
                 ]"
+                :aria-label="isExpanded ? $t('editor.buttons.expand.ariaContract') : $t('editor.buttons.expand.ariaExpand')"
                 @click="toggleExpanded"
             />
         </div>
@@ -173,6 +174,9 @@ const recaptcha = useRecaptcha();
 
 import { useNotifications } from '@/plugins/notifications';
 const { setSnackbar } = useNotifications();
+
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
 
 const props = defineProps({
     name: {
@@ -331,11 +335,11 @@ const toggleExpanded = () => {
     .editor--button:not(:first-of-type):not(:last-of-type) {
         @apply mx-sm mt-0;
     }
-    
+
     .editor--button:first-of-type {
         @apply mr-sm mt-0;
     }
-    
+
     .editor--button:last-of-type {
         @apply ml-sm mt-0;
     }
