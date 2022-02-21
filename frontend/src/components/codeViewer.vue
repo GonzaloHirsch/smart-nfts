@@ -87,7 +87,7 @@ const copyContract = () => {
     navigator.clipboard
         .writeText(props.code)
         .then(() => {
-            setSnackbar(t('success.general'), 'default', 5);
+            setSnackbar(t('success.copy'), 'default', 5);
             loadingCopy.value = false;
         })
         .catch((err) => {

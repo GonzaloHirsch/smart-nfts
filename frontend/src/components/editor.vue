@@ -15,8 +15,8 @@
                         :label="$t('inputs.text.contractName')"
                         v-model="contractData.name"
                         class="w-full pb-2"
-                        @validInput="() => handleValidInput('name')"
-                        @invalidInput="(error) => handleInvalidInput('name', error)"
+                        @validInput="() => handleValidInput('name', false)"
+                        @invalidInput="(error) => handleInvalidInput('name', error, false)"
                     />
                     <v-input
                         id="symbol"
@@ -27,8 +27,8 @@
                         :label="$t('inputs.text.contractSymbol')"
                         v-model="contractData.symbol"
                         class="w-full pt-2"
-                        @validInput="() => handleValidInput('symbol')"
-                        @invalidInput="(error) => handleInvalidInput('symbol', error)"
+                        @validInput="() => handleValidInput('symbol', false)"
+                        @invalidInput="(error) => handleInvalidInput('symbol', error, false)"
                     />
                 </div>
             </div>
@@ -47,6 +47,7 @@
                     <v-checkbox
                         id="isAutoIncrementIds"
                         name="isAutoIncrementIds"
+                        class="my-1"
                         :placeholder="$t('inputs.text.extensions.autoincrementId')"
                         :label="$t('inputs.text.extensions.autoincrementId')"
                         v-model="contractData.isAutoIncrementIds"
@@ -78,13 +79,29 @@
                 />
                 <div class="flex flex-row">
                     <span class="border-l-2 border-black mx-xs"></span>
-                    <v-checkbox
-                        id="isLimitSupply"
-                        name="isLimitSupply"
-                        placeholder="Limit Supply"
-                        label="Limit Supply"
-                        v-model="contractData.isLimitSupply"
-                    />
+                    <div class="flex flex-col">
+                        <v-checkbox
+                            id="isLimitSupply"
+                            name="isLimitSupply"
+                            class="my-1"
+                            :placeholder="$t('inputs.text.extensions.limitSupply.name')"
+                            :label="$t('inputs.text.extensions.limitSupply.name')"
+                            v-model="contractData.isLimitSupply"
+                        />
+                        <v-input
+                            v-if="contractData.isLimitSupply"
+                            id="supply"
+                            name="supply"
+                            format="primary-white"
+                            :placeholder="$t('inputs.placeholder.uint256')"
+                            :validations="['required', 'uint256']"
+                            :label="$t('inputs.text.extensions.limitSupply.count')"
+                            v-model="contractData.extensionInputs.maxSupply"
+                            class="w-full mb-1"
+                            @validInput="() => handleValidInput('maxSupply', true)"
+                            @invalidInput="(error) => handleInvalidInput('maxSupply', error, true)"
+                        />
+                    </div>
                 </div>
                 <v-checkbox
                     id="isURIStorage"
@@ -99,6 +116,7 @@
                     <v-checkbox
                         id="isUniqueStorage"
                         name="isUniqueStorage"
+                        class="my-1"
                         :placeholder="$t('inputs.text.extensions.uniqueStorage')"
                         :label="$t('inputs.text.extensions.uniqueStorage')"
                         v-model="contractData.isUniqueStorage"
@@ -107,7 +125,7 @@
             </div>
             <div v-if="contractData.isURIStorage" class="py-sm">
                 <h5 class="form--title">{{ $t('editor.contract.metadata') }} <QuestionMarkCircleIcon class="form--title-icon" /></h5>
-                <p class="text-xl text-brand_secondary">{{$t('editor.metadata.image')}}</p>
+                <p class="text-xl text-brand_secondary">{{ $t('editor.metadata.image') }}</p>
                 <v-checkbox
                     id="hasImage"
                     name="hasImage"
@@ -116,7 +134,7 @@
                     v-model="contractData.hasImage"
                     class="w-full md:w-6/12"
                 />
-                <p class="text-xl text-brand_secondary mt-sm">{{$t('editor.metadata.fields')}}</p>
+                <p class="text-xl text-brand_secondary mt-sm">{{ $t('editor.metadata.fields') }}</p>
                 <v-metadata v-model="contractData.metadata" />
                 <p class="mt-xs text-body_xs" v-html="$t('editor.metadata.note')"></p>
             </div>
@@ -174,7 +192,7 @@ import vMetadata from '@/components/editor/metadata/metadata.vue';
 import vCheckbox from '@/components/editor/checkbox.vue';
 import { QuestionMarkCircleIcon, ChevronUpIcon } from '@heroicons/vue/solid';
 import { ref, watch, computed } from 'vue';
-import { mapApiExtensionsToForm, mapApiMetadataToForm } from '@/js/mapper.js';
+import { mapApiExtensionsToForm, mapExtensionInputsToForm, mapApiMetadataToForm } from '@/js/mapper.js';
 
 import { useApi } from '@/plugins/api';
 const api = useApi();
@@ -201,6 +219,10 @@ const props = defineProps({
         type: Array,
         default: []
     },
+    extensionInputs: {
+        type: Object,
+        default: {}
+    },
     metadata: {
         type: Object,
         default: {}
@@ -225,6 +247,7 @@ const props = defineProps({
 
 // Get a mapped version of the extension to see which one is enabled
 const mappedExtensions = mapApiExtensionsToForm(props.extensions);
+const mappedInputs = mapExtensionInputsToForm(props.extensionInputs);
 const [hasImage, mappedMetadata] = mapApiMetadataToForm(props.metadata);
 const contractData = ref({
     name: props.name,
@@ -238,9 +261,11 @@ const contractData = ref({
     isURIStorage: mappedExtensions.isURIStorage ?? false,
     isUniqueStorage: mappedExtensions.isUniqueStorage ?? false,
     hasImage: hasImage ?? true,
-    metadata: mappedMetadata ?? []
+    metadata: mappedMetadata ?? [],
+    extensionInputs: mappedInputs || {}
 });
 const inputsErrors = ref({});
+const extensionInputsErrors = ref({});
 const isLoading = ref(false);
 
 const emit = defineEmits(['contractChanged', 'verifyContract', 'deployContract']);
@@ -251,7 +276,7 @@ const deployContract = () => {
             emit('deployContract');
             isLoading.value = false;
         } else {
-            setSnackbar('You are not human, cannot use this!', 'error', 5);
+            setSnackbar(t('errors.robot'), 'error', 5);
             isLoading.value = false;
         }
     });
@@ -261,12 +286,20 @@ const verifyContract = () => {
 };
 
 // Error handling
-const handleValidInput = (name) => {
-    inputsErrors.value[name] = undefined;
+const handleValidInput = (name, isExtensionInput) => {
+    if (isExtensionInput) {
+        extensionInputsErrors.value[name] = undefined;
+    } else {
+        inputsErrors.value[name] = undefined;
+    }
 };
 
-const handleInvalidInput = (name, error) => {
-    inputsErrors.value[name] = error;
+const handleInvalidInput = (name, error, isExtensionInput) => {
+    if (isExtensionInput) {
+        extensionInputsErrors.value[name] = error;
+    } else {
+        inputsErrors.value[name] = error;
+    }
 };
 
 const validMetadata = computed(() => {
@@ -278,12 +311,17 @@ watch(
         // Need to verify that both are selected not to emit a fake event
         if (
             ((contractData.value.isAutoIncrementIds && contractData.value.isMintable) || !contractData.value.isAutoIncrementIds) &&
-            ((contractData.value.isLimitSupply && contractData.value.isEnumerable) || !contractData.value.isLimitSupply) &&
+            ((contractData.value.isLimitSupply &&
+                contractData.value.isEnumerable &&
+                contractData.value.extensionInputs.maxSupply !== null &&
+                contractData.value.extensionInputs.maxSupply !== undefined &&
+                contractData.value.extensionInputs.maxSupply !== '') ||
+                !contractData.value.isLimitSupply) &&
             ((contractData.value.isUniqueStorage && contractData.value.isURIStorage) || !contractData.value.isUniqueStorage) &&
             validMetadata.value
         ) {
             // Don't send the update event if the name or symbol are invalid
-            if (!inputsErrors.value['name'] && !inputsErrors.value['symbol']) {
+            if (!inputsErrors.value['name'] && !inputsErrors.value['symbol'] && !extensionInputsErrors.value['maxSupply']) {
                 emit('contractChanged', contractData.value);
             }
         }

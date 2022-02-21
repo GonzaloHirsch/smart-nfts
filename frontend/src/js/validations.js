@@ -116,8 +116,8 @@ const isAddress = (address) => {
 };
 
 const isUint256 = (num) => {
-    if (isNaN(num)) return false;
-    let _num = parseFloat(num, 10);
+    if (isNaN(num) || num.toString().includes('.')) return false;
+    let _num = parseInt(num, 10);
     return _num >= 0 && _num <= uint256Limit;
 };
 

@@ -389,6 +389,10 @@
                 "enumerable": "Enumerable",
                 "uriStorage": "URIStorage",
                 "uniqueStorage": "Unique Storage",
+                "limitSupply": {
+                    "name": "Limit Supply",
+                    "count": "Supply Number"
+                },
                 "autoincrementId": "Auto Increment IDs",
                 "metadata": {
                     "image": "Has Image?"

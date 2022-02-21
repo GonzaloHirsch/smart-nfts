@@ -1,10 +1,9 @@
-import { EXTENSIONS, CONTRACT_TYPES, STATE_MUTABILITY, VISIBILITY } from "../constants/contract.constants";
-import { IContractExtension, IContractLibrary, IContractMethod, IContractVariable } from "../interfaces/contract.interface";
-import {staticImplements} from '../helpers/global.helper';
+import { EXTENSIONS, CONTRACT_TYPES, STATE_MUTABILITY, VISIBILITY } from '../constants/contract.constants';
+import { IContractExtension, IContractLibrary, IContractMethod, IContractVariable } from '../interfaces/contract.interface';
+import { staticImplements } from '../helpers/global.helper';
 
 @staticImplements<IContractExtension>()
 export abstract class LimitSupply {
-    
     public static getExtensionOZImports(): string[] {
         return [];
     }
@@ -19,11 +18,13 @@ export abstract class LimitSupply {
     }
 
     public static getExtensionVariables(): IContractVariable[] {
-        return [{
-            name: '_maxSupply',
-            type: CONTRACT_TYPES.UINT256,
-            visibility: VISIBILITY.PRIVATE
-        }];
+        return [
+            {
+                name: '_maxSupply',
+                type: CONTRACT_TYPES.UINT256,
+                visibility: VISIBILITY.PRIVATE
+            }
+        ];
     }
     public static getExtensionConstructorContent(): string[] {
         return ['_maxSupply = %maxSupply%;'];
@@ -32,18 +33,15 @@ export abstract class LimitSupply {
         return [
             {
                 name: 'safeMint',
-                params: [{
-                    name: 'hash',
-                    type: CONTRACT_TYPES.STRING_MEMORY
-                }],
+                params: [],
                 mandatory: false,
-                content: ['require(_maxSupply < totalSupply(), \'Exceeding max token supply\');\n'],
+                content: ["require(totalSupply() < _maxSupply, 'Exceeding max token supply');\n"],
                 visibility: VISIBILITY.PUBLIC,
                 options: ''
-            },
+            }
         ];
-    }    
+    }
     public static getParentExtension(): EXTENSIONS | null {
         return null;
-    }    
+    }
 }

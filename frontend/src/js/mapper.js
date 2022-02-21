@@ -6,6 +6,7 @@ export const mapFormToApiData = (formData) => {
         name: formData.name,
         symbol: formData.symbol,
         extensions: [],
+        inputs: {...formData.extensionInputs},
         metadata: {
             hasImage: formData.hasImage,
             attributes: formData.metadata.map(field => {
@@ -56,4 +57,9 @@ export const mapApiMetadataToForm = (metadata) => {
             display: field.displayType
         }
     })];
+};
+
+// API --> Front
+export const mapExtensionInputsToForm = (inputs) => {
+    return inputs;
 };

@@ -32,6 +32,10 @@ export const getContractLicense = (license: string): string => {
     return `// SPDX-License-Identifier: ${license}` + newLine();
 }
 
+export const getContractAttribution = (): string => {
+    return `// Contract created with Smart NFTs: https://smart-nfts.gonzalohirsch.com/` + newLine();
+}
+
 export const getContractStarter = (name: string, extensions: FINAL_EXTENSIONS[]): string => {
     const filteredExtensions = extensions.filter(ext => ext !== FINAL_EXTENSIONS.ERC721);
     return `contract ${name} is ERC721${filteredExtensions.length > 0 ? ',' : ''} ${filteredExtensions.join(', ')}` + newLine();

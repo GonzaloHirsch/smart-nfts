@@ -31,6 +31,7 @@
                     :name="storedContract.name"
                     :symbol="storedContract.symbol"
                     :extensions="storedContract.extensions"
+                    :extensionInputs="storedContract?.inputs || {}"
                     :metadata="storedContract.metadata"
                     :isVerified="isVerified"
                     :canVerify="canVerify"

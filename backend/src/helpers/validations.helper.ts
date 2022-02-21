@@ -83,7 +83,7 @@ const isAddress = (address: string): boolean => {
 };
 
 const isUint256 = (num: number): boolean => {
-    if (isNaN(num)) return false;
+    if (isNaN(num) || num.toString().includes('.')) return false;
     return num >= 0 && num <= uint256Limit;
 };
 

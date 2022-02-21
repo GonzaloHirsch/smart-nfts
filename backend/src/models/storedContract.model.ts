@@ -40,7 +40,7 @@ const StoredConstractSchema = new Schema(
         name: { type: String },
         symbol: { type: String },
         extensions: [{ type: String }],
-        input: { type: {}},
+        inputs: { type: {}},
         digest: { type: String },
         deployment: {
             address: { type: String, required: false },
