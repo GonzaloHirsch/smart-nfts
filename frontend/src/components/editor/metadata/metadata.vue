@@ -1,9 +1,9 @@
 <template>
     <div class="flex flex-col mt-xs" autocomplete="off">
         <div class="grid grid-cols-7" v-if="props.modelValue.length > 0">
-            <span class="col-span-2 pl-xs font-bold">Name</span>
-            <span class="col-span-2 pl-xs font-bold">Type</span>
-            <span class="col-span-2 pl-xs font-bold">Display</span>
+            <span class="col-span-2 pl-xs font-bold">{{ $t('editor.metadata.titles.name') }}</span>
+            <span class="col-span-2 pl-xs font-bold">{{ $t('editor.metadata.titles.type') }}</span>
+            <span class="col-span-2 pl-xs font-bold">{{ $t('editor.metadata.titles.display') }}</span>
         </div>
         <v-metadata-field
             v-for="(field, index) in props.modelValue"
@@ -17,15 +17,16 @@
         />
         <span
             @click="canAddField ? handleAddField() : undefined"
+            :aria-label="$t('editor.metadata.addAttribute.aria')"
             :class="['w-fit flex transition duration-200 mt-xs', canAddField ? 'cursor-pointer hover:text-brand_secondary' : 'text-gray-500']"
-            ><PlusCircleIcon class="w-6 h-6 mr-1" /> Add Attribute</span
+            ><PlusCircleIcon class="w-6 h-6 mr-1" /> {{ $t('editor.metadata.addAttribute.text') }}</span
         >
     </div>
 </template>
 
 <script setup>
 import vMetadataField from '@/components/editor/metadata/metadataField.vue';
-import { ref, computed } from 'vue';
+import { computed } from 'vue';
 import { PlusCircleIcon } from '@heroicons/vue/solid';
 
 const emit = defineEmits(['update:modelValue']);
