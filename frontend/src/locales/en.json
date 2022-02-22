@@ -232,17 +232,60 @@
                 "title": "Contract Information",
                 "copy": "Contract information mainly refers to the <pre class=\"code\"><code>name</code></pre> and <pre class=\"code\"><code>symbol</code></pre> properties of the Smart Contract. <pre class=\"code\"><code>name</code></pre> refers to the collection itself (e.g., the \"CustomTokens\" collection) and will be displayed on most external sites when referring to the Smart Contract. <pre class=\"code\"><code>symbol</code></pre> refers to a way to display the number of tokens in the set (e.g., the symbol for \"CustomTokens\" can be \"CTKN\" and that way, someone can have 3 CTKN)."
             },
+            "creation": {
+                "title": "Creation",
+                "copy_1": "With each extension you choose, you add more functionality to your contract. Some extensions are variations of others, so when selecting some, we'll add others for you (e.g., choosing \"Auto Increment IDs\" activates \"Mintable\").",
+                "copy_2": "Previewing the contract before and after adding an extension can help you understand the changes and how the Solidity code works.",
+                "mintable": {
+                    "title": "Mintable",
+                    "copy_1": "The <pre class=\"code\"><code>mintable</code></pre> extension allows the owner of the contract to emit new NFTs. These tokens are simple, just a user-defined ID, and get automatically transferred to the specified address during creation. If you combine this extension with <pre class=\"code\"><code>URI Storage</code></pre>, the NFTs can have metadata, making them more valuable.",
+                    "autoincrementIds": {
+                        "title": "Auto Increment IDs",
+                        "copy_1": "The <pre class=\"code\"><code>autoincrement IDs</code></pre> extension automatically assigns incrementing IDs to the tokens, removing the <pre class=\"code\"><code>tokenId</code></pre> parameter from the minting."
+                    }
+                },
+                "pausable": {
+                    "title": "Pausable",
+                    "copy_1": "The <pre class=\"code\"><code>pausable</code></pre> extension authorizes the contract owner to pause (and unpause) token transfers, minting, and burning. Stopping the contract can be helpful if trades need to be prevented for evaluation or in an emergency scenario where there's a bug."
+                },
+                "burnable": {
+                    "title": "Burnable",
+                    "copy_1": "The <pre class=\"code\"><code>burnable</code></pre> extension allows the owner of a token to burn (destroy) it, which is irreversible. Burning tokens can reduce the supply of NFTs, possibly increasing the asset price, but that depends on the market."
+                },
+                "enumerable": {
+                    "title": "Enumerable",
+                    "copy_1": "The <pre class=\"code\"><code>enumerable</code></pre> extension helps add more features to the NFT contract. It allows the contract to publish its complete list of tokens and make them discoverable at the expense of more expensive transfers. It adds the following methods:",
+                    "copy_2": {
+                        "bullet_1": "<pre class=\"code\"><code>totalSupply()</code></pre>: Returns the total amount of tokens stored in the contract.",
+                        "bullet_2": "<pre class=\"code\"><code>tokenByIndex()</code></pre>: Returns <pre class=\"code\"><code>tokenId</code></pre> of an NFT stored at the provided index.",
+                        "bullet_3": "<pre class=\"code\"><code>tokenOfOwnerByIndex()</code></pre>: Returns the <pre class=\"code\"><code>tokenId</code></pre> of an NFT stored at a particular index of the owner's list of tokens."
+                    },
+                    "limitedSupply": {
+                        "title": "Limited Supply",
+                        "copy_1": "The <pre class=\"code\"><code>limited supply</code></pre> extension allows you to limit how many tokens the contract can mint. This extension can generate a more limited edition collection of NFTs. The <pre class=\"code\"><code>enumerable</code></pre> extension is needed to count the NFTs that exist."
+                    }
+                },
+                "uriStorage": {
+                    "title": "URI Storage",
+                    "copy_1": "The <pre class=\"code\"><code>URI storage</code></pre> extension allows setting a URI pointing to off-chain storage for each NFT. This off-chain data, also known as <a href=\"#metadata\" class=\"link\">metadata</a>, can add many extra attributes to the tokens to make them richer. If selected, a URI pointing to the metadata is needed when minting a new NFT (although this won't be necessary when interacting via Smart NFTs).",
+                    "uniqueStorage": {
+                        "title": "Unique Storage",
+                        "copy_1": "The <pre class=\"code\"><code>unique storage</code></pre> extension prevents token duplicated from being created. By duplicates, we mean tokens with the same metadata. Metadata gets hashed before minting the NFT to compare it and find copies. Note that it increases the cost of creating an NFT."
+                    }
+                }
+            },
             "metadata": {
                 "title": "Metadata",
                 "copy_1": "Metadata refers to all other properties that one can add to the token. The <pre class=\"code\"><code>name</code></pre> and <pre class=\"code\"><code>description</code></pre> properties are always required, but any attribute can be added, including images and other files.",
-                "copy_2": "Metadata is stored off-chain because it's expensive to keep it in the chain. That's where the <a class=\"link\" href=\"https://ipfs.io/\" target=\"_blank\" rel=\"noopener noreferer\">InterPlanetary File System</a> (IPFS) comes into play. IPFS is a protocol and a peer-to-peer network for storing and sharing information in a distributed filesystem, basically where we save our metadata. We only keep the link to the metadata in the blockchain, thus reducing the footprint of the contract. Given this, metadata is only allowed when activating the URI Storage extension, indicating the URIs will be stored.",
+                "copy_2": "Metadata is stored off-chain because it's expensive to keep it in the chain. That's where the <a class=\"link\" href=\"https://ipfs.io/\" target=\"_blank\" rel=\"noopener noreferer\">InterPlanetary File System</a> (IPFS) comes into play. IPFS is a protocol and a peer-to-peer network for storing and sharing information in a distributed filesystem, basically where we save our metadata. We only keep the link to the metadata in the blockchain, thus reducing the footprint of the contract. Given this, metadata is only allowed when activating the URI Storage extension, indicating the URIs will be stored. You can update the metadata schema after deploying the contract, and we'll still follow the latest schema you choose.",
                 "copy_3": "Extra attributes can be of four types. \"<em>String</em>\" is just plain text (e.g., a color), while \"<em>Number</em>\" can come in 3 different formats. \"<em>Boost Number</em>\" is a number displayed as a booster (e.g., height). \"<em>Boost Percentage</em>\" is a percentage also shown as a booster (e.g., strength). \"<em>Plain Number</em>\" is just a number (e.g., generation).",
                 "copy_4": "You can define the schema that each NFT's metadata will have. Metadata values are filled in when creating a token."
             },
             "deploy": {
                 "title": "Deploy",
                 "copy_1": "When you deploy your contract, you are publishing it to the world. Deployments happen in a testnet (a blockchain made for testing), specifically <a class=\"link\" href=\"https://www.rinkeby.io/#stats\" target=\"_blank\" rel=\"noopener noreferer\">Rinkeby</a> or <a class=\"link\" href=\"https://ropsten.etherscan.io/\" target=\"_blank\" rel=\"noopener noreferer\">Ropsten</a> in our case (it will almost always deploy to Rinkeby). Using the deployment address (how to find your smart contract in the blockchain), you can see more information on sites like <a class=\"link\" href=\"https://rinkeby.etherscan.io/\" target=\"_blank\" rel=\"noopener noreferer\">Etherscan</a>.",
-                "copy_2": "All contracts deploy using the Smart NFTs address so that you can fully interact with it. If you want to, you can also transfer ownership to your address, but we won't be capable of interacting with it."
+                "copy_2": "All contracts deploy using the Smart NFTs address so that you can fully interact with it. If you want to, you can also transfer ownership to your address, but we won't be capable of interacting with it.",
+                "copy_3": "Updating a deployed smart contract is hard, but we let you deploy multiple times. The only catch is that you'll lose the previous contract we stored. If you still want to access the previous version, we recommend transferring ownership of the old version before deploying a new one."
             },
             "verify": {
                 "title": "Verify",
@@ -410,7 +453,7 @@
                 "pausable": "Pausable",
                 "burnable": "Burnable",
                 "enumerable": "Enumerable",
-                "uriStorage": "URIStorage",
+                "uriStorage": "URI Storage",
                 "uniqueStorage": "Unique Storage",
                 "limitSupply": {
                     "name": "Limit Supply",

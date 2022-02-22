@@ -48,8 +48,8 @@ h5 {
 }
 p,
 span,
-a {
-    @apply text-base font-text;
+a, li {
+    @apply text-body_md font-text;
 }
 
 @screen md {

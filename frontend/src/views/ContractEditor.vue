@@ -170,6 +170,30 @@
         <h2 class="text-center text-brand_secondary mb-base">{{$t('editor.content.title')}}</h2>
         <v-anchored-title type="h3" :text="$t('editor.content.contractInformation.title')" anchor="contractInformation" class="mb-xs"/>
         <p v-html="$t('editor.content.contractInformation.copy')"></p>
+        <v-anchored-title type="h3" :text="$t('editor.content.creation.title')" anchor="creation" class="mb-xs"/>
+        <p v-html="$t('editor.content.creation.copy_1')"></p>
+        <p v-html="$t('editor.content.creation.copy_2')"></p>
+        <v-anchored-title type="h4" :text="$t('editor.content.creation.mintable.title')" anchor="mintable" class="mb-xs"/>
+        <p v-html="$t('editor.content.creation.mintable.copy_1')"></p>
+        <v-anchored-title type="h5" :text="$t('editor.content.creation.mintable.autoincrementIds.title')" anchor="autoincrementIds" class="mb-xs"/>
+        <p v-html="$t('editor.content.creation.mintable.autoincrementIds.copy_1')"></p>
+        <v-anchored-title type="h4" :text="$t('editor.content.creation.pausable.title')" anchor="pausable" class="mb-xs"/>
+        <p v-html="$t('editor.content.creation.pausable.copy_1')"></p>
+        <v-anchored-title type="h4" :text="$t('editor.content.creation.burnable.title')" anchor="burnable" class="mb-xs"/>
+        <p v-html="$t('editor.content.creation.burnable.copy_1')"></p>
+        <v-anchored-title type="h4" :text="$t('editor.content.creation.enumerable.title')" anchor="enumerable" class="mb-xs"/>
+        <p v-html="$t('editor.content.creation.enumerable.copy_1')"></p>
+        <ul>
+            <li v-html="$t('editor.content.creation.enumerable.copy_2.bullet_1')"></li>
+            <li v-html="$t('editor.content.creation.enumerable.copy_2.bullet_2')"></li>
+            <li v-html="$t('editor.content.creation.enumerable.copy_2.bullet_3')"></li>
+        </ul>
+        <v-anchored-title type="h5" :text="$t('editor.content.creation.enumerable.limitedSupply.title')" anchor="limitedSupply" class="mb-xs"/>
+        <p v-html="$t('editor.content.creation.enumerable.limitedSupply.copy_1')"></p>
+        <v-anchored-title type="h4" :text="$t('editor.content.creation.uriStorage.title')" anchor="uriStorage" class="mb-xs"/>
+        <p v-html="$t('editor.content.creation.uriStorage.copy_1')"></p>
+        <v-anchored-title type="h5" :text="$t('editor.content.creation.uriStorage.uniqueStorage.title')" anchor="uniqueStorage" class="mb-xs"/>
+        <p v-html="$t('editor.content.creation.uriStorage.uniqueStorage.copy_1')"></p>
         <v-anchored-title type="h3" :text="$t('editor.content.metadata.title')" anchor="metadata" class="mb-xs"/>
         <p v-html="$t('editor.content.metadata.copy_1')"></p>
         <p v-html="$t('editor.content.metadata.copy_2')"></p>
@@ -178,6 +202,7 @@
         <v-anchored-title type="h3" :text="$t('editor.content.deploy.title')" anchor="deploy" class="mb-xs"/>
         <p v-html="$t('editor.content.deploy.copy_1')"></p>
         <p v-html="$t('editor.content.deploy.copy_2')"></p>
+        <p v-html="$t('editor.content.deploy.copy_3')"></p>
         <v-anchored-title type="h3" :text="$t('editor.content.verify.title')" anchor="verify" class="mb-xs"/>
         <p v-html="$t('editor.content.verify.copy')"></p>
     </v-section>
@@ -518,6 +543,10 @@ useMeta({
 
 .editor--content p {
     @apply mb-sm;
+}
+
+.editor--content ul {
+    @apply list-disc pl-sm mb-sm;
 }
 
 .editor--content .link:hover {

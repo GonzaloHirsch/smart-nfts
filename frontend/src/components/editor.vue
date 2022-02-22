@@ -3,8 +3,7 @@
         <div class="divide-y divide-typography_secondary px-sm">
             <div class="pb-sm">
                 <h5 class="form--title">
-                    {{ $t('editor.contract.information')
-                    }}<QuestionMarkCircleIcon class="form--title-icon cursor-pointer" @click="getHelp('contractInformation')" />
+                    {{ $t('editor.contract.information') }}<QuestionMarkCircleIcon class="form--title-icon" @click="getHelp('contractInformation')" />
                 </h5>
                 <div class="flex flex-col justify-between">
                     <!-- Set validations for each field and the validation events -->
@@ -35,16 +34,19 @@
                 </div>
             </div>
             <div class="py-sm">
-                <h5 class="form--title">{{ $t('editor.contract.creation') }} <QuestionMarkCircleIcon class="form--title-icon" /></h5>
-                <v-checkbox
-                    id="isMintable"
-                    name="isMintable"
-                    :placeholder="$t('inputs.text.extensions.mintable')"
-                    :label="$t('inputs.text.extensions.mintable')"
-                    v-model="contractData.isMintable"
-                    class="w-full md:w-6/12"
-                />
-                <div class="flex flex-row">
+                <h5 class="form--title">
+                    {{ $t('editor.contract.creation') }} <QuestionMarkCircleIcon class="form--title-icon" @click="getHelp('creation')" />
+                </h5>
+                <div class="flex">
+                    <v-checkbox
+                        id="isMintable"
+                        name="isMintable"
+                        :placeholder="$t('inputs.text.extensions.mintable')"
+                        :label="$t('inputs.text.extensions.mintable')"
+                        v-model="contractData.isMintable"
+                    /><QuestionMarkCircleIcon class="form--field-icon" @click="getHelp('mintable')" />
+                </div>
+                <div class="flex">
                     <span class="border-l-2 border-black mx-xs"></span>
                     <v-checkbox
                         id="isAutoIncrementIds"
@@ -53,43 +55,50 @@
                         :placeholder="$t('inputs.text.extensions.autoincrementId')"
                         :label="$t('inputs.text.extensions.autoincrementId')"
                         v-model="contractData.isAutoIncrementIds"
-                    />
+                    /><QuestionMarkCircleIcon class="form--field-icon" @click="getHelp('autoincrementIds')" />
                 </div>
-                <v-checkbox
-                    id="isPausable"
-                    name="isPausable"
-                    :placeholder="$t('inputs.text.extensions.pausable')"
-                    :label="$t('inputs.text.extensions.pausable')"
-                    v-model="contractData.isPausable"
-                    class="w-full md:w-6/12"
-                />
-                <v-checkbox
-                    id="isBurnable"
-                    name="isBurnable"
-                    :placeholder="$t('inputs.text.extensions.burnable')"
-                    :label="$t('inputs.text.extensions.burnable')"
-                    v-model="contractData.isBurnable"
-                    class="w-full md:w-6/12"
-                />
-                <v-checkbox
-                    id="isEnumerable"
-                    name="isEnumerable"
-                    :placeholder="$t('inputs.text.extensions.enumerable')"
-                    :label="$t('inputs.text.extensions.enumerable')"
-                    v-model="contractData.isEnumerable"
-                    class="w-full md:w-6/12"
-                />
-                <div class="flex flex-row">
+                <div class="flex">
+                    <v-checkbox
+                        id="isPausable"
+                        name="isPausable"
+                        :placeholder="$t('inputs.text.extensions.pausable')"
+                        :label="$t('inputs.text.extensions.pausable')"
+                        v-model="contractData.isPausable"
+                    />
+                    <QuestionMarkCircleIcon class="form--field-icon" @click="getHelp('pausable')" />
+                </div>
+                <div class="flex">
+                    <v-checkbox
+                        id="isBurnable"
+                        name="isBurnable"
+                        :placeholder="$t('inputs.text.extensions.burnable')"
+                        :label="$t('inputs.text.extensions.burnable')"
+                        v-model="contractData.isBurnable"
+                    /><QuestionMarkCircleIcon class="form--field-icon" @click="getHelp('burnable')" />
+                </div>
+                <div class="flex">
+                    <v-checkbox
+                        id="isEnumerable"
+                        name="isEnumerable"
+                        :placeholder="$t('inputs.text.extensions.enumerable')"
+                        :label="$t('inputs.text.extensions.enumerable')"
+                        v-model="contractData.isEnumerable"
+                    />
+                    <QuestionMarkCircleIcon class="form--field-icon" @click="getHelp('enumerable')" />
+                </div>
+                <div class="flex">
                     <span class="border-l-2 border-black mx-xs"></span>
                     <div class="flex flex-col">
-                        <v-checkbox
-                            id="isLimitSupply"
-                            name="isLimitSupply"
-                            class="my-1"
-                            :placeholder="$t('inputs.text.extensions.limitSupply.name')"
-                            :label="$t('inputs.text.extensions.limitSupply.name')"
-                            v-model="contractData.isLimitSupply"
-                        />
+                        <div class="flex my-1">
+                            <v-checkbox
+                                id="isLimitSupply"
+                                name="isLimitSupply"
+                                :placeholder="$t('inputs.text.extensions.limitSupply.name')"
+                                :label="$t('inputs.text.extensions.limitSupply.name')"
+                                v-model="contractData.isLimitSupply"
+                            />
+                            <QuestionMarkCircleIcon class="form--field-icon" @click="getHelp('limitedSupply')" />
+                        </div>
                         <v-input
                             v-if="contractData.isLimitSupply"
                             id="supply"
@@ -105,15 +114,17 @@
                         />
                     </div>
                 </div>
-                <v-checkbox
-                    id="isURIStorage"
-                    name="isURIStorage"
-                    :placeholder="$t('inputs.text.extensions.uriStorage')"
-                    :label="$t('inputs.text.extensions.uriStorage')"
-                    v-model="contractData.isURIStorage"
-                    class="w-full md:w-6/12"
-                />
-                <div class="flex flex-row">
+                <div class="flex">
+                    <v-checkbox
+                        id="isURIStorage"
+                        name="isURIStorage"
+                        :placeholder="$t('inputs.text.extensions.uriStorage')"
+                        :label="$t('inputs.text.extensions.uriStorage')"
+                        v-model="contractData.isURIStorage"
+                    />
+                    <QuestionMarkCircleIcon class="form--field-icon" @click="getHelp('uriStorage')" />
+                </div>
+                <div class="flex">
                     <span class="border-l-2 border-black mx-xs"></span>
                     <v-checkbox
                         id="isUniqueStorage"
@@ -122,13 +133,13 @@
                         :placeholder="$t('inputs.text.extensions.uniqueStorage')"
                         :label="$t('inputs.text.extensions.uniqueStorage')"
                         v-model="contractData.isUniqueStorage"
-                    />
+                    /><QuestionMarkCircleIcon class="form--field-icon" @click="getHelp('uniqueStorage')" />
                 </div>
             </div>
             <div v-if="contractData.isURIStorage" class="py-sm">
                 <h5 class="form--title">
                     {{ $t('editor.contract.metadata') }}
-                    <QuestionMarkCircleIcon class="form--title-icon cursor-pointer" @click="getHelp('metadata')" />
+                    <QuestionMarkCircleIcon class="form--title-icon" @click="getHelp('metadata')" />
                 </h5>
                 <p class="text-xl text-brand_secondary">{{ $t('editor.metadata.image') }}</p>
                 <v-checkbox
@@ -404,7 +415,11 @@ const toggleExpanded = () => {
 }
 
 .form--title-icon {
-    @apply h-6 w-6 text-brand_tertiary ml-xs;
+    @apply h-6 w-6 text-brand_tertiary ml-xs cursor-pointer;
+}
+
+.form--field-icon {
+    @apply h-5 w-5 text-brand_tertiary ml-xs my-auto cursor-pointer;
 }
 
 .editor--button:not(:first-of-type):not(:last-of-type) {
