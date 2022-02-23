@@ -19,7 +19,7 @@ export interface IContract {
 export interface IContractExtension {
     // Static methods
     getExtensionOZImports(): string[];             // import from open zeppling
-    getExtensionInputs(): string[];                // strings that must be replaced by input
+    getExtensionInputs(): IParameter[];                // strings that must be replaced by input
     getExtensionName(): EXTENSIONS;                // Name of extension (ex: ERC721URIStorage)
     getExtensionLibs(): IContractLibrary[];        // For including a library within a contract in solidity.
     getExtensionVariables(): IContractVariable[];  // Necessary class variables

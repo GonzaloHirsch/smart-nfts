@@ -1,6 +1,7 @@
 import { EXTENSIONS, CONTRACT_TYPES, VISIBILITY } from "../constants/contract.constants";
 import { IContractExtension, IContractLibrary, IContractMethod, IContractVariable } from "../interfaces/contract.interface";
 import {staticImplements} from '../helpers/global.helper';
+import { IParameter } from "../interfaces/general.interface";
 
 @staticImplements<IContractExtension>()
 export abstract class Pausable {
@@ -8,7 +9,7 @@ export abstract class Pausable {
     public static getExtensionOZImports(): string[] {
         return ["@openzeppelin/contracts/security/Pausable.sol", "@openzeppelin/contracts/access/Ownable.sol"];
     }
-    public static getExtensionInputs(): string[] {
+    public static getExtensionInputs(): IParameter[] {
         return [];
     }
     public static getExtensionName(): EXTENSIONS {

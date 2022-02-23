@@ -7,6 +7,8 @@ import { hashString } from '../helpers/string.helper';
 import { IContractExtension, IContractLibrary, IContractMethod, IContractVariable } from '../interfaces/contract.interface';
 import { IArguments, IParameter } from '../interfaces/general.interface';
 import TemplateService from './template.service';
+import InvalidInputException from '../exceptions/invalidInput.exception';
+import { typeValidations } from '../helpers/validations.helper';
 
 class CreationService {
     private static instance: CreationService;
@@ -119,8 +121,15 @@ class CreationService {
 
         // Filter out any invalid inputs
         return validInputs
-            .reduce((acc: {[inputName: string]: string}, inputName: string) => {
-                acc[inputName] = inputs[inputName]
+            .reduce((acc: {[inputName: string]: string}, input: IParameter) => {
+                const value = inputs[input.name];
+                if (value == undefined) {
+                    throw InvalidInputException.Missing(input.name, input.type);
+                }
+                if (!typeValidations[input.type](value)) {
+                    throw InvalidInputException.Type(input.name, input.type, value);
+                }
+                acc[input.name] = value;
                 return acc;
             }, {});
     }

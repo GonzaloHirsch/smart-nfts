@@ -1,6 +1,7 @@
 import { EXTENSIONS, CONTRACT_TYPES, STATE_MUTABILITY, VISIBILITY } from "../constants/contract.constants";
 import { IContractExtension, IContractLibrary, IContractMethod, IContractVariable } from "../interfaces/contract.interface";
 import {staticImplements} from '../helpers/global.helper';
+import { IParameter } from "../interfaces/general.interface";
 
 @staticImplements<IContractExtension>()
 export abstract class LimitSupply {
@@ -8,8 +9,11 @@ export abstract class LimitSupply {
     public static getExtensionOZImports(): string[] {
         return [];
     }
-    public static getExtensionInputs(): string[] {
-        return ['maxSupply'];
+    public static getExtensionInputs(): IParameter[] {
+        return [{
+            name: 'maxSupply',
+            type: CONTRACT_TYPES.UINT256
+        }];
     }
     public static getExtensionName(): EXTENSIONS {
         return EXTENSIONS.LimitSupply;

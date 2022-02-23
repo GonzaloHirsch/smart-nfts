@@ -1,6 +1,7 @@
-import { EXTENSIONS, CONTRACT_TYPES, STATE_MUTABILITY, VISIBILITY } from "../constants/contract.constants";
+import { EXTENSIONS } from "../constants/contract.constants";
 import { IContractExtension, IContractLibrary, IContractMethod, IContractVariable } from "../interfaces/contract.interface";
 import {staticImplements} from '../helpers/global.helper';
+import { IParameter } from "../interfaces/general.interface";
 
 @staticImplements<IContractExtension>()
 export abstract class ERC721 {
@@ -8,7 +9,7 @@ export abstract class ERC721 {
     public static getExtensionOZImports(): string[] {
         return ["@openzeppelin/contracts/token/ERC721/ERC721.sol"];
     }
-    public static getExtensionInputs(): string[] {
+    public static getExtensionInputs(): IParameter[] {
         return [];
     }
     public static getExtensionName(): EXTENSIONS {
