@@ -22,8 +22,8 @@
         </div>
         <div class="p-sm text-sm flex flex-col items-center w-full" v-if="props.hash">
             <div class="flex flex-row w-full items-center justify-between">
-                <span :class="['text-lg', loadingContent ? 'loading--text loading--name' : contentError ? 'error--text loading--name' : '']">{{
-                    tokenInfo.name || null
+                <span :class="['text-md', loadingContent ? 'loading--text loading--name' : contentError ? 'error--text loading--name' : '']">{{
+                    cutNameOff(tokenInfo.name) || null
                 }}</span>
                 <span v-if="props.id" class="text-lg text-brand_secondary">#{{ props.id }}</span>
             </div>
@@ -78,7 +78,7 @@
             <div class="flex flex-col items-center w-full px-sm">
                 <span
                     v-if="loadingContent || tokenInfo.name"
-                    :class="['text-h4 mt-sm', loadingContent ? 'loading--text loading-enlarged--name' : '']"
+                    :class="['text-h4 leading-tight mt-sm text-center', loadingContent ? 'loading--text loading-enlarged--name' : '']"
                     >{{ tokenInfo.name || null }}</span
                 >
                 <p
@@ -283,6 +283,11 @@ const handleCardClick = () => {
 const handleNavigation = (url) => {
     window.open(url, '_blank').focus();
 };
+
+const cutNameOff = (name) => {
+    if (!name || name.length < 30) return name;
+    return name.substring(0, 30) + '...'
+}
 
 const getIpfsLink = (hash) => {
     return ipfs.getImageUri(ipfs.clearGateUri(hash));

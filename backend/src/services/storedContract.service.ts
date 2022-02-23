@@ -119,6 +119,7 @@ class StoredContractService {
         contract.inputs = inputs;
         contract.digest = contractDigest;
         contract.markModified('metadata');
+        contract.markModified('inputs');
         await contract.save();
 
         return {contract, contractString};

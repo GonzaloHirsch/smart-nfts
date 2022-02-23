@@ -2,9 +2,7 @@
     <div class="relative code-viewer rounded-md bg-slate-800 text-white h-full overflow-hidden">
         <div :class="['overflow-x-auto overflow-y-auto justify-start items-start relative', props.loading ? '' : 'h-full']">
             <pre v-if="!props.loading" class="flex h-full">
-                <code ref="contractCode" class="language-solidity w-full p-sm ">
-                    {{props.code}}
-                </code>
+                <code ref="contractCode" class="language-solidity w-full p-sm ">{{props.code}}</code>
             </pre>
         </div>
         <div v-if="!props.loading && props.canDownload" class="absolute flex top-0 right-0">
@@ -87,7 +85,7 @@ const copyContract = () => {
     navigator.clipboard
         .writeText(props.code)
         .then(() => {
-            setSnackbar(t('success.general'), 'default', 5);
+            setSnackbar(t('success.copy'), 'default', 5);
             loadingCopy.value = false;
         })
         .catch((err) => {
