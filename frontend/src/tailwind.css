@@ -91,7 +91,7 @@ pre code.hljs {
     @apply text-white bg-slate-800;
 }
 .hljs span {
-    @apply font-mono !important;
+    @apply font-mono text-base !important;
 }
 .hljs-subst {
     @apply text-white;

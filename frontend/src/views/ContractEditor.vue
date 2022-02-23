@@ -534,7 +534,7 @@ useMeta({
 }
 
 .editor--content pre.code {
-    @apply text-brand_secondary bg-brand_tertiary/20 underline italic !important;
+    @apply text-brand_secondary bg-brand_tertiary/20 italic !important;
 }
 
 .editor--content .link {
