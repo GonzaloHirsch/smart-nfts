@@ -19,7 +19,7 @@
     <v-section :noPadding="true" class="bg-typography_primary">
         <div v-if="!isLoadingEditor" class="flex flex-col md:flex-row">
             <div
-                class="flex flex-col w-full md:w-6/12 lg:w-5/12 xl:w-4/12 py-sm pr-xs pl-sm h-fit"
+                class="flex flex-col w-full md:w-6/12 lg:w-5/12 xl:w-4/12 px-xs pb-xs md:py-sm md:pr-xs md:pl-sm h-fit"
                 id="editorContainer"
                 ref="editorContainer"
                 :key="lastSaved"
@@ -143,7 +143,7 @@
                 </v-editor>
             </div>
             <div
-                class="flex w-full md:w-6/12 lg:w-7/12 xl:w-8/12 py-sm pr-sm pl-xs code-viewer--wrapper"
+                class="flex w-full md:w-6/12 lg:w-7/12 xl:w-8/12 px-xs pt-sm md:py-sm md:pr-sm md:pl-xs code-viewer--wrapper"
                 :style="`min-height: ${editorHeight}px; max-height: ${editorHeight}px`"
             >
                 <v-code-viewer

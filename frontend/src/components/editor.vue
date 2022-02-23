@@ -340,7 +340,7 @@ watch(
             validMetadata.value
         ) {
             // Don't send the update event if the name or symbol are invalid
-            if (!inputsErrors.value['name'] && !inputsErrors.value['symbol'] && !extensionInputsErrors.value['maxSupply']) {
+            if (!inputsErrors.value['name'] && !inputsErrors.value['symbol'] && (!extensionInputsErrors.value['maxSupply'] || !contractData.value.isLimitSupply)) {
                 emit('contractChanged', contractData.value);
             }
         }
