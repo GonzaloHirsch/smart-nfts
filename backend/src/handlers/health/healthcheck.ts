@@ -2,6 +2,7 @@ import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import { errorHandler } from '../../middleware/errorHandler.middleware';
 import { corsHandler } from '../../middleware/corsHandler.middleware';
 import EtherscanService from '../../services/etherscan.service';
+import { headerVerificationHandler } from '../../middleware/headerHandler.middleware';
 
 const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   const address = process.env.DEPLOYMENT_ADDRESS;
@@ -22,4 +23,4 @@ const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyRes
   };
 }
 
-export const handler = corsHandler("GET")(errorHandler()(endpoint));
+export const handler = corsHandler("GET")(errorHandler()(headerVerificationHandler()(endpoint)));

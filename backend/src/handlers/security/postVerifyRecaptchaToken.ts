@@ -4,6 +4,7 @@ import { corsHandler } from '../../middleware/corsHandler.middleware';
 import RecaptchaVerificationService from '../../services/recaptchaVerificationService';
 import GenericException from '../../exceptions/generic.exception';
 import { HTTP_ERRORS } from '../../constants/errors.constants';
+import { headerVerificationHandler } from '../../middleware/headerHandler.middleware';
 
 const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     const requestBody = JSON.parse(event.body!);
@@ -21,4 +22,4 @@ const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyRes
     };
 };
 
-export const handler = corsHandler('GET')(errorHandler()(endpoint));
+export const handler = corsHandler('GET')(errorHandler()(headerVerificationHandler()(endpoint)));

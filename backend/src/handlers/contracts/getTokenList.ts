@@ -7,6 +7,7 @@ import GenericException from '../../exceptions/generic.exception';
 import { HTTP_ERRORS } from '../../constants/errors.constants';
 import ListingService from '../../services/listing.service';
 import { TOKENS_PER_PAGE } from '../../constants/general.constants';
+import { headerVerificationHandler } from '../../middleware/headerHandler.middleware';
 
 const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   
@@ -57,4 +58,4 @@ const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyRes
     };
 };
 
-export const handler = corsHandler('GET')(errorHandler()(endpoint));
+export const handler = corsHandler('GET')(errorHandler()(headerVerificationHandler()(endpoint)));

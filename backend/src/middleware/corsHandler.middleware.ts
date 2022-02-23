@@ -13,7 +13,7 @@ export const corsHandler =
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Credentials': true,
         'Access-Control-Allow-Methods': allowedMethods,
-        'Access-Control-Expose-Headers': 'content-disposition, Accept-Language'
+        'Access-Control-Expose-Headers': 'content-disposition, Accept-Language, origin'
       }
     };
   };
