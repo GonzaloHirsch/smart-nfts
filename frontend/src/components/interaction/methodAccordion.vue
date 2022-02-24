@@ -212,6 +212,9 @@ const router = useRouter();
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
 
+import { useRecaptcha } from '@/plugins/recaptcha';
+const recaptcha = useRecaptcha();
+
 const callMethod = () => {
     // Perform all validations before calling the method
     const hasError = performValidations();
@@ -249,25 +252,37 @@ const handleMintCall = (contractId) => {
             })
         );
     if (props?.metadata?.hasImage) apiData.append('token', metadataImage.value);
-    // Send the request
-    api.mintWithContract(contractId, apiData)
-        .then((res) => {
-            handleSuccessResults(res);
-        })
-        .catch((err) => {
-            handleErrorResults(err);
-        });
+    recaptcha.challengeInput('MINT_WITH_CONTRACT', (token) => {
+        // Send the request
+        api.mintWithContract(contractId, apiData, token)
+            .then((res) => {
+                handleSuccessResults(res);
+            })
+            .catch((err) => {
+                if (err.response.status === 403) {
+                    setSnackbar(t('errors.robot'), 'error', 5);
+                } else {
+                    handleErrorResults(err);
+                }
+            });
+    });
 };
 
 const handleMethodCall = (contractId) => {
     isLoading.value = true;
-    api.interactWithContract(contractId, props.method._id, inputs.value)
-        .then((res) => {
-            handleSuccessResults(res);
-        })
-        .catch((err) => {
-            handleErrorResults(err);
-        });
+    recaptcha.challengeInput('MINT_WITH_CONTRACT', (token) => {
+        api.interactWithContract(contractId, props.method._id, inputs.value, token)
+            .then((res) => {
+                handleSuccessResults(res);
+            })
+            .catch((err) => {
+                if (err.response.status === 403) {
+                    setSnackbar(t('errors.robot'), 'error', 5);
+                } else {
+                    handleErrorResults(err);
+                }
+            });
+    });
 };
 
 const handleSuccessResults = (res) => {
@@ -284,7 +299,7 @@ const handleErrorResults = (err) => {
         callError.value = err.response?.data?.data?.transactionHash;
     } else {
         errorType.value = 'internal';
-        callError.value = 'Internal error';
+        callError.value = t('errors.internal');
     }
     callResult.value = undefined;
     callResultType.value = undefined;
@@ -426,17 +441,17 @@ const getHelp = () => {
 
 const copyResponse = (response) => {
     if (!navigator.clipboard) {
-        setSnackbar('Cannot copy response to clipboard!', 'error', 5);
+        setSnackbar(t('errors.method.notCopyResponse'), 'error', 5);
         return;
     }
     navigator.clipboard
         .writeText(response)
         .then(() => {
-            setSnackbar('Copied to clipboard!', 'default', 5);
+            setSnackbar(t('success.copy'), 'default', 5);
         })
         .catch((err) => {
             console.error(err);
-            setSnackbar('Cannot copy response to clipboard!', 'error', 5);
+            setSnackbar(t('errors.method.notCopyResponse'), 'error', 5);
         });
 };
 </script>

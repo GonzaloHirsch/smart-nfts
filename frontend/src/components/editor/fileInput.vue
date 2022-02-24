@@ -49,8 +49,8 @@ const selectedFile = ref(undefined);
 
 const handleChangeFile = () => {
     selectedFile.value = fileInput.value.files[0];
-    // Limit 5MB
-    if (selectedFile.value.size > 5 * 1024) {
+    // Limit 5MB = 5 * 2^10 * 2^10
+    if (selectedFile.value.size > 5 * 1024 * 1024) {
         selectedFile.value = undefined;
         setSnackbar(t('inputs.errors.image.tooBig'), 'error', 5);
     } else {
@@ -66,7 +66,7 @@ const handleFileDrag = (e) => {
         setSnackbar(t('inputs.errors.image.countLimit'), 'error', 5);
     } else if (!/^image\/.*$/.test(e.dataTransfer.files[0].type)) {
         setSnackbar(t('inputs.errors.image.type'), 'error', 5);
-    } else if (e.dataTransfer.files[0].type > 5 * 1024) {
+    } else if (e.dataTransfer.files[0].size > 5 * 1024 * 1024) {
         setSnackbar(t('inputs.errors.image.tooBig'), 'error', 5);
     } else {
         fileInput.value.files = e.dataTransfer.files;

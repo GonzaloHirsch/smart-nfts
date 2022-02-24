@@ -6,6 +6,8 @@ import { isEmptyPathParams, validContractId } from '../../helpers/validations.he
 import { HTTP_ERRORS } from '../../constants/errors.constants';
 import GenericException from '../../exceptions/generic.exception';
 import EtherscanService from '../../services/etherscan.service';
+import { headerVerificationHandler } from '../../middleware/headerHandler.middleware';
+import { recaptchaVerificationHandler } from '../../middleware/recaptchaVerificator.middleware';
 
 const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     if (isEmptyPathParams(event.pathParameters) || !validContractId(event.pathParameters!.contractId)) 
@@ -27,4 +29,4 @@ const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyRes
     };
 };
 
-export const handler = corsHandler('POST')(errorHandler()(endpoint));
+export const handler = corsHandler('POST')(errorHandler()(recaptchaVerificationHandler()(headerVerificationHandler()(endpoint))));

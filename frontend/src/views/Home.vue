@@ -197,22 +197,21 @@ const handleValidViewId = (id) => {
 const isLoading = ref(false);
 const handleCreateContract = () => {
     isLoading.value = true;
-    recaptcha.challengeInput('CREATE_CONTRACT', api, (recaptchaResponse) => {
-        if (recaptchaResponse.data.success) {
-            // Call API & wait for the response
-            api.createContract().then((res) => {
-                // Don't make it stop loading if it's ok, it's better for the experience
-                // isLoading.value = false;
-                if (res.data && res.data.id) {
-                    router.push(`/create/${res.data.id}`);
-                } else {
-                    isLoading.value = false;
-                }
-            });
-        } else {
-            setSnackbar(t('errors.robot'), 'error', 5);
+    recaptcha.challengeInput('CREATE_CONTRACT', (token) => {
+        // Call API & wait for the response
+        api.createContract(token).then((res) => {
+            // Don't make it stop loading if it's ok, it's better for the experience
+            // isLoading.value = false;
+            if (res.data && res.data.id) {
+                router.push(`/create/${res.data.id}`);
+            } else {
+                isLoading.value = false;
+            }
+        }).catch(err => {
+            console.error(err);
             isLoading.value = false;
-        }
+            setSnackbar(t('errors.robot'), 'error', 5);
+        });
     });
 };
 

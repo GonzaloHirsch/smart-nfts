@@ -10,6 +10,8 @@ import { ACCEPTED_LANGUAGES_MAP, ACCEPTED_LANGUAGES } from '../../constants/gene
 import { typeValidations } from '../../helpers/validations.helper';
 import { sendReminderEmail } from '../../helpers/email.helper';
 import parser from 'accept-language-parser';
+import { headerVerificationHandler } from '../../middleware/headerHandler.middleware';
+import { recaptchaVerificationHandler } from '../../middleware/recaptchaVerificator.middleware';
 
 const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     if (isEmptyPathParams(event.pathParameters) || !validContractId(event.pathParameters!.contractId)) {
@@ -60,4 +62,4 @@ const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyRes
     };
 };
 
-export const handler = corsHandler('POST')(errorHandler()(endpoint));
+export const handler = corsHandler('POST')(errorHandler()(recaptchaVerificationHandler()(headerVerificationHandler()(endpoint))));

@@ -271,6 +271,9 @@ const { setSnackbar } = useNotifications();
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
 
+import { useRecaptcha } from '@/plugins/recaptcha';
+const recaptcha = useRecaptcha();
+
 const isLoading = ref(false);
 const validContract = ref(true);
 const contractId = ref(undefined);
@@ -309,20 +312,22 @@ watch(
                 contractId.value = route.params.id;
                 // Get the contract
                 isLoading.value = true;
-                api.getContract(contractId.value)
-                    .then((res) => {
-                        contract.value = res.data;
-                        validContract.value = true;
-                        isLoading.value = false;
-                        if (!contractIsDeployed.value) {
-                            setSnackbar(t('errors.contract.notDeployed'), 'error', 5);
-                        }
-                    })
-                    .catch((err) => {
-                        validContract.value = false;
-                        setSnackbar(t('errors.contract.notExist'), 'error', 5);
-                        isLoading.value = false;
-                    });
+                recaptcha.challengeInput('GET_CONTRACT', (token) => {
+                    api.getContract(contractId.value, token)
+                        .then((res) => {
+                            contract.value = res.data;
+                            validContract.value = true;
+                            isLoading.value = false;
+                            if (!contractIsDeployed.value) {
+                                setSnackbar(t('errors.contract.notDeployed'), 'error', 5);
+                            }
+                        })
+                        .catch((err) => {
+                            validContract.value = false;
+                            setSnackbar(t('errors.contract.notExist'), 'error', 5);
+                            isLoading.value = false;
+                        });
+                });
             } else {
                 contractId.value = undefined;
                 contract.value = {};

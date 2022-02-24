@@ -7,6 +7,8 @@ import { setHttpErrorMsg } from '../../helpers/errors.helper';
 import { HTTP_ERRORS } from '../../constants/errors.constants';
 import StoredContractService from '../../services/storedContract.service';
 import InteractionService from '../../services/interaction.service';
+import { headerVerificationHandler } from '../../middleware/headerHandler.middleware';
+import { recaptchaVerificationHandler } from '../../middleware/recaptchaVerificator.middleware';
 
 const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     console.log('Path params: ' + JSON.stringify(event.pathParameters))
@@ -37,4 +39,4 @@ const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyRes
     };
 };
 
-export const handler = corsHandler('POST')(errorHandler()(endpoint));
+export const handler = corsHandler('POST')(errorHandler()(recaptchaVerificationHandler()(headerVerificationHandler()(endpoint))));

@@ -98,18 +98,19 @@ const copyContract = () => {
 // Ref to access the element
 const contractCode = ref(null);
 const formatCode = () => {
-    if (props.code && contractCode.value) {
+    if (props.code && contractCode.value && hljs) {
         hljs.highlightElement(contractCode.value);
     }
 };
 // Watch for changes and style again
 watch(
     () => props.loading,
-    async () => {
+    () => {
         // We need to wait for next tick so that it's done loading
         if (!props.loading) {
-            await nextTick();
-            formatCode();
+            nextTick().then(() => {
+                formatCode();
+            });
         }
     },
     {

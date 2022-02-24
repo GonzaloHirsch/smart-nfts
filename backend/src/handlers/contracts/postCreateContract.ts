@@ -2,6 +2,8 @@ import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import StoredContractService from '../../services/storedContract.service';
 import { errorHandler } from '../../middleware/errorHandler.middleware';
 import { corsHandler } from '../../middleware/corsHandler.middleware';
+import { headerVerificationHandler } from '../../middleware/headerHandler.middleware';
+import { recaptchaVerificationHandler } from '../../middleware/recaptchaVerificator.middleware';
 
 const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     const contractService = await StoredContractService.getInstance();
@@ -12,4 +14,4 @@ const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyRes
     };
 };
 
-export const handler = corsHandler("POST")(errorHandler()(endpoint));
+export const handler = corsHandler("POST")(errorHandler()(recaptchaVerificationHandler()(headerVerificationHandler()(endpoint))));
