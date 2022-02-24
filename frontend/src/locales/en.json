@@ -17,7 +17,7 @@
     },
     "footer": {
         "made": "Made by",
-        "madeContinued": "This is a capstone project for our Software Engineering degrees.",
+        "madeContinued": "This is a capstone project for our Software Engineering degrees. The goal is to make NFT creation easy and accessible to everyone, centralizing all the necessary technology through a friendly UI.",
         "location": {
             "text": "Proyecto Final - Instituto Tecnológico de Buenos Aires (ITBA)",
             "aria": "Learn more about the Instituto Tecnológico de Buenos Aires (ITBA)"
@@ -72,16 +72,16 @@
             },
             "content": {
                 "create": {
-                    "text": "Use our simple editor to create your custom NFT in just minutes (or seconds!). Choose among multiple extensions and define your metadata according to industry standards in just a few clicks. Create, deploy, and verify your very own custom ERC-721 contract. Don't know how to code? Don't worry! For starters, this is a zero-code environment, and everything has explanations. Don't want to deploy it with us? We've got you covered! Create the contract and download it for further customizations or deployment."
+                    "text": "Use our simple editor to create your custom NFT in just seconds! Choose among multiple extensions and define your metadata according to industry standards in just a few clicks. Create, deploy, and verify your very own custom ERC-721 contract. Don't know how to code? Don't worry! For starters, this is a zero-code environment, and everything has explanations. Don't want to deploy it with us? We've got you covered. Create the contract and download it for further customizations or deployment."
                 },
                 "edit": {
-                    "text": "Already have an existing contract you created with us? Use this option to continue working on it (or make some edits if you are coming back). Our contracts can be edited, deployed, and verified an infinite number of times. We even let you edit metadata fields after deploying the contract."
+                    "text": "Already have an existing contract you created with us? Use this option to continue working on it. Our contracts can be edited, deployed, and verified an infinite number of times. Be mindful that any change done on the contract, excluding the metadata fields, after deployment will require the contract to be deployed again. To start, enter your contract's id below and click Go Edit."
                 },
                 "interact": {
-                    "text": "After deploying your contract, you can interact with it (and no wallet is required!). The only thing you need is your contract ID. Mint tokens, read contract data and write to the contract itself. Everything is in real-time and without costly gas fees. All minted NFTs are visible in Etherscan and OpenSea, and if you make yourself the owner of the contract, you can even create your OpenSea collections with us."
+                    "text": "After deploying your contract to the blockchain, you can interact with it. Enter your contract's ID and begin minting tokens, reading contract data and writing to the contract itself. Everything is in real-time and without costly gas fees. Interaction will be done through SmartNFTs' wallet, meaning this wallet will be the contract owner. You can transfer ownership of the contract to yourself at any time to make it your own."
                 },
                 "view": {
-                    "text": "After minting NFTs, the only thing left to do is view them. Access all your minted tokens with our 'View' page; just put the contract ID, and we'll load all your NFTs (along with their metadata). All created NFTs will show the metadata you defined for them, along with the image and options to view the raw data (in case you are a developer or just curious). We'll provide the links to OpenSea and Etherscan so that you share your tokens with the world (and your friends)."
+                    "text": "After minting NFTs, you can view them by entering your contract's ID and clicking 'Go View'. You will be able to view the token's relevant information and it's metadata, which can include the image, name, description, and attributes you defined. We will provide a variety of links for you to view your raw metadata as JSON and to view your tokens through popular sites, such as OpenSea and Etherscan. You can use these sites to share your tokens with the world!"
                 }
             }
         },
@@ -102,11 +102,11 @@
         "verticalFacts": {
             "step": {
                 "title": "Step by step explanations",
-                "description": "Each option has a guide, and changes become visible seconds after making them."
+                "description": "Each option has an in depth explanations, helping you understand what functionality each extension will bring to the contract if added."
             },
             "simple": {
                 "title": "Simple and Quick",
-                "description": "In less than 5 minutes, you can have your custom ERC721 smart contract deployed, verified, and ready to start minting tokens with custom metadata."
+                "description": "In less than 5 minutes, you can have your custom ERC-721 smart contract deployed, verified, and ready to start minting tokens with custom metadata."
             },
             "centralized": {
                 "title": "All in One",
