@@ -17,49 +17,55 @@
             </div>
         </template>
         <template v-else>
-            <div class="flex flex-col items-center justify-center mt-sm">
-                <h2 class="mb-xs">{{ $t('status.status.wallet.address.title') }}</h2>
-                <v-tooltip v-if="isOk" :text="$t('status.status.wallet.address.copy')">
-                    <h3
-                        @click="copyWalletAddress"
-                        class="text-h4 break-all text-center w-full hover:text-brand_secondary duration-200 hover:cursor-pointer"
-                    >
-                        {{ status?.wallet?.address }}
-                    </h3>
-                </v-tooltip>
-                <h3 v-else class="text-h4 break-all text-center w-full text-error">{{$t('status.errors.noWallet')}}</h3>
-                <h2 class="mt-sm mb-xs">{{ $t('status.status.wallet.balance.title') }}</h2>
-                <div class="flex items-center justify-center">
-                    <h3 v-if="isOk">{{ status?.wallet?.balance?.toFixed(8) }} eth</h3>
-                    <h3 v-else class="text-error text-h4">{{$t('status.errors.noBalance')}}</h3>
-                    <v-tooltip :text="$t('status.status.wallet.balance.lowBalance')" class="ml-xs"
-                        ><ExclamationCircleIcon v-if="hasLowBalance" class="w-8 h-8 text-error"
-                    /></v-tooltip>
+            <div class="grid grid-cols-10 gap-sm mt-base">
+                <div class="col-span-full lg:col-span-6 md:row-span-2 status--box">
+                    <h2 class="status--box-title">{{ $t('status.status.wallet.title') }}</h2>
+
+                    <h3 class="status--box-subtitle">{{ $t('status.status.wallet.address.title') }}</h3>
+                    <v-tooltip v-if="isOk" :text="$t('status.status.wallet.address.copy')" class="md:ml-base">
+                        <h4
+                            @click="copyWalletAddress"
+                            class="status--box-value break-all text-left w-full hover:text-brand_secondary duration-200 hover:cursor-pointer"
+                        >
+                            {{ status?.wallet?.address }}
+                        </h4>
+                    </v-tooltip>
+                    <h4 v-else class="status--box-value break-all text-left w-full text-error md:ml-base">{{ $t('status.errors.noAddress') }}</h4>
+
+                    <h3 class="status--box-subtitle">{{ $t('status.status.wallet.balance.title') }}</h3>
+                    <div class="flex items-center justify-start md:ml-base">
+                        <h4 v-if="isOk" class="status--box-value">{{ status?.wallet?.balance?.toFixed(8) }} ETH</h4>
+                        <h4 v-else class="text-error status--box-value">{{ $t('status.errors.noBalance') }}</h4>
+                        <v-tooltip :text="$t('status.status.wallet.balance.lowBalance')" class="ml-xs"
+                            ><ExclamationCircleIcon v-if="hasLowBalance" class="w-6 h-6 text-error"
+                        /></v-tooltip>
+                    </div>
                 </div>
-                <p class="mt-xs text-lg">
-                    {{ $t('status.status.wallet.network.using') }}
-                    <a v-if="isOk"
-                        class="text-lg underline hover:text-brand_secondary duration-300"
-                        :href="`https://${status?.wallet?.network}.etherscan.io/`"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        >{{ capitalize(status?.wallet?.network) }} (testnet)</a
-                    >
-                    <span v-else class="text-error text-lg">{{$t('status.errors.noNetwork')}}</span>
-                </p>
-                <p class="mt-base text-sm" v-html="$t('status.status.timestamp', [$d(status?.timestamp || new Date(), 'long')])"></p>
+                <div class="col-span-full md:col-span-5 lg:col-span-4 row-span-1 status--box">
+                    <h3 class="status--box-title">{{ $t('status.status.wallet.network.using') }}</h3>
+                    <div class="mt-sm">
+                        <a
+                            v-if="isOk"
+                            class="status--box-value hover:text-brand_secondary duration-300"
+                            :href="`https://${status?.wallet?.network}.etherscan.io/`"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            >{{ capitalize(status?.wallet?.network) }} Testnet</a
+                        >
+                        <span v-else class="text-error status--box-value">{{ $t('status.errors.noNetwork') }}</span>
+                    </div>
+                </div>
+                <div class="col-span-full md:col-span-5 lg:col-span-4 status--box">
+                    <h3 class="status--box-title">{{ $t('status.status.timestamp') }}</h3>
+                    <h4 class="status--box-value mt-sm">{{ $d(status?.timestamp || new Date(), 'long') }}</h4>
+                </div>
+                <div v-if="!isLoading && isOk" class="col-span-full status--box">
+                    <h3 class="status--box-title">{{$t('status.contribute.title')}}</h3>
+                    <div class="mt-sm status--box-value"><span class="status--box-value" v-html="$t('status.contribute.addBalance')"></span><sup>*</sup></div>
+                    <p class="text-sm mt-sm"><sup>*</sup>{{ $t('status.contribute.disclaimer') }}</p>
+                </div>
             </div>
         </template>
-    </v-section>
-
-    <v-section v-if="!isLoading && isOk">
-        <div
-            class="bg-brand_primary rounded-lg shadow-md shadow-brand_primary p-sm border-2 border-brand_tertiary w-full md:w-10/12 lg:w-8/12 mx-auto"
-        >
-            <h4 class="text-center text-brand_secondary">Want to contribute?</h4>
-            <div class="mt-sm text-center"><span v-html="$t('status.contribute.addBalance')"></span><sup>*</sup></div>
-            <p class="text-xs mt-base"><sup>*</sup>{{ $t('status.contribute.disclaimer') }}</p>
-        </div>
     </v-section>
 </template>
 
@@ -129,5 +135,21 @@ useMeta({
 <style scoped>
 .status--title {
     @apply contents;
+}
+
+.status--box-subtitle {
+    @apply mt-sm mb-xs text-h4;
+}
+
+.status--box-title {
+    @apply text-brand_secondary leading-none;
+}
+
+.status--box-value {
+    @apply text-h5 !important;
+}
+
+.status--box {
+    @apply p-base bg-brand_primary border border-brand_tertiary shadow-md shadow-brand_primary rounded-md;
 }
 </style>

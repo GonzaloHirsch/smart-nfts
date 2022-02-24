@@ -10,8 +10,8 @@ const initRecaptcha = () => {
         const script = document.createElement('script');
         script.id = recaptchaKey;
         script.src = `https://www.google.com/recaptcha/api.js?render=${recaptchaKey}`;
-        script.async = true;
-        script.defer = true;
+        // script.async = true;
+        // script.defer = true;
         document.head.appendChild(script);
     }
 }

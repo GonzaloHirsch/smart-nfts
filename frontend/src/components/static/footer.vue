@@ -68,7 +68,7 @@
         <div
             class="flex flex-col md:flex-row justify-between items-center w-full text-body_xs mt-base text-typography_primary text-center md:text-left"
         >
-            <div class="mb-sm md:mb-0">
+            <div class="mb-sm md:mb-0 flex flex-col">
                 <span class="text-body_xs">{{ $t('footer.copyright') }}</span>
             </div>
             <a
