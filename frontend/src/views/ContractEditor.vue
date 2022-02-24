@@ -145,6 +145,7 @@
             <div
                 class="flex w-full md:w-6/12 lg:w-7/12 xl:w-8/12 px-xs pt-sm md:py-sm md:pr-sm md:pl-xs code-viewer--wrapper"
                 :style="`min-height: ${editorHeight}px; max-height: ${editorHeight}px`"
+                id="codeContainer"
             >
                 <v-code-viewer
                     @downloadContract="handleDownloadContract"
@@ -251,7 +252,9 @@ const api = useApi();
 import { useRecaptcha } from '@/plugins/recaptcha';
 const recaptcha = useRecaptcha();
 
-import { ref, computed, onMounted, nextTick } from 'vue';
+import { useResizeObserver } from '@vueuse/core';
+
+import { ref, computed, onMounted, nextTick, onUpdated } from 'vue';
 const isOpen = ref(false);
 const modalType = ref(undefined);
 const modalError = ref(undefined);
@@ -315,7 +318,6 @@ const loadContract = (showLoading = true) => {
             });
     });
 };
-loadContract();
 
 import { mapFormToApiData } from '@/js/mapper';
 const handleContractChange = (contractData) => {
@@ -485,11 +487,17 @@ const openContractReminderModal = () => {
 const editorHeight = ref(undefined);
 const editorContainer = ref(null);
 const startWatchingHeight = () => {
-    const resizeObserver = new ResizeObserver(() => {
-        editorHeight.value = editorContainer.value?.clientHeight;
-    });
-    resizeObserver.observe(editorContainer.value);
+    // This doesn't work in Safari :(
+    if (editorContainer.value) {
+        useResizeObserver(editorContainer, (entries) => {
+            editorHeight.value = entries[0].contentRect.height + entries[0].contentRect.top + entries[0].contentRect.x;
+        });
+    }
 };
+
+onMounted(() => {
+    loadContract();
+});
 
 import { useMeta } from 'vue-meta';
 useMeta({
@@ -586,6 +594,15 @@ useMeta({
 @screen sm {
     .code-viewer--wrapper {
         min-height: inherit;
+    }
+}
+
+@media not all and (min-resolution: 0.001dpcm) {
+    @supports (-webkit-appearance: none) and (stroke-color: transparent) {
+        #codeContainer {
+            max-height: 100vh !important;
+            min-height: 100vh !important;
+        }
     }
 }
 </style>

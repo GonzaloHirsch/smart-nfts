@@ -33,6 +33,7 @@ const i18n = createI18n({
   locale: navigator.language,
   fallbackLocale: 'en',
   messages: locales,
+  warnHtmlInMessage: 'off',
   datetimeFormats: {
     'en': {
       short: {

@@ -17,7 +17,7 @@
 
 <script setup>
 import { useMeta } from 'vue-meta';
-import { ref, provide, onMounted } from 'vue';
+import { ref, provide } from 'vue';
 import { useResizeObserver } from '@vueuse/core';
 
 import { NAV_HEIGHT } from '@/js/constants.js';
@@ -35,22 +35,6 @@ const navbarHeight = ref(undefined);
 provide(NAV_HEIGHT, navbarHeight);
 useResizeObserver(app, (_) => {
     navbarHeight.value = navbar.value?.$el.clientHeight || navbarMobile.value?.$el.clientHeight;
-});
-
-// Recaptcha
-
-onMounted(() => {
-    // Dynamically create the recaptcha key script
-    const recaptchaKey = import.meta.env.VITE_RECAPTCHA_KEY;
-    if (!recaptchaKey) console.error('Missing Google Recaptcha Key');
-    if (!document.getElementById(recaptchaKey)) {
-        const script = document.createElement('script');
-        script.id = recaptchaKey;
-        script.src = `https://www.google.com/recaptcha/api.js?render=${recaptchaKey}`;
-        script.async = true;
-        script.defer = true;
-        document.head.appendChild(script);
-    }
 });
 
 // Meta

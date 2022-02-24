@@ -42,7 +42,7 @@
 </template>
 
 <script setup>
-import { ref, watch, nextTick } from 'vue';
+import { ref, watch, nextTick, onMounted } from 'vue';
 import { RefreshIcon, DocumentDuplicateIcon, DownloadIcon } from '@heroicons/vue/solid';
 
 import { useNotifications } from '@/plugins/notifications';
@@ -98,8 +98,9 @@ const copyContract = () => {
 // Ref to access the element
 const contractCode = ref(null);
 const formatCode = () => {
-    if (props.code && contractCode.value && hljs) {
-        hljs.highlightElement(contractCode.value);
+    if (props.code && contractCode.value && Prism) {
+        // hljs.highlightElement(contractCode.value);
+        window.Prism.highlightAll();
     }
 };
 // Watch for changes and style again
@@ -117,6 +118,11 @@ watch(
         immediate: true
     }
 );
+
+onMounted(() => {
+    // Prism.js setup
+    window.Prism.manual = true;
+})
 </script>
 
 <style scoped>
