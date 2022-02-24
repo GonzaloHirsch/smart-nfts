@@ -97,23 +97,22 @@ const canSendEmail = computed(() => error.value === undefined && !isSendingEmail
 const sendEmail = () => {
     if (canSendEmail.value) {
         isSendingEmail.value = true;
-        recaptcha.challengeInput("SEND_REMINDER", api, (recaptchaResponse) => {
-            if (recaptchaResponse.data.success) {
-                api.sendEmailReminder(props.contractId, email.value)
-                    .then(() => {
-                        isSendingEmail.value = false;
-                        sentEmail.value = true;
-                        sentEmailError.value = undefined;
-                    })
-                    .catch((err) => {
-                        isSendingEmail.value = false;
-                        sentEmail.value = false;
+        recaptcha.challengeInput('SEND_REMINDER', (token) => {
+            api.sendEmailReminder(props.contractId, email.value, token)
+                .then(() => {
+                    isSendingEmail.value = false;
+                    sentEmail.value = true;
+                    sentEmailError.value = undefined;
+                })
+                .catch((err) => {
+                    isSendingEmail.value = false;
+                    sentEmail.value = false;
+                    if (err.response.status === 403) {
+                        setSnackbar(t('errors.robot'), 'error', 5);
+                    } else {
                         sentEmailError.value = err.response.data.message;
-                    });
-            } else {
-                setSnackbar('You are not human, cannot use this!', 'error', 5);
-                isSendingEmail.value = false;
-            }
+                    }
+                });
         });
     }
 };

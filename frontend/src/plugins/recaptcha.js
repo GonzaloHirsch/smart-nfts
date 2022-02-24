@@ -4,13 +4,11 @@ import { inject } from 'vue';
 const PLUGIN_KEY = 'recaptcha-plugin';
 
 const recaptcha = {
-    challengeInput: async (action, apiInstance, nextFunction) => {
+    challengeInput: async (action, callback) => {
         grecaptcha.ready(async () => {
             const recaptchaKey = import.meta.env.VITE_RECAPTCHA_KEY;
             const token = await grecaptcha.execute(recaptchaKey, { action: action });
-            apiInstance.verifyRecaptchaToken(token).then((res) => {
-                nextFunction(res);
-            });
+            callback(token);
         });
     }
 }

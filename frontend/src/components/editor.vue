@@ -210,17 +210,8 @@ import { QuestionMarkCircleIcon, ChevronUpIcon } from '@heroicons/vue/solid';
 import { ref, watch, computed } from 'vue';
 import { mapApiExtensionsToForm, mapExtensionInputsToForm, mapApiMetadataToForm } from '@/js/mapper.js';
 
-import { useApi } from '@/plugins/api';
-const api = useApi();
-
 import { useRouter } from 'vue-router';
 const router = useRouter();
-
-import { useRecaptcha } from '@/plugins/recaptcha';
-const recaptcha = useRecaptcha();
-
-import { useNotifications } from '@/plugins/notifications';
-const { setSnackbar } = useNotifications();
 
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
@@ -281,7 +272,9 @@ const contractData = ref({
     isUniqueStorage: mappedExtensions.isUniqueStorage ?? false,
     hasImage: hasImage ?? true,
     metadata: mappedMetadata ?? [],
-    extensionInputs: mappedInputs || {}
+    extensionInputs: mappedInputs || {
+        maxSupply: 10
+    }
 });
 const inputsErrors = ref({});
 const extensionInputsErrors = ref({});
@@ -289,16 +282,7 @@ const isLoading = ref(false);
 
 const emit = defineEmits(['contractChanged', 'verifyContract', 'deployContract']);
 const deployContract = () => {
-    isLoading.value = true;
-    recaptcha.challengeInput('DEPLOY_CONTRACT', api, (recaptchaResponse) => {
-        if (recaptchaResponse.data.success) {
-            emit('deployContract');
-            isLoading.value = false;
-        } else {
-            setSnackbar(t('errors.robot'), 'error', 5);
-            isLoading.value = false;
-        }
-    });
+    emit('deployContract');
 };
 const verifyContract = () => {
     emit('verifyContract');

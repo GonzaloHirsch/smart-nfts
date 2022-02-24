@@ -29,9 +29,59 @@ provider:
       # NO CAMBIAR
       app: pf
   httpApi:
-    cors: true
+    cors:
+      allowedOrigins: 
+        - ${env:CORS_ORIGIN}
+      allowedHeaders: 
+        - X-Recaptcha-Token
+        - x-recaptcha-token
+        - origin
+        - Origin
+        - Content-Type
+        - X-Amz-Date
+        - Authorization
+        - X-Api-Key
+        - X-Amz-Security-Token
+        - X-Amz-User-Agent
+      origin: ${env:CORS_ORIGIN}
+      headers: 
+        - X-Recaptcha-Token
+        - x-recaptcha-token
+        - origin
+        - Origin
+        - Content-Type
+        - X-Amz-Date
+        - Authorization
+        - X-Api-Key
+        - X-Amz-Security-Token
+        - X-Amz-User-Agent
   restApi:
-    cors: true
+    cors:
+      allowedOrigins: 
+        - ${env:CORS_ORIGIN}
+      allowedHeaders: 
+        - X-Recaptcha-Token
+        - x-recaptcha-token
+        - origin
+        - Origin
+        - Content-Type
+        - X-Amz-Date
+        - Authorization
+        - X-Api-Key
+        - X-Amz-Security-Token
+        - X-Amz-User-Agent
+      origin: ${env:CORS_ORIGIN}
+      headers: 
+        - X-Recaptcha-Token
+        - x-recaptcha-token
+        - origin
+        - Origin
+        - Content-Type
+        - X-Amz-Date
+        - Authorization
+        - X-Api-Key
+        - X-Amz-Security-Token
+        - X-Amz-User-Agent
   environment:
     MONGO_CONNECTION_STRING: ${env:MONGO_CONNECTION_STRING}
     INFURA_PROJECT_ID: ${env:INFURA_PROJECT_ID}
@@ -43,6 +93,7 @@ provider:
     PINATA_API_KEY: ${env:PINATA_API_KEY}
     PINATA_API_SECRET: ${env:PINATA_API_SECRET}
     RECAPTCHA_SECRET_KEY: ${env:RECAPTCHA_SECRET_KEY}
+    CORS_ORIGIN: ${env:CORS_ORIGIN}
 
 custom:
   serverless-offline:
@@ -67,7 +118,32 @@ functions:
       - http:
           path: /
           method: get
-          cors: true
+          cors:
+            allowedOrigins: 
+              - ${env:CORS_ORIGIN}
+            allowedHeaders: 
+              - X-Recaptcha-Token
+              - x-recaptcha-token
+              - origin
+              - Origin
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+            origin: ${env:CORS_ORIGIN}
+            headers: 
+              - X-Recaptcha-Token
+              - x-recaptcha-token
+              - origin
+              - Origin
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
     tags:
       app: pf
   postCreateContract:
@@ -76,7 +152,32 @@ functions:
       - http:
           path: /contracts
           method: post
-          cors: true
+          cors:
+            allowedOrigins: 
+              - ${env:CORS_ORIGIN}
+            allowedHeaders: 
+              - X-Recaptcha-Token
+              - x-recaptcha-token
+              - origin
+              - Origin
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+            origin: ${env:CORS_ORIGIN}
+            headers: 
+              - X-Recaptcha-Token
+              - x-recaptcha-token
+              - origin
+              - Origin
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
     tags:
       app: pf
   putUpdateContract:
@@ -85,7 +186,32 @@ functions:
       - http:
           path: /contracts/{contractId}
           method: put
-          cors: true
+          cors:
+            allowedOrigins: 
+              - ${env:CORS_ORIGIN}
+            allowedHeaders: 
+              - X-Recaptcha-Token
+              - x-recaptcha-token
+              - origin
+              - Origin
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+            origin: ${env:CORS_ORIGIN}
+            headers: 
+              - X-Recaptcha-Token
+              - x-recaptcha-token
+              - origin
+              - Origin
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
     tags:
       app: pf
   postDeployContract:
@@ -96,7 +222,32 @@ functions:
       - http:
           path: /contracts/{contractId}/deploy
           method: post
-          cors: true
+          cors:
+            allowedOrigins: 
+              - ${env:CORS_ORIGIN}
+            allowedHeaders: 
+              - X-Recaptcha-Token
+              - x-recaptcha-token
+              - origin
+              - Origin
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+            origin: ${env:CORS_ORIGIN}
+            headers: 
+              - X-Recaptcha-Token
+              - x-recaptcha-token
+              - origin
+              - Origin
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
     tags:
       app: pf
   postVerifyContract:
@@ -107,7 +258,32 @@ functions:
       - http:
           path: /contracts/{contractId}/verify
           method: post
-          cors: true
+          cors:
+            allowedOrigins: 
+              - ${env:CORS_ORIGIN}
+            allowedHeaders: 
+              - X-Recaptcha-Token
+              - x-recaptcha-token
+              - origin
+              - Origin
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+            origin: ${env:CORS_ORIGIN}
+            headers: 
+              - X-Recaptcha-Token
+              - x-recaptcha-token
+              - origin
+              - Origin
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
     tags:
       app: pf
   postInteractContract:
@@ -118,7 +294,32 @@ functions:
       - http:
           path: /contracts/{contractId}/interact
           method: post
-          cors: true
+          cors:
+            allowedOrigins: 
+              - ${env:CORS_ORIGIN}
+            allowedHeaders: 
+              - X-Recaptcha-Token
+              - x-recaptcha-token
+              - origin
+              - Origin
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+            origin: ${env:CORS_ORIGIN}
+            headers: 
+              - X-Recaptcha-Token
+              - x-recaptcha-token
+              - origin
+              - Origin
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
     tags:
       app: pf
   postMintToken:
@@ -129,7 +330,32 @@ functions:
       - http:
           path: /contracts/{contractId}/mint
           method: post
-          cors: true
+          cors:
+            allowedOrigins: 
+              - ${env:CORS_ORIGIN}
+            allowedHeaders: 
+              - X-Recaptcha-Token
+              - x-recaptcha-token
+              - origin
+              - Origin
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+            origin: ${env:CORS_ORIGIN}
+            headers: 
+              - X-Recaptcha-Token
+              - x-recaptcha-token
+              - origin
+              - Origin
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
     tags:
       app: pf
   getContract:
@@ -138,7 +364,32 @@ functions:
       - http:
           path: /contracts/{contractId}
           method: get
-          cors: true
+          cors:
+            allowedOrigins: 
+              - ${env:CORS_ORIGIN}
+            allowedHeaders: 
+              - X-Recaptcha-Token
+              - x-recaptcha-token
+              - origin
+              - Origin
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+            origin: ${env:CORS_ORIGIN}
+            headers: 
+              - X-Recaptcha-Token
+              - x-recaptcha-token
+              - origin
+              - Origin
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
     tags:
       app: pf
   getContractContents:
@@ -149,7 +400,32 @@ functions:
       - http:
           path: /contracts/{contractId}/contents
           method: get
-          cors: true
+          cors:
+            allowedOrigins: 
+              - ${env:CORS_ORIGIN}
+            allowedHeaders: 
+              - X-Recaptcha-Token
+              - x-recaptcha-token
+              - origin
+              - Origin
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+            origin: ${env:CORS_ORIGIN}
+            headers: 
+              - X-Recaptcha-Token
+              - x-recaptcha-token
+              - origin
+              - Origin
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
     tags:
       app: pf
   getCompiledContract:
@@ -160,7 +436,32 @@ functions:
       - http:
           path: /contracts/{contractId}/compile
           method: get
-          cors: true
+          cors:
+            allowedOrigins: 
+              - ${env:CORS_ORIGIN}
+            allowedHeaders: 
+              - X-Recaptcha-Token
+              - x-recaptcha-token
+              - origin
+              - Origin
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+            origin: ${env:CORS_ORIGIN}
+            headers: 
+              - X-Recaptcha-Token
+              - x-recaptcha-token
+              - origin
+              - Origin
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
     tags:
       app: pf
   getTokenList:
@@ -171,18 +472,32 @@ functions:
       - http:
           path: /contracts/{contractId}/tokens
           method: get
-          cors: true
-    tags:
-      app: pf
-  postVerifyRecaptchaToken:
-    handler: src/handlers/security/postVerifyRecaptchaToken.handler
-    memorySize: 512 # Probably more memory-intensive process than the rest
-    timeout: 30 # More timeout because it needs more time to make the request
-    events:
-      - http:
-          path: /security/verify
-          method: post
-          cors: true
+          cors:
+            allowedOrigins: 
+              - ${env:CORS_ORIGIN}
+            allowedHeaders: 
+              - X-Recaptcha-Token
+              - x-recaptcha-token
+              - origin
+              - Origin
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+            origin: ${env:CORS_ORIGIN}
+            headers: 
+              - X-Recaptcha-Token
+              - x-recaptcha-token
+              - origin
+              - Origin
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
     tags:
       app: pf
   postSendContractReminder:
@@ -192,6 +507,31 @@ functions:
       - http:
           path: /contracts/{contractId}/reminder
           method: post
-          cors: true
+          cors:
+            allowedOrigins: 
+              - ${env:CORS_ORIGIN}
+            allowedHeaders: 
+              - X-Recaptcha-Token
+              - x-recaptcha-token
+              - origin
+              - Origin
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+            origin: ${env:CORS_ORIGIN}
+            headers: 
+              - X-Recaptcha-Token
+              - x-recaptcha-token
+              - origin
+              - Origin
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
     tags:
       app: pf

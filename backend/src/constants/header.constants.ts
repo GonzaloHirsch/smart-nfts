@@ -2,7 +2,8 @@
 export const HEADERS = {
     ORIGIN: 'origin',
     ORIGIN_CAPITALIZED: 'Origin',
-    TOKEN: 'X-Recaptcha-Token'
+    TOKEN: 'x-recaptcha-token',
+    TOKEN_CAPITALIZED: 'X-Recaptcha-Token'
 };
 
 export const HEADER_HOSTS = {

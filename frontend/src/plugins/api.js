@@ -1,13 +1,21 @@
 import { inject } from 'vue';
 import axios from 'axios';
 import fileDownload from 'js-file-download';
-import {PAGINATION_PER_PAGE} from '../js/constants';
+import { PAGINATION_PER_PAGE } from '../js/constants';
 
 // Constant plugin key
 const PLUGIN_KEY = 'pf-api';
 
+const TOKEN_HEADER = 'X-Recaptcha-Token';
+
 // Axios instance
 let instance;
+
+const getSecurityHeaders = (recaptcha) => {
+    const h = {}
+    h[TOKEN_HEADER] = recaptcha;
+    return h;
+}
 
 const api = {
     getStatus: async () => {
@@ -15,69 +23,63 @@ const api = {
             return res
         })
     },
-    editContract: async (contractId, data) => {
-        return instance.put(`contracts/${contractId}`, data).then(res => {
+    editContract: async (contractId, data, recaptcha) => {
+        return instance.put(`contracts/${contractId}`, data, { headers: getSecurityHeaders(recaptcha) }).then(res => {
             return res
         })
     },
-    getContract: async (contractId) => {
-        return instance.get(`contracts/${contractId}`).then(res => {
+    getContract: async (contractId, recaptcha) => {
+        return instance.get(`contracts/${contractId}`, { headers: getSecurityHeaders(recaptcha) }).then(res => {
             return res
         })
     },
-    getTokens: async (contractId, page = 1) => {
-        return instance.get(`contracts/${contractId}/tokens?page=${page}&perPage=${PAGINATION_PER_PAGE}`).then(res => {
+    getTokens: async (contractId, page = 1, recaptcha) => {
+        return instance.get(`contracts/${contractId}/tokens?page=${page}&perPage=${PAGINATION_PER_PAGE}`, { headers: getSecurityHeaders(recaptcha) }).then(res => {
             return res;
         })
     },
-    createContract: async () => {
-        return instance.post(`contracts`).then(res => {
+    createContract: async (recaptcha) => {
+        return instance.post(`contracts`, {}, { headers: getSecurityHeaders(recaptcha) }).then(res => {
             return res
         })
     },
-    deployContract: async (contractId) => {
-        return instance.post(`contracts/${contractId}/deploy`).then(res => {
+    deployContract: async (contractId, recaptcha) => {
+        return instance.post(`contracts/${contractId}/deploy`, {}, { headers: getSecurityHeaders(recaptcha) }).then(res => {
             return res
         })
     },
-    verifyContract: async (contractId) => {
-        return instance.post(`contracts/${contractId}/verify`).then(res => {
+    verifyContract: async (contractId, recaptcha) => {
+        return instance.post(`contracts/${contractId}/verify`, {}, { headers: getSecurityHeaders(recaptcha) }).then(res => {
             return res
         });
     },
-    downloadContract: async (contractId) => {
-        return instance.get(`contracts/${contractId}/contents`, { responseType: 'blob' }).then(res => {
+    downloadContract: async (contractId, recaptcha) => {
+        return instance.get(`contracts/${contractId}/contents`, { responseType: 'blob', headers: getSecurityHeaders(recaptcha) }).then(res => {
             const filename = res.headers['content-disposition'].split('filename=')[1];
             fileDownload(res.data, filename);
             return res;
         });
     },
-    interactWithContract: async (contractId, methodId, inputs) => {
+    interactWithContract: async (contractId, methodId, inputs, recaptcha) => {
         return instance.post(`contracts/${contractId}/interact`, {
             methodId: methodId,
             inputs: inputs
-        }).then(res => {
+        }, { headers: getSecurityHeaders(recaptcha) }).then(res => {
             return res;
         });
     },
-    mintWithContract: async (contractId, formData) => {
-        return instance.post(`contracts/${contractId}/mint`, formData, {
-            "Content-Type": "multipart/form-data"
-        }).then(res => {
+    mintWithContract: async (contractId, formData, recaptcha) => {
+        const headers = { headers: getSecurityHeaders(recaptcha) }
+        headers.headers["Content-Type"] = "multipart/form-data";
+        headers["Content-Type"] = "multipart/form-data";
+        return instance.post(`contracts/${contractId}/mint`, formData, headers).then(res => {
             return res;
         });
     },
-    verifyRecaptchaToken: async (token) => {
-        return instance.post(`security/verify`, {
-            token: token
-        }).then(res => {
-            return res;
-        });
-    },
-    sendEmailReminder: async (contractId, email) => {
+    sendEmailReminder: async (contractId, email, recaptcha) => {
         return instance.post(`contracts/${contractId}/reminder`, {
             email: email
-        }).then(res => {
+        }, { headers: getSecurityHeaders(recaptcha) }).then(res => {
             return res;
         });
     }

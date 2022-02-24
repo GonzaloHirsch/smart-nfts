@@ -167,43 +167,43 @@
     </v-section>
 
     <v-section class="bg-typography_primary editor--content">
-        <h2 class="text-center text-brand_secondary mb-base">{{$t('editor.content.title')}}</h2>
-        <v-anchored-title type="h3" :text="$t('editor.content.contractInformation.title')" anchor="contractInformation" class="mb-xs"/>
+        <h2 class="text-center text-brand_secondary mb-base">{{ $t('editor.content.title') }}</h2>
+        <v-anchored-title type="h3" :text="$t('editor.content.contractInformation.title')" anchor="contractInformation" class="mb-xs" />
         <p v-html="$t('editor.content.contractInformation.copy')"></p>
-        <v-anchored-title type="h3" :text="$t('editor.content.creation.title')" anchor="creation" class="mb-xs"/>
+        <v-anchored-title type="h3" :text="$t('editor.content.creation.title')" anchor="creation" class="mb-xs" />
         <p v-html="$t('editor.content.creation.copy_1')"></p>
         <p v-html="$t('editor.content.creation.copy_2')"></p>
-        <v-anchored-title type="h4" :text="$t('editor.content.creation.mintable.title')" anchor="mintable" class="mb-xs"/>
+        <v-anchored-title type="h4" :text="$t('editor.content.creation.mintable.title')" anchor="mintable" class="mb-xs" />
         <p v-html="$t('editor.content.creation.mintable.copy_1')"></p>
-        <v-anchored-title type="h5" :text="$t('editor.content.creation.mintable.autoincrementIds.title')" anchor="autoincrementIds" class="mb-xs"/>
+        <v-anchored-title type="h5" :text="$t('editor.content.creation.mintable.autoincrementIds.title')" anchor="autoincrementIds" class="mb-xs" />
         <p v-html="$t('editor.content.creation.mintable.autoincrementIds.copy_1')"></p>
-        <v-anchored-title type="h4" :text="$t('editor.content.creation.pausable.title')" anchor="pausable" class="mb-xs"/>
+        <v-anchored-title type="h4" :text="$t('editor.content.creation.pausable.title')" anchor="pausable" class="mb-xs" />
         <p v-html="$t('editor.content.creation.pausable.copy_1')"></p>
-        <v-anchored-title type="h4" :text="$t('editor.content.creation.burnable.title')" anchor="burnable" class="mb-xs"/>
+        <v-anchored-title type="h4" :text="$t('editor.content.creation.burnable.title')" anchor="burnable" class="mb-xs" />
         <p v-html="$t('editor.content.creation.burnable.copy_1')"></p>
-        <v-anchored-title type="h4" :text="$t('editor.content.creation.enumerable.title')" anchor="enumerable" class="mb-xs"/>
+        <v-anchored-title type="h4" :text="$t('editor.content.creation.enumerable.title')" anchor="enumerable" class="mb-xs" />
         <p v-html="$t('editor.content.creation.enumerable.copy_1')"></p>
         <ul>
             <li v-html="$t('editor.content.creation.enumerable.copy_2.bullet_1')"></li>
             <li v-html="$t('editor.content.creation.enumerable.copy_2.bullet_2')"></li>
             <li v-html="$t('editor.content.creation.enumerable.copy_2.bullet_3')"></li>
         </ul>
-        <v-anchored-title type="h5" :text="$t('editor.content.creation.enumerable.limitedSupply.title')" anchor="limitedSupply" class="mb-xs"/>
+        <v-anchored-title type="h5" :text="$t('editor.content.creation.enumerable.limitedSupply.title')" anchor="limitedSupply" class="mb-xs" />
         <p v-html="$t('editor.content.creation.enumerable.limitedSupply.copy_1')"></p>
-        <v-anchored-title type="h4" :text="$t('editor.content.creation.uriStorage.title')" anchor="uriStorage" class="mb-xs"/>
+        <v-anchored-title type="h4" :text="$t('editor.content.creation.uriStorage.title')" anchor="uriStorage" class="mb-xs" />
         <p v-html="$t('editor.content.creation.uriStorage.copy_1')"></p>
-        <v-anchored-title type="h5" :text="$t('editor.content.creation.uriStorage.uniqueStorage.title')" anchor="uniqueStorage" class="mb-xs"/>
+        <v-anchored-title type="h5" :text="$t('editor.content.creation.uriStorage.uniqueStorage.title')" anchor="uniqueStorage" class="mb-xs" />
         <p v-html="$t('editor.content.creation.uriStorage.uniqueStorage.copy_1')"></p>
-        <v-anchored-title type="h3" :text="$t('editor.content.metadata.title')" anchor="metadata" class="mb-xs"/>
+        <v-anchored-title type="h3" :text="$t('editor.content.metadata.title')" anchor="metadata" class="mb-xs" />
         <p v-html="$t('editor.content.metadata.copy_1')"></p>
         <p v-html="$t('editor.content.metadata.copy_2')"></p>
         <p v-html="$t('editor.content.metadata.copy_3')"></p>
         <p v-html="$t('editor.content.metadata.copy_4')"></p>
-        <v-anchored-title type="h3" :text="$t('editor.content.deploy.title')" anchor="deploy" class="mb-xs"/>
+        <v-anchored-title type="h3" :text="$t('editor.content.deploy.title')" anchor="deploy" class="mb-xs" />
         <p v-html="$t('editor.content.deploy.copy_1')"></p>
         <p v-html="$t('editor.content.deploy.copy_2')"></p>
         <p v-html="$t('editor.content.deploy.copy_3')"></p>
-        <v-anchored-title type="h3" :text="$t('editor.content.verify.title')" anchor="verify" class="mb-xs"/>
+        <v-anchored-title type="h3" :text="$t('editor.content.verify.title')" anchor="verify" class="mb-xs" />
         <p v-html="$t('editor.content.verify.copy')"></p>
     </v-section>
 </template>
@@ -248,6 +248,9 @@ const route = useRoute(),
 import { useApi } from '@/plugins/api';
 const api = useApi();
 
+import { useRecaptcha } from '@/plugins/recaptcha';
+const recaptcha = useRecaptcha();
+
 import { ref, computed, onMounted, nextTick } from 'vue';
 const isOpen = ref(false);
 const modalType = ref(undefined);
@@ -284,31 +287,33 @@ const contractEdited = ref(false);
 
 const loadContract = (showLoading = true) => {
     if (showLoading) isLoadingEditor.value = true;
-    api.getContract(route.params.id)
-        .then((res) => {
-            storedContract.value = res.data;
-            if (res.data.contract) {
-                contractEdited.value = true;
-                lastSaved.value = new Date();
-                contract.value = res.data.contract;
-            }
-            if (showLoading) isLoadingEditor.value = false;
-            // Wait until next tick so that the editor is rendered
-            nextTick().then(() => {
-                startWatchingHeight();
+    recaptcha.challengeInput('GET_CONTRACT', (token) => {
+        api.getContract(route.params.id, token)
+            .then((res) => {
+                storedContract.value = res.data;
+                if (res.data.contract) {
+                    contractEdited.value = true;
+                    lastSaved.value = new Date();
+                    contract.value = res.data.contract;
+                }
+                if (showLoading) isLoadingEditor.value = false;
+                // Wait until next tick so that the editor is rendered
+                nextTick().then(() => {
+                    startWatchingHeight();
+                });
+            })
+            .catch((err) => {
+                if (err.response.status >= 500) {
+                    router.replace({
+                        path: '/500'
+                    });
+                } else {
+                    router.replace({
+                        path: '/404'
+                    });
+                }
             });
-        })
-        .catch((err) => {
-            if (err.response.status >= 500) {
-                router.replace({
-                    path: '/500'
-                });
-            } else {
-                router.replace({
-                    path: '/404'
-                });
-            }
-        });
+    });
 };
 loadContract();
 
@@ -317,16 +322,24 @@ const handleContractChange = (contractData) => {
     let dataToSend = mapFormToApiData(contractData);
     if (dataToSend.name && dataToSend.symbol) {
         isLoading.value = true;
-        api.editContract(route.params.id, mapFormToApiData(contractData)).then((res) => {
-            contract.value = res.data.contract;
-            storedContract.value = res.data;
-            contractEdited.value = true;
-            lastSaved.value = new Date();
-            isLoading.value = false;
-            // Wait until next tick so that the editor is rendered
-            nextTick().then(() => {
-                startWatchingHeight();
-            });
+        recaptcha.challengeInput('EDIT_CONTRACT', (token) => {
+            api.editContract(route.params.id, mapFormToApiData(contractData), token)
+                .then((res) => {
+                    contract.value = res.data.contract;
+                    storedContract.value = res.data;
+                    contractEdited.value = true;
+                    lastSaved.value = new Date();
+                    isLoading.value = false;
+                    // Wait until next tick so that the editor is rendered
+                    nextTick().then(() => {
+                        startWatchingHeight();
+                    });
+                })
+                .catch((err) => {
+                    console.error(err);
+                    isLoading.value = false;
+                    setSnackbar(t('errors.robot'), 'error', 5);
+                });
         });
     }
 };
@@ -338,15 +351,17 @@ const handleDeployContract = () => {
     modalType.value = 'deploy';
     isLoadingModal.value = true;
     showModal();
-    api.deployContract(route.params.id)
-        .then((res) => {
-            storedContract.value = res.data;
-            isLoadingModal.value = false;
-        })
-        .catch((err) => {
-            isLoadingModal.value = false;
-            modalError.value = err.response.data;
-        });
+    recaptcha.challengeInput('DEPLOY_CONTRACT', (token) => {
+        api.deployContract(route.params.id, token)
+            .then((res) => {
+                storedContract.value = res.data;
+                isLoadingModal.value = false;
+            })
+            .catch((err) => {
+                isLoadingModal.value = false;
+                modalError.value = err.response.data;
+            });
+    });
 };
 
 const isVerified = computed(() => {
@@ -393,29 +408,33 @@ const handleVerifyContract = () => {
     modalType.value = 'verify';
     isLoadingModal.value = true;
     showModal();
-    api.verifyContract(route.params.id)
-        .then((res) => {
-            storedContract.value = res.data;
-            isLoadingModal.value = false;
-        })
-        .catch((err) => {
-            console.log(err);
-            modalError.value = true;
-            isLoadingModal.value = false;
-        });
+    recaptcha.challengeInput('VERIFY_CONTRACT', (token) => {
+        api.verifyContract(route.params.id, token)
+            .then((res) => {
+                storedContract.value = res.data;
+                isLoadingModal.value = false;
+            })
+            .catch((err) => {
+                console.log(err);
+                modalError.value = true;
+                isLoadingModal.value = false;
+            });
+    });
 };
 const handleDownloadContract = () => {
     isLoadingDownload.value = true;
-    api.downloadContract(route.params.id)
-        .then((res) => {
-            isLoadingDownload.value = false;
-            setSnackbar(t('editor.download.message'), 'default', 5);
-        })
-        .catch((err) => {
-            isLoadingDownload.value = false;
-            console.log(err);
-            setSnackbar(t('editor.download.error'), 'error', 5);
-        });
+    recaptcha.challengeInput('DOWNLOAD_CONTRACT', (token) => {
+        api.downloadContract(route.params.id)
+            .then((res) => {
+                isLoadingDownload.value = false;
+                setSnackbar(t('editor.download.message'), 'default', 5);
+            })
+            .catch((err) => {
+                isLoadingDownload.value = false;
+                console.log(err);
+                setSnackbar(t('editor.download.error'), 'error', 5);
+            });
+    });
 };
 
 const copyContractId = () => {

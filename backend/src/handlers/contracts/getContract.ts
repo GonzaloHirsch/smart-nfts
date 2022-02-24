@@ -6,6 +6,7 @@ import { isEmptyPathParams, validContractId } from '../../helpers/validations.he
 import GenericException from '../../exceptions/generic.exception';
 import { HTTP_ERRORS } from '../../constants/errors.constants';
 import { headerVerificationHandler } from '../../middleware/headerHandler.middleware';
+import { recaptchaVerificationHandler } from '../../middleware/recaptchaVerificator.middleware';
 
 const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   
@@ -23,4 +24,4 @@ const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyRes
     };
 };
 
-export const handler = corsHandler('GET')(errorHandler()(headerVerificationHandler()(endpoint)));
+export const handler = corsHandler('GET')(errorHandler()(recaptchaVerificationHandler()(headerVerificationHandler()(endpoint))));

@@ -12,6 +12,7 @@ export const HTTP_ERRORS = {
         INVALID_INPUT_MISSING: { status: 400, internalStatus: 'INVALID_INPUT_MISSING', message: 'Inputs are missing.' },
         INVALID_INPUT_TYPE: { status: 400, internalStatus: 'INVALID_INPUT_TYPE', message: 'Input types are incorrect.' },
         INVALID_INPUT_EXTENSIONS: { status: 400, internalStatus: 'INVALID_INPUT_EXT', message: 'Extensions combination is incorrect.' }, 
+        FORBIDDEN_REQUEST: { status: 403, internalStatus: 'FORBIDDEN', message: 'Forbidden request.' }, 
     },
     FORBIDDEN: {
         GENERAL: { status: 403, internalStatus: 'FORBIDDEN', message: 'Forbidden.' },
@@ -39,6 +40,7 @@ export const EXCEPTION_NAMES = {
     CONTRACT_NOT_FOUND: 'ContractNotFoundException',
     METHOD_NOT_FOUND: 'MethodNotFoundException',
     VERIFICATION_FAILED: 'VerificationFailedException',
+    RECAPTCHA_VERIFICATION_FAILED: 'RecaptchaVerificationFailedException',
     INSUFFICIENT_GAS: 'InsufficientGasException',
     COMPILATION_ERROR: 'CompilationException',
     VERIFICATION_DUPLICATION: 'VerificationDuplicationException',
@@ -74,5 +76,6 @@ export const EXCEPTION_TO_HTTP_MAP = new Map<string, IHttpErrorData>([
     [EXCEPTION_NAMES.INVALID_INPUT_TYPE, HTTP_ERRORS.BAD_REQUEST.INVALID_INPUT_TYPE],
     [EXCEPTION_NAMES.INVALID_INPUT_EXTENSIONS, HTTP_ERRORS.BAD_REQUEST.INVALID_INPUT_EXTENSIONS],
     [EXCEPTION_NAMES.ETHERSCAN_ERROR, HTTP_ERRORS.SERVER.ETHERSCAN],
-    [EXCEPTION_NAMES.MISSING_HEADER, HTTP_ERRORS.BAD_REQUEST.GENERAL],
+    [EXCEPTION_NAMES.MISSING_HEADER, HTTP_ERRORS.BAD_REQUEST.FORBIDDEN_REQUEST],
+    [EXCEPTION_NAMES.RECAPTCHA_VERIFICATION_FAILED, HTTP_ERRORS.BAD_REQUEST.FORBIDDEN_REQUEST],
 ]);

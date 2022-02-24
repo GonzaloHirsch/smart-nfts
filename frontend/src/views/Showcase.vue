@@ -141,6 +141,9 @@ import { ref, computed, watch } from 'vue';
 import { useApi } from '@/plugins/api';
 const api = useApi();
 
+import { useRecaptcha } from '@/plugins/recaptcha';
+const recaptcha = useRecaptcha();
+
 import { useNotifications } from '@/plugins/notifications';
 const { setSnackbar } = useNotifications();
 
@@ -215,41 +218,49 @@ watch(
                 contractId.value = route.params.id;
                 // Get the contract
                 isLoading.value = true;
-                api.getContract(contractId.value)
-                    .then((res) => {
-                        contract.value = res.data;
-                        // Todo: verify the contract is mintable
-                        if (!contractIsDeployed.value) {
-                            setSnackbar(t('errors.contract.notDeployed'), 'error', 5);
-                            validContract.value = false;
-                            isLoading.value = false;
-                        } else if (!contract.value.deployment.extensions.includes(EXTENSIONS.MINTABLE)) {
-                            setSnackbar(t('errors.contract.notMint'), 'error', 5);
-                            validContract.value = false;
-                            isLoading.value = false;
-                        } else {
-                            validContract.value = true;
-                            // Load tokens
-                            hasIpfsError.value = false;
-                            api.getTokens(contractId.value, currentPage.value)
-                                .then((res) => {
-                                    tokens.value = res.data.records;
-                                    pagination.value = res.data._metadata;
-                                    isLoading.value = false;
-                                })
-                                .catch((res) => {
-                                    tokens.value = [];
-                                    console.error(res);
-                                    isLoading.value = false;
+                recaptcha.challengeInput('GET_CONTRACT', (token) => {
+                    api.getContract(contractId.value, token)
+                        .then((res) => {
+                            contract.value = res.data;
+                            // Todo: verify the contract is mintable
+                            if (!contractIsDeployed.value) {
+                                setSnackbar(t('errors.contract.notDeployed'), 'error', 5);
+                                validContract.value = false;
+                                isLoading.value = false;
+                            } else if (!contract.value.deployment.extensions.includes(EXTENSIONS.MINTABLE)) {
+                                setSnackbar(t('errors.contract.notMint'), 'error', 5);
+                                validContract.value = false;
+                                isLoading.value = false;
+                            } else {
+                                validContract.value = true;
+                                // Load tokens
+                                hasIpfsError.value = false;
+                                recaptcha.challengeInput('GET_CONTRACT_TOKENS', (_token) => {
+                                    api.getTokens(contractId.value, currentPage.value, _token)
+                                        .then((res) => {
+                                            tokens.value = res.data.records;
+                                            pagination.value = res.data._metadata;
+                                            isLoading.value = false;
+                                        })
+                                        .catch((res) => {
+                                            tokens.value = [];
+                                            console.error(res);
+                                            isLoading.value = false;
+                                        });
                                 });
-                        }
-                    })
-                    .catch((err) => {
-                        console.error(err);
-                        validContract.value = false;
-                        setSnackbar(t('errors.contract.notExist'), 'error', 5);
-                        isLoading.value = false;
-                    });
+                            }
+                        })
+                        .catch((err) => {
+                            console.error(err);
+                            validContract.value = false;
+                            isLoading.value = false;
+                            if (err.response.status === 404) {
+                                setSnackbar(t('errors.contract.notExist'), 'error', 5);
+                            } else {
+                                setSnackbar(t('errors.robot'), 'error', 5);
+                            }
+                        });
+                });
             } else {
                 contractId.value = undefined;
                 contract.value = {};
@@ -268,19 +279,24 @@ watch(
                 // Load tokens
                 hasIpfsError.value = false;
                 isLoadingPage.value = true;
-                api.getTokens(contractId.value, currentPage.value)
-                    .then((res) => {
-                        tokens.value = res.data.records;
-                        pagination.value = res.data._metadata;
-                        isLoading.value = false;
-                        isLoadingPage.value = false;
-                    })
-                    .catch((res) => {
-                        tokens.value = [];
-                        console.error(res);
-                        isLoading.value = false;
-                        isLoadingPage.value = false;
-                    });
+                recaptcha.challengeInput('GET_CONTRACT_TOKENS', (token) => {
+                    api.getTokens(contractId.value, currentPage.value, token)
+                        .then((res) => {
+                            tokens.value = res.data.records;
+                            pagination.value = res.data._metadata;
+                            isLoading.value = false;
+                            isLoadingPage.value = false;
+                        })
+                        .catch((res) => {
+                            tokens.value = [];
+                            console.error(res);
+                            isLoading.value = false;
+                            isLoadingPage.value = false;
+                            if (err.response.status === 400) {
+                                setSnackbar(t('errors.robot'), 'error', 5);
+                            }
+                        });
+                });
             } else {
                 contractId.value = undefined;
                 contract.value = {};

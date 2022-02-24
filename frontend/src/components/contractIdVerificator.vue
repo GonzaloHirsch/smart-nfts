@@ -36,46 +36,57 @@ import { ref, computed, watch } from 'vue';
 import { useApi } from '@/plugins/api';
 const api = useApi();
 
+import { useRecaptcha } from '@/plugins/recaptcha';
+const recaptcha = useRecaptcha();
+
 import { useNotifications } from '@/plugins/notifications';
 const { setSnackbar } = useNotifications();
 
-const emit = defineEmits(['validId']); 
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
+
+const emit = defineEmits(['validId']);
 const props = defineProps({
     button: {
         type: Object,
         required: true
     }
-})
+});
 
 const isLoading = ref(false);
 const contractId = ref(undefined);
 const _editDisabled = ref(false);
 const editDisabled = computed(() => {
-  return contractId.value === undefined || contractId.value === '' || _editDisabled.value || isLoading.value;
+    return contractId.value === undefined || contractId.value === '' || _editDisabled.value || isLoading.value;
 });
 
 const handleClick = () => {
-  isLoading.value = true;
-  // Call API & wait for the response
-  api
-    .getContract(contractId.value)
-    .then(() => {
-      // Don't make it stop loading, otherwise it doesn't look good
-      emit('validId', contractId.value);
-    })
-    .catch(() => {
-      isLoading.value = false;
-      _editDisabled.value = true;
-      setSnackbar("Contract doesn't exist!", 'error', 5);
+    isLoading.value = true;
+    // Call API & wait for the response
+    recaptcha.challengeInput('GET_CONTRACT', (token) => {
+        api.getContract(contractId.value, token)
+            .then(() => {
+                // Don't make it stop loading, otherwise it doesn't look good
+                emit('validId', contractId.value);
+            })
+            .catch((err) => {
+                isLoading.value = false;
+                _editDisabled.value = true;
+                if (err.response.status === 403) {
+                    setSnackbar(t('errors.robot'), 'error', 5);
+                } else {
+                    setSnackbar(t('errors.contract.notExist'), 'error', 5);
+                }
+            });
     });
 };
 watch(
-  () => contractId.value,
-  () => {
-    // Edit must be disabled because the id is invalid
-    if (_editDisabled.value) {
-      _editDisabled.value = !_editDisabled.value;
+    () => contractId.value,
+    () => {
+        // Edit must be disabled because the id is invalid
+        if (_editDisabled.value) {
+            _editDisabled.value = !_editDisabled.value;
+        }
     }
-  }
 );
 </script>

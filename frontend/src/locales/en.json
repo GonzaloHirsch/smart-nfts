@@ -580,6 +580,7 @@
     "date": "{0}",
     "errors": {
         "robot": "You are not human, cannot use this!",
+        "internal": "Internal error",
         "contract": {
             "notExist": "Contract doesn't exist!",
             "notMint": "Contract cannot mint tokens!",
@@ -587,6 +588,9 @@
             "notCopyId": "Cannot copy contract ID to clipboard!",
             "notCopyAddress": "Cannot copy contract address to clipboard!",
             "notCopyCode": "Cannot copy contract code to clipboard!"
+        },
+        "method": {
+            "notCopyResponse": "Cannot copy response to clipboard!"
         }
     },
     "success": {
