@@ -23,4 +23,4 @@ const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyRes
   };
 }
 
-export const handler = corsHandler("GET")(errorHandler()(recaptchaVerificationHandler()(headerVerificationHandler()(endpoint))));
+export const handler = corsHandler("GET")(errorHandler()(headerVerificationHandler()(endpoint)));

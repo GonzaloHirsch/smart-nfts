@@ -418,21 +418,28 @@ const handleVerifyContract = () => {
                 console.log(err);
                 modalError.value = true;
                 isLoadingModal.value = false;
+                if (err.response.status === 403) {
+                    setSnackbar(t('errors.robot'), 'error', 5);
+                }
             });
     });
 };
 const handleDownloadContract = () => {
     isLoadingDownload.value = true;
     recaptcha.challengeInput('DOWNLOAD_CONTRACT', (token) => {
-        api.downloadContract(route.params.id)
+        api.downloadContract(route.params.id, token)
             .then((res) => {
                 isLoadingDownload.value = false;
                 setSnackbar(t('editor.download.message'), 'default', 5);
             })
             .catch((err) => {
-                isLoadingDownload.value = false;
                 console.log(err);
-                setSnackbar(t('editor.download.error'), 'error', 5);
+                isLoadingDownload.value = false;
+                if (err.response.status === 403) {
+                    setSnackbar(t('errors.robot'), 'error', 5);
+                } else {
+                    setSnackbar(t('editor.download.error'), 'error', 5);
+                }
             });
     });
 };
@@ -455,7 +462,7 @@ const copyContractId = () => {
 
 const copyContractAddress = () => {
     if (!navigator.clipboard) {
-        setSnackbar('Cannot copy contract address to clipboard!', 'error', 5);
+        setSnackbar(t('errors.contract.notCopyAddress'), 'error', 5);
         return;
     }
     navigator.clipboard
