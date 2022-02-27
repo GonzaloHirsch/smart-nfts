@@ -10,7 +10,7 @@ import CreationService from './creation.service';
 import NotFoundException from '../exceptions/notFoundException.exception';
 import InvalidInputException from '../exceptions/invalidInput.exception';
 // Others
-import { EXTENSIONS } from '../constants/contract.constants';
+import { EXTENSIONS, UPDATE_TYPES } from '../constants/contract.constants';
 import { IMetadata } from '../interfaces/metadata.interface';
 import { IArguments } from '../interfaces/general.interface';
 import { typeValidations } from '../helpers/validations.helper';
@@ -74,52 +74,60 @@ class StoredContractService {
         symbol: string,
         extensions: EXTENSIONS[],
         inputs: IArguments,
-        metadata: IMetadata
+        metadata: IMetadata, 
+        updateType: UPDATE_TYPES
     ): Promise<{contract: IStoredContract, contractString: string}> => {
         /* Make sure it can add metadata, after reviewing the flow, this shouldn't be validated
         If the user chooses not to have URIStorage, it will need to remove the configured metadata, which won't be
         available again if the user changes it's mind, making them lose the progress */
         // if (!extensions.includes(EXTENSIONS.ERC721URIStorage) && metadata.length > 0) throw new InvalidContractOptionsException(contractId);
 
-        // Check valid name and symbol
-        if (!typeValidations.name(name)) {
-            throw InvalidInputException.Type('name', 'string', name);
-        }
-        if (!typeValidations.symbol(symbol)) {
-            throw InvalidInputException.Type('symbol', 'string', name);
-        }
-
         // Find contract in the DB
         const contract = await this.getEnforcedContractById(contractId);
 
-        const extHas = (extension: EXTENSIONS) => extensions.includes(extension);
+        let contractString = '';
 
-        // Throw if there is an invalid extension combination
-        if ((extHas(EXTENSIONS.AutoIncrementIds) && !extHas(EXTENSIONS.Mintable))
-        || (extHas(EXTENSIONS.UniqueStorage) && !extHas(EXTENSIONS.ERC721URIStorage))) {
-            throw InvalidInputException.Extension();
-        }
-      
-        const extensionCopy = [...extensions];
+        if (updateType === UPDATE_TYPES.ALL || updateType === UPDATE_TYPES.METADATA) {
+            contract.metadata.hasImage = metadata.hasImage;
+            contract.metadata.attributes = metadata.attributes;
+            contract.markModified('metadata');
+        } 
+        if (updateType === UPDATE_TYPES.ALL || updateType === UPDATE_TYPES.CONTRACT) {
+            // Check valid name and symbol
+            if (!typeValidations.name(name)) {
+                throw InvalidInputException.Type('name', 'string', name);
+            }
+            if (!typeValidations.symbol(symbol)) {
+                throw InvalidInputException.Type('symbol', 'string', name);
+            }
 
-        // Generate updated contract
-        const contractString = CreationService.getInstance().genContract(name, symbol, extensions as EXTENSIONS[], inputs);
+            const extHas = (extension: EXTENSIONS) => extensions.includes(extension);
+
+            // Throw if there is an invalid extension combination
+            if ((extHas(EXTENSIONS.AutoIncrementIds) && !extHas(EXTENSIONS.Mintable))
+            || (extHas(EXTENSIONS.UniqueStorage) && !extHas(EXTENSIONS.ERC721URIStorage))) {
+                throw InvalidInputException.Extension();
+            }
         
-        // Digest the content    
-        hash.reset();
-        hash.update(contractString);
-        const contractDigest = hash.digest('hex');
-      
-        // Store the new selection
-        contract.name = name;
-        contract.symbol = symbol;
-        contract.extensions = extensionCopy;
-        contract.metadata.hasImage = metadata.hasImage;
-        contract.metadata.attributes = metadata.attributes;
-        contract.inputs = inputs;
-        contract.digest = contractDigest;
-        contract.markModified('metadata');
-        contract.markModified('inputs');
+            const extensionCopy = [...extensions];
+
+            // Generate updated contract
+            contractString = CreationService.getInstance().genContract(name, symbol, extensions as EXTENSIONS[], inputs);
+            
+            // Digest the content    
+            hash.reset();
+            hash.update(contractString);
+            const contractDigest = hash.digest('hex');
+        
+            // Store the new selection
+            contract.name = name;
+            contract.symbol = symbol;
+            contract.extensions = extensionCopy;
+            contract.inputs = inputs;
+            contract.digest = contractDigest;
+            contract.markModified('inputs');
+        }
+        
         await contract.save();
 
         return {contract, contractString};

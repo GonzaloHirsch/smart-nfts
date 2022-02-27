@@ -1,20 +1,20 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
-import { EXTENSIONS } from '../../constants/contract.constants';
+import { EXTENSIONS, UPDATE_TYPES } from '../../constants/contract.constants';
 import { errorHandler } from '../../middleware/errorHandler.middleware';
 import { corsHandler } from '../../middleware/corsHandler.middleware';
 import { enumHasKeys } from '../../helpers/collection.helper';
 import StoredContractService from '../../services/storedContract.service';
-import { isEmptyPathParams, validContractId, isEmptyBody } from '../../helpers/validations.helper';
+import { isEmptyPathParams, validContractId, isEmptyBody, isEmptyQueryParams } from '../../helpers/validations.helper';
 import GenericException from '../../exceptions/generic.exception';
 import { setHttpErrorMsg } from '../../helpers/errors.helper';
 import { HTTP_ERRORS } from '../../constants/errors.constants';
-import { IMetadataAttribute, IMetadata } from '../../interfaces/metadata.interface';
+import { IMetadata } from '../../interfaces/metadata.interface';
 import { headerVerificationHandler } from '../../middleware/headerHandler.middleware';
 import { recaptchaVerificationHandler } from '../../middleware/recaptchaVerificator.middleware';
 
 const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     
-    if (isEmptyPathParams(event.pathParameters) || !validContractId(event.pathParameters!.contractId)) 
+    if (isEmptyPathParams(event.pathParameters) || !validContractId(event.pathParameters!.contractId) || isEmptyQueryParams(event.queryStringParameters)) 
         throw new GenericException(setHttpErrorMsg(HTTP_ERRORS.BAD_REQUEST.PARAMS, 'Missing contract ID'));
     else if (isEmptyBody(event.body)) 
         throw new GenericException(setHttpErrorMsg(HTTP_ERRORS.BAD_REQUEST.PARAMS, 'Missing request body'));
@@ -25,8 +25,9 @@ const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyRes
     const extensions = requestBody.extensions as string[];
     const inputs = requestBody.inputs as string[] ?? {};
     const metadata = requestBody.metadata as IMetadata;
+    const updateType = event.queryStringParameters!.updateType as string;
 
-    if (!name || !symbol || !extensions || !enumHasKeys(EXTENSIONS, extensions)) {
+    if (!name || !symbol || !extensions || !enumHasKeys(EXTENSIONS, extensions) || !enumHasKeys(UPDATE_TYPES, [updateType])) {
         throw new GenericException(HTTP_ERRORS.BAD_REQUEST.PARAMS);
     }
 
@@ -39,7 +40,8 @@ const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyRes
         symbol, 
         extensions as EXTENSIONS[],
         inputs,
-        metadata
+        metadata,
+        updateType as UPDATE_TYPES
     );
 
     return {

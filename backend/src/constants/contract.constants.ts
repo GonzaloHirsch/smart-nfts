@@ -85,3 +85,9 @@ export enum SUPPORTED_NETWORKS {
     RINKEBY = 'rinkeby',
     ROPSTEN = 'ropsten'
 };
+
+export enum UPDATE_TYPES {
+    CONTRACT = 'CONTRACT',
+    METADATA = 'METADATA',
+    ALL = 'ALL',
+}
