@@ -3,7 +3,7 @@
         <slot />
         <div
             :class="[
-                'tooltip',
+                'tooltip z-100',
                 props.positionY === 'top' ? 'tooltip--top' : '',
                 props.positionY === 'bottom' ? 'tooltip--bottom' : '',
                 props.positionX === 'left' ? 'tooltip--left' : '',
@@ -48,7 +48,6 @@ const props = defineProps({
 
 .tooltip {
     @apply text-white text-center p-1 rounded w-32 -ml-16 opacity-0 duration-300 absolute bg-gray-800;
-    z-index: 1;
 }
 
 .tooltip--top {

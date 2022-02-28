@@ -1,15 +1,15 @@
 import { EXTENSIONS } from '@/js/constants';
 
 // Front --> API
-export const mapFormToApiData = (formData) => {
+export const mapFormToApiData = (contractData, metadataData) => {
     const data = {
-        name: formData.name,
-        symbol: formData.symbol,
+        name: contractData.name,
+        symbol: contractData.symbol,
         extensions: [],
-        inputs: {...formData.extensionInputs},
+        inputs: {...contractData.extensionInputs},
         metadata: {
-            hasImage: formData.hasImage,
-            attributes: formData.metadata.map(field => {
+            hasImage: metadataData.hasImage,
+            attributes: metadataData.metadata.map(field => {
             return {
                 traitType: field.name,
                 displayType: field.display,
@@ -17,14 +17,14 @@ export const mapFormToApiData = (formData) => {
             }
         })}
     };
-    if (formData.isMintable) data.extensions.push(EXTENSIONS.MINTABLE);
-    if (formData.isPausable) data.extensions.push(EXTENSIONS.PAUSABLE);
-    if (formData.isBurnable) data.extensions.push(EXTENSIONS.BURNABLE);
-    if (formData.isAutoIncrementIds) data.extensions.push(EXTENSIONS.AUTO_INCREMENT_IDS);
-    if (formData.isEnumerable) data.extensions.push(EXTENSIONS.ENUMERABLE);
-    if (formData.isURIStorage) data.extensions.push(EXTENSIONS.URI_STORAGE);
-    if (formData.isUniqueStorage) data.extensions.push(EXTENSIONS.UNIQUE_STORAGE);
-    if (formData.isLimitSupply) data.extensions.push(EXTENSIONS.LIMIT_SUPPLY);
+    if (contractData.isMintable) data.extensions.push(EXTENSIONS.MINTABLE);
+    if (contractData.isPausable) data.extensions.push(EXTENSIONS.PAUSABLE);
+    if (contractData.isBurnable) data.extensions.push(EXTENSIONS.BURNABLE);
+    if (contractData.isAutoIncrementIds) data.extensions.push(EXTENSIONS.AUTO_INCREMENT_IDS);
+    if (contractData.isEnumerable) data.extensions.push(EXTENSIONS.ENUMERABLE);
+    if (contractData.isURIStorage) data.extensions.push(EXTENSIONS.URI_STORAGE);
+    if (contractData.isUniqueStorage) data.extensions.push(EXTENSIONS.UNIQUE_STORAGE);
+    if (contractData.isLimitSupply) data.extensions.push(EXTENSIONS.LIMIT_SUPPLY);
     return data;
 };
 

@@ -15,7 +15,13 @@ const getSecurityHeaders = (recaptcha) => {
     const h = {}
     h[TOKEN_HEADER] = recaptcha;
     return h;
-}
+};
+
+const _editContract = async (contractId, data, recaptcha, updateType = 'CONTRACT') => {
+    return instance.put(`contracts/${contractId}?updateType=${updateType}`, data, { headers: getSecurityHeaders(recaptcha) }).then(res => {
+        return res
+    })
+};
 
 const api = {
     getStatus: async () => {
@@ -23,10 +29,11 @@ const api = {
             return res
         })
     },
-    editContract: async (contractId, data, recaptcha) => {
-        return instance.put(`contracts/${contractId}`, data, { headers: getSecurityHeaders(recaptcha) }).then(res => {
-            return res
-        })
+    editContractData: async (contractId, data, recaptcha) => {
+        return _editContract(contractId, data, recaptcha, "CONTRACT");
+    },
+    editContractMetadata: async (contractId, data, recaptcha) => {
+        return _editContract(contractId, data, recaptcha, "METADATA");
     },
     getContract: async (contractId, recaptcha) => {
         return instance.get(`contracts/${contractId}`, { headers: getSecurityHeaders(recaptcha) }).then(res => {

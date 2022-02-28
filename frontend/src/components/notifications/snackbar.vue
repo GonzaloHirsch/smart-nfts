@@ -83,7 +83,7 @@ const classes = computed(() => {
                     parent: 'text-white bg-gray-900',
                     icon: 'hover:text-red-500',
                     timeoutOuter: 'bg-gray-400 bg-opacity-50',
-                    timeoutInner: 'bg-blue-700'
+                    timeoutInner: 'bg-brand_tertiary'
                 };
             case 'error':
                 return {

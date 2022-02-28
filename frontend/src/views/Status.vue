@@ -112,17 +112,17 @@ const hasLowBalance = computed(() => status?.value?.wallet?.balance < 1);
 
 const copyWalletAddress = () => {
     if (!navigator.clipboard) {
-        setSnackbar(t('status.errors.copyAddress'), 'error', 5);
+        setSnackbar(t('status.errors.copyAddress'), 'error', 2.5);
         return;
     }
     navigator.clipboard
         .writeText(status.value.wallet.address)
         .then(() => {
-            setSnackbar(t('status.status.wallet.address.copyOk'), 'default', 5);
+            setSnackbar(t('status.status.wallet.address.copyOk'), 'default', 2.5);
         })
         .catch((err) => {
             console.error(err);
-            setSnackbar(t('status.errors.copyAddress'), 'error', 5);
+            setSnackbar(t('status.errors.copyAddress'), 'error', 2.5);
         });
 };
 

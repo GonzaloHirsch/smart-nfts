@@ -79,18 +79,18 @@ const loadingCopy = ref(false);
 const copyContract = () => {
     loadingCopy.value = true;
     if (!navigator.clipboard) {
-        setSnackbar(t('errors.contract.notCopyCode'), 'error', 5);
+        setSnackbar(t('errors.contract.notCopyCode'), 'error', 2.5);
         return;
     }
     navigator.clipboard
         .writeText(props.code)
         .then(() => {
-            setSnackbar(t('success.copy'), 'default', 5);
+            setSnackbar(t('success.copy'), 'default', 2.5);
             loadingCopy.value = false;
         })
         .catch((err) => {
             console.error(err);
-            setSnackbar(t('errors.contract.notCopyCode'), 'error', 5);
+            setSnackbar(t('errors.contract.notCopyCode'), 'error', 2.5);
             loadingCopy.value = false;
         });
 };

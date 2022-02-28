@@ -1,7 +1,8 @@
 <template>
-    <div class="bg-light pt-sm rounded-md shadow-lg border border-gray-200">
+    <div class="bg-light pt-sm rounded-md shadow-lg border border-gray-200 relative">
         <div class="divide-y divide-typography_secondary px-sm">
-            <div class="pb-sm">
+            <div class="pb-sm relative">
+                <div v-if="props.isLoading" class="editor--blocker-panel"></div>
                 <h5 class="form--title">
                     {{ $t('editor.contract.information') }}<QuestionMarkCircleIcon class="form--title-icon" @click="getHelp('contractInformation')" />
                 </h5>
@@ -33,7 +34,8 @@
                     />
                 </div>
             </div>
-            <div class="py-sm">
+            <div class="py-sm relative">
+                <div v-if="props.isLoading" class="editor--blocker-panel"></div>
                 <h5 class="form--title">
                     {{ $t('editor.contract.creation') }} <QuestionMarkCircleIcon class="form--title-icon" @click="getHelp('creation')" />
                 </h5>
@@ -147,11 +149,11 @@
                     name="hasImage"
                     :placeholder="$t('inputs.text.extensions.metadata.image')"
                     :label="$t('editor.contract.hasImage')"
-                    v-model="contractData.hasImage"
+                    v-model="metadataData.hasImage"
                     class="w-full md:w-6/12"
                 />
                 <p class="text-xl text-brand_secondary mt-sm">{{ $t('editor.metadata.fields') }}</p>
-                <v-metadata v-model="contractData.metadata" />
+                <v-metadata v-model="metadataData.metadata" />
                 <p class="mt-xs text-body_xs" v-html="$t('editor.metadata.note')"></p>
             </div>
         </div>
@@ -241,6 +243,10 @@ const props = defineProps({
         type: Boolean,
         default: false
     },
+    isLoading: {
+        type: Boolean,
+        default: false
+    },
     canVerify: {
         type: Boolean,
         default: false
@@ -270,17 +276,19 @@ const contractData = ref({
     isLimitSupply: mappedExtensions.isLimitSupply ?? false,
     isURIStorage: mappedExtensions.isURIStorage ?? false,
     isUniqueStorage: mappedExtensions.isUniqueStorage ?? false,
-    hasImage: hasImage ?? true,
-    metadata: mappedMetadata ?? [],
     extensionInputs: mappedInputs || {
         maxSupply: 10
     }
+});
+const metadataData = ref({
+    metadata: mappedMetadata ?? [],
+    hasImage: hasImage ?? true
 });
 const inputsErrors = ref({});
 const extensionInputsErrors = ref({});
 const isLoading = ref(false);
 
-const emit = defineEmits(['contractChanged', 'verifyContract', 'deployContract']);
+const emit = defineEmits(['contractChanged', 'metadataChanged', 'verifyContract', 'deployContract']);
 const deployContract = () => {
     emit('deployContract');
 };
@@ -306,27 +314,45 @@ const handleInvalidInput = (name, error, isExtensionInput) => {
 };
 
 const validMetadata = computed(() => {
-    return contractData.value.metadata.filter((field) => field.name === '' || field.name === null || field.name === undefined).length === 0;
+    return metadataData.value.metadata.filter((field) => field.name === '' || field.name === null || field.name === undefined).length === 0;
 });
+const validState = () => {
+    if (
+        ((contractData.value.isAutoIncrementIds && contractData.value.isMintable) || !contractData.value.isAutoIncrementIds) &&
+        ((contractData.value.isLimitSupply &&
+            contractData.value.isEnumerable &&
+            contractData.value.extensionInputs.maxSupply !== null &&
+            contractData.value.extensionInputs.maxSupply !== undefined &&
+            contractData.value.extensionInputs.maxSupply !== '') ||
+            !contractData.value.isLimitSupply) &&
+        ((contractData.value.isUniqueStorage && contractData.value.isURIStorage) || !contractData.value.isUniqueStorage) &&
+        validMetadata.value
+    ) {
+        // Don't send the update event if the name or symbol are invalid
+        if (
+            !inputsErrors.value['name'] &&
+            !inputsErrors.value['symbol'] &&
+            (!extensionInputsErrors.value['maxSupply'] || !contractData.value.isLimitSupply)
+        ) {
+            return true;
+        }
+    }
+    return false;
+};
 watch(
     () => contractData.value,
     () => {
-        // Need to verify that both are selected not to emit a fake event
-        if (
-            ((contractData.value.isAutoIncrementIds && contractData.value.isMintable) || !contractData.value.isAutoIncrementIds) &&
-            ((contractData.value.isLimitSupply &&
-                contractData.value.isEnumerable &&
-                contractData.value.extensionInputs.maxSupply !== null &&
-                contractData.value.extensionInputs.maxSupply !== undefined &&
-                contractData.value.extensionInputs.maxSupply !== '') ||
-                !contractData.value.isLimitSupply) &&
-            ((contractData.value.isUniqueStorage && contractData.value.isURIStorage) || !contractData.value.isUniqueStorage) &&
-            validMetadata.value
-        ) {
-            // Don't send the update event if the name or symbol are invalid
-            if (!inputsErrors.value['name'] && !inputsErrors.value['symbol'] && (!extensionInputsErrors.value['maxSupply'] || !contractData.value.isLimitSupply)) {
-                emit('contractChanged', contractData.value);
-            }
+        if (validState()) {
+            emit('contractChanged', contractData.value, metadataData.value);
+        }
+    },
+    { deep: true }
+);
+watch(
+    () => metadataData.value,
+    () => {
+        if (validState()) {
+            emit('metadataChanged', contractData.value, metadataData.value);
         }
     },
     { deep: true }
@@ -416,5 +442,9 @@ const toggleExpanded = () => {
 
 .editor--button:last-of-type {
     @apply ml-sm mt-0;
+}
+
+.editor--blocker-panel {
+    @apply absolute top-0 left-0 bg-light/50 z-10 w-full h-full;
 }
 </style>

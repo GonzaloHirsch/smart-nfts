@@ -116,6 +116,24 @@
                 "title": "All in One",
                 "description": "You can find everything you might need here! Creation, compilation, verification, adding metadata, contract interaction, and your own NFT gallery."
             }
+        },
+        "cta": {
+            "title": "See more about this project",
+            "text": "Explore how this works, the technologies and services behind it, and check the service status.",
+            "buttons": {
+                "status":  {
+                    "text": "Status",
+                    "aria": "Start using Smart NFTs now"
+                },
+                "howItWorks":  {
+                    "text": "How It Works",
+                    "aria": "Start using Smart NFTs now"
+                },
+                "technologies":  {
+                    "text": "Technologies",
+                    "aria": "Start using Smart NFTs now"
+                }
+            }
         }
     },
     "nav": {

@@ -29,7 +29,7 @@
                 <v-feature-content>
                     <template #content>
                         <p>
-                            {{$t('home.tabs.content.create.text')}}
+                            {{ $t('home.tabs.content.create.text') }}
                         </p>
                     </template>
                     <template #bottom>
@@ -54,7 +54,7 @@
                 <v-feature-content>
                     <template #content>
                         <p>
-                            {{$t('home.tabs.content.edit.text')}}
+                            {{ $t('home.tabs.content.edit.text') }}
                         </p>
                     </template>
                     <template #bottom>
@@ -77,7 +77,7 @@
                 <v-feature-content>
                     <template #content>
                         <p>
-                            {{$t('home.tabs.content.interact.text')}}
+                            {{ $t('home.tabs.content.interact.text') }}
                         </p>
                     </template>
                     <template #bottom>
@@ -100,7 +100,7 @@
                 <v-feature-content>
                     <template #content>
                         <p>
-                            {{$t('home.tabs.content.view.text')}}
+                            {{ $t('home.tabs.content.view.text') }}
                         </p>
                     </template>
                     <template #bottom>
@@ -126,13 +126,55 @@
         <v-facts :facts="facts" />
     </v-section>
 
-    <v-section id="offer" class="bg-gradient-to-b from-white to-brand_primary">
+    <v-section id="offer" class="bg-white">
         <div class="flex flex-col md:flex-row w-full">
             <div class="w-full md:w-6/12">
                 <v-vertical-facts :facts="verticalFacts" />
             </div>
             <div class="w-full md:w-6/12">
                 <v-contract-drawing class="contract-drawing h-full mx-auto" />
+            </div>
+        </div>
+    </v-section>
+
+    <v-section :smallPadding="true" id="about" class="bg-gradient-to-b from-white via-white to-brand_primary">
+        <div class="flex flex-col justify-center items-center bg-brand_primary border-2 rounded-md border-brand_secondary shadow-md shadow-brand_tertiary p-base w-fit mx-auto">
+            <h2 class="text-h4 leading-none mb-sm">{{ $t('home.cta.title') }}</h2>
+            <p class="mb-sm">{{ $t('home.cta.text') }}</p>
+            <div class="flex flex-row">
+                <v-button
+                    format="secondary"
+                    href="/#features"
+                    target="_self"
+                    :aria="$t('home.cta.buttons.howItWorks.aria')"
+                    :external="false"
+                    :white="false"
+                    :text="$t('home.cta.buttons.howItWorks.text')"
+                    size="medium"
+                    class="w-fit"
+                />
+                <v-button
+                    format="secondary"
+                    href="/#features"
+                    target="_self"
+                    :aria="$t('home.cta.buttons.technologies.aria')"
+                    :external="false"
+                    :white="false"
+                    :text="$t('home.cta.buttons.technologies.text')"
+                    size="medium"
+                    class="w-fit mx-sm"
+                />
+                <v-button
+                    format="secondary"
+                    href="/#features"
+                    target="_self"
+                    :aria="$t('home.cta.buttons.status.aria')"
+                    :external="false"
+                    :white="false"
+                    :text="$t('home.cta.buttons.status.text')"
+                    size="medium"
+                    class="w-fit"
+                />
             </div>
         </div>
     </v-section>
@@ -199,19 +241,21 @@ const handleCreateContract = () => {
     isLoading.value = true;
     recaptcha.challengeInput('CREATE_CONTRACT', (token) => {
         // Call API & wait for the response
-        api.createContract(token).then((res) => {
-            // Don't make it stop loading if it's ok, it's better for the experience
-            // isLoading.value = false;
-            if (res.data && res.data.id) {
-                router.push(`/create/${res.data.id}`);
-            } else {
+        api.createContract(token)
+            .then((res) => {
+                // Don't make it stop loading if it's ok, it's better for the experience
+                // isLoading.value = false;
+                if (res.data && res.data.id) {
+                    router.push(`/create/${res.data.id}`);
+                } else {
+                    isLoading.value = false;
+                }
+            })
+            .catch((err) => {
+                console.error(err);
                 isLoading.value = false;
-            }
-        }).catch(err => {
-            console.error(err);
-            isLoading.value = false;
-            setSnackbar(t('errors.robot'), 'error', 5);
-        });
+                setSnackbar(t('errors.robot'), 'error', 2.5);
+            });
     });
 };
 

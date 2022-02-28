@@ -260,7 +260,7 @@ const handleMintCall = (contractId) => {
             })
             .catch((err) => {
                 if (err.response.status === 403) {
-                    setSnackbar(t('errors.robot'), 'error', 5);
+                    setSnackbar(t('errors.robot'), 'error', 2.5);
                 } else {
                     handleErrorResults(err);
                 }
@@ -277,7 +277,7 @@ const handleMethodCall = (contractId) => {
             })
             .catch((err) => {
                 if (err.response.status === 403) {
-                    setSnackbar(t('errors.robot'), 'error', 5);
+                    setSnackbar(t('errors.robot'), 'error', 2.5);
                 } else {
                     handleErrorResults(err);
                 }
@@ -441,17 +441,17 @@ const getHelp = () => {
 
 const copyResponse = (response) => {
     if (!navigator.clipboard) {
-        setSnackbar(t('errors.method.notCopyResponse'), 'error', 5);
+        setSnackbar(t('errors.method.notCopyResponse'), 'error', 2.5);
         return;
     }
     navigator.clipboard
         .writeText(response)
         .then(() => {
-            setSnackbar(t('success.copy'), 'default', 5);
+            setSnackbar(t('success.copy'), 'default', 2.5);
         })
         .catch((err) => {
             console.error(err);
-            setSnackbar(t('errors.method.notCopyResponse'), 'error', 5);
+            setSnackbar(t('errors.method.notCopyResponse'), 'error', 2.5);
         });
 };
 </script>
