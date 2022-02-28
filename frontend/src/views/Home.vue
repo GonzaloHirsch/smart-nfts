@@ -144,7 +144,7 @@
             <div class="flex flex-row">
                 <v-button
                     format="secondary"
-                    href="/#features"
+                    href="/how-it-works/"
                     target="_self"
                     :aria="$t('home.cta.buttons.howItWorks.aria')"
                     :external="false"
@@ -155,7 +155,7 @@
                 />
                 <v-button
                     format="secondary"
-                    href="/#features"
+                    href="/technologies/"
                     target="_self"
                     :aria="$t('home.cta.buttons.technologies.aria')"
                     :external="false"
@@ -166,7 +166,7 @@
                 />
                 <v-button
                     format="secondary"
-                    href="/#features"
+                    href="/status/"
                     target="_self"
                     :aria="$t('home.cta.buttons.status.aria')"
                     :external="false"

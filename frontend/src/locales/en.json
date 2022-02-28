@@ -153,6 +153,18 @@
             "text": "View",
             "aria": "Go to view"
         },
+        "status": {
+            "text": "Status",
+            "aria": "See the service status"
+        },
+        "howItWorks": {
+            "text": "How It Works",
+            "aria": "Go to the how it works page"
+        },
+        "technologies": {
+            "text": "Technologies",
+            "aria": "See what technologies power this page"
+        },
         "app": {
             "aria": "Go to the homepage"
         },
@@ -165,6 +177,7 @@
             }
         },
         "features": "Features",
+        "about": "About",
         "contact": "Contact"
     },
     "about": {
