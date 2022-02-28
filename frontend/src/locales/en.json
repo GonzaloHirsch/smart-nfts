@@ -149,6 +149,16 @@
         "features": "Features",
         "contact": "Contact"
     },
+    "about": {
+        "hero": {
+            "title": "Behind the Scenes",
+            "button": {
+                "text": "Read More",
+                "aria": "Learn more about SmartNFTs"
+            },
+            "subtitle": "Read on to learn what an ERC-721 Smart Contract is, what technologies are used in our processes, and the purpose for which SmartNFTs was created."
+        }
+    },  
     "editor": {
         "contract": {
             "empty": "Start by completing the contract name and symbol...",

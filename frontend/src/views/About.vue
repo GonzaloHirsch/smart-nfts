@@ -1,0 +1,254 @@
+<template>
+    <v-left-hero :full-height="true" 
+        class="bg-gradient-to-b from-brand_primary to-white" 
+        title="about.hero.title"
+        subtitle="about.hero.subtitle"
+    >
+        <template #buttons>
+            <v-button
+                format="secondary"
+                href="#how-it-works"
+                target="_self"
+                :aria="$t('about.hero.button.aria')"
+                :external="false"
+                :white="false"
+                :text="$t('about.hero.button.text')"
+                size="large"
+            />
+        </template>
+    </v-left-hero>
+
+    <v-section id="how-it-works" class="bg-typography_primary">
+        <h2 class="mb-base text-brand_secondary">{{ $t('home.tabs.title') }}</h2>
+        <v-tabs :tabs="['Create', 'Edit', 'Interact', 'View']">
+            <template #Create>
+                <v-feature-content>
+                    <template #content>
+                        <p>
+                            {{$t('home.tabs.content.create.text')}}
+                        </p>
+                    </template>
+                    <template #bottom>
+                        <v-button
+                            :format="isLoading ? 'disabled' : 'secondary'"
+                            @click="isLoading ? undefined : handleCreateContract()"
+                            :aria="$t('home.tabs.buttons.create.aria')"
+                            :external="false"
+                            :white="false"
+                            :loading="isLoading"
+                            :disabled="isLoading"
+                            :text="$t('home.tabs.buttons.create.text')"
+                            size="medium"
+                        />
+                    </template>
+                    <template #image>
+                        <v-create-drawing />
+                    </template>
+                </v-feature-content>
+            </template>
+            <template #Edit>
+                <v-feature-content>
+                    <template #content>
+                        <p>
+                            {{$t('home.tabs.content.edit.text')}}
+                        </p>
+                    </template>
+                    <template #bottom>
+                        <v-contract-id-verificator
+                            :button="{
+                                text: 'home.tabs.buttons.edit.text',
+                                aria: 'home.tabs.buttons.edit.aria',
+                                format: 'secondary',
+                                size: 'medium'
+                            }"
+                            @validId="handleValidEditId"
+                        />
+                    </template>
+                    <template #image>
+                        <v-edit-drawing class="fact-image--smaller" />
+                    </template>
+                </v-feature-content>
+            </template>
+            <template #Interact>
+                <v-feature-content>
+                    <template #content>
+                        <p>
+                            {{$t('home.tabs.content.interact.text')}}
+                        </p>
+                    </template>
+                    <template #bottom>
+                        <v-contract-id-verificator
+                            :button="{
+                                text: 'home.tabs.buttons.interact.text',
+                                aria: 'home.tabs.buttons.interact.aria',
+                                format: 'secondary',
+                                size: 'medium'
+                            }"
+                            @validId="handleValidInteractId"
+                        />
+                    </template>
+                    <template #image>
+                        <v-interact-drawing />
+                    </template>
+                </v-feature-content>
+            </template>
+            <template #View>
+                <v-feature-content>
+                    <template #content>
+                        <p>
+                            {{$t('home.tabs.content.view.text')}}
+                        </p>
+                    </template>
+                    <template #bottom>
+                        <v-contract-id-verificator
+                            :button="{
+                                text: 'home.tabs.buttons.view.text',
+                                aria: 'home.tabs.buttons.view.aria',
+                                format: 'secondary',
+                                size: 'medium'
+                            }"
+                            @validId="handleValidViewId"
+                        />
+                    </template>
+                    <template #image>
+                        <v-view-drawing />
+                    </template>
+                </v-feature-content>
+            </template>
+        </v-tabs>
+    </v-section>
+
+    <v-section id="benefits" class="bg-typography_primary">
+        <v-facts :facts="facts" />
+    </v-section>
+
+    <v-section id="offer" class="bg-gradient-to-b from-white to-brand_primary">
+        <div class="flex flex-col md:flex-row w-full">
+            <div class="w-full md:w-6/12">
+                <v-vertical-facts :facts="verticalFacts" />
+            </div>
+            <div class="w-full md:w-6/12">
+                <v-contract-drawing class="contract-drawing h-full mx-auto" />
+            </div>
+        </div>
+    </v-section>
+</template>
+
+<script setup>
+// Components
+import vButton from '@/components/button.vue';
+import vLeftHero from '@/components/leftHero.vue';
+import vSection from '@/components/section.vue';
+import { QuestionMarkCircleIcon } from '@heroicons/vue/solid';
+import vTabs from '@/components/tabs.vue';
+import vFeatureContent from '@/components/featureContent.vue';
+import vHiddenAnchor from '@/components/hiddenAnchor.vue';
+import vContractIdVerificator from '@/components/contractIdVerificator.vue';
+import vFacts from '@/components/facts.vue';
+import vVerticalFacts from '@/components/verticalFacts.vue';
+
+import { useMeta } from 'vue-meta';
+import { ref } from 'vue';
+
+// Images
+import vCreateDrawing from '@/assets/images/Create-Drawing.svg?component';
+import vEditDrawing from '@/assets/images/Edit-Drawing.svg?component';
+import vInteractDrawing from '@/assets/images/Interact-Drawing.svg?component';
+import vViewDrawing from '@/assets/images/View-Drawing.svg?component';
+import vContractDrawing from '@/assets/images/Contract-Drawing.svg?component';
+import vIconNoWallet from '@/assets/images/icons/Icon-No-Wallet.svg?component';
+import vIconNoGas from '@/assets/images/icons/Icon-No-Gas.svg?component';
+import vIconNoCoding from '@/assets/images/icons/Icon-No-Coding.svg?component';
+import vIconExplanation from '@/assets/images/icons/Icon-Explanation.svg?component';
+import vIconTime from '@/assets/images/icons/Icon-Time.svg?component';
+import vIconCentralized from '@/assets/images/icons/Icon-Centralized.svg?component';
+
+import { useRouter } from 'vue-router';
+const router = useRouter();
+
+import { useApi } from '@/plugins/api';
+const api = useApi();
+
+import { useRecaptcha } from '@/plugins/recaptcha';
+const recaptcha = useRecaptcha();
+
+import { useNotifications } from '@/plugins/notifications';
+const { setSnackbar } = useNotifications();
+
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
+
+const handleValidEditId = (id) => {
+    router.push(`/create/${id}`);
+};
+
+const handleValidInteractId = (id) => {
+    router.push(`/interact/${id}`);
+};
+
+const handleValidViewId = (id) => {
+    router.push(`/tokens/${id}`);
+};
+
+const isLoading = ref(false);
+const handleCreateContract = () => {
+    isLoading.value = true;
+    recaptcha.challengeInput('CREATE_CONTRACT', (token) => {
+        // Call API & wait for the response
+        api.createContract(token).then((res) => {
+            // Don't make it stop loading if it's ok, it's better for the experience
+            // isLoading.value = false;
+            if (res.data && res.data.id) {
+                router.push(`/create/${res.data.id}`);
+            } else {
+                isLoading.value = false;
+            }
+        }).catch(err => {
+            console.error(err);
+            isLoading.value = false;
+            setSnackbar(t('errors.robot'), 'error', 5);
+        });
+    });
+};
+
+const facts = [
+    {
+        title: t('home.facts.wallet.title'),
+        description: t('home.facts.wallet.description'),
+        icon: vIconNoWallet
+    },
+    {
+        title: t('home.facts.gas.title'),
+        description: t('home.facts.gas.description'),
+        icon: vIconNoGas
+    },
+    {
+        title: t('home.facts.coding.title'),
+        description: t('home.facts.coding.description'),
+        icon: vIconNoCoding
+    }
+];
+
+const verticalFacts = [
+    {
+        title: t('home.verticalFacts.step.title'),
+        description: t('home.verticalFacts.step.description'),
+        icon: vIconExplanation
+    },
+    {
+        title: t('home.verticalFacts.simple.title'),
+        description: t('home.verticalFacts.simple.description'),
+        icon: vIconTime
+    },
+    {
+        title: t('home.verticalFacts.centralized.title'),
+        description: t('home.verticalFacts.centralized.description'),
+        icon: vIconCentralized
+    }
+];
+
+useMeta({
+    title: t('home.meta.title'),
+    description: t('home.meta.description')
+});
+</script>

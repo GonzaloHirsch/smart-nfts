@@ -1,5 +1,5 @@
 <template>
-    <v-left-hero :full-height="true" class="bg-gradient-to-b from-brand_primary to-white" title="home.hero.title">
+    <v-left-hero :full-height="true" class="bg-gradient-to-b from-brand_primary to-white" title="home.hero.title" :is-home="true">
         <template #buttons>
             <v-button
                 format="secondary"

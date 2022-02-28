@@ -2,13 +2,15 @@
   <v-section :fullHeight="props.fullHeight" :noPadding="props.noPadding" class="flex flex-wrap flex-row md:flex-nowrap items-start justify-center">
     <div class="flex flex-col items-center md:items-start justify-center w-full md:w-6/12 md:h-full">
       <h1 class="text-brand_secondary mb-sm text-center md:text-left w-full text-h4 md:text-h2" v-html="$t(props.title)" />
+      <h2 v-if="props.subtitle" class="text-brand_secondary mb-sm text-center md:text-left w-full text-body_xl md:text-h5" v-html="$t(props.subtitle)" />
       <div v-if="$slots.buttons" class="flex flex-row items-center md:items-start justify-center mt-sm text-h5">
         <slot name="buttons"></slot>
       </div>
       <slot />
     </div>
     <div class="w-full md:w-6/12 flex flex-col items-center md:items-end justify-center md:h-full relative mt-base md:mt-0">
-      <v-main-drawing class="hero-main-drawing"/>
+      <v-main-drawing v-if="props.isHome" class="hero-main-drawing"/>
+      <v-about-us-drawing v-if="!props.isHome" class="hero-main-drawing"/>
       <v-background-drawing class="hidden md:block hero-background-drawing transform rotate-45"/>
     </div>
   </v-section>
@@ -18,6 +20,7 @@
 import vSection from '@/components/section.vue';
 
 import vMainDrawing from '@/assets/images/Main-Drawing.svg?component';
+import vAboutUsDrawing from '@/assets/images/About-Us-Drawing.svg?component';
 import vBackgroundDrawing from '@/assets/images/Background-Drawing.svg?component';
 
 const props = defineProps({
@@ -34,6 +37,9 @@ const props = defineProps({
   },
   subtitle: {
     type: String
+  },
+  isHome: {
+    type: Boolean
   }
 });
 </script>

@@ -5,6 +5,7 @@ const ContractEditor = () => import('./views/ContractEditor.vue');
 const Interact = () => import('./views/Interact.vue');
 const Showcase = () => import('./views/Showcase.vue');
 const Status = () => import('./views/Status.vue');
+const About = () => import('./views/About.vue');
 const NotFound = () => import('./views/NotFound.vue');
 const ServerError = () => import('./views/ServerError.vue');
 
@@ -30,6 +31,11 @@ export const routes = [
     path: '/status',
     meta: { title: 'Status' },
     component: Status,
+  },
+  {
+    path: '/about',
+    meta: { title: 'About' },
+    component: About,
   },
   {
     path: '/500',
