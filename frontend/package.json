@@ -7,8 +7,8 @@
     "serve": "vite preview",
     "deploy-local": "source .env.production . && npm i && npm run clean && npm run build && npm run deploy-configure && npm run deploy-cache && npm run deploy-wout-cache && npm run deploy-invalidate",
     "deploy-configure": "source .env.production_deploy . && aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID --profile frontendProdProfile && aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY --profile frontendProdProfile",
-    "deploy-cache": "source .env.production_deploy . aws s3 sync dist \"s3://${S3_BUCKET}/\" --cache-control max-age=31536000 --region us-east-1 --exclude=index.html --profile frontendProdProfile",
-    "deploy-wout-cache": "source .env.production_deploy . && aws s3 sync dist \"s3://${S3_BUCKET}/\" --cache-control no-cache --region us-east-1 --profile frontendProdProfile",
+    "deploy-cache": "source .env.production_deploy . && aws s3 sync dist/ \"s3://${S3_BUCKET}/\" --cache-control max-age=31536000 --region us-east-1 --exclude='index.html' --profile frontendProdProfile",
+    "deploy-wout-cache": "source .env.production_deploy . && aws s3 sync dist/ \"s3://${S3_BUCKET}/\" --cache-control no-cache --region us-east-1 --exclude='*' --include='index.html' --profile frontendProdProfile",
     "deploy-invalidate": "source .env.production_deploy . && aws cloudfront create-invalidation --distribution-id $DISTRIBUTION_ID --paths \"/*\" --region us-east-1 --profile frontendProdProfile",
     "clean": "rm -rf dist/"
   },
@@ -34,6 +34,7 @@
     "autoprefixer": "^10.4.0",
     "tailwindcss": "^3.0.10",
     "vite": "^2.6.13",
+    "vite-plugin-html": "^3.0.6",
     "vite-svg-loader": "^3.1.2"
   }
 }

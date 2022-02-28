@@ -224,11 +224,11 @@ watch(
                             contract.value = res.data;
                             // Todo: verify the contract is mintable
                             if (!contractIsDeployed.value) {
-                                setSnackbar(t('errors.contract.notDeployed'), 'error', 5);
+                                setSnackbar(t('errors.contract.notDeployed'), 'error', 2.5);
                                 validContract.value = false;
                                 isLoading.value = false;
                             } else if (!contract.value.deployment.extensions.includes(EXTENSIONS.MINTABLE)) {
-                                setSnackbar(t('errors.contract.notMint'), 'error', 5);
+                                setSnackbar(t('errors.contract.notMint'), 'error', 2.5);
                                 validContract.value = false;
                                 isLoading.value = false;
                             } else {
@@ -255,9 +255,9 @@ watch(
                             validContract.value = false;
                             isLoading.value = false;
                             if (err.response.status === 404) {
-                                setSnackbar(t('errors.contract.notExist'), 'error', 5);
+                                setSnackbar(t('errors.contract.notExist'), 'error', 2.5);
                             } else {
-                                setSnackbar(t('errors.robot'), 'error', 5);
+                                setSnackbar(t('errors.robot'), 'error', 2.5);
                             }
                         });
                 });
@@ -293,7 +293,7 @@ watch(
                             isLoading.value = false;
                             isLoadingPage.value = false;
                             if (err.response.status === 400) {
-                                setSnackbar(t('errors.robot'), 'error', 5);
+                                setSnackbar(t('errors.robot'), 'error', 2.5);
                             }
                         });
                 });

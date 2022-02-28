@@ -52,7 +52,7 @@ const handleChangeFile = () => {
     // Limit 5MB = 5 * 2^10 * 2^10
     if (selectedFile.value.size > 5 * 1024 * 1024) {
         selectedFile.value = undefined;
-        setSnackbar(t('inputs.errors.image.tooBig'), 'error', 5);
+        setSnackbar(t('inputs.errors.image.tooBig'), 'error', 2.5);
     } else {
         emit('update:modelValue', fileInput.value.files[0]);
     }
@@ -63,11 +63,11 @@ const handleFileDrag = (e) => {
     e.preventDefault();
     e.currentTarget.classList.remove('fileinput--hover');
     if (e.dataTransfer.files.length !== 1) {
-        setSnackbar(t('inputs.errors.image.countLimit'), 'error', 5);
+        setSnackbar(t('inputs.errors.image.countLimit'), 'error', 2.5);
     } else if (!/^image\/.*$/.test(e.dataTransfer.files[0].type)) {
-        setSnackbar(t('inputs.errors.image.type'), 'error', 5);
+        setSnackbar(t('inputs.errors.image.type'), 'error', 2.5);
     } else if (e.dataTransfer.files[0].size > 5 * 1024 * 1024) {
-        setSnackbar(t('inputs.errors.image.tooBig'), 'error', 5);
+        setSnackbar(t('inputs.errors.image.tooBig'), 'error', 2.5);
     } else {
         fileInput.value.files = e.dataTransfer.files;
         // Manual trigger of the change file

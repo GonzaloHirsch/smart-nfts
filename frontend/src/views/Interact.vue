@@ -319,12 +319,12 @@ watch(
                             validContract.value = true;
                             isLoading.value = false;
                             if (!contractIsDeployed.value) {
-                                setSnackbar(t('errors.contract.notDeployed'), 'error', 5);
+                                setSnackbar(t('errors.contract.notDeployed'), 'error', 2.5);
                             }
                         })
                         .catch((err) => {
                             validContract.value = false;
-                            setSnackbar(t('errors.contract.notExist'), 'error', 5);
+                            setSnackbar(t('errors.contract.notExist'), 'error', 2.5);
                             isLoading.value = false;
                         });
                 });

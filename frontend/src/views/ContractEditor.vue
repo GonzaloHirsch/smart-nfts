@@ -26,6 +26,7 @@
             >
                 <v-editor
                     @contractChanged="handleContractChange"
+                    @metadataChanged="handleMetadataChange"
                     @deployContract="handleDeployContract"
                     @verifyContract="handleVerifyContract"
                     :name="storedContract.name"
@@ -34,14 +35,15 @@
                     :extensionInputs="storedContract?.inputs || {}"
                     :metadata="storedContract.metadata"
                     :isVerified="isVerified"
+                    :isLoading="isLoading || isLoadingMetadata"
                     :canVerify="canVerify"
                     :canDeploy="canDeploy"
                     :id="route.params.id"
                 >
                     <template #expandableHead>
-                        <v-tooltip v-if="contractEdited" :text="!isLoading ? $t('editor.lastSaved', [$d(lastSaved, 'short')]) : $t('editor.saving')">
+                        <v-tooltip v-if="contractEdited" :text="!isLoading && !isLoadingMetadata ? $t('editor.lastSaved', [$d(lastSaved, 'short')]) : $t('editor.saving')">
                             <span class="expandable-head--icon-wrapper">
-                                <CloudUploadIcon v-if="!isLoading" class="expandable-head--icon" />
+                                <CloudUploadIcon v-if="!isLoading && !isLoadingMetadata" class="expandable-head--icon" />
                                 <RefreshIcon v-else class="expandable-head--icon animate-spin-reverse" />
                             </span>
                         </v-tooltip>
@@ -77,11 +79,11 @@
                     <template #expandableContent>
                         <div class="my-xs" v-if="contractEdited">
                             <v-information-item
-                                :title="isLoading ? $t('editor.saving') : $t('editor.lastSavedSimple')"
-                                :description="isLoading ? undefined : $t('date', [$d(lastSaved, 'short')])"
+                                :title="isLoading || isLoadingMetadata ? $t('editor.saving') : $t('editor.lastSavedSimple')"
+                                :description="isLoading || isLoadingMetadata ? undefined : $t('date', [$d(lastSaved, 'short')])"
                             >
                                 <template #icon>
-                                    <CloudUploadIcon v-if="!isLoading" class="expandable-content--icon" />
+                                    <CloudUploadIcon v-if="!isLoading && !isLoadingMetadata" class="expandable-content--icon" />
                                     <RefreshIcon v-else class="expandable-content--icon animate-spin-reverse" />
                                 </template>
                             </v-information-item>
@@ -92,14 +94,14 @@
                                     <DocumentIcon class="expandable-content--icon" />
                                 </template>
                                 <template #actions>
-                                    <v-tooltip :text="$t('editor.contract.idCopy')">
+                                    <v-tooltip :text="$t('editor.contract.idCopy')" class="mr-xs">
                                         <DocumentDuplicateIcon
                                             @click="copyContractId"
                                             :aria-label="$t('editor.contract.idCopy')"
                                             class="expandable-content--icon-action"
                                         />
                                     </v-tooltip>
-                                    <v-tooltip v-if="canSendEmail" :text="$t('editor.contract.reminder')" class="ml-xs">
+                                    <v-tooltip v-if="canSendEmail" :text="$t('editor.contract.reminder')">
                                         <MailIcon
                                             @click="openContractReminderModal"
                                             :aria-label="$t('editor.contract.reminder')"
@@ -119,14 +121,14 @@
                                     <GlobeAltIcon class="expandable-content--icon" />
                                 </template>
                                 <template #actions>
-                                    <v-tooltip :text="$t('editor.contract.deployCopy')">
+                                    <v-tooltip :text="$t('editor.contract.deployCopy')" class="mr-xs">
                                         <DocumentDuplicateIcon
                                             @click="copyContractAddress"
                                             :aria-label="$t('editor.contract.deployCopy')"
                                             class="expandable-content--icon-action"
                                         />
                                     </v-tooltip>
-                                    <v-tooltip :text="$t('editor.contract.view')" class="ml-xs">
+                                    <v-tooltip :text="$t('editor.contract.view')">
                                         <a
                                             class="expandable-content--icon-action"
                                             :href="`https://${storedContract.deployment.network}.etherscan.io/address/${storedContract.deployment.address}`"
@@ -282,6 +284,7 @@ const handleEmailModalClose = () => {
 const contract = ref(t('editor.contract.empty'));
 const storedContract = ref({});
 const isLoading = ref(false);
+const isLoadingMetadata = ref(false);
 const isLoadingEditor = ref(true);
 const isLoadingModal = ref(false);
 const isLoadingDownload = ref(false);
@@ -320,12 +323,12 @@ const loadContract = (showLoading = true) => {
 };
 
 import { mapFormToApiData } from '@/js/mapper';
-const handleContractChange = (contractData) => {
-    let dataToSend = mapFormToApiData(contractData);
+const handleContractChange = (contractData, metadataData) => {
+    let dataToSend = mapFormToApiData(contractData, metadataData);
     if (dataToSend.name && dataToSend.symbol) {
         isLoading.value = true;
         recaptcha.challengeInput('EDIT_CONTRACT', (token) => {
-            api.editContract(route.params.id, mapFormToApiData(contractData), token)
+            api.editContractData(route.params.id, dataToSend, token)
                 .then((res) => {
                     contract.value = res.data.contract;
                     storedContract.value = res.data;
@@ -340,7 +343,31 @@ const handleContractChange = (contractData) => {
                 .catch((err) => {
                     console.error(err);
                     isLoading.value = false;
-                    setSnackbar(t('errors.robot'), 'error', 5);
+                    if (err.response.status === 403) setSnackbar(t('errors.robot'), 'error', 5);
+                });
+        });
+    }
+};
+const handleMetadataChange = (contractData, metadataData) => {
+    let dataToSend = mapFormToApiData(contractData, metadataData);
+    if (dataToSend.name && dataToSend.symbol) {
+        isLoadingMetadata.value = true;
+        recaptcha.challengeInput('EDIT_CONTRACT', (token) => {
+            api.editContractMetadata(route.params.id, dataToSend, token)
+                .then((res) => {
+                    storedContract.value = res.data;
+                    contractEdited.value = true;
+                    lastSaved.value = new Date();
+                    isLoadingMetadata.value = false;
+                    // Wait until next tick so that the editor is rendered
+                    nextTick().then(() => {
+                        startWatchingHeight();
+                    });
+                })
+                .catch((err) => {
+                    console.error(err);
+                    isLoadingMetadata.value = false;
+                    if (err.response.status === 403) setSnackbar(t('errors.robot'), 'error', 5);
                 });
         });
     }
