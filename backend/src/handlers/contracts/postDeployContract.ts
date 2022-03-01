@@ -17,15 +17,15 @@ const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyRes
     
     const instance = await StoredContractService.getInstance();
 
-    let {contract, contractString} = await instance.getContractContentsById(event.pathParameters!.contractId!)
+    let contract = await instance.getEnforcedContractById(event.pathParameters!.contractId!)
 
-    if (contractString == null) {
-        throw new GenericException(HTTP_ERRORS.BAD_REQUEST.CONTRACT);
-    } else if (contract.digest === contract.deployment.digest) {
+    if (contract.digest === contract.deployment.digest) {
         throw new GenericException(HTTP_ERRORS.BAD_REQUEST.ALREADY_DEPLOYED);
+    } else if (!(contract.compilation) || !(contract.compilation.bytecode)) {
+        throw new GenericException(HTTP_ERRORS.BAD_REQUEST.MISSING_COMPILATION);
     }
     
-    contract = await DeploymentService.getInstance().deployContract(contract, contractString);
+    contract = await DeploymentService.getInstance().deployContract(contract);
 
     return {
         statusCode: 200,

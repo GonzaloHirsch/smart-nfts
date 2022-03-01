@@ -15,7 +15,7 @@
                 class="w-px h-px opacity-0 overflow-hidden absolute"
             />
             <label for="fileInput" class="block cursor-pointer text-center">
-                <div v-html="$t('inputs.placeholder.image')" />
+                <div class="text-lg" v-html="$t('inputs.placeholder.image')" />
                 <strong v-if="selectedFile">{{ $t('inputs.text.image', [selectedFile.name]) }}</strong>
             </label>
         </div>

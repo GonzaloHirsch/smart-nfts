@@ -1,6 +1,7 @@
 <template>
     <div class="flex flex-col lg:flex-row w-full items-center">
         <div class="w-full lg:w-7/12 pt-20 sm:pt-20 md:pt-20 lg:pt-16 xl:pt-8">
+            <slot name="title" />
             <slot name="content" />
             <div class="mt-sm">
                 <slot name="bottom" />

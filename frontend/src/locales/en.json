@@ -188,6 +188,31 @@
                 "aria": "Learn more about SmartNFTs"
             },
             "subtitle": "Read on to learn what an ERC-721 Smart Contract is, what technologies are used in our processes, and the purpose for which SmartNFTs was created."
+        },
+        "erc721": {
+            "title": "What is a ERC-721 Smart Contract?",
+            "text": "After minting NFTs, you can view them by entering your contract's ID and clicking 'Go View'. You will be able to view the token's relevant information and it's metadata, which can include the image, name, description, and attributes you defined. We will provide a variety of links for you to view your raw metadata as JSON and to view your tokens through popular sites, such as OpenSea and Etherscan. You can use these sites to share your tokens with the world!"
+        },
+        "technologies": {
+            "title": "Technologies",
+            "facts": {
+                "openzeppelin": {
+                    "title": "Contract",
+                    "description": "Contracts dynamically coded in Solidity, compiled using the Javascript bindings for the Solidity compiler and powered by OpenZepellin standard contracts."
+                },
+                "pinata": {
+                    "title": "Storage",
+                    "description": "Storage in the blockchain is expensive; we use Pinata instead for storage. An IPFS (InterPlanetary File System) is needed to store large amounts of data off-chain."
+                },
+                "infura": {
+                    "title": "Connection",
+                    "description": "Dedicated connections to the blockchain are hard to build, but Infura helps us have an entry point for interaction without having the infrastructure."
+                }
+            }
+        },
+        "meta": {
+            "title": "About",
+            "description": "Learn more about how Smart NFTs works and the technologies behind the product. Understand what an ERC-721 contract is before creating them."
         }
     },  
     "editor": {
@@ -230,7 +255,14 @@
         },
         "deploy": {
             "title": "Deploy Contract",
-            "loading": "Deploying contract, please wait...",
+            "loading": {
+                "compile": "Compiling contract...",
+                "deploy": "Deploying contract..."
+            },
+            "prepare": {
+                "compile": "Contract compilation...",
+                "deploy": "Contract deployment..."
+            },
             "message": "Your contract is now deployed on address <strong>{0}</strong>. You will be able to see it in the blockchain (it may take a couple of minutes for the block to be mined). You can now verify it, but please wait until the contract is visible. If you edit the contract, you will have to deploy it again.",
             "error": "Error deploying contract. If the Smart NFTs' address is out of gas, please contact the owners of the site, otherwise the transaction hash will provide more information if used in Etherscan."
         },
@@ -350,7 +382,7 @@
         "title": "Tokens",
         "prepare": "Fetching tokens, please wait...",
         "preparePage": "Fetching more tokens, please wait...",
-        "noTokens": "No more tokens found",
+        "noTokens": "No tokens found",
         "buttons": {
             "edit": "Edit contract",
             "interact": "Interact with contract"
@@ -627,6 +659,7 @@
     "date": "{0}",
     "errors": {
         "robot": "You are not human, cannot use this!",
+        "timeout": "Backend request timed out.",
         "internal": "Internal error",
         "contract": {
             "notExist": "Contract doesn't exist!",

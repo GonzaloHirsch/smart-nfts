@@ -144,23 +144,23 @@
             <div class="flex flex-row">
                 <v-button
                     format="secondary"
-                    href="/how-it-works/"
-                    target="_self"
-                    :aria="$t('home.cta.buttons.howItWorks.aria')"
-                    :external="false"
-                    :white="false"
-                    :text="$t('home.cta.buttons.howItWorks.text')"
-                    size="medium"
-                    class="w-fit"
-                />
-                <v-button
-                    format="secondary"
-                    href="/technologies/"
+                    href="/about#technologies"
                     target="_self"
                     :aria="$t('home.cta.buttons.technologies.aria')"
                     :external="false"
                     :white="false"
                     :text="$t('home.cta.buttons.technologies.text')"
+                    size="medium"
+                    class="w-fit"
+                />
+                <v-button
+                    format="secondary"
+                    href="/about#how-it-works"
+                    target="_self"
+                    :aria="$t('home.cta.buttons.howItWorks.aria')"
+                    :external="false"
+                    :white="false"
+                    :text="$t('home.cta.buttons.howItWorks.text')"
                     size="medium"
                     class="w-fit mx-sm"
                 />

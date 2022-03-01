@@ -43,7 +43,7 @@
                 </ul>
             </div>
             <div class="col-span-2 my-sm lg:my-0">
-                <span class="text-h5 leading-normal font-semibold">{{ $t('nav.about') }}</span>
+                <router-link to="/about/" class="text-h5 leading-normal font-semibold">{{ $t('nav.about') }}</router-link>
                 <div class="col-span-full h-1 bg-white my-sm"></div>
                 <ul class="flex flex-col list-none">
                     <template v-for="(link, index) in aboutLinks" :key="index">
@@ -124,14 +124,14 @@ const featureLinks = [
 ];
 const aboutLinks = [
     {
-        to: '/how-it-works/',
-        text: 'nav.howItWorks.text',
-        aria: 'nav.howItWorks.aria'
-    },
-    {
-        to: '/technologies/',
+        to: '/about#technologies',
         text: 'nav.technologies.text',
         aria: 'nav.technologies.aria'
+    },
+    {
+        to: '/about#how-it-works',
+        text: 'nav.howItWorks.text',
+        aria: 'nav.howItWorks.aria'
     },
     {
         to: '/status/',
@@ -146,6 +146,10 @@ const aboutLinks = [
     @apply text-body_xs;
 }
 .footer--link-uni:hover {
+    @apply underline;
+}
+
+.footer--link:hover {
     @apply underline;
 }
 

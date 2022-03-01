@@ -4,6 +4,7 @@ import Web3 from 'web3';
 import { DEPLOY_GAS } from '../constants/general.constants';
 import TransactionService from './transaction.service';
 import { SUPPORTED_NETWORKS } from '../constants/contract.constants';
+import ContractNotCompiledException from 'src/exceptions/contractNotCompiled.exception';
 
 class DeploymentService {
     private static instance: DeploymentService;
@@ -26,31 +27,34 @@ class DeploymentService {
     };
 
     /**
-     * Given the stored contract and its string content, compile the contract content
-     * and deploy to the ethereum blockchain. Save the state of the contract in local db.
+     * Given the stored contract and its string content
+     * deploy to the ethereum blockchain. Save the state of the contract in local db.
      * @param contract Contract info that is stored in the our own db
      * @param contractString Content of the contract that must be compiled
      */
-    public deployContract = async (contract: IStoredContract, contractString: string): Promise<IStoredContract> => {
+    public deployContract = async (contract: IStoredContract): Promise<IStoredContract> => {
         let contractAddress;
-
-        // Compile contract
-        const compiledContract = compileContract(contractString);
-
+        
         // Deploy contract
-        contractAddress = await this._deployCompiledContract(compiledContract.abi, compiledContract.bytecode);
+        contractAddress = await this._deployCompiledContract(contract.compilation!.abi, contract.compilation!.bytecode);
+        
+        console.log(`Deployed contract ${contract.id}`);
 
         // Update inner state
         contract.deployment.digest = contract.digest;
-        contract.deployment.abi = compiledContract.abi;
-        contract.deployment.extensions = [...contract.extensions];
+        contract.deployment.abi = [...contract.compilation!.abi];
+        contract.deployment.extensions = [...contract.compilation!.extensions];
+        contract.deployment.inputs = {...contract.compilation!.inputs};
         contract.deployment.network = process.env.DEPLOYMENT_NETWORK as SUPPORTED_NETWORKS;
         contract.deployment.address = contractAddress!;
         contract.deployment.date = new Date();
-        contract.deployment.compilerVersion = compiledContract.compilerVersion;
+        contract.deployment.compilerVersion = contract.compilation!.compilerVersion;
         contract.markModified('deployment');
         contract.markModified('deployment.abi');
         contract.markModified('deployment.extensions');
+        contract.markModified('deployment.inputs');
+        contract.compilation = undefined;
+        contract.markModified('compilation');
         await contract.save();
 
         return contract;
@@ -72,7 +76,9 @@ class DeploymentService {
             })
             .encodeABI();
 
+        console.log("Created deploy transaction");
         const tx = await this.transactionService.createTransaction(contractData, DEPLOY_GAS, this.deploymentAddress);
+        console.log("Started deploy transaction");
 
         return await this.transactionService.signAndSendTransaction(tx, true);
     };
