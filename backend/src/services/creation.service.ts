@@ -2,7 +2,7 @@ import MissingExtensionException from '../exceptions/missingExtension.exception'
 import { EXTENSIONS, EXTENSION_MAP, REQUIRE_KEYWORD } from '../constants/contract.constants';
 import { CustomContract } from '../contracts/custom.contract';
 import { arrayFindAndRemoveValue, flattenArray, getSortFn } from '../helpers/collection.helper';
-import { getExtensionAdditions, getMergedMethodStateMutability, getMergedMethodVisibility } from '../helpers/creation.helper';
+import { checkValidExtensions, getExtensionAdditions, getMergedMethodStateMutability, getMergedMethodVisibility } from '../helpers/creation.helper';
 import { hashString } from '../helpers/string.helper';
 import { IContractExtension, IContractLibrary, IContractMethod, IContractVariable } from '../interfaces/contract.interface';
 import { IArguments, IParameter } from '../interfaces/general.interface';
@@ -23,13 +23,23 @@ class CreationService {
     saveContract = async () => {};
 
     genContract = (name: string, symbol: string, extensions: EXTENSIONS[], userInputs: IArguments): string => {
+        // Check valid name and symbol
+        if (!typeValidations.name(name)) {
+            throw InvalidInputException.Type('name', 'string', name);
+        }
+        if (!typeValidations.symbol(symbol)) {
+            throw InvalidInputException.Type('symbol', 'string', symbol);
+        }
+
+        checkValidExtensions(extensions);
+
         // Always add the base ERC721 extension
         if (!(extensions.includes(EXTENSIONS.ERC721))) {
             extensions.unshift(EXTENSIONS.ERC721);
         }
 
-        if (extensions.includes(EXTENSIONS.UniqueStorage) 
-        && (!extensions.includes(EXTENSIONS.Mintable) || !extensions.includes(EXTENSIONS.ERC721URIStorage))) {
+        // Unique Storage is added only if mintable or contains storage
+        if (extensions.includes(EXTENSIONS.UniqueStorage) && !extensions.includes(EXTENSIONS.Mintable)) {
             extensions = arrayFindAndRemoveValue(extensions, EXTENSIONS.UniqueStorage);
         }
 

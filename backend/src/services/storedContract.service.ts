@@ -13,7 +13,6 @@ import InvalidInputException from '../exceptions/invalidInput.exception';
 import { EXTENSIONS, UPDATE_TYPES } from '../constants/contract.constants';
 import { IMetadata } from '../interfaces/metadata.interface';
 import { IArguments } from '../interfaces/general.interface';
-import { typeValidations } from '../helpers/validations.helper';
 
 const hash = new SHA3(512);
 const nanoid = customAlphabet('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz', 15);
@@ -93,13 +92,6 @@ class StoredContractService {
             contract.markModified('metadata');
         } 
         if (updateType === UPDATE_TYPES.ALL || updateType === UPDATE_TYPES.CONTRACT) {
-            // Check valid name and symbol
-            if (!typeValidations.name(name)) {
-                throw InvalidInputException.Type('name', 'string', name);
-            }
-            if (!typeValidations.symbol(symbol)) {
-                throw InvalidInputException.Type('symbol', 'string', name);
-            }
 
             const extHas = (extension: EXTENSIONS) => extensions.includes(extension);
 

@@ -1,3 +1,4 @@
+import InvalidContractOptionsException from "../exceptions/invalidContractOptionsException.exception";
 import { EXTENSIONS, STATE_MUTABILITY, VISIBILITY } from "../constants/contract.constants";
 
 export const getMergedMethodVisibility = (visibilities: (VISIBILITY | undefined)[]): VISIBILITY => {
@@ -29,4 +30,14 @@ export const getExtensionAdditions = (extensions: EXTENSIONS[]): EXTENSIONS[] =>
         extensions.push(EXTENSIONS.Ownable);
     }
     return extensions;
+}
+
+
+export const checkValidExtensions = (extensions: EXTENSIONS[]) => {
+    const invalidStorage = extensions.includes(EXTENSIONS.UniqueStorage) && !extensions.includes(EXTENSIONS.ERC721URIStorage);
+    const invalidEnumeration = extensions.includes(EXTENSIONS.LimitSupply) && !extensions.includes(EXTENSIONS.ERC721Enumerable);
+
+    if (invalidStorage || invalidEnumeration) {
+        throw new InvalidContractOptionsException();
+    }
 }

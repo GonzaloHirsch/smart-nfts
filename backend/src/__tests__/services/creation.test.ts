@@ -1,6 +1,9 @@
 import { IArguments } from "../../interfaces/general.interface";
 import { EXTENSIONS } from "../../constants/contract.constants";
 import CreationService from "../../services/creation.service";
+import InvalidInputException from "../../exceptions/invalidInput.exception";
+import InvalidContractOptionsException from "../../exceptions/invalidContractOptionsException.exception";
+import { LimitSupply } from "../../contracts/LimitSupply.contract";
 
 let service: CreationService;
 let valid: IArguments;
@@ -13,7 +16,7 @@ beforeAll(async () => {
     };
 });
 
-describe('Full Valid Contract Creation', () => {
+describe('Valid Contract Creation', () => {
 
     test('no extensions contract is generated', () => {
         const extensions: EXTENSIONS[] = [];
@@ -35,4 +38,70 @@ describe('Full Valid Contract Creation', () => {
         
         expect(service.genContract(valid.name, valid.symbol, extensions, {maxSupply: 5})).toBe(expectedContract);
     });
+});
+
+describe('Invalid Contract Creation', () => {
+
+    const nameCases = [['spaces', 'Test Contract'], ['empty', ''], ['invalid character', 'Test$'], ['length exceeded', 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa']];
+
+    test.each(nameCases)(
+        "invalid name type - %s",
+        (_methodName, invalidName) => {
+            
+            const extensions: EXTENSIONS[] = [EXTENSIONS.Mintable, EXTENSIONS.AutoIncrementIds, EXTENSIONS.ERC721Enumerable];
+
+            expect(
+                () => {service.genContract(invalidName, valid.symbol, extensions, {})}
+            ).toThrow(InvalidInputException.Type('name', 'string', invalidName));
+        }
+    );
+
+    const symbolCases = [['spaces', 'TS T'], ['empty', ''], ['invalid character', 'TST$'], ['length exceeded', 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa']];
+
+    test.each(symbolCases)(
+        "invalid symbol type - %s",
+        (_methodName, invalidSymbol) => {
+            
+            const extensions: EXTENSIONS[] = [EXTENSIONS.Mintable, EXTENSIONS.AutoIncrementIds, EXTENSIONS.ERC721Enumerable];
+            
+            expect(
+                () => {service.genContract(valid.name, invalidSymbol, extensions, {})}
+            ).toThrow(InvalidInputException.Type('symbol', 'string', invalidSymbol));
+        }
+    );
+
+    const extensionCases = [['storage', [EXTENSIONS.UniqueStorage]], ['enumerable', [EXTENSIONS.LimitSupply]]];
+
+    test.each(extensionCases)(
+        "missing parent extension - %s",
+        (_methodName, extensionList) => {
+                        
+            expect(
+                () => {service.genContract(valid.name, valid.symbol, extensionList as EXTENSIONS[], {})}
+            ).toThrow(InvalidContractOptionsException);
+        }
+    );
+
+    test('missing user input - limit supply', () => {
+        
+        const extensions: EXTENSIONS[] = [EXTENSIONS.ERC721Enumerable, EXTENSIONS.LimitSupply];
+        const missingInput = {};
+        const neededInput = LimitSupply.getExtensionInputs()[0];
+
+        expect(
+            () => {service.genContract(valid.name, valid.symbol, extensions as EXTENSIONS[], missingInput)}
+        ).toThrow(InvalidInputException.Missing(neededInput.name, neededInput.type));
+    });
+
+    test('invalid user input type - limit supply', () => {
+        
+        const extensions: EXTENSIONS[] = [EXTENSIONS.ERC721Enumerable, EXTENSIONS.LimitSupply];
+        const invalidInput = {maxSupply: 'hi'};
+        const neededInput = LimitSupply.getExtensionInputs()[0];
+
+        expect(
+            () => {service.genContract(valid.name, valid.symbol, extensions as EXTENSIONS[], invalidInput)}
+        ).toThrow(InvalidInputException.Type(neededInput.name, neededInput.type, invalidInput.maxSupply));
+    });
+
 });
