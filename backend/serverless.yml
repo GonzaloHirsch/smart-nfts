@@ -217,10 +217,46 @@ functions:
   postDeployContract:
     handler: src/handlers/contracts/postDeployContract.handler
     memorySize: 1024 # Probably more memory-intensive process than the rest
-    timeout: 120 # More timeout because it needs more time to compile
+    timeout: 60 # More timeout because it needs more time to compile
     events:
       - http:
           path: /contracts/{contractId}/deploy
+          method: post
+          cors:
+            allowedOrigins: 
+              - ${env:CORS_ORIGIN}
+            allowedHeaders: 
+              - X-Recaptcha-Token
+              - x-recaptcha-token
+              - origin
+              - Origin
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+            origin: ${env:CORS_ORIGIN}
+            headers: 
+              - X-Recaptcha-Token
+              - x-recaptcha-token
+              - origin
+              - Origin
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+    tags:
+      app: pf
+  postCompileContract:
+    handler: src/handlers/contracts/postCompileContract.handler
+    memorySize: 1024 # Probably more memory-intensive process than the rest
+    timeout: 60 # More timeout because it needs more time to compile
+    events:
+      - http:
+          path: /contracts/{contractId}/compile
           method: post
           cors:
             allowedOrigins: 

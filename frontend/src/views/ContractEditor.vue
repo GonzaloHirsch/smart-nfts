@@ -1,7 +1,9 @@
 <template>
     <v-deploy-contract-modal
         v-if="modalType === 'deploy'"
-        :isLoadingModal="isLoadingModal"
+        :isLoadingCompile="isLoadingCompile"
+        :isLoadingDeploy="isLoadingDeploy"
+        :step="deployStep"
         :modalError="modalError"
         :deployedAddress="storedContract?.deployment?.address"
         :showModal="isOpen"
@@ -9,7 +11,7 @@
     />
     <v-verify-contract-modal
         v-if="modalType === 'verify'"
-        :isLoadingModal="isLoadingModal"
+        :isLoadingModal="isLoadingVerification"
         :modalError="modalError"
         :showModal="isOpen"
         @close="handleModalClose"
@@ -41,7 +43,10 @@
                     :id="route.params.id"
                 >
                     <template #expandableHead>
-                        <v-tooltip v-if="contractEdited" :text="!isLoading && !isLoadingMetadata ? $t('editor.lastSaved', [$d(lastSaved, 'short')]) : $t('editor.saving')">
+                        <v-tooltip
+                            v-if="contractEdited"
+                            :text="!isLoading && !isLoadingMetadata ? $t('editor.lastSaved', [$d(lastSaved, 'short')]) : $t('editor.saving')"
+                        >
                             <span class="expandable-head--icon-wrapper">
                                 <CloudUploadIcon v-if="!isLoading && !isLoadingMetadata" class="expandable-head--icon" />
                                 <RefreshIcon v-else class="expandable-head--icon animate-spin-reverse" />
@@ -268,7 +273,9 @@ const handleModalClose = () => {
     setTimeout(() => {
         modalType.value = undefined;
         modalError.value = undefined;
-        isLoadingModal.value = false;
+        isLoadingVerification.value = false;
+        isLoadingCompile.value = false;
+        isLoadingDeploy.value = false;
     }, 500);
 };
 const handleEmailModalClose = () => {
@@ -277,7 +284,9 @@ const handleEmailModalClose = () => {
     setTimeout(() => {
         modalType.value = undefined;
         modalError.value = undefined;
-        isLoadingModal.value = false;
+        isLoadingVerification.value = false;
+        isLoadingCompile.value = false;
+        isLoadingDeploy.value = false;
     }, 500);
 };
 
@@ -286,8 +295,11 @@ const storedContract = ref({});
 const isLoading = ref(false);
 const isLoadingMetadata = ref(false);
 const isLoadingEditor = ref(true);
-const isLoadingModal = ref(false);
+const isLoadingVerification = ref(false);
+const isLoadingCompile = ref(false);
+const isLoadingDeploy = ref(false);
 const isLoadingDownload = ref(false);
+const deployStep = ref(undefined);
 const lastSaved = ref(undefined);
 const contractEdited = ref(false);
 
@@ -378,17 +390,52 @@ const isDeployed = computed(() => {
 });
 const handleDeployContract = () => {
     modalType.value = 'deploy';
-    isLoadingModal.value = true;
+    isLoadingCompile.value = true;
+    isLoadingDeploy.value = false;
+    deployStep.value = 'compile';
     showModal();
-    recaptcha.challengeInput('DEPLOY_CONTRACT', (token) => {
-        api.deployContract(route.params.id, token)
-            .then((res) => {
-                storedContract.value = res.data;
-                isLoadingModal.value = false;
+    recaptcha.challengeInput('COMPILE_CONTRACT', (_token) => {
+        api.compileContract(route.params.id, _token)
+            .then(() => {
+                deployStep.value = 'deploy';
+                isLoadingCompile.value = false;
+                isLoadingDeploy.value = true;
+                recaptcha.challengeInput('DEPLOY_CONTRACT', (token) => {
+                    api.deployContract(route.params.id, token)
+                        .then((res) => {
+                            storedContract.value = res.data;
+                            isLoadingVerification.value = false;
+                            isLoadingCompile.value = false;
+                            isLoadingDeploy.value = false;
+                            deployStep.value = undefined;
+                        })
+                        .catch((err) => {
+                            isLoadingVerification.value = false;
+                            isLoadingCompile.value = false;
+                            isLoadingDeploy.value = false;
+                            deployStep.value = undefined;
+                            if (err.response.status === 403) {
+                                setSnackbar(t('errors.robot'), 'error', 5);
+                            } else if (err.response.status === 504) {
+                                setSnackbar(t('errors.timeout'), 'error', 5);
+                            } else {
+                                modalError.value = err.response.data.internalStatus;
+                            }
+                        });
+                });
             })
             .catch((err) => {
-                isLoadingModal.value = false;
-                modalError.value = err.response.data;
+                isLoadingVerification.value = false;
+                isLoadingCompile.value = false;
+                isLoadingDeploy.value = false;
+                deployStep.value = undefined;
+                if (err.response.status === 403) {
+                    setSnackbar(t('errors.robot'), 'error', 5);
+                } else if (err.response.status === 504) {
+                    setSnackbar(t('errors.timeout'), 'error', 5);
+                } else {
+                    modalError.value = err.response.data.internalStatus;
+                }
             });
     });
 };
@@ -435,18 +482,18 @@ const canSendEmail = computed(() => {
 });
 const handleVerifyContract = () => {
     modalType.value = 'verify';
-    isLoadingModal.value = true;
+    isLoadingVerification.value = true;
     showModal();
     recaptcha.challengeInput('VERIFY_CONTRACT', (token) => {
         api.verifyContract(route.params.id, token)
             .then((res) => {
                 storedContract.value = res.data;
-                isLoadingModal.value = false;
+                isLoadingVerification.value = false;
             })
             .catch((err) => {
                 console.log(err);
                 modalError.value = true;
-                isLoadingModal.value = false;
+                isLoadingVerification.value = false;
                 if (err.response.status === 403) {
                     setSnackbar(t('errors.robot'), 'error', 5);
                 }

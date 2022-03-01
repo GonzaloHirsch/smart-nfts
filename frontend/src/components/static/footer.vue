@@ -1,11 +1,11 @@
 <template>
     <footer id="footer" class="p-sm pt-base flex flex-col items-center bg-brand_secondary">
-        <div class="grid grid-cols-1 md:grid-cols-7 w-11/12 mx-auto text-white">
+        <div class="grid grid-cols-1 lg:grid-cols-9 w-11/12 mx-auto text-white">
             <div class="col-span-3">
                 <router-link
                     to="/"
                     @click="handleTopScroll"
-                    class="text-h5 leading-normal font-semibold w-full md:w-5/12"
+                    class="text-h5 leading-normal font-semibold w-full lg:w-5/12"
                     :aria-label="$t('footer.app.aria')"
                     >{{ $t('app.name') }}</router-link
                 >
@@ -31,18 +31,29 @@
                     >. <span class="text-base">{{ $t('footer.madeContinued') }}</span>
                 </div>
             </div>
-            <div class="col-span-2 my-sm md:my-0">
+            <div class="col-span-2 my-sm lg:my-0">
                 <span class="text-h5 leading-normal font-semibold">{{ $t('nav.features') }}</span>
                 <div class="col-span-full h-1 bg-white my-sm"></div>
                 <ul class="flex flex-col list-none">
-                    <template v-for="(link, index) in links" :key="index">
+                    <template v-for="(link, index) in featureLinks" :key="index">
                         <li class="footer--link">
                             <router-link :to="link.to" class="text-lg font-medium" :aria-label="$t(link.aria)">{{ $t(link.text) }}</router-link>
                         </li>
                     </template>
                 </ul>
             </div>
-            <div class="col-span-2 my-sm md:my-0">
+            <div class="col-span-2 my-sm lg:my-0">
+                <router-link to="/about/" class="text-h5 leading-normal font-semibold">{{ $t('nav.about') }}</router-link>
+                <div class="col-span-full h-1 bg-white my-sm"></div>
+                <ul class="flex flex-col list-none">
+                    <template v-for="(link, index) in aboutLinks" :key="index">
+                        <li class="footer--link">
+                            <router-link :to="link.to" class="text-lg font-medium" :aria-label="$t(link.aria)">{{ $t(link.text) }}</router-link>
+                        </li>
+                    </template>
+                </ul>
+            </div>
+            <div class="col-span-2 my-sm lg:my-0">
                 <span class="text-h5 leading-normal font-semibold text-left">{{ $t('nav.contact') }}</span>
                 <div class="col-span-full h-1 bg-white my-sm"></div>
                 <ul class="flex flex-col list-none">
@@ -66,9 +77,9 @@
             </div>
         </div>
         <div
-            class="flex flex-col md:flex-row justify-between items-center w-full text-body_xs mt-base text-typography_primary text-center md:text-left"
+            class="flex flex-col lg:flex-row justify-between items-center w-full text-body_xs mt-base text-typography_primary text-center lg:text-left"
         >
-            <div class="mb-sm md:mb-0 flex flex-col">
+            <div class="mb-sm lg:mb-0 flex flex-col">
                 <span class="text-body_xs">{{ $t('footer.copyright') }}</span>
             </div>
             <a
@@ -89,7 +100,7 @@ const handleTopScroll = () => {
     document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
 };
 
-const links = [
+const featureLinks = [
     {
         to: '/#Create',
         text: 'nav.create.text',
@@ -111,6 +122,23 @@ const links = [
         aria: 'nav.list.aria'
     }
 ];
+const aboutLinks = [
+    {
+        to: '/about#technologies',
+        text: 'nav.technologies.text',
+        aria: 'nav.technologies.aria'
+    },
+    {
+        to: '/about#how-it-works',
+        text: 'nav.howItWorks.text',
+        aria: 'nav.howItWorks.aria'
+    },
+    {
+        to: '/status/',
+        text: 'nav.status.text',
+        aria: 'nav.status.aria'
+    }
+];
 </script>
 
 <style scoped>
@@ -118,6 +146,10 @@ const links = [
     @apply text-body_xs;
 }
 .footer--link-uni:hover {
+    @apply underline;
+}
+
+.footer--link:hover {
     @apply underline;
 }
 

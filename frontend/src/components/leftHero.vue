@@ -11,7 +11,7 @@
     <div class="w-full md:w-6/12 flex flex-col items-center md:items-end justify-center md:h-full relative mt-base md:mt-0">
       <v-main-drawing v-if="props.isHome" class="hero-main-drawing"/>
       <v-about-us-drawing v-if="!props.isHome" class="hero-main-drawing"/>
-      <v-background-drawing class="hidden md:block hero-background-drawing transform rotate-45"/>
+      <v-circle-drawing class="hero-background-drawing"/>
     </div>
   </v-section>
 </template>
@@ -21,7 +21,7 @@ import vSection from '@/components/section.vue';
 
 import vMainDrawing from '@/assets/images/Main-Drawing.svg?component';
 import vAboutUsDrawing from '@/assets/images/About-Us-Drawing.svg?component';
-import vBackgroundDrawing from '@/assets/images/Background-Drawing.svg?component';
+import vCircleDrawing from '@/assets/images/Circle-Drawing.svg?component';
 
 const props = defineProps({
   fullHeight: {

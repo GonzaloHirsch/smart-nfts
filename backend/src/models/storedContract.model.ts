@@ -11,8 +11,17 @@ export interface IStoredContract extends Document {
     name: string;
     symbol: string;
     extensions: Array<string>;
-    inputs: IArguments,
+    inputs: IArguments;
     digest: string;
+    compilation?: {
+        bytecode: string;
+        abi: IAbi;
+        compilerVersion: string;
+        digest: string;
+        date: Date;
+        extensions: Array<string>;
+        inputs: IArguments;
+    };
     deployment: {
         address: string;
         date: Date;
@@ -20,6 +29,7 @@ export interface IStoredContract extends Document {
         network: SUPPORTED_NETWORKS;
         abi: IAbi;
         extensions: Array<string>;
+        inputs: IArguments;
         digest: string;
     };
     verification: {
@@ -40,8 +50,48 @@ const StoredConstractSchema = new Schema(
         name: { type: String },
         symbol: { type: String },
         extensions: [{ type: String }],
-        inputs: { type: {}},
+        inputs: { type: {} },
         digest: { type: String },
+        compilation: {
+            bytecode: { type: String },
+            compilerVersion: {
+                type: String,
+                required: false
+            },
+            digest: {
+                type: String,
+                required: false
+            },
+            abi: [
+                {
+                    name: { type: String, required: false },
+                    type: { type: String, required: true, enum: METHOD_TYPE },
+                    stateMutability: { type: String, required: false, enum: STATE_MUTABILITY },
+                    anonymous: { type: Boolean, required: false },
+                    inputs: [
+                        {
+                            name: { type: String, required: false },
+                            type: { type: String, required: true },
+                            indexed: { type: Boolean, required: false },
+                            internalType: { type: String, enum: CONTRACT_TYPES }
+                        }
+                    ],
+                    outputs: [
+                        {
+                            name: { type: String, required: false },
+                            type: { type: String, required: true },
+                            internalType: { type: String, enum: CONTRACT_TYPES }
+                        }
+                    ]
+                }
+            ],
+            date: {
+                type: Date,
+                required: false
+            },
+            extensions: [{ type: String }],
+            inputs: { type: {} }
+        },
         deployment: {
             address: { type: String, required: false },
             date: {
@@ -84,7 +134,8 @@ const StoredConstractSchema = new Schema(
                         }
                     ]
                 }
-            ]
+            ],
+            inputs: { type: {} }
         },
         verification: {
             verified: {

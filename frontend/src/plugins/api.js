@@ -55,6 +55,11 @@ const api = {
             return res
         })
     },
+    compileContract: async (contractId, recaptcha) => {
+        return instance.post(`contracts/${contractId}/compile`, {}, { headers: getSecurityHeaders(recaptcha) }).then(res => {
+            return res
+        })
+    },
     verifyContract: async (contractId, recaptcha) => {
         return instance.post(`contracts/${contractId}/verify`, {}, { headers: getSecurityHeaders(recaptcha) }).then(res => {
             return res
