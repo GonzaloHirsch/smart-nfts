@@ -29,6 +29,11 @@ SDK: 4.3.0
 Components: 3.18.1
 ```
 
+**NOTE:** Serverless v3.x was released during development, it introduces breaking changes, so the version we recommend is `2.72.0`, which can be installed like so:
+```bash
+npm i -g serverless@2.72.0
+```
+
 ### AWS CLI
 
 In order to configure credentials for deployment, the [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) is required. Please verify it's installed or install it.

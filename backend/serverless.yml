@@ -94,6 +94,7 @@ provider:
     PINATA_API_SECRET: ${env:PINATA_API_SECRET}
     RECAPTCHA_SECRET_KEY: ${env:RECAPTCHA_SECRET_KEY}
     CORS_ORIGIN: ${env:CORS_ORIGIN}
+    NODE_MODULES_PATH: ${env:NODE_MODULES_PATH}
 
 custom:
   serverless-offline:

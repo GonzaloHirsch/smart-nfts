@@ -25,8 +25,12 @@ class EtherscanService {
             throw new VerificationDuplicationException(contract.deployment.address);
         }
 
+        console.log('Flatenning contract...');
+
         // Flatten contract
         const flatContract = await flattenContract(contractString);
+
+        console.log('Verifying contract');
 
         // Verify the contract
         const verificationId = await this._verifyContract(
@@ -36,6 +40,8 @@ class EtherscanService {
             contract.deployment.compilerVersion,
             contract.deployment.network
         );
+
+        console.log('Contract verified');
 
         // Updating the state
         contract.verification.verified = true;
