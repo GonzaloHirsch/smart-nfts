@@ -19,7 +19,7 @@
             </div>
         </template>
         <template v-else>
-            <p v-if="!props.modalError" class="break-all" v-html="$t('editor.deploy.message', [props.deployedAddress])"></p>
+            <p v-if="!props.modalError" class="break-words" v-html="$t('editor.deploy.message', [props.deployedAddress])"></p>
             <p v-else class="break-words" v-html="$t('editor.deploy.error')"></p>
         </template>
     </v-modal>

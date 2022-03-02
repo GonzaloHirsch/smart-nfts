@@ -144,6 +144,17 @@
             <div class="flex flex-row">
                 <v-button
                     format="secondary"
+                    href="/about#erc-721"
+                    target="_self"
+                    :aria="$t('home.cta.buttons.erc721.aria')"
+                    :external="false"
+                    :white="false"
+                    :text="$t('home.cta.buttons.erc721.text')"
+                    size="medium"
+                    class="w-fit"
+                />
+                <v-button
+                    format="secondary"
                     href="/about#technologies"
                     target="_self"
                     :aria="$t('home.cta.buttons.technologies.aria')"
@@ -151,7 +162,7 @@
                     :white="false"
                     :text="$t('home.cta.buttons.technologies.text')"
                     size="medium"
-                    class="w-fit"
+                    class="w-fit ml-sm"
                 />
                 <v-button
                     format="secondary"
@@ -162,7 +173,7 @@
                     :white="false"
                     :text="$t('home.cta.buttons.howItWorks.text')"
                     size="medium"
-                    class="w-fit mx-sm"
+                    class="w-fit ml-sm"
                 />
                 <v-button
                     format="secondary"
@@ -173,7 +184,7 @@
                     :white="false"
                     :text="$t('home.cta.buttons.status.text')"
                     size="medium"
-                    class="w-fit"
+                    class="w-fit ml-sm"
                 />
             </div>
         </div>

@@ -119,7 +119,7 @@
         },
         "cta": {
             "title": "See more about this project",
-            "text": "Explore how this works, the technologies and services behind it, and check the service status.",
+            "text": "Learn about ERC-721 Smart Contracts, explore how this works, the technologies and services behind it, and check the service status.",
             "buttons": {
                 "status":  {
                     "text": "Status",
@@ -132,6 +132,10 @@
                 "technologies":  {
                     "text": "Technologies",
                     "aria": "Start using Smart NFTs now"
+                },
+                "erc721":  {
+                    "text": "ERC-721",
+                    "aria": "Learn about ERC-721 contracts"
                 }
             }
         }
@@ -164,6 +168,10 @@
         "technologies": {
             "text": "Technologies",
             "aria": "See what technologies power this page"
+        },
+        "erc721": {
+            "text": "ERC-721",
+            "aria": "See what ERC-721 contracts are"
         },
         "app": {
             "aria": "Go to the homepage"
@@ -207,6 +215,20 @@
                 "infura": {
                     "title": "Connection",
                     "description": "Dedicated connections to the blockchain are hard to build, but Infura helps us have an entry point for interaction without having the infrastructure."
+                }
+            }
+        },
+        "howItWorks": {
+            "title": "Illustrative Diagram",
+            "process": {
+                "A": {
+                    "description": "The API connects to Infura’s Ethereum node. Using Web3.js, it interacts with said node."
+                },
+                "B": {
+                    "description": "The API stores tokens’ metadata, including images and JSONs, in an IPFS named Pinata. Metadata is public and is visible to everyone."
+                },
+                "C": {
+                    "description": "Communicate with the Ethereum blockchain through a node provided by Infura."
                 }
             }
         },
@@ -263,7 +285,7 @@
                 "compile": "Contract compilation...",
                 "deploy": "Contract deployment..."
             },
-            "message": "Your contract is now deployed on address <strong>{0}</strong>. You will be able to see it in the blockchain (it may take a couple of minutes for the block to be mined). You can now verify it, but please wait until the contract is visible. If you edit the contract, you will have to deploy it again.",
+            "message": "Your contract is now deployed on address <strong class=\"break-all\">{0}</strong>. You will be able to see it in the blockchain (it may take a couple of minutes for the block to be mined). You can now verify it, but please wait until the contract is visible. If you edit the contract, you will have to deploy it again.",
             "error": "Error deploying contract. If the Smart NFTs' address is out of gas, please contact the owners of the site, otherwise the transaction hash will provide more information if used in Etherscan."
         },
         "verify": {

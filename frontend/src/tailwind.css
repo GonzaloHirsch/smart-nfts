@@ -180,11 +180,22 @@ code.language-solidity .token {
 /* CIRCLES BEHIND TAB IMAGES */
 .fc--image-wrapper .image-background {
     @apply w-full;
-    max-width: 350px;
-    max-height: 350px;
-    min-width: 350px;
-    min-height: 350px;
+    max-width: 300px;
+    max-height: 300px;
+    min-width: 300px;
+    min-height: 300px;
     border-radius: 50%;
+}
+
+@screen md {
+    .fc--image-wrapper .image-background {
+        @apply w-full;
+        max-width: 350px;
+        max-height: 350px;
+        min-width: 350px;
+        min-height: 350px;
+        border-radius: 50%;
+    }
 }
 
 /* HERO DRAWING */
@@ -206,8 +217,8 @@ svg.hero-main-drawing {
 .hero-background-drawing svg,
 svg.hero-background-drawing {
     @apply w-full z-0 absolute top-0 left-0 bottom-0 right-0 overflow-visible shadow-xl text-brand_tertiary/50 shadow-brand_primary my-auto mx-auto;
-    max-width: 300px;
-    max-height: 300px;
+    max-width: 250px;
+    max-height: 250px;
     border-radius: 50%;
 }
 
@@ -273,4 +284,27 @@ pre.code {
 
 .section--full {
     height: 100vh;
+}
+
+/* SVG ANIMATIONS */
+
+.diagram--infura-logo:hover {
+    @apply fill-brand_tertiary animate-pulse !important;
+}
+.diagram--infura-logo {
+    @apply duration-300 !important;
+}
+
+.diagram--ethereum-logo:hover > path:first-child {
+    @apply fill-brand_tertiary animate-pulse !important;
+}
+.diagram--ethereum-logo > path:first-child {
+    @apply duration-300 !important;
+}
+
+.diagram--pinata-logo:hover > path:not(.diagram--pinata-logo--eye) {
+    @apply fill-brand_tertiary animate-pulse !important;
+}
+.diagram--pinata-logo > path:not(.diagram--pinata-logo--eye) {
+    @apply duration-300 !important;
 }

@@ -124,6 +124,11 @@ const featureLinks = [
 ];
 const aboutLinks = [
     {
+        to: '/about#erc-721',
+        text: 'nav.erc721.text',
+        aria: 'nav.erc721.aria'
+    },
+    {
         to: '/about#technologies',
         text: 'nav.technologies.text',
         aria: 'nav.technologies.aria'
