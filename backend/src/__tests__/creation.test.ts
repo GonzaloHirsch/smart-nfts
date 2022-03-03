@@ -1,9 +1,9 @@
-import { IArguments } from "../../interfaces/general.interface";
-import { EXTENSIONS } from "../../constants/contract.constants";
-import CreationService from "../../services/creation.service";
-import InvalidInputException from "../../exceptions/invalidInput.exception";
-import InvalidContractOptionsException from "../../exceptions/invalidContractOptionsException.exception";
-import { LimitSupply } from "../../contracts/LimitSupply.contract";
+import { IArguments } from "../interfaces/general.interface";
+import { EXTENSIONS } from "../constants/contract.constants";
+import CreationService from "../services/creation.service";
+import InvalidInputException from "../exceptions/invalidInput.exception";
+import InvalidContractOptionsException from "../exceptions/invalidContractOptionsException.exception";
+import { LimitSupply } from "../contracts/LimitSupply.contract";
 
 let service: CreationService;
 let valid: IArguments;

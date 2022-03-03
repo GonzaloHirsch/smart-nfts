@@ -56,7 +56,7 @@ class MintingService {
             const metadataDef = storedContract.metadata;
 
             if (!metadataDef) {
-                throw new InvalidContractOptionsException(storedContract._id);
+                throw new InvalidContractOptionsException(storedContract.id);
             }
             // check metadata input is correct
             const standardMetadata = this._checkAndMapToStandardMetadata(

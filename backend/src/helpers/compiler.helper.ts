@@ -4,9 +4,10 @@ import path from 'path';
 import { removeAllButLast } from '../helpers/string.helper';
 import { straightenContent } from '../helpers/contractFlattener.helper';
 import CompilationException from '../exceptions/compilation.exception';
+import { ENVIRONMENTS } from '../constants/general.constants';
 
 // This should never execute, this is to trick webpack into bundling this dependency
-if (process.env.node_env !== undefined && process.env.node_env !== 'development' && process.env.node_env !== 'production') {
+if (process.env.node_env !== undefined && process.env.node_env !== ENVIRONMENTS.DEVELOPMENT && process.env.node_env !== ENVIRONMENTS.PRODUCTION) {
   import('@openzeppelin/contracts').then((res) => {
     console.log('Imported OpenZeppelin Contracts...');
   });

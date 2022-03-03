@@ -47,20 +47,22 @@ class InteractionService {
         // Get the method definition from the ABI
         const method = AbiService.getInstance().getContractMethod(storedContract.deployment.abi, methodId);
 
-        // Check the arguments match the inputs of the methods
-        this._checkValidInputs(method.inputs, args);
+        // Check the arguments match the inputs of the methods and order them
+        const orderedArgs = this._checkAndOrderValidInputs(method.inputs, args);
 
         // Get the web3 Contract
         const contract = new this.web3.eth.Contract(storedContract.deployment.abi as any, address);
 
         // Different calls for read and write methods
         return this._isReadMethod(method) 
-            ? this._handleReadMethod(contract, method, args) 
-            : this._handleWriteMethod(storedContract.deployment.network, contract, address, method, args);
+            ? this._handleReadMethod(contract, method, orderedArgs) 
+            : this._handleWriteMethod(storedContract.deployment.network, contract, address, method, orderedArgs);
     };
 
-    private _checkValidInputs = (methodInputs: IAbiInput[], args: IArguments): void => {
+    private _checkAndOrderValidInputs = (methodInputs: IAbiInput[], args: IArguments): IArguments => {
         
+        const finalArgs: IArguments = {};
+
         if (methodInputs.length !== Object.keys(args).length) {
             throw InvalidInputException.Count(methodInputs.length, Object.keys(args).length);
         }
@@ -76,7 +78,11 @@ class InteractionService {
             if (typeValidator == null || !typeValidator(argumentValue)) {
                 throw InvalidInputException.Type(inputDef.name, inputDef.type, argumentValue);
             }
+
+            finalArgs[inputDef.name] = argumentValue;
         }
+
+        return finalArgs;
     };
 
     private _isReadMethod = (method: IAbiMethod): boolean => {
