@@ -641,10 +641,6 @@ useMeta({
     @apply ml-1;
 }
 
-.editor--content pre.code {
-    @apply text-brand_secondary bg-brand_tertiary/20 italic !important;
-}
-
 .editor--content .link {
     @apply underline font-bold duration-200;
 }

@@ -65,10 +65,10 @@ const links = [
     }
 ];
 
-const handleTopScroll = (toggleMenu) => {
+const handleTopScroll = (_toggleMenu) => {
     document.body.scrollTop = 0; // For Safari
     document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
-    if (toggleMenu) toggleMenu();
+    if (_toggleMenu) toggleMenu();
 };
 
 const menuVisible = ref(false);

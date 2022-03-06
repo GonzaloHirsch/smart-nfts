@@ -3,7 +3,7 @@
         <template #buttons>
             <v-button
                 format="secondary"
-                href="#how-it-works"
+                href="#erc-721"
                 target="_self"
                 :aria="$t('about.hero.button.aria')"
                 :external="false"
@@ -31,7 +31,7 @@
     </v-section>
 
     <v-section id="technologies" class="bg-typography_primary">
-        <h2 class="mb-base text-brand_secondary text-center">{{ $t('about.technologies.title') }}</h2>
+        <h2 class="mb-xs md:mb-base text-brand_secondary text-center">{{ $t('about.technologies.title') }}</h2>
         <v-facts :facts="technologies" />
     </v-section>
 
@@ -59,7 +59,6 @@ import vButton from '@/components/button.vue';
 import vFacts from '@/components/facts.vue';
 import vLeftHero from '@/components/leftHero.vue';
 import vSection from '@/components/section.vue';
-import { QuestionMarkCircleIcon } from '@heroicons/vue/solid';
 import vFeatureContent from '@/components/featureContent.vue';
 
 import { useMeta } from 'vue-meta';

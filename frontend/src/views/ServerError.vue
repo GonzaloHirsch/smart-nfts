@@ -3,7 +3,7 @@
         <template #buttons>
             <v-button
                 format="secondary"
-                @click="handleGoStatus"
+                @click="this.$router.replace('/status')"
                 :aria="$t('500.hero.buttonStatus.aria')"
                 :white="false"
                 :text="$t('500.hero.buttonStatus.text').toUpperCase()"
@@ -11,7 +11,7 @@
             />
             <v-button
                 format="secondary"
-                @click="handleGoHome"
+                @click="this.$router.replace('/')"
                 :aria="$t('500.hero.buttonHome.aria')"
                 :white="false"
                 :text="$t('500.hero.buttonHome.text').toUpperCase()"
@@ -23,15 +23,6 @@
 <script setup>
 import vButton from '@/components/button.vue';
 import vHero from '@/components/hero.vue';
-
-import { useRouter } from 'vue-router';
-const router = useRouter();
-const handleGoHome = () => {
-    router.replace('/');
-};
-const handleGoStatus = () => {
-    router.replace('/status');
-};
 
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();

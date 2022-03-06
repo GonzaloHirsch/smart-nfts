@@ -121,19 +121,19 @@
             "title": "See more about this project",
             "text": "Learn about ERC-721 Smart Contracts, explore how this works, the technologies and services behind it, and check the service status.",
             "buttons": {
-                "status":  {
+                "status": {
                     "text": "Status",
                     "aria": "Start using Smart NFTs now"
                 },
-                "howItWorks":  {
+                "howItWorks": {
                     "text": "How It Works",
                     "aria": "Start using Smart NFTs now"
                 },
-                "technologies":  {
+                "technologies": {
                     "text": "Technologies",
                     "aria": "Start using Smart NFTs now"
                 },
-                "erc721":  {
+                "erc721": {
                     "text": "ERC-721",
                     "aria": "Learn about ERC-721 contracts"
                 }
@@ -236,7 +236,7 @@
             "title": "About",
             "description": "Learn more about how Smart NFTs works and the technologies behind the product. Understand what an ERC-721 contract is before creating them."
         }
-    },  
+    },
     "editor": {
         "contract": {
             "empty": "Start by completing the contract name and symbol...",
@@ -483,8 +483,93 @@
         },
         "content": {
             "title": "Methods Explained",
-            "methodName": {
-                "content": ""
+            "general": {
+                "methodTypes": {
+                    "title": "Types of Methods",
+                    "anchor": "method-types"
+                },
+                "read": {
+                    "title": "Read Methods",
+                    "anchor": "read-methods",
+                    "text": "\"Read\" methods don't require gas fees, as they only read data from the blockchain and don't change it."
+                },
+                "write": {
+                    "title": "Write Methods",
+                    "text": "\"Write\" methods require a gas fee when executing them because changes to blockchain data happen. The price of gas changes constantly, so there are <a class=\"underline hover:text-brand_secondary duration-300\" href=\"https://etherscan.io/gastracker\" target=\"_blank\" rel=\"noopener noreferer\">tools</a> for tracking the price."
+                }
+            },
+            "methods": {
+                "safeMint": {
+                    "content_1": "The <pre class=\"code\"><code>safeMint</code></pre> function safely mints tokens. It receives a <pre class=\"code\"><code>to</code></pre> address to send the newly created NFT and a <pre class=\"code\"><code>tokenId</code></pre>. The token ID is not necessary if autoincrement IDs are active.",
+                    "content_2": "Before calling this method, if metadata is stored, the values for metadata properties need to be defined."
+                },
+                "balanceOf": {
+                    "content_1": "Returns the number of tokens the <pre class=\"code\"><code>owner</code></pre> address holds."
+                },
+                "getApproved": {
+                    "content_1": "Gets the approved address for a token ID or zero if no address. By default, the owner of the token is the one approved."
+                },
+                "isApprovedForAll": {
+                    "content_1": "Tells whether an <pre class=\"code\"><code>operator</code></pre> is approved to transfer <pre class=\"code\"><code>owner</code></pre> tokens on their behalf."
+                },
+                "name": {
+                    "content_1": "Gets the token <pre class=\"code\"><code>name</code></pre>."
+                },
+                "owner": {
+                    "content_1": "Returns the address of the current contract owner, which is the only one authorized to call most of the methods. In this case, the Smart NFTs address is the owner unless ownership is renounced or transferred."
+                },
+                "ownerOf": {
+                    "content_1": "Returns the owner of the token specified by the <pre class=\"code\"><code>tokenId</code></pre>"
+                },
+                "paused": {
+                    "content_1": "Returns <pre class=\"code\"><code>true</code></pre> if the contract is paused and <pre class=\"code\"><code>false</code></pre> otherwise."
+                },
+                "supportsInterface": {
+                    "content_1": "Returns <pre class=\"code\"><code>true</code></pre> if this contract implements the specified interface given the <pre class=\"code\"><code>interfaceId</code></pre> or false otherwise. Contracts can implement interfaces to inherit behavior from top-level contracts.",
+                    "content_2": "For example, all the Smart NFTs contracts implement the <pre class=\"code\"><code>IERC721</code></pre> interface, with the following interface ID: <pre class=\"code\"><code>0x80ac58cd</code></pre>."
+                },
+                "symbol": {
+                    "content_1": "Gets the token <pre class=\"code\"><code>symbol</code></pre>."
+                },
+                "tokenByIndex": {
+                    "content_1": "It recovers the token ID at a given <pre class=\"code\"><code>index</code></pre> in the list of all tokens in the contract."
+                },
+                "tokenOfOwnerByIndex": {
+                    "content_1": "It recovers the token ID at a given <pre class=\"code\"><code>index</code></pre> of the list of tokens owned by the <pre class=\"code\"><code>owner</code></pre>."
+                },
+                "tokenURI": {
+                    "content_1": "It returns the URI given a <pre class=\"code\"><code>tokenId</code></pre>; it may be empty if no URI is stored."
+                },
+                "totalSupply": {
+                    "content_1": "Gets the total amount of tokens stored in the contract."
+                },
+                "approve": {
+                    "content_1": "Approves another address to transfer the given <pre class=\"code\"><code>tokenId</code></pre>. The <pre class=\"code\"><code>null</code></pre> address indicates no approved address for transfer. There can only be one approved address at a time. Only the owner or the approved operator for the given token can call this method."
+                },
+                "burn": {
+                    "content_1": "Burns (deletes) a specific token given the <pre class=\"code\"><code>tokenId</code></pre>; this action cannot be reverted."
+                },
+                "pause": {
+                    "content_1": "Stops the contract temporarily, preventing minting and transfers."
+                },
+                "renounceOwnership": {
+                    "content_1": "Leaves the contract without an owner, losing all functionality that needs an owner."
+                },
+                "safeTransferFrom": {
+                    "content_1": "Transfers a token given the <pre class=\"code\"><code>tokenId</code></pre> from one address (<pre class=\"code\"><code>from</code></pre>) to another address (<pre class=\"code\"><code>to</code></pre>)."
+                },
+                "setApprovalForAll": {
+                    "content_1": "It changes the approval state for a given <pre class=\"code\"><code>operator</code></pre>. An operator is allowed to transfer tokens of the sender on their behalf."
+                },
+                "transferFrom": {
+                    "content_1": "Transfers a token given the <pre class=\"code\"><code>tokenId</code></pre> from one address (<pre class=\"code\"><code>from</code></pre>) to another address (<pre class=\"code\"><code>to</code></pre>). The use of this method is discouraged, in favor of the <pre class=\"code\"><code>safeTransferFrom</code></pre> method."
+                },
+                "transferOwnership": {
+                    "content_1": "Transfers ownership of the contract to a new address (<pre class=\"code\"><code>newOwner</code></pre>)."
+                },
+                "unpause": {
+                    "content_1": "Resumes minting and transfers after pausing the contract."
+                }
             }
         },
         "loading": {

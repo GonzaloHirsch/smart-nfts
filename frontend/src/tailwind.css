@@ -46,10 +46,11 @@ h5 {
     @apply text-body_xl font-highlight;
 }
 p,
-span,
-a,
 li {
     @apply text-body_md font-text;
+}
+a, span {
+    font-size: inherit;
 }
 
 @screen md {
@@ -273,7 +274,7 @@ svg.contract-drawing {
 /* CODE */
 
 pre.code {
-    @apply underline decoration-brand_secondary inline-block italic;
+    @apply underline decoration-brand_secondary inline-block text-brand_secondary bg-brand_tertiary/20 italic;
 }
 
 /* RECAPTCHA HIDE BADGE */

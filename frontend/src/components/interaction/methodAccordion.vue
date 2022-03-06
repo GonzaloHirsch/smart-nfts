@@ -18,7 +18,7 @@
                 class="ml-auto mr-sm"
             />
         </template>
-        <template v-if="(props.method.inputs && props.method.inputs.length > 0) || callError || callResult" #content>
+        <template v-if="(props.method.inputs && props.method.inputs.length > 0) || callError || callResult || callResultType" #content>
             <div class="divide-y divide-white">
                 <!-- Basic inputs -->
                 <div v-if="props.method.inputs && props.method.inputs.length > 0">
@@ -104,14 +104,14 @@
                         </template>
                     </div>
                 </template>
-                <template v-if="callResult || callError">
+                <template v-if="callResult || callResultType || callError">
                     <div :class="[props.metadata || (props.method.inputs && props.method.inputs.length > 0) ? 'mt-sm pt-sm' : '']">
                         <p class="text-h5">{{ $t('interact.methods.result.title') }}</p>
                         <div class="w-full bg-white rounded-md p-xs mt-sm pr-base relative break-words">
-                            <p v-if="callResult" class="text-typography_secondary">
+                            <p v-if="(callResult || callResultType) && callHasSuccess" class="text-typography_secondary">
                                 {{ callResultType === 'transactionHash' ? $t('interact.success.transactionDisplay', [callResult]) : callResult }}
                             </p>
-                            <p v-if="callError" class="text-error">
+                            <p v-if="!callHasSuccess" class="text-error">
                                 {{ errorType === 'transaction' ? $t('interact.error.transactionDisplay', [callError]) : callError }}
                             </p>
                             <div
@@ -122,7 +122,7 @@
                                 <DocumentDuplicateIcon class="h-5 w-5" />
                             </div>
                         </div>
-                        <p v-if="callError && errorType === 'transaction'" class="mt-xs text-error text-sm">
+                        <p v-if="!callHasSuccess && callError && errorType === 'transaction'" class="mt-xs text-error text-sm">
                             {{ $t('interact.error.transactionMoreInfo') }}
                             <a
                                 class="underline no-inherit text-sm"
@@ -133,7 +133,7 @@
                                 >{{ callError }}</a
                             >
                         </p>
-                        <p v-else-if="callResult && callResultType === 'transactionHash'" class="mt-xs text-white text-sm">
+                        <p v-else-if="callHasSuccess && callResultType === 'transactionHash'" class="mt-xs text-white text-sm">
                             {{ $t('interact.error.transactionMoreInfo') }}
                             <a
                                 class="underline no-inherit text-sm"
@@ -193,6 +193,7 @@ const metadataInputsErrors = ref({});
 const detailsInputsErrors = ref({});
 const errors = ref(undefined);
 
+const callHasSuccess = ref(false);
 const callResult = ref(undefined);
 const callResultType = ref(undefined);
 const callError = ref(undefined);
@@ -270,7 +271,7 @@ const handleMintCall = (contractId) => {
 
 const handleMethodCall = (contractId) => {
     isLoading.value = true;
-    recaptcha.challengeInput('MINT_WITH_CONTRACT', (token) => {
+    recaptcha.challengeInput('CONTRACT_METHOD', (token) => {
         api.interactWithContract(contractId, props.method._id, inputs.value, token)
             .then((res) => {
                 handleSuccessResults(res);
@@ -286,6 +287,7 @@ const handleMethodCall = (contractId) => {
 };
 
 const handleSuccessResults = (res) => {
+    callHasSuccess.value = true;
     callResult.value = res.data.result;
     callResultType.value = res.data.resultType;
     callError.value = undefined;
@@ -294,9 +296,15 @@ const handleSuccessResults = (res) => {
 };
 
 const handleErrorResults = (err) => {
+    callHasSuccess.value = false;
     if (err.response && err.response.status === 400) {
-        errorType.value = 'transaction';
-        callError.value = err.response?.data?.data?.transactionHash;
+        if (err.response?.data?.data?.transactionHash) {
+            errorType.value = 'transaction';
+            callError.value = err.response?.data?.data?.transactionHash;
+        } else {
+            errorType.value = 'blockchain';
+            callError.value = err.response?.data?.message;
+        }
     } else {
         errorType.value = 'internal';
         callError.value = t('errors.internal');
