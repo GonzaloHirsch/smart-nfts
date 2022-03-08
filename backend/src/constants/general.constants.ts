@@ -30,3 +30,7 @@ export enum ENVIRONMENTS {
     PRODUCTION = 'production',
     DEVELOPMENT = 'development'
 }
+
+// Metadata file size
+// 2.5 MB => 2.5 * 1000 * 1000 = 2.5 MILL bytes
+export const FILE_SIZE_LIMIT = 2500000;

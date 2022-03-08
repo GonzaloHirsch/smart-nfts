@@ -8,6 +8,7 @@ import { IArguments } from '../interfaces/general.interface';
 import { IMetadata, IStandardMetadata, IStandardMetadataAttribute } from '../interfaces/metadata.interface';
 import { EXTENSIONS } from '../constants/contract.constants';
 import { DEFAULT_METADATA_FIELDS, METADATA_TYPES } from '../constants/metadata.constants';
+import { FILE_SIZE_LIMIT } from '../constants/general.constants';
 import { typeValidations } from '../helpers/validations.helper';
 // Services
 import IpfsService from './ipfs.service';
@@ -20,7 +21,7 @@ import InvalidContractOptionsException from '../exceptions/invalidContractOption
 class MintingService {
     private static instance: MintingService;
 
-    constructor() { }
+    constructor() {}
 
     static getInstance = () => {
         if (!MintingService.instance) {
@@ -29,10 +30,7 @@ class MintingService {
         return MintingService.instance;
     };
 
-    handleMintCall = async (
-        storedContract: IStoredContract, methodId: string, formData: MultipartFormData
-    ): Promise<IInteractResponse> => {
-        
+    handleMintCall = async (storedContract: IStoredContract, methodId: string, formData: MultipartFormData): Promise<IInteractResponse> => {
         if (!storedContract.deployment || !storedContract.deployment.address) {
             throw new ContractNotDeployedException(storedContract.id);
         }
@@ -59,9 +57,12 @@ class MintingService {
                 throw new InvalidContractOptionsException(storedContract.id);
             }
             // check metadata input is correct
-            const standardMetadata = this._checkAndMapToStandardMetadata(
-                metadataDef, metadataArgs, fileData != null
-            );
+            const standardMetadata = this._checkAndMapToStandardMetadata(metadataDef, metadataArgs, fileData != null);
+
+            // Verify size limit
+            if (metadataDef.hasImage && Buffer.byteLength(fileData.content) > FILE_SIZE_LIMIT) {
+                throw InvalidInputException.Size('token', Buffer.byteLength(fileData.content) / 1000000);
+            }
 
             // Upload the metadata
             const pinnedMetadata = metadataDef.hasImage
@@ -76,13 +77,10 @@ class MintingService {
                 methodArgs.hash = this._createMetadataHash(standardMetadata);
                 console.log(methodArgs.hash);
             }
-
         }
 
         // Call the minter method
-        return await InteractionService
-            .getInstance(storedContract.deployment.network)
-            .handleMethodCall(storedContract, methodId, methodArgs);
+        return await InteractionService.getInstance(storedContract.deployment.network).handleMethodCall(storedContract, methodId, methodArgs);
     };
 
     _checkAndMapToStandardMetadata = (
@@ -134,8 +132,8 @@ class MintingService {
             // Create the standard attribute with the input received
             const standardAttribute: IStandardMetadataAttribute = {
                 trait_type: attributeDef.traitType.trim(),
-                value:  argumentValue
-            }
+                value: argumentValue
+            };
 
             if (attributeDef.displayType != null) {
                 standardAttribute.display_type = attributeDef.displayType;
@@ -148,8 +146,8 @@ class MintingService {
     };
 
     private _createMetadataHash = (metadata: IStandardMetadata): string => {
-        return ObjectHash(metadata, {algorithm: 'sha1'});
-    }
+        return ObjectHash(metadata, { algorithm: 'sha1' });
+    };
 }
 
 export default MintingService;

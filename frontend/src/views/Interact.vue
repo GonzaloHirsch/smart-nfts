@@ -98,150 +98,15 @@
 
     <v-section class="bg-typography_primary">
         <h2 class="text-center text-brand_secondary mb-base">{{ $t('interact.content.title') }}</h2>
-        <v-anchored-title type="h3" text="balanceOf" anchor="balanceOf" class="mt-sm" />
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
-            corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
-        </p>
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
-            corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
-        </p>
-        <v-anchored-title type="h3" text="getApproved" anchor="getApproved" class="mt-sm" />
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
-            corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
-        </p>
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
-            corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
-        </p>
-        <v-anchored-title type="h3" text="isApprovedForAll" anchor="isApprovedForAll" class="mt-sm" />
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
-            corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
-        </p>
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
-            corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
-        </p>
-        <v-anchored-title type="h3" text="name" anchor="name" class="mt-sm" />
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
-            corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
-        </p>
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
-            corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
-        </p>
-        <v-anchored-title type="h3" text="owner" anchor="owner" class="mt-sm" />
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
-            corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
-        </p>
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
-            corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
-        </p>
-        <v-anchored-title type="h3" text="ownerOf" anchor="ownerOf" class="mt-sm" />
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
-            corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
-        </p>
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
-            corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
-        </p>
-        <v-anchored-title type="h3" text="supportsInterface" anchor="supportsInterface" class="mt-sm" />
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
-            corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
-        </p>
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
-            corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
-        </p>
-        <v-anchored-title type="h3" text="symbol" anchor="symbol" class="mt-sm" />
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
-            corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
-        </p>
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
-            corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
-        </p>
-        <v-anchored-title type="h3" text="tokenURI" anchor="tokenURI" class="mt-sm" />
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
-            corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
-        </p>
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
-            corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
-        </p>
-        <v-anchored-title type="h3" text="approve" anchor="approve" class="mt-sm" />
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
-            corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
-        </p>
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
-            corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
-        </p>
-        <v-anchored-title type="h3" text="renounceOwnership" anchor="renounceOwnership" class="mt-sm" />
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
-            corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
-        </p>
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
-            corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
-        </p>
-        <v-anchored-title type="h3" text="safeMint" anchor="safeMint" class="mt-sm" />
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
-            corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
-        </p>
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
-            corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
-        </p>
-        <v-anchored-title type="h3" text="safeTransferFrom" anchor="safeTransferFrom" class="mt-sm" />
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
-            corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
-        </p>
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
-            corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
-        </p>
-        <v-anchored-title type="h3" text="setApprovalForAll" anchor="setApprovalForAll" class="mt-sm" />
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
-            corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
-        </p>
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
-            corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
-        </p>
-        <v-anchored-title type="h3" text="transferFrom" anchor="transferFrom" class="mt-sm" />
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
-            corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
-        </p>
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
-            corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
-        </p>
-        <v-anchored-title type="h3" text="transferOwnership" anchor="transferOwnership" class="mt-sm" />
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
-            corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
-        </p>
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque ea iste sunt non delectus incidunt minima esse neque cupiditate, modi
-            corporis dignissimos necessitatibus? Quos cum architecto facere dolorum suscipit.
-        </p>
+        <v-anchored-title type="h3" :text="$t('interact.content.general.methodTypes.title')" :anchor="$t('interact.content.general.methodTypes.anchor')" class="mt-sm" />
+        <v-anchored-title type="h4" :text="$t('interact.content.general.read.title')" :anchor="$t('interact.content.general.read.anchor')" class="mt-sm" />
+        <p v-html="$t('interact.content.general.read.text')"/>
+        <v-anchored-title type="h4" :text="$t('interact.content.general.write.title')" :anchor="$t('interact.content.general.write.anchor')" class="mt-sm" />
+        <p v-html="$t('interact.content.general.write.text')"/>
+        <template v-for="(method, index) in methods" :key="index">
+            <v-anchored-title type="h3" :text="method.name" :anchor="method.name" class="mt-sm" />
+            <p v-for="content in method.contentCount" :key="content" v-html="$t(`interact.content.methods.${method.name}.content_${content}`)" class="mt-xs first:mt-0"/>
+        </template>
     </v-section>
 </template>
 
@@ -260,7 +125,7 @@ import { useRoute, useRouter } from 'vue-router';
 const route = useRoute(),
     router = useRouter();
 
-import { ref, computed, watch, inject } from 'vue';
+import { ref, computed, watch } from 'vue';
 
 import { useApi } from '@/plugins/api';
 const api = useApi();
@@ -361,6 +226,125 @@ const getAbiMint = (abi) => {
             method.name.toLowerCase().includes('mint')
     );
 };
+
+// Content
+const methods = [
+    {
+        name: 'safeMint',
+        type: 'CREATE',
+        contentCount: 2
+    },
+    {
+        name: 'balanceOf',
+        type: 'READ',
+        contentCount: 1
+    },
+    {
+        name: 'getApproved',
+        type: 'READ',
+        contentCount: 1
+    },
+    {
+        name: 'isApprovedForAll',
+        type: 'READ',
+        contentCount: 1
+    },
+    {
+        name: 'name',
+        type: 'READ',
+        contentCount: 1
+    },
+    {
+        name: 'owner',
+        type: 'READ',
+        contentCount: 1
+    },
+    {
+        name: 'ownerOf',
+        type: 'READ',
+        contentCount: 1
+    },
+    {
+        name: 'paused',
+        type: 'READ',
+        contentCount: 1
+    },
+    {
+        name: 'supportsInterface',
+        type: 'READ',
+        contentCount: 2
+    },
+    {
+        name: 'symbol',
+        type: 'READ',
+        contentCount: 1
+    },
+    {
+        name: 'tokenByIndex',
+        type: 'READ',
+        contentCount: 1
+    },
+    {
+        name: 'tokenOfOwnerByIndex',
+        type: 'READ',
+        contentCount: 1
+    },
+    {
+        name: 'tokenURI',
+        type: 'READ',
+        contentCount: 1
+    },
+    {
+        name: 'totalSupply',
+        type: 'READ',
+        contentCount: 1
+    },
+    {
+        name: 'approve',
+        type: 'WRITE',
+        contentCount: 1
+    },
+    {
+        name: 'burn',
+        type: 'WRITE',
+        contentCount: 1
+    },
+    {
+        name: 'pause',
+        type: 'WRITE',
+        contentCount: 1
+    },
+    {
+        name: 'renounceOwnership',
+        type: 'WRITE',
+        contentCount: 1
+    },
+    {
+        name: 'safeTransferFrom',
+        type: 'WRITE',
+        contentCount: 1
+    },
+    {
+        name: 'setApprovalForAll',
+        type: 'WRITE',
+        contentCount: 1
+    },
+    {
+        name: 'transferFrom',
+        type: 'WRITE',
+        contentCount: 1
+    },
+    {
+        name: 'transferOwnership',
+        type: 'WRITE',
+        contentCount: 1
+    },
+    {
+        name: 'unpause',
+        type: 'WRITE',
+        contentCount: 1
+    }
+];
 
 // Meta
 import { useMeta } from 'vue-meta';

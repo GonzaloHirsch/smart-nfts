@@ -199,7 +199,6 @@ import vSection from '@/components/section.vue';
 import { QuestionMarkCircleIcon } from '@heroicons/vue/solid';
 import vTabs from '@/components/tabs.vue';
 import vFeatureContent from '@/components/featureContent.vue';
-import vHiddenAnchor from '@/components/hiddenAnchor.vue';
 import vContractIdVerificator from '@/components/contractIdVerificator.vue';
 import vFacts from '@/components/facts.vue';
 import vVerticalFacts from '@/components/verticalFacts.vue';

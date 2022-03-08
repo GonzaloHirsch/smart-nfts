@@ -296,7 +296,7 @@ const getIpfsLink = (hash) => {
 
 <style scoped>
 .token--image {
-    @apply flex flex-row w-full items-center justify-center object-cover;
+    @apply flex flex-row w-full items-center justify-center object-cover bg-white;
     aspect-ratio: 1 / 1;
 }
 
