@@ -85,7 +85,7 @@ class MintingService {
             .handleMethodCall(storedContract, methodId, methodArgs);
     };
 
-    private _checkAndMapToStandardMetadata = (
+    _checkAndMapToStandardMetadata = (
         metadataDef: IMetadata, metaArgs: IArguments, hasImage: boolean
     ): IStandardMetadata => {
 
