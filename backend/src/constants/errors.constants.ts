@@ -13,6 +13,7 @@ export const HTTP_ERRORS = {
         INVALID_INPUT_COUNT: { status: 400, internalStatus: 'INVALID_INPUT_COUNT', message: 'Input amount does not match param amount.' },
         INVALID_INPUT_MISSING: { status: 400, internalStatus: 'INVALID_INPUT_MISSING', message: 'Inputs are missing.' },
         INVALID_INPUT_TYPE: { status: 400, internalStatus: 'INVALID_INPUT_TYPE', message: 'Input types are incorrect.' },
+        INVALID_INPUT_SIZE: { status: 400, internalStatus: 'INVALID_INPUT_SIZE', message: 'Input size is incorrect.' },
         INVALID_INPUT_EXTENSIONS: { status: 400, internalStatus: 'INVALID_INPUT_EXT', message: 'Extensions combination is incorrect.' }, 
         FORBIDDEN_REQUEST: { status: 403, internalStatus: 'FORBIDDEN', message: 'Forbidden request.' }, 
     },
@@ -56,6 +57,7 @@ export const EXCEPTION_NAMES = {
     INVALID_INPUT_COUNT: 'InvalidInputCountException',
     INVALID_INPUT_MISSING: 'InvalidInputMissingException',
     INVALID_INPUT_TYPE: 'InvalidInputTypeException',
+    INVALID_INPUT_SIZE: 'InvalidInputSizeException',
     INVALID_INPUT_EXTENSIONS: 'InvalidInputExtensionsException',
     ETHERSCAN_ERROR: 'EtherscanErrorException',
     MISSING_HEADER: "MissingHeaderException"
@@ -78,6 +80,7 @@ export const EXCEPTION_TO_HTTP_MAP = new Map<string, IHttpErrorData>([
     [EXCEPTION_NAMES.INVALID_INPUT_COUNT, HTTP_ERRORS.BAD_REQUEST.INVALID_INPUT_COUNT],
     [EXCEPTION_NAMES.INVALID_INPUT_MISSING, HTTP_ERRORS.BAD_REQUEST.INVALID_INPUT_MISSING],
     [EXCEPTION_NAMES.INVALID_INPUT_TYPE, HTTP_ERRORS.BAD_REQUEST.INVALID_INPUT_TYPE],
+    [EXCEPTION_NAMES.INVALID_INPUT_SIZE, HTTP_ERRORS.BAD_REQUEST.INVALID_INPUT_SIZE],
     [EXCEPTION_NAMES.INVALID_INPUT_EXTENSIONS, HTTP_ERRORS.BAD_REQUEST.INVALID_INPUT_EXTENSIONS],
     [EXCEPTION_NAMES.ETHERSCAN_ERROR, HTTP_ERRORS.SERVER.ETHERSCAN],
     [EXCEPTION_NAMES.MISSING_HEADER, HTTP_ERRORS.BAD_REQUEST.FORBIDDEN_REQUEST],

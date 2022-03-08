@@ -20,6 +20,13 @@ class InvalidInputException extends CustomException {
         exception.name = EXCEPTION_NAMES.INVALID_INPUT_TYPE;
         return exception;
     }
+    
+    static Size(inputValue: any, size: number) {
+        const msg = `Invalid size (${size} MB) for (${inputValue})`;
+        const exception = new InvalidInputException(msg);
+        exception.name = EXCEPTION_NAMES.INVALID_INPUT_SIZE;
+        return exception;
+    }
 
     static Count(expected: number, received: number) {
         const msg = `Invalid number of parameters. Got ${received} expected ${expected}!`;

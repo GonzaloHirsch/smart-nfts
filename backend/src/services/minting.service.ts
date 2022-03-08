@@ -8,6 +8,7 @@ import { IArguments } from '../interfaces/general.interface';
 import { IMetadata, IStandardMetadata, IStandardMetadataAttribute } from '../interfaces/metadata.interface';
 import { EXTENSIONS } from '../constants/contract.constants';
 import { DEFAULT_METADATA_FIELDS, METADATA_TYPES } from '../constants/metadata.constants';
+import { FILE_SIZE_LIMIT } from '../constants/general.constants';
 import { typeValidations } from '../helpers/validations.helper';
 // Services
 import IpfsService from './ipfs.service';
@@ -39,6 +40,11 @@ class MintingService {
 
         const fileData = formData.token as FileData;
         const extensions = storedContract.deployment.extensions;
+
+        // Verify size limit
+        if (Buffer.byteLength(fileData.content) > FILE_SIZE_LIMIT) {
+            throw InvalidInputException.Size('token', Buffer.byteLength(fileData.content) / 1000000);
+        }
 
         // Parse the inputs and check if its a valid JSON
         let methodArgs: IArguments;
