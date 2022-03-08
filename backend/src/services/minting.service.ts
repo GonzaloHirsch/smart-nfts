@@ -21,7 +21,7 @@ import InvalidContractOptionsException from '../exceptions/invalidContractOption
 class MintingService {
     private static instance: MintingService;
 
-    constructor() { }
+    constructor() {}
 
     static getInstance = () => {
         if (!MintingService.instance) {
@@ -30,21 +30,13 @@ class MintingService {
         return MintingService.instance;
     };
 
-    handleMintCall = async (
-        storedContract: IStoredContract, methodId: string, formData: MultipartFormData
-    ): Promise<IInteractResponse> => {
-        
+    handleMintCall = async (storedContract: IStoredContract, methodId: string, formData: MultipartFormData): Promise<IInteractResponse> => {
         if (!storedContract.deployment || !storedContract.deployment.address) {
             throw new ContractNotDeployedException(storedContract.id);
         }
 
         const fileData = formData.token as FileData;
         const extensions = storedContract.deployment.extensions;
-
-        // Verify size limit
-        if (Buffer.byteLength(fileData.content) > FILE_SIZE_LIMIT) {
-            throw InvalidInputException.Size('token', Buffer.byteLength(fileData.content) / 1000000);
-        }
 
         // Parse the inputs and check if its a valid JSON
         let methodArgs: IArguments;
@@ -65,9 +57,12 @@ class MintingService {
                 throw new InvalidContractOptionsException(storedContract._id);
             }
             // check metadata input is correct
-            const standardMetadata = this._checkAndMapToStandardMetadata(
-                metadataDef, metadataArgs, fileData != null
-            );
+            const standardMetadata = this._checkAndMapToStandardMetadata(metadataDef, metadataArgs, fileData != null);
+
+            // Verify size limit
+            if (metadataDef.hasImage && Buffer.byteLength(fileData.content) > FILE_SIZE_LIMIT) {
+                throw InvalidInputException.Size('token', Buffer.byteLength(fileData.content) / 1000000);
+            }
 
             // Upload the metadata
             const pinnedMetadata = metadataDef.hasImage
@@ -82,19 +77,13 @@ class MintingService {
                 methodArgs.hash = this._createMetadataHash(standardMetadata);
                 console.log(methodArgs.hash);
             }
-
         }
 
         // Call the minter method
-        return await InteractionService
-            .getInstance(storedContract.deployment.network)
-            .handleMethodCall(storedContract, methodId, methodArgs);
+        return await InteractionService.getInstance(storedContract.deployment.network).handleMethodCall(storedContract, methodId, methodArgs);
     };
 
-    private _checkAndMapToStandardMetadata = (
-        metadataDef: IMetadata, metaArgs: IArguments, hasImage: boolean
-    ): IStandardMetadata => {
-
+    private _checkAndMapToStandardMetadata = (metadataDef: IMetadata, metaArgs: IArguments, hasImage: boolean): IStandardMetadata => {
         // If the attributes received and the attributes in def is different throw error
         const recievedInputCount = Object.keys(metaArgs.attributes ?? {}).length;
         if (metadataDef.attributes.length !== recievedInputCount) {
@@ -140,8 +129,8 @@ class MintingService {
             // Create the standard attribute with the input received
             const standardAttribute: IStandardMetadataAttribute = {
                 trait_type: attributeDef.traitType.trim(),
-                value:  argumentValue
-            }
+                value: argumentValue
+            };
 
             if (attributeDef.displayType != null) {
                 standardAttribute.display_type = attributeDef.displayType;
@@ -154,8 +143,8 @@ class MintingService {
     };
 
     private _createMetadataHash = (metadata: IStandardMetadata): string => {
-        return ObjectHash(metadata, {algorithm: 'sha1'});
-    }
+        return ObjectHash(metadata, { algorithm: 'sha1' });
+    };
 }
 
 export default MintingService;
