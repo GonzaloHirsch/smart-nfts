@@ -72,3 +72,5 @@ backend/.env.development
 backend/.env.production_template_deploy
 
 docs/.env.production_deploy
+
+backend/.scannerwork/

@@ -82,6 +82,19 @@ npm run dev
 
 A local server on port `8000` will start working, `ctrl + c` to stop it.
 
+### Static Analysis
+
+**Sonarqube** can be used to perform static analysis on the code.
+
+Having an instance of Sonarqube running, call:
+```bash
+npm run sonar
+```
+
+#### Running Sonarqube
+
+Download the appropriate version from the [Sonarqube](https://www.sonarqube.org/downloads/) site. The Docker configuration is the easiest one.
+
 ## Deployment
 
 In order to deploy it, just running the following will deploy the infrastructure:
