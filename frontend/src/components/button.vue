@@ -154,7 +154,7 @@ const props = defineProps({
 /* BUTTONS */
 .button.button--size-xsmall a,
 .button.button--size-xsmall span {
-    @apply text-xs px-xs py-xs;
+    @apply text-xs px-1 py-1;
 }
 
 .button.button--size-small a,

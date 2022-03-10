@@ -5,6 +5,9 @@ module.exports = {
   content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
   theme: {
     extend: {
+      borderRadius: {
+        '50%': '50%'
+      },
       colors: {
         // https://tailwindcss.com/docs/background-color
         // blue-800
@@ -25,7 +28,9 @@ module.exports = {
         highlight: ['Inter', 'Helvetiva']
       },
       fontSize: {
+        '2xs': "0.625rem",
         body_xs: "0.75rem",
+        body_sm: "0.875rem",
         body: "1rem",
         body_md: "1.125rem",
         body_xl: "1.25rem",

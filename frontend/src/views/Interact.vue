@@ -58,6 +58,7 @@
                     :isMint="true"
                     :isLoading="isLoading"
                     :network="contract?.deployment?.network"
+                    :defaultAddress="defaultAddress"
                 />
             </div>
             <template v-if="hasContract && contractIsDeployed && !isLoading && validContract">
@@ -71,6 +72,7 @@
                         :hasContract="hasContract"
                         :isLoading="isLoading"
                         :network="contract?.deployment?.network"
+                        :defaultAddress="defaultAddress"
                     />
                 </div>
                 <div class="col-span-full lg:col-span-5 entire-panel">
@@ -83,6 +85,7 @@
                         :hasContract="hasContract"
                         :isLoading="isLoading"
                         :network="contract?.deployment?.network"
+                        :defaultAddress="defaultAddress"
                     />
                 </div>
             </template>
@@ -143,6 +146,7 @@ const isLoading = ref(false);
 const validContract = ref(true);
 const contractId = ref(undefined);
 const contract = ref({});
+const defaultAddress = ref(undefined);
 const hasContract = computed(() => !(contractId.value === '' || contractId.value === null || contractId.value === undefined));
 const contractIsDeployed = computed(
     () =>
@@ -178,14 +182,17 @@ watch(
                 // Get the contract
                 isLoading.value = true;
                 recaptcha.challengeInput('GET_CONTRACT', (token) => {
-                    api.getContract(contractId.value, token)
-                        .then((res) => {
+                    Promise.all([ api.getContract(contractId.value, token), api.getStatus()])
+                        .then(([res, resStatus]) => {
+                            // Do with the contract info
                             contract.value = res.data;
                             validContract.value = true;
                             isLoading.value = false;
                             if (!contractIsDeployed.value) {
                                 setSnackbar(t('errors.contract.notDeployed'), 'error', 2.5);
                             }
+                            // Keep wallet address
+                            defaultAddress.value = resStatus.data.wallet.address
                         })
                         .catch((err) => {
                             validContract.value = false;
@@ -356,10 +363,16 @@ useMeta({
 
 <style>
 .entire-panel {
-    @apply flex flex-col bg-light rounded-md shadow-lg border border-gray-200 pt-sm pb-sm px-base h-fit;
+    @apply flex flex-col bg-light rounded-md shadow-lg border border-gray-200 pt-sm pb-sm px-sm h-fit;
 }
 
 .action--icon {
     @apply w-9 h-9 my-auto;
+}
+
+@screen md {
+    .entire-panel {
+        @apply pt-sm pb-sm px-base;
+    }
 }
 </style>

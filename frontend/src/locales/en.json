@@ -470,6 +470,7 @@
         "methods": {
             "fields": {
                 "title": "Fields",
+                "copyAddress": "Autofill address",
                 "metadata": {
                     "title": "Metadata",
                     "image": "Image",
@@ -495,6 +496,7 @@
                 },
                 "write": {
                     "title": "Write Methods",
+                    "anchor": "write-methods",
                     "text": "\"Write\" methods require a gas fee when executing them because changes to blockchain data happen. The price of gas changes constantly, so there are <a class=\"underline hover:text-brand_secondary duration-300\" href=\"https://etherscan.io/gastracker\" target=\"_blank\" rel=\"noopener noreferer\">tools</a> for tracking the price."
                 }
             },
@@ -777,7 +779,8 @@
             "notCopyCode": "Cannot copy contract code to clipboard!"
         },
         "method": {
-            "notCopyResponse": "Cannot copy response to clipboard!"
+            "notCopyResponse": "Cannot copy response to clipboard!",
+            "notCopyAddress": "Cannot copy address to clipboard!"
         }
     },
     "success": {

@@ -1,38 +1,48 @@
 <template>
-    <div :class="{
+    <div
+        :class="{
             'flex flex-col': true,
             'input--size-large': props.size === 'large',
             'input--size-medium': props.size === 'medium',
             'input--size-small': props.size === 'small',
             'input--size-xsmall': props.size === 'xsmall'
-        }">
+        }"
+    >
         <label v-show="!props.hideLabel" :aria-hidden="hideLabel" :class="['mb-1', error ? 'text-error' : '']" :for="props.id">{{
             props.label
         }}</label>
         <!-- If continuous input, it will use the @input to trigger on each key -->
-        <input
-            v-if="continuousInput"
-            :class="['rounded-lg transition-colors duration-300', classes, error ? 'input-error' : '', 'text-input']"
-            type="text"
-            :name="props.name"
-            :id="props.id"
-            :placeholder="props.placeholder"
-            @input="onInputChanged"
-            :value="modelValue"
-            :autocomplete="props.autocomplete"
-        />
-        <!-- Otherwise use a discrete approach, just event when focus is lost -->
-        <input
-            v-else
-            :class="['rounded-lg transition-colors duration-300', classes, error ? 'input-error' : '', 'text-input']"
-            type="text"
-            :name="props.name"
-            :id="props.id"
-            :placeholder="props.placeholder"
-            @change="onInputChanged"
-            :value="modelValue"
-            :autocomplete="props.autocomplete"
-        />
+        <div class="flex w-full">
+            <input
+                v-if="continuousInput"
+                :class="['rounded-lg transition-colors duration-300 w-full', classes, error ? 'input-error' : '', 'text-input']"
+                type="text"
+                :name="props.name"
+                :id="props.id"
+                :placeholder="props.placeholder"
+                @input="onInputChanged"
+                :value="modelValue"
+                :autocomplete="props.autocomplete"
+            />
+            <!-- Otherwise use a discrete approach, just event when focus is lost -->
+            <input
+                v-else
+                :class="['rounded-lg transition-colors duration-300 w-full', classes, error ? 'input-error' : '', 'text-input']"
+                type="text"
+                :name="props.name"
+                :id="props.id"
+                :placeholder="props.placeholder"
+                @change="onInputChanged"
+                :value="modelValue"
+                :autocomplete="props.autocomplete"
+            />
+            <v-tooltip v-if="props.hasAutofill" :text="props.autofillHelp" class="self-end" positionY="bottom">
+                <PencilIcon
+                    @click="emit('update:modelValue', props.autofillValue)"
+                    class="w-8 h-8 mb-1 ml-xs bg-white rounded-50% text-brand_secondary p-1 hover:bg-white/75 cursor-pointer duration-300 ar-1/1"
+                />
+            </v-tooltip>
+        </div>
         <!-- Showing the error -->
         <span v-if="error && !props.hideError" class="text-error text-xs mt-xs">{{ $t(error) }}</span>
     </div>
@@ -41,6 +51,7 @@
 <script setup>
 import { applyValidations, sumarizeValidationResults } from '@/js/validations.js';
 import { computed, ref, watch } from 'vue';
+import { PencilIcon } from '@heroicons/vue/solid';
 
 const emit = defineEmits(['update:modelValue', 'validInput', 'invalidInput']);
 
@@ -91,6 +102,18 @@ const props = defineProps({
     size: {
         type: String,
         default: 'small'
+    },
+    hasAutofill: {
+        type: Boolean,
+        default: false
+    },
+    autofillValue: {
+        type: String,
+        default: undefined
+    },
+    autofillHelp: {
+        type: String,
+        default: undefined
     }
 });
 

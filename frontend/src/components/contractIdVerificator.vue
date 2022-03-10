@@ -72,7 +72,7 @@ const handleClick = () => {
             .catch((err) => {
                 isLoading.value = false;
                 _editDisabled.value = true;
-                if (err.response.status === 403) {
+                if (err?.response?.status === 403) {
                     setSnackbar(t('errors.robot'), 'error', 2.5);
                 } else {
                     setSnackbar(t('errors.contract.notExist'), 'error', 2.5);

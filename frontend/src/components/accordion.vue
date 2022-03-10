@@ -1,18 +1,21 @@
 <template>
   <Disclosure v-slot="{ open }">
     <DisclosureButton
-      :class="[formats.button, 'flex justify-between w-full px-base py-sm text-left rounded-lg outline-none relative', props.class]"
+      :class="[formats.button, 'flex justify-between w-full px-sm md:px-base py-sm text-left rounded-lg outline-none relative', props.class]"
       style="z-index: 2"
     >
       <div class="flex flex-row items-center h-full w-full">
-        <span class="mr-sm text-base md:text-body_xl">{{ props.title }}</span>
+        <div class="flex flex-col mr-xs md:mr-sm">
+          <span class="text-body_sm sm:text-base lg:text-body_xl">{{ props.title }}</span>
+          <span v-if="props.error" class="text-error text-body_xs sm:text-body_sm lg:text-body_md">{{ props.error }}</span>
+        </div>
         <slot name="header" />
       </div>
-      <ChevronUpIcon :class="[$slots.content ? '' : 'invisible', open ? '' : 'transform rotate-180', 'transition duration-200 w-8 h-8']" />
+      <ChevronUpIcon :class="[$slots.content ? '' : 'invisible', open ? '' : 'transform rotate-180', 'transition duration-200 w-8 h-8 my-auto']" />
     </DisclosureButton>
     <DisclosurePanel
       v-if="$slots.content"
-      :class="[formats.content, 'px-base py-sm rounded-md transform accordion--panel relative']"
+      :class="[formats.content, 'px-sm md:px-base py-sm rounded-md transform accordion--panel relative']"
       style="z-index: 1"
     >
       <slot name="content" />
@@ -23,7 +26,7 @@
 <script setup>
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue';
 import { ChevronUpIcon } from '@heroicons/vue/solid';
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 
 const props = defineProps({
   title: {
@@ -36,6 +39,10 @@ const props = defineProps({
   format: {
     type: String,
     default: 'light'
+  },
+  error: {
+    type: String,
+    default: undefined
   }
 });
 

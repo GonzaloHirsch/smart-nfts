@@ -315,10 +315,16 @@ useMeta({
 
 <style>
 .entire-panel {
-    @apply flex flex-col bg-light rounded-md shadow-lg border border-gray-200 pt-sm pb-sm px-base h-fit;
+    @apply flex flex-col bg-light rounded-md shadow-lg border border-gray-200 pt-sm pb-sm px-sm h-fit;
 }
 
 .action--icon {
     @apply w-9 h-9 my-auto;
+}
+
+@screen md {
+    .entire-panel {
+        @apply pt-sm pb-sm px-base;
+    }
 }
 </style>

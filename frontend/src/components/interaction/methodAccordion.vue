@@ -1,10 +1,9 @@
 <template>
-    <v-accordion :title="props.method.name" :format="props.format">
+    <v-accordion :title="props.method.name" :format="props.format" :error="errors">
         <template #header>
             <!-- Icon for help -->
-            <QuestionMarkCircleIcon class="w-7 h-7 text-brand_tertiary" @click.stop="getHelp" />
+            <QuestionMarkCircleIcon class="w-6 h-6 md:w-7 md:h-7 text-brand_tertiary" @click.stop="getHelp" />
             <!-- Displaying the errors -->
-            <span v-if="errors" class="ml-sm text-error">{{ errors }}</span>
             <v-button
                 :format="isLoading ? 'disabled' : 'primary'"
                 :disabled="isLoading"
@@ -15,7 +14,7 @@
                 size="xsmall"
                 :text="$t('interact.buttons.execute.text').toUpperCase()"
                 @click.native.stop="callMethod"
-                class="ml-auto mr-sm"
+                class="ml-auto mr-xs my-auto"
             />
         </template>
         <template v-if="(props.method.inputs && props.method.inputs.length > 0) || callError || callResult || callResultType" #content>
@@ -39,7 +38,10 @@
                             @validInput="() => handleValidInput(input.name)"
                             @invalidInput="(error) => handleInvalidInput(input.name, error)"
                             format="primary-white"
-                            class="mb-xs"
+                            class="mb-xs w-full"
+                            :hasAutofill="input.type === 'address'"
+                            :autofillHelp="$t('interact.methods.fields.copyAddress')"
+                            :autofillValue="props.defaultAddress"
                         />
                     </template>
                 </div>
@@ -178,6 +180,10 @@ const props = defineProps({
         default: false
     },
     network: {
+        type: String,
+        default: undefined
+    },
+    defaultAddress: {
         type: String,
         default: undefined
     }

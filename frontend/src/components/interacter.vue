@@ -2,7 +2,7 @@
     <div v-if="!props.isLoading" class="flex flex-col">
         <template v-if="validContract && hasContract && contractDeployed">
             <template v-for="(method, index) in props.abi" :key="`${index}`">
-                <v-method-accordion :method="method" class="mb-xs" :isMint="props.isMint" :metadata="props.metadata" :network="props.network" />
+                <v-method-accordion :method="method" class="mb-xs" :isMint="props.isMint" :metadata="props.metadata" :network="props.network" :defaultAddress="props.defaultAddress"/>
             </template>
         </template>
         <template v-else-if="!validContract">
@@ -68,6 +68,11 @@ const props = defineProps({
         default: false
     },
     network: {
+        type: String,
+        required: false,
+        default: undefined
+    },
+    defaultAddress: {
         type: String,
         required: false,
         default: undefined
