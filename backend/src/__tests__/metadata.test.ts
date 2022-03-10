@@ -55,14 +55,14 @@ describe('Check validity of metadata arguments', () => {
         const args = {name: 52, description: 'Description', attributes: validAttributes}
         expect(
             () => {service._checkAndMapToStandardMetadata(metadataDef, args, true)}
-        ).toThrow(InvalidInputException.Missing('name', 'string'));
+        ).toThrow(InvalidInputException.Type('name', 'string', args.name));
     });
 
     test('invalid symbol type - description', () => {
         const args = {name: 'Name', description: 52, attributes: validAttributes}
         expect(
             () => {service._checkAndMapToStandardMetadata(metadataDef, args, true)}
-        ).toThrow(InvalidInputException.Missing('description', 'string'));
+        ).toThrow(InvalidInputException.Type('description', 'string', args.description));
     });
 
 });

@@ -98,11 +98,18 @@ class MintingService {
             throw InvalidInputException.Type('hasImage', metadataDef.hasImage.toString(), hasImage);
         }
 
-        // Check valid default fields are present
+        // Check default fields are present
         for (const defaultField of DEFAULT_METADATA_FIELDS) {
-            if (!metaArgs[defaultField] || typeValidations.string(!metaArgs[defaultField])) {
+            if (metaArgs[defaultField] == null) {
                 throw InvalidInputException.Missing(defaultField, 'string');
             }
+        }
+        // check default fields are valid
+        if (!typeValidations.name(metaArgs.name)) {
+            throw InvalidInputException.Type('name', 'string', metaArgs.name);
+        }
+        if (!typeValidations.string(metaArgs.description)) {
+            throw InvalidInputException.Type('description', 'string', metaArgs.description);
         }
 
         const standardMetadata: IStandardMetadata = {

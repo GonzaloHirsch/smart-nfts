@@ -100,6 +100,7 @@ const isBool = (bool: string | boolean): boolean => {
 };
 
 const max256 = (text: string): boolean => {
+    if (text == null) return false;
     return text.length <= 256;
 }
 
