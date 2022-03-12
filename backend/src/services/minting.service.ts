@@ -59,9 +59,13 @@ class MintingService {
             // check metadata input is correct
             const standardMetadata = this._checkAndMapToStandardMetadata(metadataDef, metadataArgs, fileData != null);
 
-            // Verify size limit
-            if (metadataDef.hasImage && Buffer.byteLength(fileData.content) > FILE_SIZE_LIMIT) {
-                throw InvalidInputException.Size('token', Buffer.byteLength(fileData.content) / 1000000);
+            // Verify size limit and filetype
+            if (metadataDef.hasImage) {
+                if (Buffer.byteLength(fileData.content) > FILE_SIZE_LIMIT) {
+                    throw InvalidInputException.Size('token', Buffer.byteLength(fileData.content) / 1000000);
+                } else if (/^image\/.*$/.test(fileData.contentType)) {
+                    throw InvalidInputException.Type('token', 'file', fileData.contentType);
+                }
             }
 
             // Upload the metadata
@@ -104,8 +108,9 @@ class MintingService {
                 throw InvalidInputException.Missing(defaultField, 'string');
             }
         }
+        
         // check default fields are valid
-        if (!typeValidations.name(metaArgs.name)) {
+        if (!typeValidations.string(metaArgs.name)) {
             throw InvalidInputException.Type('name', 'string', metaArgs.name);
         }
         if (!typeValidations.string(metaArgs.description)) {
