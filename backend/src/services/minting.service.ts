@@ -56,6 +56,7 @@ class MintingService {
             if (!metadataDef) {
                 throw new InvalidContractOptionsException(storedContract.id);
             }
+            
             // check metadata input is correct
             const standardMetadata = this._checkAndMapToStandardMetadata(metadataDef, metadataArgs, fileData != null);
 
@@ -79,7 +80,6 @@ class MintingService {
             // Add the metadata hash to the args if contract includes unique storage
             if (extensions.includes(EXTENSIONS.UniqueStorage)) {
                 methodArgs.hash = this._createMetadataHash(standardMetadata);
-                console.log(methodArgs.hash);
             }
         }
 
