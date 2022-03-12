@@ -107,7 +107,7 @@ const sendEmail = () => {
                 .catch((err) => {
                     isSendingEmail.value = false;
                     sentEmail.value = false;
-                    if (err.response.status === 403) {
+                    if (err?.response?.status === 403) {
                         setSnackbar(t('errors.robot'), 'error', 2.5);
                     } else {
                         sentEmailError.value = err.response.data.message;

@@ -266,7 +266,7 @@ const handleMintCall = (contractId) => {
                 handleSuccessResults(res);
             })
             .catch((err) => {
-                if (err.response.status === 403) {
+                if (err?.response?.status === 403) {
                     setSnackbar(t('errors.robot'), 'error', 2.5);
                 } else {
                     handleErrorResults(err);
@@ -283,7 +283,7 @@ const handleMethodCall = (contractId) => {
                 handleSuccessResults(res);
             })
             .catch((err) => {
-                if (err.response.status === 403) {
+                if (err?.response?.status === 403) {
                     setSnackbar(t('errors.robot'), 'error', 2.5);
                 } else {
                     handleErrorResults(err);

@@ -264,7 +264,11 @@ const handleCreateContract = () => {
             .catch((err) => {
                 console.error(err);
                 isLoading.value = false;
-                setSnackbar(t('errors.robot'), 'error', 2.5);
+                if (err?.response?.status === 403) {
+                    setSnackbar(t('errors.robot'), 'error', 2.5);
+                } else {
+                    setSnackbar(t('errors.internal'), 'error', 2.5);
+                }
             });
     });
 };

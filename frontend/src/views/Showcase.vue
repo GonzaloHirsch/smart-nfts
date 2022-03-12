@@ -254,10 +254,12 @@ watch(
                             console.error(err);
                             validContract.value = false;
                             isLoading.value = false;
-                            if (err.response.status === 404) {
+                            if (err?.response?.status === 404) {
                                 setSnackbar(t('errors.contract.notExist'), 'error', 2.5);
-                            } else {
+                            } else if (err?.response?.status === 403) {
                                 setSnackbar(t('errors.robot'), 'error', 2.5);
+                            } else {
+                                setSnackbar(t('errors.internal'), 'error', 2.5);
                             }
                         });
                 });
@@ -292,8 +294,10 @@ watch(
                             console.error(res);
                             isLoading.value = false;
                             isLoadingPage.value = false;
-                            if (err.response.status === 400) {
+                            if (err?.response?.status === 403) {
                                 setSnackbar(t('errors.robot'), 'error', 2.5);
+                            } else {
+                                setSnackbar(t('errors.internal'), 'error', 2.5);
                             }
                         });
                 });

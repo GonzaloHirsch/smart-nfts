@@ -769,7 +769,7 @@
     "errors": {
         "robot": "You are not human, cannot use this!",
         "timeout": "Backend request timed out.",
-        "internal": "Internal error",
+        "internal": "Internal error, please try again later.",
         "contract": {
             "notExist": "Contract doesn't exist!",
             "notMint": "Contract cannot mint tokens!",
