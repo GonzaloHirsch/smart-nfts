@@ -137,11 +137,11 @@
         </div>
     </v-section>
 
-    <v-section :smallPadding="true" id="about" class="bg-gradient-to-b from-white via-white to-brand_primary">
-        <div class="flex flex-col justify-center items-center bg-brand_primary border-2 rounded-md border-brand_secondary shadow-md shadow-brand_tertiary p-base w-fit mx-auto">
-            <h2 class="text-h4 leading-none mb-sm">{{ $t('home.cta.title') }}</h2>
-            <p class="mb-sm">{{ $t('home.cta.text') }}</p>
-            <div class="flex flex-row">
+    <v-section id="about" class="bg-gradient-to-b from-white via-white to-brand_primary">
+        <div class="flex flex-col justify-center items-center bg-brand_primary border-2 rounded-md border-brand_secondary shadow-md shadow-brand_tertiary p-sm md:p-base w-full md:w-fit mx-auto">
+            <h2 class="text-h5 md:text-h4 leading-none mb-sm text-center md:text-left">{{ $t('home.cta.title') }}</h2>
+            <p class="mb-sm text-center md:text-left">{{ $t('home.cta.text') }}</p>
+            <div class="flex flex-col sm:flex-row">
                 <v-button
                     format="secondary"
                     href="/about#erc-721"
@@ -151,7 +151,7 @@
                     :white="false"
                     :text="$t('home.cta.buttons.erc721.text')"
                     size="medium"
-                    class="w-fit"
+                    class="w-fit mx-auto sm:mx-0"
                 />
                 <v-button
                     format="secondary"
@@ -162,7 +162,7 @@
                     :white="false"
                     :text="$t('home.cta.buttons.technologies.text')"
                     size="medium"
-                    class="w-fit ml-sm"
+                    class="w-fit mt-sm mx-auto sm:mr-0 sm:ml-sm"
                 />
                 <v-button
                     format="secondary"
@@ -173,7 +173,7 @@
                     :white="false"
                     :text="$t('home.cta.buttons.howItWorks.text')"
                     size="medium"
-                    class="w-fit ml-sm"
+                    class="w-fit mt-sm mx-auto sm:mr-0 sm:ml-sm"
                 />
                 <v-button
                     format="secondary"
@@ -184,7 +184,7 @@
                     :white="false"
                     :text="$t('home.cta.buttons.status.text')"
                     size="medium"
-                    class="w-fit ml-sm"
+                    class="w-fit mt-sm mx-auto sm:mr-0 sm:ml-sm"
                 />
             </div>
         </div>

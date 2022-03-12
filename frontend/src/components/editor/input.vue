@@ -39,7 +39,7 @@
             <v-tooltip v-if="props.hasAutofill" :text="props.autofillHelp" class="self-end" positionY="bottom">
                 <PencilIcon
                     @click="emit('update:modelValue', props.autofillValue)"
-                    class="w-8 h-8 mb-1 ml-xs bg-white rounded-50% text-brand_secondary p-1 hover:bg-white/75 cursor-pointer duration-300 ar-1/1"
+                    class="w-10 h-10 ml-1 bg-white rounded-lg text-brand_secondary p-1 hover:bg-white/75 cursor-pointer duration-300 ar-1/1"
                 />
             </v-tooltip>
         </div>

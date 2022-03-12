@@ -673,7 +673,7 @@
             "long_string": "Invalid text, maximum length is 700 characters.",
             "email": "Invalid email.",
             "image": {
-                "tooBig": "File too large, limit is 5MB",
+                "tooBig": "File too large, limit is 2.5MB",
                 "countLimit": "Cannot upload more than 1 file",
                 "type": "Invalid file type, only images are supported"
             }
