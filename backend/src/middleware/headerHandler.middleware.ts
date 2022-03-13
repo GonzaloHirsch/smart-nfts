@@ -12,8 +12,6 @@ export const headerVerificationHandler =
             console.log(event.headers);
             throw new MissingHeaderException(HEADERS.ORIGIN);
         } 
-        
-        console.log(host);
 
-        return await handler(event);
+        return handler(event);
     };

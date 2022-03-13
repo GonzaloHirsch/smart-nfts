@@ -10,36 +10,30 @@ import CustomException from '../exceptions/custom.exception';
  * Function that doesn't receive anything, but returns a handler function exported for the Lambda layer
  * @returns
  */
-export const errorHandler = () =>
+export const errorHandler =
+    () =>
     (handler: (event: APIGatewayProxyEvent) => Promise<APIGatewayProxyResult>): ((event: APIGatewayProxyEvent) => Promise<APIGatewayProxyResult>) =>
     async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
-        
-    try {
+        try {
+            return await handler(event);
+        } catch (err) {
+            console.error(err);
 
-        return await handler(event);
+            if (err instanceof HttpException) {
+                const status = err.status || 500;
 
-    } catch (err) {
-
-        console.error(err);
-
-        if (err instanceof HttpException) {
-
-            const status = err.status || 500;
-            
-            return {
-                statusCode: status,
-                body: JSON.stringify({
-                    internalStatus: err.internalStatus || (status < 500 ? 'CLIENT_ERROR' : 'SERVER_ERROR'),
-                    message: err.message || 'Internal server error'
-                })
-            };
-            
-        } else if (err instanceof CustomException ) {
-            
+                return {
+                    statusCode: status,
+                    body: JSON.stringify({
+                        internalStatus: err.internalStatus || (status < 500 ? 'CLIENT_ERROR' : 'SERVER_ERROR'),
+                        message: err.message || 'Internal server error'
+                    })
+                };
+            }
             // Custom errors
-            if (EXCEPTION_TO_HTTP_MAP.has(err.name)) {
+            else if (err instanceof CustomException && EXCEPTION_TO_HTTP_MAP.has(err.name)) {
                 const httpError = setHttpErrorMsg(EXCEPTION_TO_HTTP_MAP.get(err.name)!, err.message);
-                
+
                 return {
                     statusCode: httpError.status,
                     body: JSON.stringify({
@@ -49,16 +43,14 @@ export const errorHandler = () =>
                     })
                 };
             }
-            
-        }
 
-        // Unknown error
-        return {
-            statusCode: 500,
-            body: JSON.stringify({
-                internalStatus: 'SERVER_ERROR',
-                message: 'Internal server error'
-            })
-        };
-    }
-};
+            // Unknown error
+            return {
+                statusCode: 500,
+                body: JSON.stringify({
+                    internalStatus: 'SERVER_ERROR',
+                    message: 'Internal server error'
+                })
+            };
+        }
+    };

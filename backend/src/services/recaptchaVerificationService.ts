@@ -21,7 +21,7 @@ class RecaptchaVerificationService {
     };
 
     public verifyToken = async (token: string) => {
-        return await RecaptchaVerificationService.client
+        return RecaptchaVerificationService.client
             .post(
                 'siteverify',
                 qs.stringify({

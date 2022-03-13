@@ -15,7 +15,7 @@ export const sendReminderEmail = async (recipient: string, contractId: string, l
         Source: `${language === 'es' ? 'Recordatorios' : 'Reminders'}@smart-nfts.gonzalohirsch.com`
     };
 
-    return await SES.sendTemplatedEmail(params)
+    return SES.sendTemplatedEmail(params)
         .promise()
         .then((res: any) => {
             console.log(res);

@@ -1,4 +1,4 @@
-import pinataClient from '@pinata/sdk';
+import pinataClient, { PinataPinResponse } from '@pinata/sdk';
 import { IArguments } from '../interfaces/general.interface';
 import { Readable } from 'stream';
 import { IFilePinResponse, IJsonPinResponse } from '../interfaces/ipfs.interface';
@@ -15,8 +15,6 @@ class IpfsService {
         return IpfsService.instance;
     };
 
-
-
     public addFileToIPFS = async (contents: Buffer, name: string): Promise<IFilePinResponse> => {
         /*eslint no-undef: ["error", { "typeof": true }] */
         const stream = Readable.from(contents);
@@ -25,7 +23,7 @@ class IpfsService {
         stream.path = name;
 
         // Response format
-        return await ipfs
+        return ipfs
             .pinFileToIPFS(stream, {
                 pinataMetadata: {
                     name: name
@@ -34,16 +32,11 @@ class IpfsService {
                     cidVersion: 0
                 }
             })
-            .then((res) => {
-                return {
-                    ipfsHash: res.IpfsHash,
-                    ipfsUri: `ipfs://${res.IpfsHash}`
-                };
-            });
-    }
+            .then((res) => this.mapIpfsResponse(res));
+    };
 
     public addJSONToIPFS = async (contents: any, name: string): Promise<IJsonPinResponse> => {
-        return await ipfs
+        return ipfs
             .pinJSONToIPFS(contents, {
                 pinataMetadata: {
                     name: name
@@ -52,25 +45,26 @@ class IpfsService {
                     cidVersion: 0
                 }
             })
-            .then((res) => {
-                return {
-                    ipfsHash: res.IpfsHash,
-                    ipfsUri: `ipfs://${res.IpfsHash}`
-                };
-            });
-    }
+            .then((res) => this.mapIpfsResponse(res));
+    };
 
     public addMetadataWithFileToIPFS = async (content: IArguments, file: any, fileName: string): Promise<IJsonPinResponse> => {
-        
         // Pin file to metadata and get its hash and uri
         const pinnedFile = await IpfsService.getInstance().addFileToIPFS(file, fileName);
-        
+
         // Add the file uri to the metadata
         content.image = pinnedFile.ipfsUri;
 
         // Pin the metadata json to IPFS
-        return await IpfsService.getInstance().addJSONToIPFS(content, content.name ?? fileName)
-    }
+        return IpfsService.getInstance().addJSONToIPFS(content, content.name ?? fileName);
+    };
+
+    private mapIpfsResponse = (res: PinataPinResponse): any => {
+        return {
+            ipfsHash: res.IpfsHash,
+            ipfsUri: `ipfs://${res.IpfsHash}`
+        };
+    };
 }
 
 export default IpfsService;

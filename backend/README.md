@@ -86,14 +86,25 @@ A local server on port `8000` will start working, `ctrl + c` to stop it.
 
 **Sonarqube** can be used to perform static analysis on the code.
 
-Having an instance of Sonarqube running, call:
-```bash
-npm run sonar
+Having a running instance for Sonarqube, fill in the following properties in `sonar-projects.js`:
+```
+sonar.projectKey
+sonar.login
 ```
 
 #### Running Sonarqube
 
 Download the appropriate version from the [Sonarqube](https://www.sonarqube.org/downloads/) site. The Docker configuration is the easiest one.
+
+On an M1 Mac, the following image is usable:
+```bash
+docker run --name sonarqube-pf -d -p 9000:9000 mwizner/sonarqube:8.7.1-community
+```
+
+Having an instance of Sonarqube running, call:
+```bash
+npm run sonar
+```
 
 ## Deployment
 

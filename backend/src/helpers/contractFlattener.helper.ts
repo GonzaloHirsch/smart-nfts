@@ -34,72 +34,64 @@ const getNodeModulePath = async (name: string, { cwd }: any) => {
     });
 };
 
-const processFile = async (file: string, root = false, hasContents = false, fileContents: string | undefined) => {
-    try {
-        // Makes sure not to process twice
-        if (root) processedFiles = {};
-        if (file in processedFiles) return;
+const processFile = async (file: string, root: boolean, hasContents: boolean, fileContents: string | undefined) => {
+    // Makes sure not to process twice
+    if (root) processedFiles = {};
+    if (file in processedFiles) return;
 
-        processedFiles[file] = true;
-        let result = '';
-        let contents;
-        let imports;
+    processedFiles[file] = true;
+    let result = '';
+    let contents;
+    let imports;
 
-        // Read the file contents if not given
-        if (!hasContents) contents = fs.readFileSync(file, { encoding: 'utf-8' });
-        else contents = fileContents!;
-        // Remove the pragma part
-        contents = contents.replace(regEx.pragma, '').trim();
-        imports = await processImports(file, contents);
-        for (let i = 0; i < imports.length; i++) {
-            result += imports[i] + '\n\n';
-        }
-        contents = contents.replace(regEx.import, '').trim();
-        result += contents;
-        return result;
-    } catch (error) {
-        throw error;
-    }
+    // Read the file contents if not given
+    if (!hasContents) contents = fs.readFileSync(file, { encoding: 'utf-8' });
+    else contents = fileContents!;
+    // Remove the pragma part
+    contents = contents.replace(regEx.pragma, '').trim();
+    imports = await processImports(file, contents);
+    imports.forEach(_import => {
+        result += _import + '\n\n';
+    });
+    contents = contents.replace(regEx.import, '').trim();
+    result += contents;
+    return result;
 };
 
 const processImports = async (file: string, content: string) => {
-    try {
-        let group = null;
-        const result = [];
-        let fileContents;
-        regEx.import.exec(''); // Resetting state of RegEx
-        while ((group = regEx.import.exec(content))) {
-            let importFile = group[1];
+    let group = null;
+    const result = [];
+    let fileContents;
+    regEx.import.exec(''); // Resetting state of RegEx
+    while ((group = regEx.import.exec(content))) {
+        let importFile = group[1];
 
-            // Get path to file to know where it is
-            let filePath = path.join(path.dirname(file), importFile);
+        // Get path to file to know where it is
+        let filePath = path.join(path.dirname(file), importFile);
 
-            if (!(filePath in processedFiles)) {
-                processedFiles[filePath] = true;
-                // Instead of checking for the file to exist, we make sure that it does not have the entire path to it
-                if (!filePath.includes(rootNodeModules)) {
-                    const nodeModulesPath = await getNodeModulePath(path.dirname(importFile), { cwd: path.dirname(file) });
-                    filePath = path.join(nodeModulesPath, path.basename(importFile));
-                }
-                filePath = path.normalize(filePath);
-                fileContents = await processFile(filePath, false, false, undefined);
-                if (fileContents) {
-                    result.push(fileContents);
-                }
+        if (!(filePath in processedFiles)) {
+            processedFiles[filePath] = true;
+            // Instead of checking for the file to exist, we make sure that it does not have the entire path to it
+            if (!filePath.includes(rootNodeModules)) {
+                const nodeModulesPath = await getNodeModulePath(path.dirname(importFile), { cwd: path.dirname(file) });
+                filePath = path.join(nodeModulesPath, path.basename(importFile));
             }
-            
+            filePath = path.normalize(filePath);
+            fileContents = await processFile(filePath, false, false, undefined);
+            if (fileContents) {
+                result.push(fileContents);
+            }
         }
-        return result;
-    } catch (error) {
-        throw error;
+        
     }
+    return result;
 };
 
 // PRAGMA
 // Gets the solidity version
 
-const getPragma = async (path: string) => {
-    const contents = fs.readFileSync(path, { encoding: 'utf-8' });
+const getPragma = async (_path: string) => {
+    const contents = fs.readFileSync(_path, { encoding: 'utf-8' });
     const group = regEx.pragma.exec(contents);
     return group && group[1];
 };

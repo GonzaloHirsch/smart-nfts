@@ -20,13 +20,13 @@ const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyRes
 
     // Check that params (if any) are valid numbers
     if (queryParams != null 
-    && ((queryParams!.page != null && !typeValidations.number(queryParams!.page)) 
-    || (queryParams!.perPage != null && !typeValidations.number(queryParams!.perPage)))) {
+    && ((queryParams.page != null && !typeValidations.number(queryParams.page)) 
+    || (queryParams.perPage != null && !typeValidations.number(queryParams.perPage)))) {
         throw new GenericException(HTTP_ERRORS.BAD_REQUEST.PARAMS);
     }
 
-    const page = queryParams!.page == null ? 1 : parseInt(queryParams!.page as string);
-    const perPage = queryParams!.perPage == null ? TOKENS_PER_PAGE : parseInt(queryParams!.perPage as string);
+    const page = queryParams!.page == null ? 1 : parseInt(queryParams!.page);
+    const perPage = queryParams!.perPage == null ? TOKENS_PER_PAGE : parseInt(queryParams!.perPage);
 
     const instance = await StoredContractService.getInstance();
 
@@ -36,7 +36,7 @@ const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyRes
         .getInstance(contract.deployment.network)
         .listTokenOwners(contract, page, perPage);
 
-    const getUrl = (page: number, perPage: number) => `/contracts/${contract.id}/tokens?page=${page}&perPage=${perPage}`;
+    const getUrl = (_page: number, _perPage: number) => `/contracts/${contract.id}/tokens?page=${_page}&perPage=${_perPage}`;
 
     return {
         statusCode: 200,

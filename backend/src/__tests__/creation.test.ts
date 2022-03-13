@@ -89,7 +89,7 @@ describe('Invalid Contract Creation', () => {
         const neededInput = LimitSupply.getExtensionInputs()[0];
 
         expect(
-            () => {service.genContract(valid.name, valid.symbol, extensions as EXTENSIONS[], missingInput)}
+            () => {service.genContract(valid.name, valid.symbol, extensions, missingInput)}
         ).toThrow(InvalidInputException.Missing(neededInput.name, neededInput.type));
     });
 
@@ -100,7 +100,7 @@ describe('Invalid Contract Creation', () => {
         const neededInput = LimitSupply.getExtensionInputs()[0];
 
         expect(
-            () => {service.genContract(valid.name, valid.symbol, extensions as EXTENSIONS[], invalidInput)}
+            () => {service.genContract(valid.name, valid.symbol, extensions, invalidInput)}
         ).toThrow(InvalidInputException.Type(neededInput.name, neededInput.type, invalidInput.maxSupply));
     });
 

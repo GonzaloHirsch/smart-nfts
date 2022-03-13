@@ -49,10 +49,11 @@ class ListingService {
         );
         
         // Filter from block 1 as per: https://ethereum.stackexchange.com/questions/71307/mycontract-getpasteventsallevents-returns-empty-array
-        const eventData = await contract.getPastEvents('Transfer', { fromBlock: 1});
+        let eventData = await contract.getPastEvents('Transfer', { fromBlock: 1});
 
-        // Sort from oldest to newest events => TODO - is this sorting necessary?
-        const sortedEventData = eventData
+        // Sort from oldest to newest events, this sorting might not be necessary, but just in case
+        // Event data is now sorted
+        eventData = eventData
             .sort(
                 (a: IEventData, b: IEventData) =>
                     a.blockNumber - b.blockNumber ||
@@ -63,7 +64,7 @@ class ListingService {
         const tokenListing: ITokenListing = {};
         
         // Get the owners for each token
-        sortedEventData.forEach((event: IEventData) => {
+        eventData.forEach((event: IEventData) => {
             // TokenId of the event involved
             const tokenId = event.returnValues.tokenId;
             // Set the owner of the token as the last transfer to
@@ -149,38 +150,6 @@ class ListingService {
             }
         },
         */
-        
-    //     const token = await ethers.getContractAt(ERC721.abi, tokenAddress, ethers.provider);
-      
-    //     console.error(await token.name(), 'tokens owned by', account);
-      
-    //     const sentLogs = await token.queryFilter(
-    //       token.filters.Transfer(account, null),
-    //     );
-    //     const receivedLogs = await token.queryFilter(
-    //       token.filters.Transfer(null, account),
-    //     );
-      
-    //     const logs = sentLogs.concat(receivedLogs)
-    //       .sort(
-    //         (a, b) =>
-    //           a.blockNumber - b.blockNumber ||
-    //           a.transactionIndex - b.TransactionIndex,
-    //       );
-      
-    //     const owned = new Set();
-      
-    //     for (const log of logs) {
-    //       const { from, to, tokenId } = log.args;
-          
-    //       if (addressEqual(to, account)) {
-    //         owned.add(tokenId.toString());
-    //       } else if (addressEqual(from, account)) {
-    //         owned.delete(tokenId.toString());
-    //       }
-    //     }
-      
-    //     console.log([...owned].join('\n'));
     };
 }
 

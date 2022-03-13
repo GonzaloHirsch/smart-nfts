@@ -1,5 +1,4 @@
-import { FINAL_EXTENSIONS, STATE_MUTABILITY, VISIBILITY } from "../constants/contract.constants";
-import { EXTENSIONS } from "../constants/contract.constants";
+import { FINAL_EXTENSIONS, STATE_MUTABILITY, VISIBILITY, EXTENSIONS } from "../constants/contract.constants";
 import { IArguments, IParameter } from "./general.interface";
 
 export interface IContract {

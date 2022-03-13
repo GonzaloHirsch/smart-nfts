@@ -1,10 +1,8 @@
-import { compileContract } from '../helpers/compiler.helper';
 import { IStoredContract } from '../models/storedContract.model';
 import Web3 from 'web3';
 import { DEPLOY_GAS } from '../constants/general.constants';
 import TransactionService from './transaction.service';
 import { SUPPORTED_NETWORKS } from '../constants/contract.constants';
-import ContractNotCompiledException from 'src/exceptions/contractNotCompiled.exception';
 
 class DeploymentService {
     private static instance: DeploymentService;
@@ -70,7 +68,7 @@ class DeploymentService {
         // Create contract instance
         const contract = new this.web3.eth.Contract(abi);
         // Deploy the contract w/promise
-        const contractData = await contract
+        const contractData = contract
             .deploy({
                 data: bytecode
             })
@@ -80,7 +78,7 @@ class DeploymentService {
         const tx = await this.transactionService.createTransaction(contractData, DEPLOY_GAS, this.deploymentAddress);
         console.log("Started deploy transaction");
 
-        return await this.transactionService.signAndSendTransaction(tx, true);
+        return this.transactionService.signAndSendTransaction(tx, true);
     };
 }
 

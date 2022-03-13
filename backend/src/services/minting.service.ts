@@ -21,8 +21,6 @@ import InvalidContractOptionsException from '../exceptions/invalidContractOption
 class MintingService {
     private static instance: MintingService;
 
-    constructor() {}
-
     static getInstance = () => {
         if (!MintingService.instance) {
             MintingService.instance = new MintingService();
@@ -64,7 +62,7 @@ class MintingService {
             if (metadataDef.hasImage) {
                 if (Buffer.byteLength(fileData.content) > FILE_SIZE_LIMIT) {
                     throw InvalidInputException.Size('token', Buffer.byteLength(fileData.content) / 1000000);
-                } else if (/^image\/.*$/.test(fileData.contentType)) {
+                } else if (!/^image\/.*$/.test(fileData.contentType)) {
                     throw InvalidInputException.Type('token', 'file', fileData.contentType);
                 }
             }
@@ -84,7 +82,7 @@ class MintingService {
         }
 
         // Call the minter method
-        return await InteractionService.getInstance(storedContract.deployment.network).handleMethodCall(storedContract, methodId, methodArgs);
+        return InteractionService.getInstance(storedContract.deployment.network).handleMethodCall(storedContract, methodId, methodArgs);
     };
 
     _checkAndMapToStandardMetadata = (

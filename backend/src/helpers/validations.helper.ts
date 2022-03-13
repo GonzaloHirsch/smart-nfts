@@ -13,12 +13,9 @@ export const isEmptyBody = (body: any) => {
   return body == null;
 };
 
-// TODO: We can check for the format or the length too to avoid DB calls
 export const validContractId = (contractId: string | null | undefined) => {
-  return contractId != null && contractId.trim().length > 0;
+  return contractId != null && contractId.trim().length > 0 && /^[a-zA-Z0-9]{15}$/i.test(contractId);
 };
-
-
 
 // Limit for uint256 numbers
 const uint256Limit = (2 ** 256) - 1;

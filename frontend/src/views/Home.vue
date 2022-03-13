@@ -162,7 +162,7 @@
                     :white="false"
                     :text="$t('home.cta.buttons.technologies.text')"
                     size="medium"
-                    class="w-fit mt-sm mx-auto sm:mr-0 sm:ml-sm"
+                    class="w-fit mt-sm mx-auto sm:mt-0 sm:mr-0 sm:ml-sm"
                 />
                 <v-button
                     format="secondary"
@@ -173,7 +173,7 @@
                     :white="false"
                     :text="$t('home.cta.buttons.howItWorks.text')"
                     size="medium"
-                    class="w-fit mt-sm mx-auto sm:mr-0 sm:ml-sm"
+                    class="w-fit mt-sm mx-auto sm:mt-0 sm:mr-0 sm:ml-sm"
                 />
                 <v-button
                     format="secondary"
@@ -184,7 +184,7 @@
                     :white="false"
                     :text="$t('home.cta.buttons.status.text')"
                     size="medium"
-                    class="w-fit mt-sm mx-auto sm:mr-0 sm:ml-sm"
+                    class="w-fit mt-sm mx-auto sm:mt-0 sm:mr-0 sm:ml-sm"
                 />
             </div>
         </div>

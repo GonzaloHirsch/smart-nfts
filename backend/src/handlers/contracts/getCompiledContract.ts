@@ -17,8 +17,8 @@ const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyRes
 
     const instance = await StoredContractService.getInstance();
 
-    const {contract, contractString} = await instance.getContractContentsById(event.pathParameters!.contractId!)
-    console.log(contractString)
+    const {contractString} = await instance.getContractContentsById(event.pathParameters!.contractId!)
+
     const compiledContract = compileContract(contractString!);
 
     return {

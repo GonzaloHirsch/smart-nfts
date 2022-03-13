@@ -1,7 +1,7 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import { errorHandler } from '../../middleware/errorHandler.middleware';
 import { corsHandler } from '../../middleware/corsHandler.middleware';
-import { isEmptyPathParams, validContractId, isEmptyBody } from '../../helpers/validations.helper';
+import { isEmptyPathParams, validContractId } from '../../helpers/validations.helper';
 import GenericException from '../../exceptions/generic.exception';
 import { setHttpErrorMsg } from '../../helpers/errors.helper';
 import { HTTP_ERRORS } from '../../constants/errors.constants';
@@ -11,13 +11,9 @@ import { headerVerificationHandler } from '../../middleware/headerHandler.middle
 import { recaptchaVerificationHandler } from '../../middleware/recaptchaVerificator.middleware';
 
 const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
-    console.log('Path params: ' + JSON.stringify(event.pathParameters))
-
     if (isEmptyPathParams(event.pathParameters) || !validContractId(event.pathParameters!.contractId)) {
         throw new GenericException(setHttpErrorMsg(HTTP_ERRORS.BAD_REQUEST.PARAMS, 'Missing contract ID'));
     }
-
-    console.log('Body: ' + JSON.stringify(event.body))
 
     const requestBody = JSON.parse(event.body!);
     const methodId = requestBody?.methodId as string;

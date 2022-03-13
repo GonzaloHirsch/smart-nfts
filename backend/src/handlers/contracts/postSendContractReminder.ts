@@ -2,12 +2,11 @@ import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import StoredContractService from '../../services/storedContract.service';
 import { errorHandler } from '../../middleware/errorHandler.middleware';
 import { corsHandler } from '../../middleware/corsHandler.middleware';
-import { isEmptyBody, isEmptyPathParams, validContractId } from '../../helpers/validations.helper';
+import { isEmptyBody, isEmptyPathParams, validContractId, typeValidations } from '../../helpers/validations.helper';
 import GenericException from '../../exceptions/generic.exception';
 import { setHttpErrorMsg } from '../../helpers/errors.helper';
 import { HTTP_ERRORS } from '../../constants/errors.constants';
 import { ACCEPTED_LANGUAGES_MAP, ACCEPTED_LANGUAGES } from '../../constants/general.constants';
-import { typeValidations } from '../../helpers/validations.helper';
 import { sendReminderEmail } from '../../helpers/email.helper';
 import parser from 'accept-language-parser';
 import { headerVerificationHandler } from '../../middleware/headerHandler.middleware';
@@ -49,7 +48,7 @@ const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyRes
     }
 
     // Send email
-    await sendReminderEmail(email, event.pathParameters!.contractId!, selectedLanguage!);
+    await sendReminderEmail(email, event.pathParameters!.contractId!, selectedLanguage);
 
     // Update internal status
     contract.reminder.date = new Date();

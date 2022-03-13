@@ -11,12 +11,12 @@ export interface IAbiMethod extends Document {
     inputs: IAbiInput[],
     outputs: IAbiArgument[],
     stateMutability?: STATE_MUTABILITY
-};
+}
 
 export interface IAbiInput extends IAbiArgument {
     indexed?: boolean,
-};
+}
 
 export interface IAbiArgument extends IParameter {
     internalType: CONTRACT_TYPES
-};
+}

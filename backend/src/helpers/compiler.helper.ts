@@ -15,7 +15,6 @@ if (process.env.node_env !== undefined && process.env.node_env !== ENVIRONMENTS.
 
 const CONTRACT_NAME = './ERC721.sol';
 
-// TODO mover a constantes?
 const compilerInput: ICompilerInfo = {
   language: 'Solidity',
   sources: {},
@@ -58,7 +57,6 @@ export const compileContract = (contract: string): ICompilerResponse => {
     } else {
         // We have only 1 contract to compile, we can just look for the first element
         const contractName = Object.keys(output.contracts[CONTRACT_NAME])[0];
-        // console.log(output.contracts[CONTRACT_NAME][contractName])
         return {
             bytecode: output.contracts[CONTRACT_NAME][contractName].evm.bytecode.object,
             abi: output.contracts[CONTRACT_NAME][contractName].abi,
@@ -69,7 +67,7 @@ export const compileContract = (contract: string): ICompilerResponse => {
 
 export const flattenContract = async (contract: string): Promise<string> => {
     // Flatten and remove extra licenses
-    return await straightenContent(contract)
+    return straightenContent(contract)
         .then((res: any) => removeAllButLast(res, '// SPDX-License-Identifier: MIT'))
         .catch((err: any) => {
             console.log(err);

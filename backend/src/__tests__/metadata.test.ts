@@ -1,6 +1,6 @@
 import MintingService from "../services/minting.service";
 import { METADATA_DISPLAY_TYPES, METADATA_TYPES } from "../constants/metadata.constants";
-import { IMetadata, IStandardMetadata } from "../interfaces/metadata.interface";
+import { IMetadata } from "../interfaces/metadata.interface";
 import InvalidInputException from "../exceptions/invalidInput.exception";
 
 let metadataDef: IMetadata;

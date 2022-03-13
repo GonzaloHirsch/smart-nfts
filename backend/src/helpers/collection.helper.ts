@@ -15,7 +15,14 @@ export const flattenArray = <T>(array: T[][]): T[] => {
 
 // Sort method
 export const getSortFn = <T>(condition: (input: T) => boolean) => {
-    return (a: T, b: T) => (condition(a) === condition(b) ? 0 : condition(a) ? -1 : 1);
+    return (a: T, b: T) => {
+        if (condition(a) === condition(b)) {
+            return 0;
+        } else if (condition(a)) {
+            return -1;
+        }
+        return 1;
+    };
 };
 
 // Objects

@@ -10,8 +10,9 @@ import { headerVerificationHandler } from '../../middleware/headerHandler.middle
 import { recaptchaVerificationHandler } from '../../middleware/recaptchaVerificator.middleware';
 
 const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
-    if (isEmptyPathParams(event.pathParameters) || !validContractId(event.pathParameters!.contractId)) 
-    throw new GenericException(HTTP_ERRORS.BAD_REQUEST.PARAMS);
+    if (isEmptyPathParams(event.pathParameters) || !validContractId(event.pathParameters!.contractId)) {
+        throw new GenericException(HTTP_ERRORS.BAD_REQUEST.PARAMS);
+    }
 
     const instance = await StoredContractService.getInstance();
 

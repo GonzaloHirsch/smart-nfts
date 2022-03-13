@@ -4,8 +4,7 @@ import { IStoredContract } from '../models/storedContract.model';
 // Constants, interfaces, helpers
 import { IInteractResponse } from '../interfaces/blockchain.interface';
 import { IArguments } from '../interfaces/general.interface';
-import { IAbiInput } from '../interfaces/abi.interface';
-import { IAbiMethod } from '../interfaces/abi.interface';
+import { IAbiInput, IAbiMethod } from '../interfaces/abi.interface';
 import { CONTRACT_TYPES, STATE_MUTABILITY } from '../constants/contract.constants';
 import { INTERACT_GAS, MINT_GAS } from '../constants/general.constants';
 import { typeValidations } from '../helpers/validations.helper';

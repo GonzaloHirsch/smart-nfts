@@ -33,7 +33,7 @@ class EtherscanService {
         console.log('Verifying contract');
 
         // Verify the contract
-        const verificationId = await this._verifyContract(
+        await this._verifyContract(
             flatContract,
             contract.name,
             contract.deployment.address,
@@ -53,7 +53,7 @@ class EtherscanService {
         return contract;
     };
 
-    public getAddressBalance = async (address : string) : Promise<Number> => {
+    public getAddressBalance = async (address : string) : Promise<number> => {
         const data = qs.stringify({
             apikey: `${process.env.ETHERSCAN_API_KEY}`,
             module: 'account',
@@ -64,7 +64,7 @@ class EtherscanService {
         // Config for request as per what Postman says
         const config = this._getApiConfig(undefined);
         config.data = data;
-        return await axios(config)
+        return axios(config)
             .then((res) => {
                 if (res.data.status === '0') throw new EtherscanErrorException();
                 return weiToEth(res.data.result);
@@ -73,7 +73,6 @@ class EtherscanService {
                 console.log(err);
                 throw new EtherscanErrorException();
             });
-        return 0;
     } 
 
     private _verifyContract = async (
@@ -99,7 +98,7 @@ class EtherscanService {
         const config = this._getApiConfig(contractNetwork);
         config.data = data;
         // Making the request itself
-        return await axios(config)
+        return axios(config)
             .then((res) => {
                 console.log(res);
                 if (res.data.status === '0') throw new VerificationFailedException(contractAddress);
@@ -114,14 +113,13 @@ class EtherscanService {
     private _getApiConfig = (network: string | undefined): AxiosRequestConfig => {
         let _network = network || process.env.DEPLOYMENT_NETWORK;
         const url = process.env.ETHERSCAN_API_URL?.replace('NETWORK', _network!);
-        const config: AxiosRequestConfig = {
+        return {
             method: 'post',
             url: `${url}api`,
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
         };
-        return config;
     };
 }
 

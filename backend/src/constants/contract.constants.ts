@@ -18,7 +18,7 @@ export enum STATE_MUTABILITY {
     NONPAYABLE = 'nonpayable',
     NONPAYABLE_EMPTY = '',
     PAYABLE = 'payable'
-};
+}
 
 export enum METHOD_TYPE {
     FUNCTION = 'function',
@@ -84,7 +84,7 @@ export const REQUIRE_KEYWORD = 'require';
 export enum SUPPORTED_NETWORKS {
     RINKEBY = 'rinkeby',
     ROPSTEN = 'ropsten'
-};
+}
 
 export enum UPDATE_TYPES {
     CONTRACT = 'CONTRACT',

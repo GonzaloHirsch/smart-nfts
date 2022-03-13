@@ -99,7 +99,7 @@
                                     <DocumentIcon class="expandable-content--icon" />
                                 </template>
                                 <template #actions>
-                                    <v-tooltip :text="$t('editor.contract.idCopy')" class="mr-xs">
+                                    <v-tooltip :text="$t('editor.contract.idCopy')" :class="[canSendEmail ? 'mr-xs' : '']">
                                         <DocumentDuplicateIcon
                                             @click="copyContractId"
                                             :aria-label="$t('editor.contract.idCopy')"

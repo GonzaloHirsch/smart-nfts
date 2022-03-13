@@ -20,8 +20,6 @@ class CreationService {
         return CreationService.instance;
     };
 
-    saveContract = async () => {};
-
     genContract = (name: string, symbol: string, extensions: EXTENSIONS[], userInputs: IArguments): string => {
         // Check valid name and symbol
         if (!typeValidations.name(name)) {
@@ -107,9 +105,7 @@ class CreationService {
             list.forEach((element) => {
                 // Calculate the hash of the variable name, since this should not be repeated
                 const hashName = hashString(getHashableField(element));
-                // TODO Log if a variable repeats itself (its an error)
                 if (hashMap[hashName] != null) {
-                    // TODO Logger
                     console.log(`repeated hash = ${getHashableField(element)}`);
                     return;
                 }

@@ -20,5 +20,5 @@ export const recaptchaVerificationHandler =
             throw new RecaptchaVerificationFailedException();
         }
 
-        return await handler(event);
+        return handler(event);
     };

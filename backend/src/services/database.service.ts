@@ -12,7 +12,6 @@ class DatabaseService {
     };
 
     static dbConnect = async () => {
-        // TODO - what options??
         const options: ConnectOptions = {
             autoIndex: false, // Don't build indexes
             maxPoolSize: 10, // Maintain up to 10 socket connections

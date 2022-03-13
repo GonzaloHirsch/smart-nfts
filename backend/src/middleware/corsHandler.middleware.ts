@@ -6,8 +6,6 @@ export const corsHandler =
   async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     const response = await handler(event);
     const headers = response.headers || {};
-    console.log(headers);
-    
     return {
       ...response,
       headers: {

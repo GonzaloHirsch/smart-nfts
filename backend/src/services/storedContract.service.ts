@@ -31,15 +31,15 @@ class StoredContractService {
     };
 
     public createContract = async () : Promise<IStoredContract> => {
-        return await StoredContract.create({id: nanoid()})
+        return StoredContract.create({id: nanoid()})
     }
 
     public getContractById = async (contractId: string) : Promise<IStoredContract | null> => {
-        return await StoredContract.findOne({id: contractId}).exec()
+        return StoredContract.findOne({id: contractId}).exec()
     }
 
     public getContractByQuery = async (query: FilterQuery<IStoredContract>) : Promise<IStoredContract[]> => {
-        return await StoredContract.find(query).exec()
+        return StoredContract.find(query).exec()
     }
 
     public getEnforcedContractById = async (contractId: string): Promise<IStoredContract> => {
@@ -79,7 +79,6 @@ class StoredContractService {
         /* Make sure it can add metadata, after reviewing the flow, this shouldn't be validated
         If the user chooses not to have URIStorage, it will need to remove the configured metadata, which won't be
         available again if the user changes it's mind, making them lose the progress */
-        // if (!extensions.includes(EXTENSIONS.ERC721URIStorage) && metadata.length > 0) throw new InvalidContractOptionsException(contractId);
 
         // Find contract in the DB
         const contract = await this.getEnforcedContractById(contractId);
@@ -104,7 +103,7 @@ class StoredContractService {
             const extensionCopy = [...extensions];
 
             // Generate updated contract
-            contractString = CreationService.getInstance().genContract(name, symbol, extensions as EXTENSIONS[], inputs);
+            contractString = CreationService.getInstance().genContract(name, symbol, extensions, inputs);
             
             // Digest the content    
             hash.reset();

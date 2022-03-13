@@ -5,6 +5,5 @@ export const generateContractZip = (contents: string) : Buffer => {
     // Add file directly
     zip.addFile("contract.sol", Buffer.from(contents, "utf8"));
     // get everything as a buffer
-    const zipBuffer = zip.toBuffer();
-    return zipBuffer; 
+    return zip.toBuffer();
 };

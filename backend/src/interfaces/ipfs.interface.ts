@@ -5,6 +5,6 @@ export interface IFilePinResponse {
 }
 
 export interface IJsonPinResponse {
-  ipfsHash: string;
-  ipfsUri: string;
+    ipfsHash: string;
+    ipfsUri: string;
 }

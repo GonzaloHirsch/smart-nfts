@@ -38,13 +38,13 @@ class TransactionService {
         from: string,
         to?: string,
     ): Promise<ITransactionConfig> => {
-        const nonce = await this.web3.eth.getTransactionCount(this.deploymentAddress!);
+        const nonce = await this.web3.eth.getTransactionCount(this.deploymentAddress);
 
         const gasPriceHex = this.web3.utils.toHex(this.web3.utils.toWei(GAS_PRICE, 'gwei'));
         const gasLimitHex = this.web3.utils.toHex(gasLimit);
 
         const tx: ITransactionConfig = {
-            nonce: nonce, // this.web3.utils.toHex(nonce), // TODO - Check!!
+            nonce: nonce, // this.web3.utils.toHex(nonce),
             gasPrice: gasPriceHex,
             gas: gasLimitHex,
             from: from,
@@ -66,12 +66,8 @@ class TransactionService {
         const signPromise = this.web3.eth.accounts.signTransaction(tx, process.env.DEPLOYMENT_PRIVATE_KEY!);
 
         return signPromise
-            .then((signedTx) => {
-                const sentTx = this.web3.eth.sendSignedTransaction(signedTx.rawTransaction!);
-                return sentTx;
-            })
+            .then((signedTx) => this.web3.eth.sendSignedTransaction(signedTx.rawTransaction!))
             .then((receipt) => {
-                // console.log(receipt);
                 if (isDeploy) {
                     return receipt.contractAddress;
                 }
