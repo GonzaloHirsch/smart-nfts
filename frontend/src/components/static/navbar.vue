@@ -32,14 +32,19 @@ const links = [
         aria: 'nav.edit.aria'
     },
     {
-        to: '/interact',
+        to: '/#Interact',
         text: 'nav.interact.text',
         aria: 'nav.interact.aria'
     },
     {
-        to: '/tokens',
+        to: '/#View',
         text: 'nav.list.text',
         aria: 'nav.list.aria'
+    },
+    {
+        to: '/about',
+        text: 'nav.about.text',
+        aria: 'nav.about.aria'
     }
 ];
 

@@ -101,13 +101,16 @@
 
     <v-section class="bg-typography_primary">
         <h2 class="text-center text-brand_secondary mb-base">{{ $t('interact.content.title') }}</h2>
-        <v-anchored-title type="h3" :text="$t('interact.content.general.methodTypes.title')" :anchor="$t('interact.content.general.methodTypes.anchor')" class="mt-sm" />
-        <v-anchored-title type="h4" :text="$t('interact.content.general.read.title')" :anchor="$t('interact.content.general.read.anchor')" class="mt-sm" />
+        <v-anchored-title type="h3" :text="$t('interact.content.general.read.title')" :anchor="$t('interact.content.general.read.anchor')" class="mt-sm" />
         <p v-html="$t('interact.content.general.read.text')"/>
-        <v-anchored-title type="h4" :text="$t('interact.content.general.write.title')" :anchor="$t('interact.content.general.write.anchor')" class="mt-sm" />
+        <template v-for="(method, index) in readMethods" :key="index">
+            <v-anchored-title type="h4" :text="method.name" :anchor="method.name" class="mt-sm" />
+            <p v-for="content in method.contentCount" :key="content" v-html="$t(`interact.content.methods.${method.name}.content_${content}`)" class="mt-xs first:mt-0"/>
+        </template>
+        <v-anchored-title type="h3" :text="$t('interact.content.general.write.title')" :anchor="$t('interact.content.general.write.anchor')" class="mt-sm" />
         <p v-html="$t('interact.content.general.write.text')"/>
-        <template v-for="(method, index) in methods" :key="index">
-            <v-anchored-title type="h3" :text="method.name" :anchor="method.name" class="mt-sm" />
+        <template v-for="(method, index) in writeMethods" :key="index">
+            <v-anchored-title type="h4" :text="method.name" :anchor="method.name" class="mt-sm" />
             <p v-for="content in method.contentCount" :key="content" v-html="$t(`interact.content.methods.${method.name}.content_${content}`)" class="mt-xs first:mt-0"/>
         </template>
     </v-section>
@@ -235,13 +238,7 @@ const getAbiMint = (abi) => {
 };
 
 // Content
-const methods = [
-    {
-        name: 'safeMint',
-        type: 'CREATE',
-        contentCount: 2
-    },
-    {
+const readMethods = [{
         name: 'balanceOf',
         type: 'READ',
         contentCount: 1
@@ -305,6 +302,13 @@ const methods = [
         name: 'totalSupply',
         type: 'READ',
         contentCount: 1
+    }
+];
+const writeMethods = [
+    {
+        name: 'safeMint',
+        type: 'CREATE',
+        contentCount: 2
     },
     {
         name: 'approve',

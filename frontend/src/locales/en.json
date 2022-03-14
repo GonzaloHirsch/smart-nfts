@@ -157,6 +157,10 @@
             "text": "View",
             "aria": "Go to view"
         },
+        "about": {
+            "text": "About",
+            "aria": "Go to About"
+        },
         "status": {
             "text": "Status",
             "aria": "See the service status"
@@ -185,7 +189,6 @@
             }
         },
         "features": "Features",
-        "about": "About",
         "contact": "Contact"
     },
     "about": {

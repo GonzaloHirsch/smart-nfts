@@ -43,7 +43,7 @@
                 </ul>
             </div>
             <div class="col-span-2 my-sm lg:my-0">
-                <router-link to="/about/" class="text-h5 leading-normal font-semibold">{{ $t('nav.about') }}</router-link>
+                <router-link to="/about/" class="text-h5 leading-normal font-semibold">{{ $t('nav.about.text') }}</router-link>
                 <div class="col-span-full h-1 bg-white my-sm"></div>
                 <ul class="flex flex-col list-none">
                     <template v-for="(link, index) in aboutLinks" :key="index">
