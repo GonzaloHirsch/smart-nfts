@@ -79,7 +79,7 @@
                     "text": "Use our simple editor to create your custom NFT in just seconds! Choose among multiple extensions and define your metadata according to industry standards in just a few clicks. Create, deploy, and verify your very own custom ERC-721 contract. Don't know how to code? Don't worry! For starters, this is a zero-code environment, and everything has explanations. Don't want to deploy it with us? We've got you covered. Create the contract and download it for further customizations or deployment."
                 },
                 "edit": {
-                    "text": "Already have an existing contract you created with us? Use this option to continue working on it. Our contracts can be edited, deployed, and verified an infinite number of times. Be mindful that any change done on the contract, excluding the metadata fields, after deployment will require the contract to be deployed again. To start, enter your contract's id below and click Go Edit."
+                    "text": "Already have an existing contract you created with us? Use this option to continue working on it. Our contracts can be edited, deployed, and verified an infinite number of times. Be mindful that any change done on the contract after deployment, excluding the metadata fields, will require the contract to be deployed again. To start, enter your contract's id below and click Go Edit."
                 },
                 "interact": {
                     "text": "After deploying your contract to the blockchain, you can interact with it. Enter your contract's ID and begin minting tokens, reading contract data and writing to the contract itself. Everything is in real-time and without costly gas fees. Interaction will be done through SmartNFTs' wallet, meaning this wallet will be the contract owner. You can transfer ownership of the contract to yourself at any time to make it your own."
@@ -119,7 +119,7 @@
         },
         "cta": {
             "title": "See more about this project",
-            "text": "Learn about ERC-721 Smart Contracts, explore how this works, the technologies and services behind it, and check the service status.",
+            "text": "Learn about ERC-721 Smart Contracts, explore the technologies and services behind the making of Smart NFTs, how Smart NFTs' API interacts with said services, and check Smart NFTs' service status for information on the current state of the app.",
             "buttons": {
                 "status": {
                     "text": "Status",
@@ -195,11 +195,11 @@
                 "text": "Read More",
                 "aria": "Learn more about SmartNFTs"
             },
-            "subtitle": "Read on to learn what an ERC-721 Smart Contract is, what technologies are used in our processes, and the purpose for which SmartNFTs was created."
+            "subtitle": "Read on to learn what an ERC-721 Smart Contract is, what technologies are used in our processes, and how Smart NFTs' API interacts with external services."
         },
         "erc721": {
             "title": "What is a ERC-721 Smart Contract?",
-            "text": "After minting NFTs, you can view them by entering your contract's ID and clicking 'Go View'. You will be able to view the token's relevant information and it's metadata, which can include the image, name, description, and attributes you defined. We will provide a variety of links for you to view your raw metadata as JSON and to view your tokens through popular sites, such as OpenSea and Etherscan. You can use these sites to share your tokens with the world!"
+            "text": "A smart contract is a program that runs on the Ethereum blockchain. It's a collection of code (its functions) and data (its state) that resides at a specific address on the Ethereum blockchain. Specifically, ERC721 is a smart contract standard for representing ownership of non-fungible tokens, or NFTs, meaning each token is unique. An example of these tokens are the famous CryptoKitties, where each cat is one-of-a-kind and 100% owned by 1 person."
         },
         "technologies": {
             "title": "Technologies",
@@ -210,7 +210,7 @@
                 },
                 "pinata": {
                     "title": "Storage",
-                    "description": "Storage in the blockchain is expensive; we use Pinata instead for storage. An IPFS (InterPlanetary File System) is needed to store large amounts of data off-chain."
+                    "description": "Storage in the blockchain is expensive; we use Pinata instead for storage. An IPFS, or InterPlanetary File System, is needed to store large amounts of data off-chain."
                 },
                 "infura": {
                     "title": "Connection",
@@ -225,10 +225,10 @@
                     "description": "The API connects to Infura’s Ethereum node. Using Web3.js, it interacts with said node."
                 },
                 "B": {
-                    "description": "The API stores tokens’ metadata, including images and JSONs, in an IPFS named Pinata. Metadata is public and is visible to everyone."
+                    "description": "The API stores tokens’ metadata, including images and JSONs, in an IPFS named Pinata. Metadata is public and visible to everyone."
                 },
                 "C": {
-                    "description": "Communicate with the Ethereum blockchain through a node provided by Infura."
+                    "description": "Communication with the Ethereum blockchain occurs through a node provided by Infura."
                 }
             }
         },
@@ -329,7 +329,7 @@
             "title": "Fields Explained",
             "contractInformation": {
                 "title": "Contract Information",
-                "copy": "Contract information mainly refers to the <pre class=\"code\"><code>name</code></pre> and <pre class=\"code\"><code>symbol</code></pre> properties of the Smart Contract. <pre class=\"code\"><code>name</code></pre> refers to the collection itself (e.g., the \"CustomTokens\" collection) and will be displayed on most external sites when referring to the Smart Contract. <pre class=\"code\"><code>symbol</code></pre> refers to a way to display the number of tokens in the set (e.g., the symbol for \"CustomTokens\" can be \"CTKN\" and that way, someone can have 3 CTKN)."
+                "copy": "This section refers to the <pre class=\"code\"><code>name</code></pre> and <pre class=\"code\"><code>symbol</code></pre> properties of the Smart Contract. <pre class=\"code\"><code>name</code></pre> refers to the collection itself (e.g., the \"CustomTokens\" collection) and will be displayed on most external sites when referring to the Smart Contract. <pre class=\"code\"><code>symbol</code></pre> refers to a way to display the number of tokens in the set (e.g., the symbol for \"CustomTokens\" can be \"CTKN\" and that way, someone can have 3 CTKN)."
             },
             "creation": {
                 "title": "Creation",
@@ -340,7 +340,7 @@
                     "copy_1": "The <pre class=\"code\"><code>mintable</code></pre> extension allows the owner of the contract to emit new NFTs. These tokens are simple, just a user-defined ID, and get automatically transferred to the specified address during creation. If you combine this extension with <pre class=\"code\"><code>URI Storage</code></pre>, the NFTs can have metadata, making them more valuable.",
                     "autoincrementIds": {
                         "title": "Auto Increment IDs",
-                        "copy_1": "The <pre class=\"code\"><code>autoincrement IDs</code></pre> extension automatically assigns incrementing IDs to the tokens, removing the <pre class=\"code\"><code>tokenId</code></pre> parameter from the minting."
+                        "copy_1": "The <pre class=\"code\"><code>autoincrement IDs</code></pre> extension automatically assigns incrementing IDs to the tokens, removing the <pre class=\"code\"><code>tokenId</code></pre> parameter from the minting. This extensions requires the <pre class=\"code\"><code>Mintable</code></pre> extension."
                     }
                 },
                 "pausable": {
@@ -366,29 +366,29 @@
                 },
                 "uriStorage": {
                     "title": "URI Storage",
-                    "copy_1": "The <pre class=\"code\"><code>URI storage</code></pre> extension allows setting a URI pointing to off-chain storage for each NFT. This off-chain data, also known as <a href=\"#metadata\" class=\"link\">metadata</a>, can add many extra attributes to the tokens to make them richer. If selected, a URI pointing to the metadata is needed when minting a new NFT (although this won't be necessary when interacting via Smart NFTs).",
+                    "copy_1": "The <pre class=\"code\"><code>URI storage</code></pre> extension allows setting a URI pointing to off-chain storage for each NFT. This off-chain data, also known as <a href=\"#metadata\" class=\"link\">metadata</a>, can add many extra attributes to the tokens to make them richer. If selected, a URI pointing to the metadata is needed when minting a new NFT, although this won't be necessary when interacting via Smart NFTs since we take care of the uploading the metadata to an IPFS and setting the correct URI on the token.",
                     "uniqueStorage": {
                         "title": "Unique Storage",
-                        "copy_1": "The <pre class=\"code\"><code>unique storage</code></pre> extension prevents token duplicated from being created. By duplicates, we mean tokens with the same metadata. Metadata gets hashed before minting the NFT to compare it and find copies. Note that it increases the cost of creating an NFT."
+                        "copy_1": "The <pre class=\"code\"><code>unique storage</code></pre> extension prevents duplicate tokens from being created. By duplicates, we mean tokens with the same metadata. Metadata gets hashed before minting the NFT to check if the hash has already been minted. Note that it increases the cost of minting an NFT since it requires more storage space to save the hashes."
                     }
                 }
             },
             "metadata": {
                 "title": "Metadata",
-                "copy_1": "Metadata refers to all other properties that one can add to the token. The <pre class=\"code\"><code>name</code></pre> and <pre class=\"code\"><code>description</code></pre> properties are always required, but any attribute can be added, including images and other files.",
+                "copy_1": "Metadata refers to all other properties that one can add to the token. The <pre class=\"code\"><code>name</code></pre> and <pre class=\"code\"><code>description</code></pre> properties are always required and are set by default to the metadata schema. Any other attribute can be added. Make sure to select 'Has Image' if you want to include an image or file to the metadata.",
                 "copy_2": "Metadata is stored off-chain because it's expensive to keep it in the chain. That's where the <a class=\"link\" href=\"https://ipfs.io/\" target=\"_blank\" rel=\"noopener noreferer\">InterPlanetary File System</a> (IPFS) comes into play. IPFS is a protocol and a peer-to-peer network for storing and sharing information in a distributed filesystem, basically where we save our metadata. We only keep the link to the metadata in the blockchain, thus reducing the footprint of the contract. Given this, metadata is only allowed when activating the URI Storage extension, indicating the URIs will be stored. You can update the metadata schema after deploying the contract, and we'll still follow the latest schema you choose.",
                 "copy_3": "Extra attributes can be of four types. \"<em>String</em>\" is just plain text (e.g., a color), while \"<em>Number</em>\" can come in 3 different formats. \"<em>Boost Number</em>\" is a number displayed as a booster (e.g., height). \"<em>Boost Percentage</em>\" is a percentage also shown as a booster (e.g., strength). \"<em>Plain Number</em>\" is just a number (e.g., generation).",
-                "copy_4": "You can define the schema that each NFT's metadata will have. Metadata values are filled in when creating a token."
+                "copy_4": "You can define the schema that each NFT's metadata will have. When minting tokens, values for each attribute will need to be filled for token creation to succeed."
             },
             "deploy": {
                 "title": "Deploy",
-                "copy_1": "When you deploy your contract, you are publishing it to the world. Deployments happen in a testnet (a blockchain made for testing), specifically <a class=\"link\" href=\"https://www.rinkeby.io/#stats\" target=\"_blank\" rel=\"noopener noreferer\">Rinkeby</a> or <a class=\"link\" href=\"https://ropsten.etherscan.io/\" target=\"_blank\" rel=\"noopener noreferer\">Ropsten</a> in our case (it will almost always deploy to Rinkeby). Using the deployment address (how to find your smart contract in the blockchain), you can see more information on sites like <a class=\"link\" href=\"https://rinkeby.etherscan.io/\" target=\"_blank\" rel=\"noopener noreferer\">Etherscan</a>.",
-                "copy_2": "All contracts deploy using the Smart NFTs address so that you can fully interact with it. If you want to, you can also transfer ownership to your address, but we won't be capable of interacting with it.",
-                "copy_3": "Updating a deployed smart contract is hard, but we let you deploy multiple times. The only catch is that you'll lose the previous contract we stored. If you still want to access the previous version, we recommend transferring ownership of the old version before deploying a new one."
+                "copy_1": "When you deploy your contract, you are publishing it to the world. Deployments through Smart NFTs will happen in a testnet (a blockchain made for testing), specifically <a class=\"link\" href=\"https://www.rinkeby.io/#stats\" target=\"_blank\" rel=\"noopener noreferer\">Rinkeby</a> or <a class=\"link\" href=\"https://ropsten.etherscan.io/\" target=\"_blank\" rel=\"noopener noreferer\">Ropsten</a>. Smart NFTs will always deploy to Rinkeby, with Ropsten as a second option in case of an error. Using the deployment address, which allows you to find your smart contract in the blockchain, you can see more information on sites like <a class=\"link\" href=\"https://rinkeby.etherscan.io/\" target=\"_blank\" rel=\"noopener noreferer\">Etherscan</a>.",
+                "copy_2": "All contracts deploy using the Smart NFTs address so that you can fully interact with it. If you want to, you can also transfer ownership to your address, but we won't be capable of interacting with it anymore.",
+                "copy_3": "Updating a deployed smart contract is not possible, so intead we let you deploy multiple times. By doing so, Smart NFTs will no longer be able to provide interaction with the previous contract, only the last one to be deployed. If you still want to have access to the previous version by your own means, remember to transfer ownership of it to your personal wallet before deploying a new one."
             },
             "verify": {
                 "title": "Verify",
-                "copy": "Verifying the contract is used for transparency; you match the compiled contract code with the code itself of the contract. It will allow everyone to see the code you uploaded and interact from sites like <a class=\"link\" href=\"https://rinkeby.etherscan.io/\" target=\"_blank\" rel=\"noopener noreferer\">Etherscan</a>. It's not required in our case to verify the contract before interacting with it, but we offer the option anyways."
+                "copy": "Verifying the contract is used for transparency; you match the compiled contract code with the actual code of the contract. If the bytecodes match, then the contract will be verified. This will allow everyone to see the code you uploaded and interact with it from sites like <a class=\"link\" href=\"https://rinkeby.etherscan.io/\" target=\"_blank\" rel=\"noopener noreferer\">Etherscan</a>. It's not required to verify the contract before interacting with it, yet it is a good practice since it allows external parties to view the validity of the contract."
             }
         },
         "prepare": "Preparing the editor, hang tight...",
@@ -465,7 +465,7 @@
         },
         "importantNote": {
             "title": "Important Note",
-            "content": "If you execute the <pre class=\"code\"><code>transferOwnership</code></pre> or <pre class=\"code\"><code>renounceOwnership</code></pre> methods, you will be effectively removing us (the Smart NFTs team) as the owners of your contract, which means that multiple methods will stop working. Be mindful of this action, otherwise you will have to transfer ownership back to us or deploy a new version of this contract."
+            "content": "If you execute the <pre class=\"code\"><code>transferOwnership</code></pre> or <pre class=\"code\"><code>renounceOwnership</code></pre> methods, you will be effectively removing us (the Smart NFTs team) as the owners of your contract, which means that multiple methods' invocations will stop working through this page. This is useful when you wish to interact with the contract through your personal wallet. Should you want to use Smart NFTs again to interact, you will have to transfer ownership back to us or deploy a new version of this contract."
         },
         "methods": {
             "fields": {
@@ -497,13 +497,13 @@
                 "write": {
                     "title": "Write Methods",
                     "anchor": "write-methods",
-                    "text": "\"Write\" methods require a gas fee when executing them because changes to blockchain data happen. The price of gas changes constantly, so there are <a class=\"underline hover:text-brand_secondary duration-300\" href=\"https://etherscan.io/gastracker\" target=\"_blank\" rel=\"noopener noreferer\">tools</a> for tracking the price."
+                    "text": "\"Write\" methods require a gas fee when executing them since changes to blockchain data occurs. The price of gas changes constantly, so there are <a class=\"underline hover:text-brand_secondary duration-300\" href=\"https://etherscan.io/gastracker\" target=\"_blank\" rel=\"noopener noreferer\">tools</a> for tracking the price."
                 }
             },
             "methods": {
                 "safeMint": {
-                    "content_1": "The <pre class=\"code\"><code>safeMint</code></pre> function safely mints tokens. It receives a <pre class=\"code\"><code>to</code></pre> address to send the newly created NFT and a <pre class=\"code\"><code>tokenId</code></pre>. The token ID is not necessary if autoincrement IDs are active.",
-                    "content_2": "Before calling this method, if metadata is stored, the values for metadata properties need to be defined."
+                    "content_1": "The <pre class=\"code\"><code>safeMint</code></pre> function safely mints tokens. It receives a <pre class=\"code\"><code>to</code></pre> address to send the newly created NFT and a <pre class=\"code\"><code>tokenId</code></pre>. Token ID is a way to identify your token and must never repeat itself in a contract. The token ID is not necessary if Autoincrement IDs extension is active.",
+                    "content_2": "Before calling this method, if a metadata schema was specified during creation, the values for metadata properties need to be defined."
                 },
                 "balanceOf": {
                     "content_1": "Returns the number of tokens the <pre class=\"code\"><code>owner</code></pre> address holds."
@@ -515,13 +515,13 @@
                     "content_1": "Tells whether an <pre class=\"code\"><code>operator</code></pre> is approved to transfer <pre class=\"code\"><code>owner</code></pre> tokens on their behalf."
                 },
                 "name": {
-                    "content_1": "Gets the token <pre class=\"code\"><code>name</code></pre>."
+                    "content_1": "Gets the <pre class=\"code\"><code>name</code></pre> of the deployed contract."
                 },
                 "owner": {
                     "content_1": "Returns the address of the current contract owner, which is the only one authorized to call most of the methods. In this case, the Smart NFTs address is the owner unless ownership is renounced or transferred."
                 },
                 "ownerOf": {
-                    "content_1": "Returns the owner of the token specified by the <pre class=\"code\"><code>tokenId</code></pre>"
+                    "content_1": "Returns the address of the owner of the token specified by the <pre class=\"code\"><code>tokenId</code></pre>."
                 },
                 "paused": {
                     "content_1": "Returns <pre class=\"code\"><code>true</code></pre> if the contract is paused and <pre class=\"code\"><code>false</code></pre> otherwise."
@@ -531,7 +531,7 @@
                     "content_2": "For example, all the Smart NFTs contracts implement the <pre class=\"code\"><code>IERC721</code></pre> interface, with the following interface ID: <pre class=\"code\"><code>0x80ac58cd</code></pre>."
                 },
                 "symbol": {
-                    "content_1": "Gets the token <pre class=\"code\"><code>symbol</code></pre>."
+                    "content_1": "Gets the contract's token <pre class=\"code\"><code>symbol</code></pre>."
                 },
                 "tokenByIndex": {
                     "content_1": "It recovers the token ID at a given <pre class=\"code\"><code>index</code></pre> in the list of all tokens in the contract."
@@ -540,7 +540,7 @@
                     "content_1": "It recovers the token ID at a given <pre class=\"code\"><code>index</code></pre> of the list of tokens owned by the <pre class=\"code\"><code>owner</code></pre>."
                 },
                 "tokenURI": {
-                    "content_1": "It returns the URI given a <pre class=\"code\"><code>tokenId</code></pre>; it may be empty if no URI is stored."
+                    "content_1": "Returns the URI, which points to the token metadata, given a <pre class=\"code\"><code>tokenId</code></pre>; it may be empty if no URI is stored."
                 },
                 "totalSupply": {
                     "content_1": "Gets the total amount of tokens stored in the contract."
