@@ -19,7 +19,7 @@
         "made": "Made by",
         "madeContinued": "This is a capstone project for our Software Engineering degrees. The goal is to make NFT creation easy and accessible to everyone, centralizing all the necessary technology through a friendly UI.",
         "location": {
-            "text": "Proyecto Final - Instituto Tecnológico de Buenos Aires (ITBA)",
+            "text": "Capstone Project - Instituto Tecnológico de Buenos Aires (ITBA)",
             "aria": "Learn more about the Instituto Tecnológico de Buenos Aires (ITBA)"
         },
         "contact": {
@@ -76,15 +76,19 @@
             },
             "content": {
                 "create": {
+                    "title": "Create",
                     "text": "Use our simple editor to create your custom NFT in just seconds! Choose among multiple extensions and define your metadata according to industry standards in just a few clicks. Create, deploy, and verify your very own custom ERC-721 contract. Don't know how to code? Don't worry! For starters, this is a zero-code environment, and everything has explanations. Don't want to deploy it with us? We've got you covered. Create the contract and download it for further customizations or deployment."
                 },
                 "edit": {
+                    "title": "Edit",
                     "text": "Already have an existing contract you created with us? Use this option to continue working on it. Our contracts can be edited, deployed, and verified an infinite number of times. Be mindful that any change done on the contract after deployment, excluding the metadata fields, will require the contract to be deployed again. To start, enter your contract's id below and click Go Edit."
                 },
                 "interact": {
+                    "title": "Interact",
                     "text": "After deploying your contract to the blockchain, you can interact with it. Enter your contract's ID and begin minting tokens, reading contract data and writing to the contract itself. Everything is in real-time and without costly gas fees. Interaction will be done through SmartNFTs' wallet, meaning this wallet will be the contract owner. You can transfer ownership of the contract to yourself at any time to make it your own."
                 },
                 "view": {
+                    "title": "View",
                     "text": "After minting NFTs, you can view them by entering your contract's ID and clicking 'Go View'. You will be able to view the token's relevant information and it's metadata, which can include the image, name, description, and attributes you defined. We will provide a variety of links for you to view your raw metadata as JSON and to view your tokens through popular sites, such as OpenSea and Etherscan. You can use these sites to share your tokens with the world!"
                 }
             }
@@ -123,15 +127,15 @@
             "buttons": {
                 "status": {
                     "text": "Status",
-                    "aria": "Start using Smart NFTs now"
+                    "aria": "Status of the Smart NFTs service"
                 },
                 "howItWorks": {
                     "text": "How It Works",
-                    "aria": "Start using Smart NFTs now"
+                    "aria": "Learn more about how this project works"
                 },
                 "technologies": {
                     "text": "Technologies",
-                    "aria": "Start using Smart NFTs now"
+                    "aria": "Learn more about the technologies powering this project"
                 },
                 "erc721": {
                     "text": "ERC-721",
@@ -202,7 +206,7 @@
         },
         "erc721": {
             "title": "What is a ERC-721 Smart Contract?",
-            "text": "A smart contract is a program that runs on the Ethereum blockchain. It's a collection of code (its functions) and data (its state) that resides at a specific address on the Ethereum blockchain. Specifically, ERC721 is a smart contract standard for representing ownership of non-fungible tokens, or NFTs, meaning each token is unique. An example of these tokens are the famous CryptoKitties, where each cat is one-of-a-kind and 100% owned by 1 person."
+            "text": "A smart contract is a program that runs on the Ethereum blockchain. It's a collection of code (its functions) and data (its state) that resides at a specific address on the Ethereum blockchain. Specifically, ERC-721 is a smart contract standard for representing ownership of non-fungible tokens, or NFTs, meaning each token is unique. An example of these tokens are the famous CryptoKitties, where each cat is one-of-a-kind and 100% owned by 1 person."
         },
         "technologies": {
             "title": "Technologies",
@@ -303,7 +307,7 @@
             "aria": "Download this contract"
         },
         "copyCode": {
-            "error": "Error downloading the contract, please try again later.",
+            "error": "Error copying the contract, please try again later.",
             "aria": "Copy this contract"
         },
         "email": {
@@ -343,7 +347,7 @@
                     "copy_1": "The <pre class=\"code\"><code>mintable</code></pre> extension allows the owner of the contract to emit new NFTs. These tokens are simple, just a user-defined ID, and get automatically transferred to the specified address during creation. If you combine this extension with <pre class=\"code\"><code>URI Storage</code></pre>, the NFTs can have metadata, making them more valuable.",
                     "autoincrementIds": {
                         "title": "Auto Increment IDs",
-                        "copy_1": "The <pre class=\"code\"><code>autoincrement IDs</code></pre> extension automatically assigns incrementing IDs to the tokens, removing the <pre class=\"code\"><code>tokenId</code></pre> parameter from the minting. This extensions requires the <pre class=\"code\"><code>Mintable</code></pre> extension."
+                        "copy_1": "The <pre class=\"code\"><code>Auto Increment IDs</code></pre> extension automatically assigns incrementing IDs to the tokens, removing the <pre class=\"code\"><code>tokenId</code></pre> parameter from the minting. This extensions requires the <pre class=\"code\"><code>Mintable</code></pre> extension."
                     }
                 },
                 "pausable": {
@@ -530,7 +534,7 @@
                     "content_1": "Returns <pre class=\"code\"><code>true</code></pre> if the contract is paused and <pre class=\"code\"><code>false</code></pre> otherwise."
                 },
                 "supportsInterface": {
-                    "content_1": "Returns <pre class=\"code\"><code>true</code></pre> if this contract implements the specified interface given the <pre class=\"code\"><code>interfaceId</code></pre> or false otherwise. Contracts can implement interfaces to inherit behavior from top-level contracts.",
+                    "content_1": "Returns <pre class=\"code\"><code>true</code></pre> if this contract implements the specified interface given the <pre class=\"code\"><code>interfaceId</code></pre> or <pre class=\"code\"><code>false</code></pre> otherwise. Contracts can implement interfaces to inherit behavior from top-level contracts.",
                     "content_2": "For example, all the Smart NFTs contracts implement the <pre class=\"code\"><code>IERC721</code></pre> interface, with the following interface ID: <pre class=\"code\"><code>0x80ac58cd</code></pre>."
                 },
                 "symbol": {
@@ -623,7 +627,10 @@
             "long_string": "Long text - Write your long text here",
             "contractId": "Contract ID...",
             "contractName": "SmartNFTs...",
-            "contractSymbol": "SNFT..."
+            "contractSymbol": "SNFT...",
+            "metadata": {
+                "name": "Field name..."
+            }
         },
         "text": {
             "boost_number": "Boost Number",
@@ -656,7 +663,16 @@
             "metadata": {
                 "name": "Field Name",
                 "type": "Field Type",
-                "display": "Display Type"
+                "display": "Display Type",
+                "typeOptions": {
+                    "string": "Text",
+                    "number": "Number"
+                },
+                "displayOptions": {
+                    "boost_number": "Boost Number",
+                    "boost_percentage": "Boost Percentage",
+                    "number": "Plain Number"
+                }
             }
         },
         "errors": {
@@ -723,6 +739,7 @@
     },
     "pagination": {
         "results": "Showing {0} to {1} of {2} results",
+        "resultsSingle": "Showing 1 results",
         "aria": {
             "prev": "Go to previous page",
             "next": "Go to next page",
@@ -753,7 +770,7 @@
     "500": {
         "hero": {
             "title": "500 - Internal Error",
-            "subtitle": "There was an internal error, check the backend status in case our services are down, otherwise please go back home and start over",
+            "subtitle": "There was an internal error, check the backend status in case our services are down, otherwise please go back home and start over.",
             "buttonHome": {
                 "text": "Go back home",
                 "aria": "Go back to the homepage"

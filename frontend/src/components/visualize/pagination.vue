@@ -35,13 +35,14 @@
         </div>
         <div class="mt-xs text-sm">
             ({{
+                props.pagination.totalCount !== 1 ?
                 $t('pagination.results', [
                     (props.pagination.page - 1) * props.pagination.perPage + 1,
                     props.pagination.page * props.pagination.perPage > props.pagination.totalCount
                         ? props.pagination.totalCount
                         : props.pagination.page * props.pagination.perPage,
                     props.pagination.totalCount
-                ])
+                ]) : $t('pagination.resultsSingle')
             }})
         </div>
     </div>

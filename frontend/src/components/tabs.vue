@@ -5,7 +5,7 @@
         </template>
         <TabGroup @change="changedTab" :defaultIndex="customDefaultIndex" :key="customDefaultIndex">
             <TabList class="flex p-1 space-x-1 bg-brand_primary rounded-lg max-w-md mb-sm absolute top-0 left-0 w-full">
-                <Tab v-for="tab in props.tabs" as="template" :key="tab" v-slot="{ selected }">
+                <Tab v-for="(tab, index) in props.tabs" as="template" :key="tab" v-slot="{ selected }">
                     <button
                         :class="[
                             'w-full py-xs px-sm text-sm sm:text-base md:text-h5 leading-1 font-medium text-black rounded-md',
@@ -13,7 +13,7 @@
                             selected ? 'bg-brand_tertiary shadow' : 'text-brand_secondary hover:bg-brand_tertiary/20 hover:text-brand_secondary'
                         ]"
                     >
-                        {{ tab }}
+                        {{ props.tabTitles[index] }}
                     </button>
                 </Tab>
             </TabList>
@@ -34,6 +34,10 @@ import vHiddenAnchor from '@/components/hiddenAnchor.vue';
 
 const props = defineProps({
     tabs: {
+        type: Array,
+        default: []
+    },
+    tabTitles: {
         type: Array,
         default: []
     }

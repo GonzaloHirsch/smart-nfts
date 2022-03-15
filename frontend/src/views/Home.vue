@@ -24,7 +24,7 @@
 
     <v-section id="features" class="bg-typography_primary">
         <h2 class="mb-base text-brand_secondary">{{ $t('home.tabs.title') }}</h2>
-        <v-tabs :tabs="['Create', 'Edit', 'Interact', 'View']">
+        <v-tabs :tabs="['Create', 'Edit', 'Interact', 'View']" :tabTitles="[$t('home.tabs.content.create.title'), $t('home.tabs.content.edit.title'), $t('home.tabs.content.interact.title'), $t('home.tabs.content.view.title')]">
             <template #Create>
                 <v-feature-content>
                     <template #content>

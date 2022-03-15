@@ -10,7 +10,7 @@
             :name="`name-${props.id}`"
             :id="`name-${props.id}`"
             format="primary-white"
-            placeholder="Field name..."
+            :placeholder="$t('inputs.placeholder.metadata.name')"
             :validations="['required', 'metadataName', 'max20']"
             :hideLabel="true"
             :hideError="true"
@@ -67,6 +67,9 @@ import { XCircleIcon, ExclamationIcon } from '@heroicons/vue/solid';
 import { ref, watch } from 'vue';
 import { applyValidations, sumarizeValidationResults } from '@/js/validations.js';
 
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
+
 const emit = defineEmits(['update:name', 'update:type', 'update:display', 'removeField']);
 const props = defineProps({
     name: {
@@ -103,26 +106,26 @@ const metadataField = ref({
 const typeOptions = [
     {
         value: 'string',
-        text: 'String'
+        text: t('inputs.text.metadata.typeOptions.string')
     },
     {
         value: 'number',
-        text: 'Number'
+        text: t('inputs.text.metadata.typeOptions.number')
     }
 ];
 
 const displayOptions = [
     {
         value: 'boost_number',
-        text: 'Boost Number'
+        text: t('inputs.text.metadata.displayOptions.boost_number')
     },
     {
         value: 'boost_percentage',
-        text: 'Boost Percentage'
+        text: t('inputs.text.metadata.displayOptions.boost_percentage')
     },
     {
         value: 'number',
-        text: 'Plain Number'
+        text: t('inputs.text.metadata.displayOptions.number')
     }
 ];
 

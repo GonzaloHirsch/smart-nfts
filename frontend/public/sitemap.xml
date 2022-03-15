@@ -4,9 +4,6 @@
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
-
-
 <url>
   <loc>https://smart-nfts.gonzalohirsch.com/</loc>
   <lastmod>2022-01-24T22:49:23+00:00</lastmod>
@@ -16,7 +13,15 @@
   <lastmod>2022-01-24T22:49:23+00:00</lastmod>
 </url>
 <url>
-  <loc>https://smart-nfts.gonzalohirsch.com/existing/</loc>
+  <loc>https://smart-nfts.gonzalohirsch.com/about/</loc>
+  <lastmod>2022-01-24T22:49:23+00:00</lastmod>
+</url>
+<url>
+  <loc>https://smart-nfts.gonzalohirsch.com/tokens/</loc>
+  <lastmod>2022-01-24T22:49:23+00:00</lastmod>
+</url>
+<url>
+  <loc>https://smart-nfts.gonzalohirsch.com/interact/</loc>
   <lastmod>2022-01-24T22:49:23+00:00</lastmod>
 </url>
 

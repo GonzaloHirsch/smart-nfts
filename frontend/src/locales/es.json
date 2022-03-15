@@ -2,36 +2,808 @@
     "app": {
         "name": "Smart NFTs"
     },
-    "create": {
-        "hero": {
-            "title": "Crear un NFT",
-            "subtitle": "Crear un <strong>nuevo NFT</strong> o continuar la creación de un <strong>contrato existente</strong>"
-        }
+    "aria": {
+        "anchorLinks": "Link a {0}",
+        "imageUploadRemove": "Remover la imagen seleccionada",
+        "copyContract": "Copiar este contrato",
+        "exploreTransactionHash": "Ver esta transacción en Etherscan",
+        "removeEntry": "Sacar este campo de metadata"
+    },
+    "placeholders": {
+        "contractId": "ID del contrato..."
+    },
+    "labels": {
+        "contractId": "ID del contrato"
     },
     "footer": {
         "made": "Hecho por",
-        "location": "Proyecto Final - Instituto Tecnológico de Buenos Aires (ITBA)"
+        "madeContinued": "Este es un proyecto final para nuestros títulos de Ingeniería de Software. El objetivo es hacer que la creación de NFTs sea fácil y accesible para todos, centralizando toda la tecnología necesaria a través de una interfaz de usuario amigable.",
+        "location": {
+            "text": "Proyecto Final - Instituto Tecnológico de Buenos Aires (ITBA)",
+            "aria": "Conocer más sobre el Instituto Tecnológico de Buenos Aires (ITBA)"
+        },
+        "contact": {
+            "aria": "Contactar a {0} con un email"
+        },
+        "status": {
+            "text": "Estado del Servicio",
+            "aria": "Ver el estado del servicio"
+        },
+        "learnMore": {
+            "aria": "Aprender más sobre {0}"
+        },
+        "app": {
+            "aria": "Ir a la página principal"
+        },
+        "copyright": "© 2022 Smart NFTs"
     },
     "home": {
         "title": "Página Principal",
+        "meta": {
+            "title": "Página Principal",
+            "description": "Smart NFTs, creá, implementá, probá y visualizá un contrato NFT personalizado en solo minutos. Creá tokens y compártelos con el mundo. Un proyecto de Florencia Petrikovich y Gonzalo Hirsch."
+        },
         "hero": {
-            "subtitle": "Crear tu <strong>NFT personalizado</strong> en simplemente <strong>minutos</strong>"
+            "title": "Creá, publicá e interactuá con tu contrato <strong>NFT personalizado</strong> en solo <strong>minutos</strong>",
+            "button": {
+                "text": "Empezar",
+                "aria": "Empezá a usar Smart NFTs ahora"
+            },
+            "learnMore": {
+                "text": "Leer más",
+                "aria": "Leer más sobre las posibles opciones que ofrecemos"
+            }
+        },
+        "tabs": {
+            "title": "Nuestras funcionalidades",
+            "buttons": {
+                "create": {
+                    "text": "Crear",
+                    "aria": "Crear un nuevo contrato"
+                },
+                "edit": {
+                    "text": "Editar",
+                    "aria": "Editar un contrato existente"
+                },
+                "interact": {
+                    "text": "Interactuar",
+                    "aria": "Interactuar con un contrato publicado"
+                },
+                "view": {
+                    "text": "Visualizar",
+                    "aria": "Visualizar los NFTs creados"
+                }
+            },
+            "content": {
+                "create": {
+                    "title": "Crear",
+                    "text": "¡Usá nuestro editor simple para crear tu NFT personalizado en solo segundos! Elegí entre múltiples extensiones y definí tu metadata de acuerdo con los estándares de la industria con solo unos pocos clicks. Creá, publicá y verificá tu propio contrato ERC-721 personalizado. ¿No sabes programar? ¡No te preocupes! Para empezar, este es un entorno sin código y todo tiene una explicación. ¿No quieres implementarlo con nosotros? ¡No hay problema!. Creá el contrato y descargalo para personalizarlo más."
+                },
+                "edit": {
+                    "title": "Editar",
+                    "text": "¿Ya tenés un contrato existente creado con nosotros? Usá esta opción para continuar trabajando en él. Nuestros contratos se pueden editar, publicar y verificar un número infinito de veces. Tené en cuenta que cualquier cambio que hagas en el contrato después de publicarlo, excluyendo los campos de metadata, requerirá que el contrato se publique nuevamente. Para comenzar, ingresá el ID de tu contrato a continuación y haga click en \"Editar\"."
+                },
+                "interact": {
+                    "title": "Interactuar",
+                    "text": "Después de publicar tu contrato en la Blockchain, podés interactuar con él. Ingresá el ID de tu contrato y comenzá a crear tokens, leer los datos del contrato y escribir en el contrato mismo. Todo es en tiempo real y sin pagar por el gas. La interacción se realiza a través de la billetera de SmartNFTs, lo que significa que nosotros seremos los propietarios del contrato. Sin embargo, podés transferir la propiedad del contrato a vos mismo en cualquier momento para hacerlo tuyo."
+                },
+                "view": {
+                    "title": "Ver",
+                    "text": "Después de crear NFTs, podés verlos ingresando el ID de tu contrato y haciendo click en \"Visualizar\". Podrás ver la información relevante del token y su metadata, que puede incluir la imagen, el nombre, la descripción y los atributos que se definieron. Te vamos a dar una variedad de links para que veas la metadata sin procesar como JSON y para ver tus tokens a través de páginas populares, como OpenSea y Etherscan. ¡Podés usar estas páginas para compartir tus tokens con el mundo!"
+                }
+            }
+        },
+        "facts": {
+            "wallet": {
+                "title": "Sin wallet",
+                "description": "¡No se necesita configuración para crear o interactuar con los contratos!"
+            },
+            "gas": {
+                "title": "Sin gas",
+                "description": "¡No se requiere Ethereum ni gas por adelantado para usar esta aplicación!"
+            },
+            "coding": {
+                "title": "Sin programación",
+                "description": "¡No se requiere programar para crear el contrato o generar NFTs!"
+            }
+        },
+        "verticalFacts": {
+            "step": {
+                "title": "Explicaciones paso a paso",
+                "description": "Cada opción tiene explicaciones detalladas que ayudan a comprender qué funcionalidad agregará cada extensión al contrato si se incluye."
+            },
+            "simple": {
+                "title": "Simple y rápido",
+                "description": "En menos de 5 minutos, podés publicar, verificar y preparar tu contrato ERC-721 personalizado para comenzar a generar tokens con metadata personalizada."
+            },
+            "centralized": {
+                "title": "Todo en un lugar",
+                "description": "¡Podés encontrar todo lo que vas a necesitar acá! Creación, publicación, verificación, adición de metadata, interacción con contratos y tu propia galería de NFTs."
+            }
+        },
+        "cta": {
+            "title": "Ver más sobre este proyecto",
+            "text": "Obtené información sobre los contratos ERC-721, explorá las tecnologías y servicios detrás de Smart NFTs, cómo interactúa la API de Smart NFTs con dichos servicios y verifique el estado del servicio de Smart NFTs para obtener información sobre el estado actual de la aplicación.",
+            "buttons": {
+                "status": {
+                    "text": "Estado",
+                    "aria": "Estado del servicio de Smart NFTs"
+                },
+                "howItWorks": {
+                    "text": "Como funciona",
+                    "aria": "Aprender más sobre como funciona este proyecto"
+                },
+                "technologies": {
+                    "text": "Tecnologías",
+                    "aria": "Aprender más sobre las tecnologías detrás de este proyecto"
+                },
+                "erc721": {
+                    "text": "ERC-721",
+                    "aria": "Aprender más sobre contratos ERC-721"
+                }
+            }
         }
     },
     "nav": {
-        "create": "Crear",
-        "interact": "Interactuar"
+        "create": {
+            "text": "Crear",
+            "aria": "Empezar a crear"
+        },
+        "interact": {
+            "text": "Interactuar",
+            "aria": "Ir a interactuar"
+        },
+        "edit": {
+            "text": "Editar",
+            "aria": "Ir a editar"
+        },
+        "list": {
+            "text": "Ver",
+            "aria": "Ir a visualizar"
+        },
+        "about": {
+            "text": "Nosotros",
+            "aria": "Ir a nosotros"
+        },
+        "status": {
+            "text": "Estado",
+            "aria": "Ver el estado del servicio"
+        },
+        "howItWorks": {
+            "text": "Como funciona",
+            "aria": "Ir a la página sobre como funciona"
+        },
+        "technologies": {
+            "text": "Tecnologías",
+            "aria": "Ver que tecnologías usa esta página"
+        },
+        "erc721": {
+            "text": "ERC-721",
+            "aria": "Ver más sobre que son los contratos ERC-721"
+        },
+        "app": {
+            "aria": "Ir a la página principal"
+        },
+        "menu": {
+            "open": {
+                "aria": "Abrir el menu"
+            },
+            "close": {
+                "aria": "Cerrar el menu"
+            }
+        },
+        "features": "Funcionalidades",
+        "contact": "Contacto"
+    },
+    "about": {
+        "hero": {
+            "title": "Detrás de escena",
+            "button": {
+                "text": "Leer más",
+                "aria": "Aprender más sobre SmartNFTs"
+            },
+            "subtitle": "Seguí leyendo para saber qué es un contrato ERC-721, qué tecnologías se utilizan en nuestros procesos y cómo interactúa la API de Smart NFTs con servicios externos."
+        },
+        "erc721": {
+            "title": "¿Qué es un ERC-721 Smart Contract?",
+            "text": "Un Smart Contract es un programa que se ejecuta en la Blockchain de Ethereum. Es una colección de código (sus funciones) y datos (su estado) que reside en una dirección específica en la Blockchain de Ethereum. Específicamente, ERC-721 es un estándar de Smart Contract para representar la propiedad de tokens no fungibles o NFT, lo que significa que cada token es único. Un ejemplo de estos tokens son los famosos CryptoKitties, donde cada gato es único y 100% propiedad de 1 persona."
+        },
+        "technologies": {
+            "title": "Tecnologías",
+            "facts": {
+                "openzeppelin": {
+                    "title": "Contrato",
+                    "description": "Contratos programados dinámicamente en Solidity, compilados utilizando los enlaces de Javascript para el compilador de Solidity y con la tecnología de los contratos estándar de OpenZepellin."
+                },
+                "pinata": {
+                    "title": "Almacenamiento",
+                    "description": "El almacenamiento en la Blockchain es costoso; usamos Pinata en su lugar para el almacenamiento. Se necesita un IPFS, o sInterPlanetary File System, para almacenar grandes cantidades de datos fuera de la cadena."
+                },
+                "infura": {
+                    "title": "Conexión",
+                    "description": "Las conexiones dedicadas a la Blockchain son difíciles de construir, pero Infura nos ayuda a tener un punto de entrada para la interacción sin tener la infraestructura."
+                }
+            }
+        },
+        "howItWorks": {
+            "title": "Diagrama ilustrativo",
+            "process": {
+                "A": {
+                    "description": "La API se conecta al nodo Ethereum de Infura. Usando Web3.js, interactúa con dicho nodo."
+                },
+                "B": {
+                    "description": "La API almacena la metadata de los tokens, incluidas imágenes y JSON, en un IPFS llamado Pinata. La metadata es pública y visible para todos."
+                },
+                "C": {
+                    "description": "La comunicación con la Blockchain de Ethereum se produce a través de un nodo proporcionado por Infura."
+                }
+            }
+        },
+        "meta": {
+            "title": "Nosotros",
+            "description": "Obtené más información sobre cómo funciona Smart NFTs y las tecnologías detrás del producto. Comprendé qué es un contrato ERC-721 antes de crearlos."
+        }
+    },
+    "editor": {
+        "contract": {
+            "empty": "Empezá completando el nombre y símbolo del contrato...",
+            "id": "El ID de tu contrato es:",
+            "idCopy": "Copiar el ID de tu contrato",
+            "idFull": "El ID de tu contrato es {0}",
+            "idSimple": "ID del contrato",
+            "deployCopy": "Copiar la dirección del contrato publicado",
+            "deploy": "Tu contrato está publicado en la dirección:",
+            "deploySimple": "Publicado en",
+            "verified": "¡Tu contrato está verificado!",
+            "view": "Ver en Etherscan",
+            "interact": "Interactuá con este contrato",
+            "information": "Información del Contrato",
+            "features": "Funcionalidad",
+            "creation": "Creación",
+            "metadata": "Metadata",
+            "hasImage": "¿Tiene imagen?",
+            "reminder": "Enviar un recordatorio del ID del contrato"
+        },
+        "error": {
+            "nameUsed": "Nombre de la propiedad ya en uso"
+        },
+        "buttons": {
+            "deploy": {
+                "text": "Publicar",
+                "aria": "Publicar el contrato"
+            },
+            "verify": {
+                "text": "Verificar",
+                "aria": "Verificar el contrato"
+            },
+            "expand": {
+                "ariaExpand": "Expandí para más información",
+                "ariaContract": "Ver menos información"
+            },
+            "download": "Descargar"
+        },
+        "deploy": {
+            "title": "Publicar contrato",
+            "loading": {
+                "compile": "Compilando el contrato...",
+                "deploy": "Publicando el contrato..."
+            },
+            "prepare": {
+                "compile": "Compilación del contrato...",
+                "deploy": "Publicación del contrato..."
+            },
+            "message": "Tu contrato está publicado en la dirección <strong class=\"break-all\">{0}</strong>. Podés verlo en la Blockchain (el bloque puede tardar un par de minutos en minarse). Ahora podés verificarlo, pero esperá hasta que el contrato sea visible. Si editas el contrato, tendés que publicarlo nuevamente.",
+            "error": "Error al publicar el contrato. Si la dirección de Smart NFTs no tiene gas, comuníquese con los propietarios del sitio; de lo contrario, el hash de la transacción proporcionará más información si se usa en Etherscan."
+        },
+        "verify": {
+            "title": "Verificar contrato",
+            "loading": "Verificando el contrato, un minuto...",
+            "message": "Tu contrato ahora está verificado. Tené en cuenta que si editas el contrato, tenés publicarlo y verificarlo nuevamente.",
+            "error": "Error al verificar el contrato. Si el contrato se publicó en los últimos 5 minutos, verifique que la transacción se minó en Etherscan e intente nuevamente."
+        },
+        "download": {
+            "message": "¡Contrato descargado!",
+            "error": "Error descargando el contrato, por favor intente luego.",
+            "aria": "Descargar el contrato"
+        },
+        "copyCode": {
+            "error": "Error copiando el contrato, por favor intente luego.",
+            "aria": "Copiar el contrato"
+        },
+        "email": {
+            "title": "Recordatorio de contrato",
+            "loading": "Enviando email, un minuto...",
+            "message": "Deberías recibir un email, puede tardar un par de minutos. Revisa tu carpeta de spam por si acaso.",
+            "inputMessage": "Te vamos a enviar un email de recordatorio con tu ID de contrato. Cuidado con el correo que elegís, podés enviar recordatorios cada 8hs.",
+            "error": "Error al enviar email, excediste la cuota permitida por contrato. La cuota es un recordatorio cada 8 horas.",
+            "button": "Enviar email"
+        },
+        "metadata": {
+            "image": "Imagen",
+            "fields": "Propiedades",
+            "note": "<strong>Nota:</strong> Por defecto, todos los tokens tienen nombre y descripción",
+            "addAttribute": {
+                "text": "Agregar atributo",
+                "aria": "Agregar otro atributo al esquema"
+            },
+            "titles": {
+                "name": "Campo",
+                "type": "Tipo",
+                "display": "Formato"
+            }
+        },
+        "content": {
+            "title": "Campos explicados",
+            "contractInformation": {
+                "title": "Información del contrato",
+                "copy": "Esta sección se refiere a las propiedades de <pre class=\"code\"><code>nombre</code></pre> y <pre class=\"code\"><code>símbolo</code></pre> del Smart Contract. El <pre class=\"code\"><code>nombre</code></pre> hace referencia a la colección en sí (por ejemplo, la colección \"CustomTokens\") y se va a mostrar en la mayoría de los sitios externos cuando se haga referencia al Smart Contract. El <pre class=\"code\"><code>símbolo</code></pre> se refiere a una forma de mostrar la cantidad de tokens en el conjunto (por ejemplo, el símbolo de \"CustomTokens\" puede ser \"CTKN\" y, de esa manera, alguien puede tener 3 CTKN)."
+            },
+            "creation": {
+                "title": "Creación",
+                "copy_1": "Con cada extensión que elegís, agregás más funcionalidad a tu contrato. Algunas extensiones son variaciones de otras, por lo que al seleccionar algunas, agregaremos otras por vos (p. ej., si elegís \"Auto Increment IDs\" se activa \"Mintable\").",
+                "copy_2": "La vista previa del contrato antes y después de agregar una extensión puede ayudarte a comprender los cambios y cómo funciona el código de Solidity.",
+                "mintable": {
+                    "title": "Mintable",
+                    "copy_1": "La extensión <pre class=\"code\"><code>mintable</code></pre> permite al propietario del contrato emitir nuevos NFT. Estos tokens son simples, solo un ID definido por el usuario, y se transfieren automáticamente a la dirección especificada durante la creación. Si se combina esta extensión con <pre class=\"code\"><code>URI Storage</code></pre>, los NFT pueden tener metadata, lo que los hace más valiosos.",
+                    "autoincrementIds": {
+                        "title": "Auto Increment IDs",
+                        "copy_1": "La extensión <pre class=\"code\"><code>Auto Increment IDs</code></pre> asigna automáticamente un ID incremental a los tokens, eliminando el parámetro <pre class=\"code\"><code>tokenId</code></pre> de la creación. Esta extensión requiere la extensión <pre class=\"code\"><code>Mintable</code></pre>."
+                    }
+                },
+                "pausable": {
+                    "title": "Pausable",
+                    "copy_1": "La extensión <pre class=\"code\"><code>pausable</code></pre> autoriza al propietario del contrato a pausar (y reanudar) las transferencias, la creación y el descarte de tokens. Detener el contrato puede ser útil si es necesario evitar transferencias para su evaluación o en un escenario de emergencia donde hay un error."
+                },
+                "burnable": {
+                    "title": "Burnable",
+                    "copy_1": "La extensión <pre class=\"code\"><code>burnable</code></pre> le permite al propietario de un token quemarlo (destruirlo), lo cual es irreversible. La destrucción de tokens puede reducir la oferta de NFT, posiblemente aumentando el precio del activo, pero eso depende del mercado."
+                },
+                "enumerable": {
+                    "title": "Enumerable",
+                    "copy_1": "La extensión <pre class=\"code\"><code>enumerable</code></pre> ayuda a agregar más funciones al contrato NFT. Permite que el contrato publique su lista completa de tokens y los haga reconocibles a expensas de transferencias más costosas. Agrega los siguientes métodos:",
+                    "copy_2": {
+                        "bullet_1": "<pre class=\"code\"><code>totalSupply()</code></pre>: Devuelve la cantidad total de tokens almacenados en el contrato.",
+                        "bullet_2": "<pre class=\"code\"><code>tokenByIndex()</code></pre>: Devuelve <pre class=\"code\"><code>tokenId</code></pre> de un NFT almacenado en el índice proporcionado.",
+                        "bullet_3": "<pre class=\"code\"><code>tokenOfOwnerByIndex()</code></pre>: Devuelve el <pre class=\"code\"><code>tokenId</code></pre> de un NFT almacenado en un índice particular de la lista de tokens del propietario."
+                    },
+                    "limitedSupply": {
+                        "title": "Limited Supply",
+                        "copy_1": "La extensión <pre class=\"code\"><code>limited supply</code></pre> permite limitar la cantidad de tokens que puede crear el contrato. Esta extensión puede generar una colección de NFT de edición limitada. La extensión <pre class=\"code\"><code>enumerable</code></pre> es necesaria para contar los NFT que existen."
+                    }
+                },
+                "uriStorage": {
+                    "title": "URI Storage",
+                    "copy_1": "La extensión <pre class=\"code\"><code>URI storage</code></pre> permite configurar un URI que apunta al almacenamiento fuera de la Blockchain para cada NFT. Estos datos fuera de la cadena, también conocidos como <a href=\"#metadata\" class=\"link\">metadata</a>, pueden agregar muchos atributos adicionales a los tokens para enriquecerlos. Si se elige, se necesita un URI que apunte a la metadata al crear un nuevo NFT, aunque esto no es necesario al interactuar a través de Smart NFTs, ya que nos encargamos de cargar la metadata en un IPFS y establecer el URI correcto en el token.",
+                    "uniqueStorage": {
+                        "title": "Unique Storage",
+                        "copy_1": "La extensión <pre class=\"code\"><code>unique storage</code></pre> evita que se creen tokens duplicados. Por duplicados, nos referimos a tokens con la misma metadata. La metadata se procesa antes de crear el NFT para verificar si el hash ya se utilizó. Tené en cuenta que aumenta el costo de crear un NFT ya que requiere más espacio de almacenamiento para guardar los hashes."
+                    }
+                }
+            },
+            "metadata": {
+                "title": "Metadata",
+                "copy_1": "La metadata se refiere a todas las demás propiedades que se pueden agregar al token. Las propiedades de <pre class=\"code\"><code>nombre</code></pre> y <pre class=\"code\"><code>descripción</code></pre> siempre son obligatorias y se establecen de forma predeterminada en el esquema de metadata. Se puede agregar cualquier otro atributo. Asegurate de seleccionar 'Tiene imagen' si querés incluir una imagen o un archivo en la metadata.",
+                "copy_2": "La metadata se almacena fuera de la Blockchain porque es costoso mantenerla en la Blockchain. Ahí es donde entra en juego el <a class=\"link\" href=\"https://ipfs.io/\" target=\"_blank\" rel=\"noopener noreferer\">InterPlanetary File System</a> (IPFS). IPFS es un protocolo y una red peer-to-peer para almacenar y compartir información en un sistema de archivos distribuido, básicamente donde guardamos nuestra metadata. Solo guardamos el URI a la metadata en la Blockchain, lo que reduce el tamaño del contrato. Dado esto, la metadata solo se permite cuando se activa la extensión URI Storage, lo que indica que se van a almacenar los URI. Podés actualizar el esquema de metadata después de publicar el contrato y vamos a usar el esquema más reciente que elijas.",
+                "copy_3": "Los atributos adicionales pueden ser de cuatro tipos. \"<em>Texto</em>\" es solo texto sin formato (por ejemplo, un color), mientras que \"<em>Número</em>\" puede venir en 3 formatos diferentes. \"<em>Número de aumento</em>\" es un número que se muestra como un aumento (por ejemplo, altura). El \"<em>Porcentaje de aumento</em>\" es un porcentaje que también se muestra como un aumento (por ejemplo, fuerza). \"<em>Número simple</em>\" es solo un número (por ejemplo, generación).",
+                "copy_4": "Podés definir el esquema que tendrá la metadata de cada NFT. Al crear tokens, los valores de cada atributo tendrán que completarse para que la creación del token sea exitosa."
+            },
+            "deploy": {
+                "title": "Publicar",
+                "copy_1": "Cuando publicas tu contrato, lo estás publicando en el mundo. Las publicaciónes a través de Smart NFTs se realizarán en una red de prueba (una Blockchain creada para hacer pruebas), específicamente <a class=\"link\" href=\"https://www.rinkeby.io/#stats\" target=\"_blank\" rel=\"noopener noreferer\">Rinkeby</a> o <a class=\"link\" href=\"https://ropsten.etherscan.io/\" target=\"_blank\" rel=\"noopener noreferer\">Ropsten</a>. Los Smart NFTs siempre se publicarán en Rinkeby, con Ropsten como segunda opción en caso de error. Usando la dirección donde está publicado, que te permite encontrar tu Smart Contract en la Blockchain, podés ver más información en páginas como <a class=\"link\" href=\"https://rinkeby.etherscan.io/\" target=\"_blank\" rel=\"noopener noreferer\">Etherscan</a>.",
+                "copy_2": "Todos los contratos se implementan utilizando la dirección Smart NFTs para que puedas interactuar completamente con él. Si querés, también podés transferir la propiedad a tu dirección, pero ya no podremos interactuar con el contrato.",
+                "copy_3": "No es posible actualizar un Smart Contract publicado, por lo que le permitimos publicarlo varias veces. Al hacerlo, Smart NFTs ya no podrán ofrecer interacción con el contrato anterior, solo con el último que se publicó. Si aún deseas tener acceso a la versión anterior por tus propios medios, acordate de transferir la propiedad a tu billetera personal antes de publicarl la nueva versión."
+            },
+            "verify": {
+                "title": "Verificar",
+                "copy": "Verificar el contrato se utiliza para la transparencia; hace coincidir el código de contrato compilado con el código real del contrato. Si los bytecodes coinciden, se verificará el contrato. Esto permitirá que todos vean el código que cargó e interactúen con él desde páginas como <a class=\"link\" href=\"https://rinkeby.etherscan.io/\" target=\"_blank\" rel=\"noopener noreferer\">Etherscan</a>. No es necesario verificar el contrato antes de interactuar con él, pero es una buena práctica ya que permite que terceros vean la validez del contrato."
+            }
+        },
+        "prepare": "Preparando el editor, un minuto...",
+        "lastSaved": "Último guardado: {0}",
+        "lastSavedSimple": "Último guardado",
+        "saving": "Guardando...",
+        "meta": {
+            "title": "Editor",
+            "description": "Creá o editá tu Smart Contract y definí la metadata que tendrá tu NFT. Publicá, verificá y descargá el Smart Contract de NFTs generado."
+        }
+    },
+    "showcase": {
+        "title": "Tokens",
+        "prepare": "Buscando tokens, un minuto...",
+        "preparePage": "Buscando más tokens, un minuto...",
+        "noTokens": "No se encontraron tokens",
+        "buttons": {
+            "edit": "Editar el contrato",
+            "interact": "Interactuar con el contrato"
+        },
+        "floatingInfo": {
+            "error": "El IPFS devolvió algunos errores, no vas a ver toda la información de tus tokens. Hacé click en los links de OpenSea o Etherscan para ver más sobre cada token.",
+            "info": "Los tokens y su información pueden tardar un poco en cargarse, depende del servicio IPFS, no de nosotros."
+        },
+        "cards": {
+            "noMetadata": "Este token no tiene metadata, hacé click en los íconos que aparecen para explorarlo en servicios externos o ver al dueño del mismo.",
+            "expandCard": "Ver más información sobre este token",
+            "image": {
+                "aria": "Imagen para el {0} token"
+            },
+            "links": {
+                "etherscan": {
+                    "aria": "Ver este token en Etherscan",
+                    "tooltip": "Ver este token en Etherscan"
+                },
+                "opensea": {
+                    "aria": "Ver este token en OpenSea",
+                    "tooltip": "Ver este token en OpenSea"
+                },
+                "owner": {
+                    "aria": "Ver al dueño del token en Etherscan",
+                    "tooltip": "Ver al dueño del token en Etherscan"
+                },
+                "metadata": {
+                    "aria": "Ver la metadata subida en Pinata",
+                    "tooltip": "Ver la metadata subida en Pinata"
+                },
+                "image": {
+                    "aria": "Ver la imagen subida en Pinata",
+                    "tooltip": "Ver la imagen subida en Pinata"
+                }
+            },
+            "attributes": {
+                "boosts": "Aumentos",
+                "stats": "Estadísticas",
+                "properties": "Propiedades"
+            }
+        },
+        "meta": {
+            "title": "Visualizar Tokens",
+            "description": "Ver todos los NFT creados con tu contrato. ¡Todos los tokens también son visibles en Etherscan y OpenSea!"
+        }
+    },
+    "interact": {
+        "title": {
+            "default": "Contrato",
+            "create": "Crear token"
+        },
+        "read": {
+            "title": "Leer"
+        },
+        "write": {
+            "title": "Escribir"
+        },
+        "importantNote": {
+            "title": "Nota importante",
+            "content": "Si ejecutas los métodos <pre class=\"code\"><code>transferOwnership</code></pre> o <pre class=\"code\"><code>renounceOwnership</code></pre>, nos eliminás a nosotros (el equipo de Smart NFTs) como propietarios del contrato, lo que significa que las llamadas a varios métodos dejarán de funcionar a través de esta página. Esto es útil cuando querés interactuar con el contrato a través de tu billetera personal. Si querés volver a utilizar Smart NFTs para interactuar, tenés que volver a transferirnos la propiedad o implementar una nueva versión de este contrato."
+        },
+        "methods": {
+            "fields": {
+                "title": "Campos",
+                "copyAddress": "Completar dirección",
+                "metadata": {
+                    "title": "Metadata",
+                    "image": "Imagen",
+                    "details": "Detalles"
+                }
+            },
+            "result": {
+                "title": "Resultado",
+                "copyResponse": "Copiar esta respuesta"
+            }
+        },
+        "content": {
+            "title": "Métodos explicados",
+            "general": {
+                "methodTypes": {
+                    "title": "Tipos de métodos",
+                    "anchor": "method-types"
+                },
+                "read": {
+                    "title": "Métodos de lectura",
+                    "anchor": "read-methods",
+                    "text": "Los métodos de \"lectura\" no requieren gas, ya que solo leen datos de la Blockchain y no los modifican."
+                },
+                "write": {
+                    "title": "Métodos de escritura",
+                    "anchor": "write-methods",
+                    "text": "Los métodos de \"escritura\" requieren de gas al ejecutarlos, ya que se producen cambios en los datos de la Blockchain. El precio del gas cambia constantemente, por lo que existen <a class=\"underline hover:text-brand_secondary duration-300\" href=\"https://etherscan.io/gastracker\" target=\"_blank\" rel=\"noopener noreferer\">herramientas</a> para realizar un seguimiento del precio."
+                }
+            },
+            "methods": {
+                "safeMint": {
+                    "content_1": "La función <pre class=\"code\"><code>safeMint</code></pre> crea tokens de forma segura. Recibe una dirección (<pre class=\"code\"><code>to</code></pre>) para enviar el NFT recién creado y un <pre class=\"code\"><code>tokenId</code></pre>. El ID del token es una forma de identificar tu token y nunca debe repetirse en un contrato. El ID del token no es necesario si la extensión Autoincrement IDs está activa.",
+                    "content_2": "Antes de llamar a este método, si se especificó un esquema de metadata durante la creación, es necesario definir los valores para las propiedades de la metadata."
+                },
+                "balanceOf": {
+                    "content_1": "Devuelve el número de tokens que tiene la dirección del <pre class=\"code\"><code>owner</code></pre>."
+                },
+                "getApproved": {
+                    "content_1": "Obtiene la dirección aprobada para el ID de un token o cero si no tiene dirección. Por defecto, el propietario del token es el aprobado."
+                },
+                "isApprovedForAll": {
+                    "content_1": "Indica si un <pre class=\"code\"><code>operator</code></pre> está aprobado para transferir tokens del <pre class=\"code\"><code>owner</code></pre> en su nombre."
+                },
+                "name": {
+                    "content_1": "Obtiene el <pre class=\"code\"><code>nombre</code></pre> del contrato publicado."
+                },
+                "owner": {
+                    "content_1": "Devuelve la dirección del propietario del contrato actual, que es el único autorizado para llamar a la mayoría de los métodos. En este caso, la dirección de Smart NFTs es el propietario a menos que se renuncie o se transfiera la propiedad."
+                },
+                "ownerOf": {
+                    "content_1": "Devuelve la dirección del propietario del token especificado por <pre class=\"code\"><code>tokenId</code></pre>."
+                },
+                "paused": {
+                    "content_1": "Devuelve <pre class=\"code\"><code>true</code></pre> si el contrato está en pausa y <pre class=\"code\"><code>false</code></pre> en caso contrario."
+                },
+                "supportsInterface": {
+                    "content_1": "Devuelve <pre class=\"code\"><code>true</code></pre> si este contrato implementa la interfaz especificada dado el <pre class=\"code\"><code>interfaceId</code></pre> o <pre class=\"code\"><code>false</code></pre> en caso contrario. Los contratos pueden implementar interfaces para heredar el comportamiento de los contratos de nivel superior.",
+                    "content_2": "Por ejemplo, todos los contratos de Smart NFTs implementan la interfaz <pre class=\"code\"><code>IERC721</code></pre>, con el siguiente ID de interfaz: <pre class=\"code\"><code>0x80ac58cd</code></pre>."
+                },
+                "symbol": {
+                    "content_1": "Obtiene el <pre class=\"code\"><code>símbolo</code></pre> del token del contrato."
+                },
+                "tokenByIndex": {
+                    "content_1": "Recupera el ID de un token en un <pre class=\"code\"><code>index</code></pre> dado en la lista de todos los tokens en el contrato."
+                },
+                "tokenOfOwnerByIndex": {
+                    "content_1": "Recupera el ID de un token en un <pre class=\"code\"><code>index</code></pre> dado de la lista de tokens del <pre class=\"code\"><code>owner</code></pre>."
+                },
+                "tokenURI": {
+                    "content_1": "Devuelve el URI, que apunta a la metadata del token, dado un <pre class=\"code\"><code>tokenId</code></pre>; puede estar vacío si no se almacena ningún URI."
+                },
+                "totalSupply": {
+                    "content_1": "Obtiene la cantidad total de tokens almacenados en el contrato."
+                },
+                "approve": {
+                    "content_1": "Aprueba otra dirección para transferir el <pre class=\"code\"><code>tokenId</code></pre> dado. La dirección <pre class=\"code\"><code>null</code></pre> indica que no hay una dirección aprobada para la transferencia. Solo puede haber una dirección aprobada a la vez. Solo el propietario o el operador aprobado para el token dado puede llamar a este método."
+                },
+                "burn": {
+                    "content_1": "Quema (elimina) un token específico dado el <pre class=\"code\"><code>tokenId</code></pre>; esta acción no se puede revertir."
+                },
+                "pause": {
+                    "content_1": "Detiene el contrato temporalmente, impidiendo creaciones y transferencias."
+                },
+                "renounceOwnership": {
+                    "content_1": "Deja el contrato sin dueño, perdiendo toda la funcionalidad que necesita de un dueño."
+                },
+                "safeTransferFrom": {
+                    "content_1": "Transfiere un token dado el <pre class=\"code\"><code>tokenId</code></pre> de una dirección (<pre class=\"code\"><code>from</code></pre>) a otra dirección (<pre class=\"code\"><code>to</code></pre>)."
+                },
+                "setApprovalForAll": {
+                    "content_1": "Cambia el estado de aprobación de un determinado <pre class=\"code\"><code>operator</code></pre>. Un operador puede transferir tokens nombre de quien llama al método."
+                },
+                "transferFrom": {
+                    "content_1": "Transfiere un token dado el <pre class=\"code\"><code>tokenId</code></pre> de una dirección (<pre class=\"code\"><code>from</code></pre>) a otra dirección (<pre class=\"code\"><code>to</code></pre>). No se recomienda el uso de este método, en cambio, se recomienda el <pre class=\"code\"><code>safeTransferFrom</code></pre>."
+                },
+                "transferOwnership": {
+                    "content_1": "Transfiere la propiedad del contrato a una nueva dirección (<pre class=\"code\"><code>newOwner</code></pre>)."
+                },
+                "unpause": {
+                    "content_1": "Reanuda la creacion y las transferencias después de pausar el contrato."
+                }
+            }
+        },
+        "loading": {
+            "contract": "Cargando contrato...",
+            "method": "",
+            "methods": "Cargando métodos...",
+            "initial": "Escribí el ID de tu contrato para cargar los métodos.",
+            "initialMethods": "Los métodos aparecerán acá cuando carguen."
+        },
+        "success": {
+            "transactionDisplay": "Éxito - Hash de la transacción: {0}"
+        },
+        "error": {
+            "invalidContract": "ID de contrato inválido",
+            "contractNotDeployed": "El contrato no fue publicado todavía",
+            "missingParameter": "Falta el parámetro {0} ({1})",
+            "missingImage": "Falta la imagen del token",
+            "transactionDisplay": "Error de Blockchain - Hash de transacción: {0}.",
+            "transactionMoreInfo": "Para más información, hacé click en el siguiente hash de transacción."
+        },
+        "buttons": {
+            "execute": {
+                "text": "Ejecutar",
+                "aria": "Ejecutar el método {0}"
+            },
+            "edit": "Editar contrato",
+            "view": "Visualizar NFTs"
+        },
+        "meta": {
+            "title": "Interactuar",
+            "description": "¡Interactúa con tu contrato! Creá tokens, obtené información del contrato y operá con el smart contract; ¡No se necesita una billetera ni gas!"
+        }
+    },
+    "inputs": {
+        "placeholder": {
+            "address": "0xb794f5ea0ba39494ce839613fffba74279579268",
+            "uint256": "Número - 1234567890",
+            "bytes4": "0x11AAFF44",
+            "bytes": "0x11FFA4...",
+            "bool": "true o false",
+            "string": "Texto - El pingüino Wenceslao...",
+            "boost_number": "Número - 1234567890",
+            "boost_percentage": "Porcentaje - 0 ... 100",
+            "number": "Número - 1234567890",
+            "image": "Soltá la imagen acá o hacé <span class=\"underline\">click acá</span> para elegirla (límite de 2.5MB)...",
+            "long_string": "Texto largo - Escribí tu texto largo acá",
+            "contractId": "ID del contrato...",
+            "contractName": "SmartNFTs...",
+            "contractSymbol": "SNFT...",
+            "metadata": {
+                "name": "Nombre..."
+            }
+        },
+        "text": {
+            "boost_number": "Número de aumento",
+            "boost_percentage": "Porcentaje de aumento",
+            "number": "Número simple",
+            "string": "Texto",
+            "long_string": "Texto largo",
+            "image": "Archivo: {0}",
+            "contractId": "ID del contrato",
+            "contractName": "Nombre del contrato",
+            "contractSymbol": "Símbolo del contrato",
+            "name": "Nombre (texto)",
+            "description": "Descripción (texto largo)",
+            "extensions": {
+                "mintable": "Mintable",
+                "pausable": "Pausable",
+                "burnable": "Burnable",
+                "enumerable": "Enumerable",
+                "uriStorage": "URI Storage",
+                "uniqueStorage": "Unique Storage",
+                "limitSupply": {
+                    "name": "Limited Supply",
+                    "count": "Número límite"
+                },
+                "autoincrementId": "Auto Increment IDs",
+                "metadata": {
+                    "image": "¿Tiene imagen?"
+                }
+            },
+            "metadata": {
+                "name": "Campo",
+                "type": "Tipo",
+                "display": "Formato",
+                "typeOptions": {
+                    "string": "Texto",
+                    "number": "Número"
+                },
+                "displayOptions": {
+                    "boost_number": "Número de aumento",
+                    "boost_percentage": "Porcentaje de aumento",
+                    "number": "Número simple"
+                }
+            }
+        },
+        "errors": {
+            "address": "Dirección inválida.",
+            "required": "Parámetro requerido.",
+            "bytes": "Bytes inválidos.",
+            "bytes4": "Bytes4 inválidos.",
+            "uint256": "Numero uint256 inválido.",
+            "bool": "Booleano inválido (true | false).",
+            "name": "Nombre solo puede contener caracteres alfanuméricos y guión bajo (_).",
+            "symbol": "Símbolo solo puede contener caracteres alfanuméricos y guión bajo (_).",
+            "metadataName": "Este campo solo puede contener letras, números y _.",
+            "max20": "Este campo tiene un máximo de 20 caracteres.",
+            "number": "No es un número válido.",
+            "boost_percentage": "Porcentaje inválido, debe ser entre 0 y 100 (sin %).",
+            "string": "Texto inválido, la longitud máxima son 256 caracteres.",
+            "long_string": "Text inválido, la longitud máxima son 700 caracteres.",
+            "email": "Email inválido.",
+            "image": {
+                "tooBig": "Archivo demasiado grande, el límite son 2.5MB.",
+                "countLimit": "No se puede subir más de 1 archivo.",
+                "type": "Tipo de archivo inválido, solo se pueden usar imágenes."
+            }
+        }
+    },
+    "status": {
+        "title": "Servidores",
+        "status": {
+            "ok": "Disponibles",
+            "notOk": "No disponibles",
+            "timestamp": "Tiempo de verificación",
+            "wallet": {
+                "title": "Billetera",
+                "address": {
+                    "title": "Dirección",
+                    "copy": "Copiar dirección",
+                    "copyOk": "¡Dirección copiada al portapapeles!"
+                },
+                "balance": {
+                    "title": "Balance",
+                    "lowBalance": "Esta billetera se está quedando sin Ethereum"
+                },
+                "network": {
+                    "using": "Red"
+                }
+            }
+        },
+        "contribute": {
+            "title": "¿Querés contribuir?",
+            "addBalance": "¿Muestra un balance bajo o querés agregar Ethereum a la billetera Smart NFTs? Dirigite a la <a class=\"underline hover:text-brand_secondary duration-300 text-h5\" href=\"https://faucet.rinkeby.io/\" target=\"_blank\" rel=\"noopener noreferer\">Faucet</a> y seguí las instrucciones para solicitar Ethereum para la cuenta de Smart NFTs.",
+            "disclaimer": "No transfieras Ethereum real a la dirección de la billetera que se muestra; puede resultar en pérdidas irrecuperables. No somos responsables de ninguna transacción que realices."
+        },
+        "errors": {
+            "copyAddress": "No se pudo copiar la dirección de la billetera al portapapeles.",
+            "noAddress": "No hay dirección",
+            "noBalance": "No hay balance",
+            "noNetwork": "No hay conexión"
+        },
+        "prepare": "Verificando el servicio, por favor espere...",
+        "meta": {
+            "title": "Estado del Servicio",
+            "description": "Ver el estado de nuestros servicios, dirección de la billetera y balance de la cuenta."
+        }
+    },
+    "pagination": {
+        "results": "Mostrando {0} a {1} de {2} resultados",
+        "resultsSingle": "Mostrando 1 resultado",
+        "aria": {
+            "prev": "Ir a la página anterior",
+            "next": "Ir a la próxima página",
+            "first": "Ir a la primera página",
+            "last": "Ir a la última página"
+        }
+    },
+    "modal": {
+        "aria": "Cerrar el modal"
+    },
+    "notifications": {
+        "aria": "Cerrar esta notificación"
     },
     "404": {
         "hero": {
-            "title": "404 - No Encontrado",
-            "subtitle": "No pudimos encontrar la página que estás buscando, por favor volvé a la página principal e intentalo de nuevo."
+            "title": "404 - No encontrado",
+            "subtitle": "No pudimos encontrar la página que estabas buscando, volvé a la página principal y empezá de nuevo.",
+            "button": {
+                "text": "Ir a página principal",
+                "aria": "Ir a la página principal"
+            }
+        },
+        "meta": {
+            "title": "404",
+            "description": "La página que estas buscando no existe."
         }
     },
     "500": {
         "hero": {
-            "title": "500 - Error Interno",
-            "subtitle": "Hubo un error interno, por favor volvé a la página principal e intentalo de nuevo."
+            "title": "500 - Error interno",
+            "subtitle": "Hubo un error interno, verificá el estado del servicio en caso de que nuestros servicios no estén disponibles, de lo contrario, regresá a la página principal y comenzá de nuevo.",
+            "buttonHome": {
+                "text": "Ir a página principal",
+                "aria": "Ir a la página principal"
+            },
+            "buttonStatus": {
+                "text": "Ver estado del servicio",
+                "aria": "Ver estado del servicio"
+            }
+        },
+        "meta": {
+            "title": "500",
+            "description": "Error interno del servidor."
         }
+    },
+    "date": "{0}",
+    "errors": {
+        "robot": "¡No sos humano, no podés usar esto!",
+        "timeout": "El servicio tardó demasiado.",
+        "internal": "Error interno, por favor intente luego.",
+        "contract": {
+            "notExist": "¡El contrato no existe!",
+            "notMint": "¡El contrato no puede crear tokens!",
+            "notDeployed": "¡El contrato no fue publicado todavía!",
+            "notCopyId": "¡No se pudo copiar el ID del contrato al portapapeles!",
+            "notCopyAddress": "¡No se pudo copiar la dirección del contrato al portapapeles!",
+            "notCopyCode": "¡No se pudo copiar el código del contrato al portapapeles!"
+        },
+        "method": {
+            "notCopyResponse": "¡No se pudo copiar la respuesta al portapapeles!",
+            "notCopyAddress": "¡No se pudo copiar la dirección al portapapeles!"
+        }
+    },
+    "success": {
+        "copy": "¡Copiado al portapapeles!"
     }
 }
