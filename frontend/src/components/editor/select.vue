@@ -9,7 +9,7 @@
             :value="props.modelValue"
             :name="props.name"
             :id="props.id"
-            :class="['rounded-lg transition-colors border border-gray-400 duration-300 hover:ring-brand_secondary', classes, error ? 'input-error' : '', props.disabled ? 'bg-gray-300/50' : '']"
+            :class="['rounded-lg transition-colors ring-brand_secondary focus:ring-brand_secondary border border-gray-400 duration-300 hover:ring-brand_secondary', classes, error ? 'input-error' : '', props.disabled ? 'bg-gray-300/50' : '']"
         >
             <option v-for="(option, index) in props.options" :key="index" :value="option.value" :selected="props.modelValue === option.value">{{ option.text }}</option>
         </select>

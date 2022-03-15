@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-row items-center">
     <input
-      class="rounded-sm border-2 border-typography_secondary focus:border-brand_primary bg-transparent transition duration-300 cursor-pointer editor--checkbox"
+      class="rounded-sm border-2 text-brand_secondary border-typography_secondary focus:border-brand_primary bg-transparent transition duration-300 cursor-pointer editor--checkbox"
       type="checkbox"
       :name="props.name"
       :id="props.id"
