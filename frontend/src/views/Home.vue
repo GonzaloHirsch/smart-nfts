@@ -13,7 +13,7 @@
             />
         </template>
         <a
-            href="#benefits"
+            href="/about"
             class="text-brand_secondary text-center mt-sm text-lg md:text-body_xl flex flex-row items-center justify-center"
             :aria-label="$t('home.hero.learnMore.aria')"
         >
