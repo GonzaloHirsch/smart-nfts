@@ -202,7 +202,11 @@
                 "text": "Read More",
                 "aria": "Learn more about SmartNFTs"
             },
-            "subtitle": "Read on to learn what an ERC-721 Smart Contract is, what technologies are used in our processes, and how Smart NFTs' API interacts with external services."
+            "subtitle": "Read on to learn what an ERC-721 Smart Contract is, what technologies are used in our processes, and how Smart NFTs' API interacts with external services.",
+            "status": {
+                "text": "See the service status",
+                "aria": "See the service status for Smart NFTs"
+            }
         },
         "erc721": {
             "title": "What is a ERC-721 Smart Contract?",

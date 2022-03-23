@@ -12,6 +12,14 @@
                 size="large"
             />
         </template>
+        <a
+            href="/status"
+            class="text-brand_secondary text-center mt-sm text-lg md:text-body_xl flex flex-row items-center justify-center"
+            :aria-label="$t('about.hero.status.aria')"
+        >
+            {{ $t('about.hero.status.text') }}
+            <QuestionMarkCircleIcon class="h-8 w-8 ml-xs" />
+        </a>
     </v-left-hero>
 
     <v-section id="erc-721" class="bg-typography_primary">
@@ -60,6 +68,7 @@ import vFacts from '@/components/facts.vue';
 import vLeftHero from '@/components/leftHero.vue';
 import vSection from '@/components/section.vue';
 import vFeatureContent from '@/components/featureContent.vue';
+import { QuestionMarkCircleIcon } from '@heroicons/vue/solid';
 
 import { useMeta } from 'vue-meta';
 

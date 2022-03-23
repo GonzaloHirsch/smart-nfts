@@ -1,5 +1,5 @@
 <template>
-    <v-header>
+    <v-header id="header-mobile">
         <nav class="flex flex-row justify-start items-center" aria-labelledby="header">
             <MenuIcon @click="toggleMenu" class="w-7 h-7 text-brand_secondary mr-sm cursor-pointer" :aria-label="$t('nav.menu.open.aria')" />
             <router-link to="/" @click="handleTopScroll(false)" class="text-h5 text-brand_secondary font-semibold" :aria-label="$t('nav.app.aria')">{{

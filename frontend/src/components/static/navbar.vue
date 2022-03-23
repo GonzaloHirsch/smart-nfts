@@ -1,5 +1,5 @@
 <template>
-    <v-header>
+    <v-header id="header">
         <nav class="flex flex-row justify-between items-center" aria-labelledby="header">
             <router-link to="/" @click="handleTopScroll" class="text-h5 text-brand_secondary font-semibold" :aria-label="$t('nav.app.aria')">{{
                 $t('app.name')
