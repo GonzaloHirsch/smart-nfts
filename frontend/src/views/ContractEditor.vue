@@ -43,43 +43,48 @@
                     :id="route.params.id"
                 >
                     <template #expandableHead>
-                        <v-tooltip
-                            v-if="contractEdited"
-                            :text="!isLoading && !isLoadingMetadata ? $t('editor.lastSaved', [$d(lastSaved, 'short')]) : $t('editor.saving')"
-                        >
-                            <span class="expandable-head--icon-wrapper">
-                                <CloudUploadIcon v-if="!isLoading && !isLoadingMetadata" class="expandable-head--icon" />
-                                <RefreshIcon v-else class="expandable-head--icon animate-spin-reverse" />
-                            </span>
-                        </v-tooltip>
-                        <v-tooltip :text="$t('editor.contract.idCopy')">
-                            <span
-                                @click="copyContractId"
-                                :aria-label="$t('editor.contract.idCopy')"
-                                class="expandable-head--icon-wrapper hover:cursor-pointer hover:text-brand_secondary"
+                        <div class="flex w-full justify-center items-center mb-1">
+                            <span class="text-sm">{{$t('editor.contract.moreInfo')}}</span>
+                        </div>
+                        <div>
+                            <v-tooltip
+                                v-if="contractEdited"
+                                :text="!isLoading && !isLoadingMetadata ? $t('editor.lastSaved', [$d(lastSaved, 'short')]) : $t('editor.saving')"
                             >
-                                <DocumentIcon class="expandable-head--icon" />
-                            </span>
-                        </v-tooltip>
-                        <v-tooltip v-if="isDeployed" :text="$t('editor.contract.deployCopy')">
-                            <span
-                                @click="copyContractAddress"
-                                :aria-label="$t('editor.contract.deployCopy')"
-                                class="expandable-head--icon-wrapper hover:cursor-pointer hover:text-brand_secondary"
-                                ><GlobeAltIcon class="expandable-head--icon"
-                            /></span>
-                        </v-tooltip>
-                        <v-tooltip v-if="isVerified" :text="$t('editor.contract.verified')">
-                            <span class="expandable-head--icon-wrapper"><BadgeCheckIcon class="expandable-head--icon" /></span>
-                        </v-tooltip>
-                        <v-tooltip v-if="isDeployed" :text="$t('editor.contract.interact')">
-                            <router-link
-                                :aria-label="$t('editor.contract.interact')"
-                                class="expandable-head--icon-wrapper hover:cursor-pointer hover:text-brand_secondary"
-                                :to="`/interact/${storedContract.id}`"
-                                ><PlayIcon class="expandable-head--icon"
-                            /></router-link>
-                        </v-tooltip>
+                                <span class="expandable-head--icon-wrapper">
+                                    <CloudUploadIcon v-if="!isLoading && !isLoadingMetadata" class="expandable-head--icon" />
+                                    <RefreshIcon v-else class="expandable-head--icon animate-spin-reverse" />
+                                </span>
+                            </v-tooltip>
+                            <v-tooltip :text="$t('editor.contract.idCopy')">
+                                <span
+                                    @click="copyContractId"
+                                    :aria-label="$t('editor.contract.idCopy')"
+                                    class="expandable-head--icon-wrapper hover:cursor-pointer hover:text-brand_secondary"
+                                >
+                                    <vIdIcon class="expandable-head--icon" />
+                                </span>
+                            </v-tooltip>
+                            <v-tooltip v-if="isDeployed" :text="$t('editor.contract.deployCopy')">
+                                <span
+                                    @click="copyContractAddress"
+                                    :aria-label="$t('editor.contract.deployCopy')"
+                                    class="expandable-head--icon-wrapper hover:cursor-pointer hover:text-brand_secondary"
+                                    ><GlobeAltIcon class="expandable-head--icon"
+                                /></span>
+                            </v-tooltip>
+                            <v-tooltip v-if="isVerified" :text="$t('editor.contract.verified')">
+                                <span class="expandable-head--icon-wrapper"><BadgeCheckIcon class="expandable-head--icon" /></span>
+                            </v-tooltip>
+                            <v-tooltip v-if="isDeployed" :text="$t('editor.contract.interact')">
+                                <router-link
+                                    :aria-label="$t('editor.contract.interact')"
+                                    class="expandable-head--icon-wrapper hover:cursor-pointer hover:text-brand_secondary"
+                                    :to="`/interact/${storedContract.id}`"
+                                    ><PlayIcon class="expandable-head--icon"
+                                /></router-link>
+                            </v-tooltip>
+                        </div>
                     </template>
                     <template #expandableContent>
                         <div class="my-xs" v-if="contractEdited">
@@ -96,7 +101,7 @@
                         <div class="my-xs">
                             <v-information-item :showActions="true" :title="$t('editor.contract.idSimple')" :description="route.params.id">
                                 <template #icon>
-                                    <DocumentIcon class="expandable-content--icon" />
+                                    <vIdIcon class="expandable-content--icon" />
                                 </template>
                                 <template #actions>
                                     <v-tooltip :text="$t('editor.contract.idCopy')" :class="[canSendEmail ? 'mr-xs' : '']">
@@ -233,7 +238,6 @@ import {
     QuestionMarkCircleIcon,
     RefreshIcon,
     DocumentDuplicateIcon,
-    DocumentIcon,
     BadgeCheckIcon,
     ExternalLinkIcon,
     PlayIcon,
@@ -241,6 +245,7 @@ import {
     CloudUploadIcon,
     GlobeAltIcon
 } from '@heroicons/vue/solid';
+import vIdIcon from '@/assets/images/icons/IdIcon.svg?component';
 import vEtherscanLogo from '@/assets/images/icons/etherscan.svg?component';
 
 import { useNotifications } from '@/plugins/notifications';

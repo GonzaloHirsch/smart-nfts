@@ -25,8 +25,8 @@
             </svg>
             <LightningBoltIcon class="w-8 h-8 absolute top-0 left-0 right-0 bottom-0 m-auto text-brand_secondary"/>
         </div>
-        <span class="block text-sm text-brand_secondary">{{ props.name }}</span>
-        <span class="block font-semibold">+{{ props.value }}{{props.isPercentage ? '%' : ''}}</span>
+        <span class="block text-sm text-brand_secondary text-center break-all">{{ props.name }}</span>
+        <span class="block font-semibold text-center">+{{ props.value }}{{props.isPercentage ? '%' : ''}}</span>
     </div>
 </template>
 

@@ -25,7 +25,7 @@
                 <span :class="['text-md', loadingContent ? 'loading--text loading--name' : contentError ? 'error--text loading--name' : '']">{{
                     cutNameOff(tokenInfo.name) || null
                 }}</span>
-                <span v-if="props.id" class="text-lg text-brand_secondary">#{{ props.id }}</span>
+                <span v-if="props.id" class="text-lg text-brand_secondary ml-xs">#{{ cutIdOff(props.id) }}</span>
             </div>
             <p
                 :class="[
@@ -54,7 +54,7 @@
                     <v-opensea-logo class="w-6 h-6 text-black/40 hover:text-brand_secondary transition duration-200 cursor-pointer" />
                 </span>
             </div>
-            <span v-if="props.id && !props.hash" class="text-lg text-brand_secondary">#{{ props.id }}</span>
+            <span v-if="props.id && !props.hash" class="text-lg text-brand_secondary">#{{ cutIdOff(props.id) }}</span>
         </div>
     </div>
     <div v-else class="flex flex-col items-center bg-transparent token-enlarged--wrapper">
@@ -73,7 +73,7 @@
                         <v-ethereum class="w-fit" />
                     </div>
                 </template>
-                <span v-if="props.id" class="text-h4 text-white absolute top-0 left-0 pt-sm pl-sm">#{{ props.id }}</span>
+                <span v-if="props.id" class="text-h4 text-white absolute top-0 left-0 pt-sm pl-sm">#{{ cutIdOff(props.id) }}</span>
             </div>
             <div class="flex flex-col items-center w-full px-sm">
                 <span
@@ -285,8 +285,13 @@ const handleNavigation = (url) => {
 };
 
 const cutNameOff = (name) => {
-    if (!name || name.length < 30) return name;
-    return name.substring(0, 30) + '...'
+    if (!name || name.length < 25) return name;
+    return name.substring(0, 25) + '...'
+}
+
+const cutIdOff = (id) => {
+    if (!id || id.toString().length < 7) return id;
+    return id.substring(0, 7) + '...'
 }
 
 const getIpfsLink = (hash) => {

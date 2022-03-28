@@ -50,8 +50,8 @@
                 "aria": "Empezá a usar Smart NFTs ahora"
             },
             "learnMore": {
-                "text": "Leer más",
-                "aria": "Leer más sobre las posibles opciones que ofrecemos"
+                "text": "Leer más sobre NFTs",
+                "aria": "Leer más sobre NFTs"
             }
         },
         "tabs": {
@@ -123,7 +123,7 @@
         },
         "cta": {
             "title": "Ver más sobre este proyecto",
-            "text": "Obtené información sobre los contratos ERC-721, explorá las tecnologías y servicios detrás de Smart NFTs, cómo interactúa la API de Smart NFTs con dichos servicios y verifique el estado del servicio de Smart NFTs para obtener información sobre el estado actual de la aplicación.",
+            "text": "Obtené información sobre los contratos ERC-721, NFTs, explorá las tecnologías y servicios detrás de Smart NFTs, cómo interactúa la API de Smart NFTs con dichos servicios y verifique el estado del servicio de Smart NFTs para obtener información sobre el estado actual de la aplicación.",
             "buttons": {
                 "status": {
                     "text": "Estado",
@@ -138,8 +138,8 @@
                     "aria": "Aprender más sobre las tecnologías detrás de este proyecto"
                 },
                 "erc721": {
-                    "text": "ERC-721",
-                    "aria": "Aprender más sobre contratos ERC-721"
+                    "text": "NFTs",
+                    "aria": "Aprender más sobre NFTs"
                 }
             }
         }
@@ -202,14 +202,14 @@
                 "text": "Leer más",
                 "aria": "Aprender más sobre SmartNFTs"
             },
-            "subtitle": "Seguí leyendo para saber qué es un contrato ERC-721, qué tecnologías se utilizan en nuestros procesos y cómo interactúa la API de Smart NFTs con servicios externos.",
+            "subtitle": "Seguí leyendo para saber qué es un contrato ERC-721 (NFT), qué tecnologías se utilizan en nuestros procesos y cómo interactúa la API de Smart NFTs con servicios externos.",
             "status": {
                 "text": "Ver el estado del servicio",
                 "aria": "Ver el estado del servicio de Smart NFTs"
             }
         },
         "erc721": {
-            "title": "¿Qué es un ERC-721 Smart Contract?",
+            "title": "¿Qué es un ERC-721 Smart Contract (NFT)?",
             "text": "Un Smart Contract es un programa que se ejecuta en la Blockchain de Ethereum. Es una colección de código (sus funciones) y datos (su estado) que reside en una dirección específica en la Blockchain de Ethereum. Específicamente, ERC-721 es un estándar de Smart Contract para representar la propiedad de tokens no fungibles o NFT, lo que significa que cada token es único. Un ejemplo de estos tokens son los famosos CryptoKitties, donde cada gato es único y 100% propiedad de 1 persona."
         },
         "technologies": {
@@ -266,7 +266,8 @@
             "creation": "Creación",
             "metadata": "Metadata",
             "hasImage": "¿Tiene imagen?",
-            "reminder": "Enviar un recordatorio del ID del contrato"
+            "reminder": "Enviar un recordatorio del ID del contrato",
+            "moreInfo": "Más información"
         },
         "error": {
             "nameUsed": "Nombre de la propiedad ya en uso"
@@ -486,6 +487,9 @@
                     "title": "Metadata",
                     "image": "Imagen",
                     "details": "Detalles"
+                },
+                "parameters": {
+                    "title": "Parámetros"
                 }
             },
             "result": {
@@ -693,7 +697,7 @@
             "number": "No es un número válido.",
             "boost_percentage": "Porcentaje inválido, debe ser entre 0 y 100 (sin %).",
             "string": "Texto inválido, la longitud máxima son 256 caracteres.",
-            "long_string": "Text inválido, la longitud máxima son 700 caracteres.",
+            "long_string": "Text inválido, la longitud máxima son 256 caracteres.",
             "email": "Email inválido.",
             "image": {
                 "tooBig": "Archivo demasiado grande, el límite son 2.5MB.",

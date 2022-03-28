@@ -50,8 +50,8 @@
                 "aria": "Start using Smart NFTs now"
             },
             "learnMore": {
-                "text": "Learn More",
-                "aria": "Learn more about the possible options you have"
+                "text": "Learn more about NFTs",
+                "aria": "Learn more about NFTs"
             }
         },
         "tabs": {
@@ -123,7 +123,7 @@
         },
         "cta": {
             "title": "See more about this project",
-            "text": "Learn about ERC-721 Smart Contracts, explore the technologies and services behind the making of Smart NFTs, how Smart NFTs' API interacts with said services, and check Smart NFTs' service status for information on the current state of the app.",
+            "text": "Learn about ERC-721 Smart Contracts, NFTs, explore the technologies and services behind the making of Smart NFTs, how Smart NFTs' API interacts with said services, and check Smart NFTs' service status for information on the current state of the app.",
             "buttons": {
                 "status": {
                     "text": "Status",
@@ -138,8 +138,8 @@
                     "aria": "Learn more about the technologies powering this project"
                 },
                 "erc721": {
-                    "text": "ERC-721",
-                    "aria": "Learn about ERC-721 contracts"
+                    "text": "NFTs",
+                    "aria": "Learn about NFTs"
                 }
             }
         }
@@ -202,14 +202,14 @@
                 "text": "Read More",
                 "aria": "Learn more about SmartNFTs"
             },
-            "subtitle": "Read on to learn what an ERC-721 Smart Contract is, what technologies are used in our processes, and how Smart NFTs' API interacts with external services.",
+            "subtitle": "Read on to learn what an ERC-721 Smart Contract (NFT) is, what technologies are used in our processes, and how Smart NFTs' API interacts with external services.",
             "status": {
                 "text": "See the service status",
                 "aria": "See the service status for Smart NFTs"
             }
         },
         "erc721": {
-            "title": "What is a ERC-721 Smart Contract?",
+            "title": "What is a ERC-721 Smart Contract (NFT)?",
             "text": "A smart contract is a program that runs on the Ethereum blockchain. It's a collection of code (its functions) and data (its state) that resides at a specific address on the Ethereum blockchain. Specifically, ERC-721 is a smart contract standard for representing ownership of non-fungible tokens, or NFTs, meaning each token is unique. An example of these tokens are the famous CryptoKitties, where each cat is one-of-a-kind and 100% owned by 1 person."
         },
         "technologies": {
@@ -266,7 +266,8 @@
             "creation": "Creation",
             "metadata": "Metadata",
             "hasImage": "Has image?",
-            "reminder": "Send a contract ID reminder"
+            "reminder": "Send a contract ID reminder",
+            "moreInfo": "More Information"
         },
         "error": {
             "nameUsed": "Name for property already in use"
@@ -486,6 +487,9 @@
                     "title": "Metadata",
                     "image": "Image",
                     "details": "Details"
+                },
+                "parameters": {
+                    "title": "Parameters"
                 }
             },
             "result": {
@@ -693,7 +697,7 @@
             "number": "Not a valid number",
             "boost_percentage": "Invalid percentage, must be between 0 and 100 (without %)",
             "string": "Invalid text, maximum length is 256 characters.",
-            "long_string": "Invalid text, maximum length is 700 characters.",
+            "long_string": "Invalid text, maximum length is 256 characters.",
             "email": "Invalid email.",
             "image": {
                 "tooBig": "File too large, limit is 2.5MB",

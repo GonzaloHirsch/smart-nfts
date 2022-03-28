@@ -21,6 +21,7 @@
             <div class="divide-y divide-white">
                 <!-- Basic inputs -->
                 <div v-if="props.method.inputs && props.method.inputs.length > 0">
+                    <p class="text-h5">{{ $t('interact.methods.fields.parameters.title') }}</p>
                     <template v-for="(input, index) in props.method.inputs" :key="index">
                         <!-- Add the validations as the required one and the type check -->
                         <!-- Receive the events for input validity -->

@@ -50,8 +50,8 @@ export const allValidations = {
         func: (input) => (maxLength(256, input)) || "inputs.errors.string"
     },
     "long_string": {
-        label: "Invalid text, maximum length is 700 characters.",
-        func: (input) => (maxLength(700, input)) || "inputs.errors.long_string"
+        label: "Invalid text, maximum length is 256 characters.",
+        func: (input) => (maxLength(256, input)) || "inputs.errors.long_string"
     },
     "number": {
         label: "Not a valid number",
@@ -134,7 +134,7 @@ const isBool = (bool) => {
 };
 
 const isName = (name) => {
-    return /^[a-zA-Z0-9_]+$/i.test(name);
+    return /^[a-zA-Z]+[a-zA-Z0-9_]*$/i.test(name);
 };
 
 const isSymbol = (symbol) => {

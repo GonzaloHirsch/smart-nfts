@@ -120,7 +120,7 @@ const isPercentage = (num: any): boolean => {
 };
 
 const isName = (name: string): boolean => {
-    return /^[a-zA-Z0-9_]+$/i.test(name);
+    return /^[a-zA-Z]+[a-zA-Z0-9_]*$/i.test(name);
 };
 
 const isSymbol = (symbol: string): boolean => {

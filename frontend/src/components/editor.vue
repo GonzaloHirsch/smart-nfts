@@ -13,7 +13,7 @@
                         name="name"
                         format="primary-white"
                         :placeholder="$t('inputs.placeholder.contractName')"
-                        :validations="['required', 'name']"
+                        :validations="['required', 'name', 'string']"
                         :label="$t('inputs.text.contractName')"
                         v-model="contractData.name"
                         class="w-full pb-2"
@@ -25,7 +25,7 @@
                         name="symbol"
                         format="primary-white"
                         :placeholder="$t('inputs.placeholder.contractSymbol')"
-                        :validations="['required', 'symbol']"
+                        :validations="['required', 'symbol', 'string']"
                         :label="$t('inputs.text.contractSymbol')"
                         v-model="contractData.symbol"
                         class="w-full pt-2"
@@ -187,7 +187,9 @@
             />
         </div>
         <div :class="['flex flex-row items-center justify-center relative border-t py-xs mt-sm border-gray-600', isExpanded ? 'border-b' : '']">
-            <slot name="expandableHead" />
+            <div>
+                <slot name="expandableHead" />
+            </div>
             <ChevronUpIcon
                 :class="[
                     'w-10 h-10 text-typography_secondary transform duration-200 cursor-pointer absolute right-0 mr-xs',
