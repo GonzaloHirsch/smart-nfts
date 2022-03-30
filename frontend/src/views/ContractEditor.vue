@@ -18,6 +18,15 @@
     />
     <v-remind-contract-modal v-if="modalType === 'email'" :contractId="route.params.id" :showModal="isOpen" @close="handleEmailModalClose" />
 
+    <v-floating-icon v-if="!isLoadingEditor" format="primary">
+        <template #icon>
+            <vIdIcon class="h-6 w-6" />
+        </template>
+        <template #content>
+            <p>{{ $t('editor.contract.idMoreInfo') }}</p>
+        </template>
+    </v-floating-icon>
+
     <v-section :noPadding="true" class="bg-typography_primary">
         <div v-if="!isLoadingEditor" class="flex flex-col md:flex-row">
             <div
@@ -46,7 +55,7 @@
                         <div class="flex w-full justify-center items-center mb-1">
                             <span class="text-sm">{{$t('editor.contract.moreInfo')}}</span>
                         </div>
-                        <div>
+                        <div class="flex flex-row justify-center items-center">
                             <v-tooltip
                                 v-if="contractEdited"
                                 :text="!isLoading && !isLoadingMetadata ? $t('editor.lastSaved', [$d(lastSaved, 'short')]) : $t('editor.saving')"
@@ -228,6 +237,7 @@ import vEditor from '@/components/editor.vue';
 import vModal from '@/components/modal.vue';
 import vSection from '@/components/section.vue';
 import vAnchoredTitle from '@/components/anchoredTitle.vue';
+import vFloatingIcon from '@/components/floatingIcon.vue';
 
 import vDeployContractModal from '@/components/modals/deployContractModal.vue';
 import vVerifyContractModal from '@/components/modals/verifyContractModal.vue';

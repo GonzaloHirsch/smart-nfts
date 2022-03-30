@@ -81,15 +81,15 @@
                 },
                 "edit": {
                     "title": "Editar",
-                    "text": "¿Ya tenés un contrato existente creado con nosotros? Usá esta opción para continuar trabajando en él. Nuestros contratos se pueden editar, publicar y verificar un número infinito de veces. Tené en cuenta que cualquier cambio que hagas en el contrato después de publicarlo, excluyendo los campos de metadata, requerirá que el contrato se publique nuevamente. Para comenzar, ingresá el ID de tu contrato a continuación y haga click en \"Editar\"."
+                    "text": "¿Ya tenés un contrato existente creado con nosotros? Usá esta opción para continuar trabajando en él. Nuestros contratos se pueden editar, publicar y verificar un número infinito de veces. Tené en cuenta que cualquier cambio que hagas en el contrato después de publicarlo, excluyendo los campos de metadata, requerirá que el contrato se publique nuevamente. Para comenzar, ingresá el <strong>ID de tu contrato</strong> a continuación y haga click en \"Editar\"."
                 },
                 "interact": {
                     "title": "Interactuar",
-                    "text": "Después de publicar tu contrato en la Blockchain, podés interactuar con él. Ingresá el ID de tu contrato y comenzá a crear tokens, leer los datos del contrato y escribir en el contrato mismo. Todo es en tiempo real y sin pagar por el gas. La interacción se realiza a través de la billetera de SmartNFTs, lo que significa que nosotros seremos los propietarios del contrato. Sin embargo, podés transferir la propiedad del contrato a vos mismo en cualquier momento para hacerlo tuyo."
+                    "text": "Después de publicar tu contrato en la Blockchain, podés interactuar con él. Ingresá el <strong>ID de tu contrato</strong> y comenzá a crear tokens, leer los datos del contrato y escribir en el contrato mismo. Todo es en tiempo real y sin pagar por el gas. La interacción se realiza a través de la billetera de SmartNFTs, lo que significa que nosotros seremos los propietarios del contrato. Sin embargo, podés transferir la propiedad del contrato a vos mismo en cualquier momento para hacerlo tuyo."
                 },
                 "view": {
                     "title": "Ver",
-                    "text": "Después de crear NFTs, podés verlos ingresando el ID de tu contrato y haciendo click en \"Visualizar\". Podrás ver la información relevante del token y su metadata, que puede incluir la imagen, el nombre, la descripción y los atributos que se definieron. Te vamos a dar una variedad de links para que veas la metadata sin procesar como JSON y para ver tus tokens a través de páginas populares, como OpenSea y Etherscan. ¡Podés usar estas páginas para compartir tus tokens con el mundo!"
+                    "text": "Después de crear NFTs, podés verlos ingresando el <strong>ID de tu contrato</strong> y haciendo click en \"Visualizar\". Podrás ver la información relevante del token y su metadata, que puede incluir la imagen, el nombre, la descripción y los atributos que se definieron. Te vamos a dar una variedad de links para que veas la metadata sin procesar como JSON y para ver tus tokens a través de páginas populares, como OpenSea y Etherscan. ¡Podés usar estas páginas para compartir tus tokens con el mundo!"
                 }
             }
         },
@@ -267,7 +267,8 @@
             "metadata": "Metadata",
             "hasImage": "¿Tiene imagen?",
             "reminder": "Enviar un recordatorio del ID del contrato",
-            "moreInfo": "Más información"
+            "moreInfo": "Más información",
+            "idMoreInfo": "No te olvides de guardar el ID de tu contrato. Podes copiarlo o enviartelo por email."
         },
         "error": {
             "nameUsed": "Nombre de la propiedad ya en uso"

@@ -28,9 +28,7 @@
             <template #Create>
                 <v-feature-content>
                     <template #content>
-                        <p>
-                            {{ $t('home.tabs.content.create.text') }}
-                        </p>
+                        <p v-html="$t('home.tabs.content.create.text')"></p>
                     </template>
                     <template #bottom>
                         <v-button
@@ -53,9 +51,7 @@
             <template #Edit>
                 <v-feature-content>
                     <template #content>
-                        <p>
-                            {{ $t('home.tabs.content.edit.text') }}
-                        </p>
+                        <p v-html="$t('home.tabs.content.edit.text')"></p>
                     </template>
                     <template #bottom>
                         <v-contract-id-verificator
@@ -76,9 +72,7 @@
             <template #Interact>
                 <v-feature-content>
                     <template #content>
-                        <p>
-                            {{ $t('home.tabs.content.interact.text') }}
-                        </p>
+                        <p v-html="$t('home.tabs.content.interact.text')"></p>
                     </template>
                     <template #bottom>
                         <v-contract-id-verificator
@@ -99,9 +93,7 @@
             <template #View>
                 <v-feature-content>
                     <template #content>
-                        <p>
-                            {{ $t('home.tabs.content.view.text') }}
-                        </p>
+                        <p v-html="$t('home.tabs.content.view.text')"></p>
                     </template>
                     <template #bottom>
                         <v-contract-id-verificator

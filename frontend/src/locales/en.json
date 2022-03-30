@@ -81,15 +81,15 @@
                 },
                 "edit": {
                     "title": "Edit",
-                    "text": "Already have an existing contract you created with us? Use this option to continue working on it. Our contracts can be edited, deployed, and verified an infinite number of times. Be mindful that any change done on the contract after deployment, excluding the metadata fields, will require the contract to be deployed again. To start, enter your contract's id below and click Go Edit."
+                    "text": "Already have an existing contract you created with us? Use this option to continue working on it. Our contracts can be edited, deployed, and verified an infinite number of times. Be mindful that any change done on the contract after deployment, excluding the metadata fields, will require the contract to be deployed again. To start, enter your <strong>contract's ID</strong> below and click Go Edit."
                 },
                 "interact": {
                     "title": "Interact",
-                    "text": "After deploying your contract to the blockchain, you can interact with it. Enter your contract's ID and begin minting tokens, reading contract data and writing to the contract itself. Everything is in real-time and without costly gas fees. Interaction will be done through SmartNFTs' wallet, meaning this wallet will be the contract owner. You can transfer ownership of the contract to yourself at any time to make it your own."
+                    "text": "After deploying your contract to the blockchain, you can interact with it. Enter your <strong>contract's ID</strong> and begin minting tokens, reading contract data and writing to the contract itself. Everything is in real-time and without costly gas fees. Interaction will be done through SmartNFTs' wallet, meaning this wallet will be the contract owner. You can transfer ownership of the contract to yourself at any time to make it your own."
                 },
                 "view": {
                     "title": "View",
-                    "text": "After minting NFTs, you can view them by entering your contract's ID and clicking 'Go View'. You will be able to view the token's relevant information and it's metadata, which can include the image, name, description, and attributes you defined. We will provide a variety of links for you to view your raw metadata as JSON and to view your tokens through popular sites, such as OpenSea and Etherscan. You can use these sites to share your tokens with the world!"
+                    "text": "After minting NFTs, you can view them by entering your <strong>contract's ID</strong> and clicking 'Go View'. You will be able to view the token's relevant information and it's metadata, which can include the image, name, description, and attributes you defined. We will provide a variety of links for you to view your raw metadata as JSON and to view your tokens through popular sites, such as OpenSea and Etherscan. You can use these sites to share your tokens with the world!"
                 }
             }
         },
@@ -267,7 +267,8 @@
             "metadata": "Metadata",
             "hasImage": "Has image?",
             "reminder": "Send a contract ID reminder",
-            "moreInfo": "More Information"
+            "moreInfo": "More Information",
+            "idMoreInfo": "Don't forget to save your contract ID. Copy it or send it via email."
         },
         "error": {
             "nameUsed": "Name for property already in use"
