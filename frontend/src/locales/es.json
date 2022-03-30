@@ -178,8 +178,8 @@
             "aria": "Ver que tecnologías usa esta página"
         },
         "erc721": {
-            "text": "ERC-721",
-            "aria": "Ver más sobre que son los contratos ERC-721"
+            "text": "NFTs",
+            "aria": "Ver más sobre que son los contratos ERC-721 (NFTs)"
         },
         "app": {
             "aria": "Ir a la página principal"
@@ -342,7 +342,7 @@
             "title": "Campos explicados",
             "contractInformation": {
                 "title": "Información del contrato",
-                "copy": "Esta sección se refiere a las propiedades de <pre class=\"code\"><code>nombre</code></pre> y <pre class=\"code\"><code>símbolo</code></pre> del Smart Contract. El <pre class=\"code\"><code>nombre</code></pre> hace referencia a la colección en sí (por ejemplo, la colección \"CustomTokens\") y se va a mostrar en la mayoría de los sitios externos cuando se haga referencia al Smart Contract. El <pre class=\"code\"><code>símbolo</code></pre> se refiere a una forma de mostrar la cantidad de tokens en el conjunto (por ejemplo, el símbolo de \"CustomTokens\" puede ser \"CTKN\" y, de esa manera, alguien puede tener 3 CTKN)."
+                "copy": "Esta sección se refiere a las propiedades de <pre class=\"code\"><code>nombre</code></pre> y <pre class=\"code\"><code>símbolo</code></pre> del Smart Contract. El <pre id=\"contract-name\" class=\"code\"><code>nombre</code></pre> hace referencia a la colección en sí (por ejemplo, la colección \"CustomTokens\") y se va a mostrar en la mayoría de los sitios externos cuando se haga referencia al Smart Contract. El <pre id=\"contract-symbol\" class=\"code\"><code>símbolo</code></pre> se refiere a una forma de mostrar la cantidad de tokens en el conjunto (por ejemplo, el símbolo de \"CustomTokens\" puede ser \"CTKN\" y, de esa manera, alguien puede tener 3 CTKN)."
             },
             "creation": {
                 "title": "Creación",
@@ -623,7 +623,7 @@
     },
     "inputs": {
         "placeholder": {
-            "address": "0xb794f5ea0ba39494ce839613fffba74279579268",
+            "address": "0xA3D9E7D1c697EDB3C37d73200149b01749853ab4",
             "uint256": "Número - 1234567890",
             "bytes4": "0x11AAFF44",
             "bytes": "0x11FFA4...",
@@ -651,8 +651,8 @@
             "contractId": "ID del contrato",
             "contractName": "Nombre del contrato",
             "contractSymbol": "Símbolo del contrato",
-            "name": "Nombre (texto)",
-            "description": "Descripción (texto largo)",
+            "name": "Nombre (Texto)",
+            "description": "Descripción (Texto largo)",
             "extensions": {
                 "mintable": "Mintable",
                 "pausable": "Pausable",

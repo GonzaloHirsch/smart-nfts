@@ -8,9 +8,12 @@
             'input--size-xsmall': props.size === 'xsmall'
         }"
     >
-        <label v-show="!props.hideLabel" :aria-hidden="hideLabel" :class="['mb-1', error ? 'text-error' : '']" :for="props.id">{{
-            props.label
-        }}</label>
+        <div v-show="!props.hideLabel" class="flex flex-row items-center mb-1">
+            <label :aria-hidden="hideLabel" :class="[error ? 'text-error' : '']" :for="props.id">{{
+                props.label
+            }}</label>
+            <QuestionMarkCircleIcon v-if="props.help" class="form--field-icon" @click="getHelp(props.help)" />
+        </div>
         <!-- If continuous input, it will use the @input to trigger on each key -->
         <div class="flex w-full">
             <input
@@ -51,7 +54,10 @@
 <script setup>
 import { applyValidations, sumarizeValidationResults } from '@/js/validations.js';
 import { computed, ref, watch } from 'vue';
-import { PencilIcon } from '@heroicons/vue/solid';
+import { PencilIcon, QuestionMarkCircleIcon } from '@heroicons/vue/solid';
+
+import { useRouter } from 'vue-router';
+const router = useRouter();
 
 const emit = defineEmits(['update:modelValue', 'validInput', 'invalidInput']);
 
@@ -114,6 +120,10 @@ const props = defineProps({
     autofillHelp: {
         type: String,
         default: undefined
+    },
+    help: {
+        type: String,
+        default: undefined
     }
 });
 
@@ -157,6 +167,13 @@ watch(
         else emit('invalidInput', error.value);
     }
 );
+
+// Handling getting help
+const getHelp = (hash) => {
+    router.push({
+        hash: `#${hash}`
+    });
+};
 </script>
 
 <style scoped>

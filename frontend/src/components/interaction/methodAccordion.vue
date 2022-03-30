@@ -1,5 +1,5 @@
 <template>
-    <v-accordion :title="props.method.name" :format="props.format" :error="errors">
+    <v-accordion :title="props.method.name" :format="props.format" :error="errors" :customId="props.method._id">
         <template #header>
             <!-- Icon for help -->
             <QuestionMarkCircleIcon class="w-6 h-6 md:w-7 md:h-7 text-brand_tertiary" @click.stop="getHelp" />
@@ -21,7 +21,7 @@
             <div class="divide-y divide-white">
                 <!-- Basic inputs -->
                 <div v-if="props.method.inputs && props.method.inputs.length > 0">
-                    <p class="text-h5">{{ $t('interact.methods.fields.parameters.title') }}</p>
+                    <p class="text-lg md:text-h5">{{ $t('interact.methods.fields.parameters.title') }}</p>
                     <template v-for="(input, index) in props.method.inputs" :key="index">
                         <!-- Add the validations as the required one and the type check -->
                         <!-- Receive the events for input validity -->
@@ -48,7 +48,7 @@
                 </div>
                 <template v-if="props.metadata">
                     <div class="mt-sm pt-sm">
-                        <p class="text-h5">{{ $t('interact.methods.fields.metadata.title') }}</p>
+                        <p class="text-lg md:text-h5">{{ $t('interact.methods.fields.metadata.title') }}</p>
                         <p v-if="props.metadata.hasImage" class="text-lg mt-sm">{{ $t('interact.methods.fields.metadata.image') }}</p>
                         <v-file-input v-if="props.metadata.hasImage" v-model="metadataImage"></v-file-input>
                         <p class="text-lg mt-sm">{{ $t('interact.methods.fields.metadata.details') }}</p>
@@ -85,7 +85,7 @@
                             <v-input
                                 :id="`${props.method.name}-metadata-${metadataField.traitType}`"
                                 :name="`metadata-${metadataField.traitType}`"
-                                :label="`${metadataField.traitType} (${metadataField.traitFormat}${
+                                :label="`${metadataField.traitType} (${t(`inputs.text.metadata.typeOptions.${metadataField.traitFormat}`)}${
                                     metadataField.displayType ? ' - ' + $t(`inputs.text.${metadataField.displayType}`) : ''
                                 })`"
                                 :hideLabel="false"
@@ -109,12 +109,12 @@
                 </template>
                 <template v-if="callResult || callResultType || callError">
                     <div :class="[props.metadata || (props.method.inputs && props.method.inputs.length > 0) ? 'mt-sm pt-sm' : '']">
-                        <p class="text-h5">{{ $t('interact.methods.result.title') }}</p>
-                        <div class="w-full bg-white rounded-md p-xs mt-sm pr-base relative break-words">
-                            <p v-if="(callResult || callResultType) && callHasSuccess" class="text-typography_secondary">
+                        <p class="text-lg md:text-h5">{{ $t('interact.methods.result.title') }}</p>
+                        <div class="w-full bg-white rounded-md p-xs mt-xs md:mt-sm pr-base relative break-words">
+                            <p v-if="(callResult || callResultType) && callHasSuccess" class="text-typography_secondary text-xs md:text-base">
                                 {{ callResultType === 'transactionHash' ? $t('interact.success.transactionDisplay', [callResult]) : callResult }}
                             </p>
-                            <p v-if="!callHasSuccess" class="text-error">
+                            <p v-if="!callHasSuccess" class="text-error text-xs md:text-base">
                                 {{ errorType === 'transaction' ? $t('interact.error.transactionDisplay', [callError]) : callError }}
                             </p>
                             <div
@@ -300,6 +300,7 @@ const handleSuccessResults = (res) => {
     callError.value = undefined;
     errorType.value = undefined;
     isLoading.value = false;
+    handleElementAutoopen();
 };
 
 const handleErrorResults = (err) => {
@@ -319,7 +320,15 @@ const handleErrorResults = (err) => {
     callResult.value = undefined;
     callResultType.value = undefined;
     isLoading.value = false;
+    handleElementAutoopen();
 };
+
+const handleElementAutoopen = () => {
+    const _element = document.getElementById(props.method._id);
+    if (!document.getElementById(props.method._id).classList.contains('disclosure--open')){
+        _element.click();
+    }
+}
 
 // Performs all input validations
 const performValidations = () => {

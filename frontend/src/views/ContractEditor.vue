@@ -504,6 +504,7 @@ const handleVerifyContract = () => {
             .then((res) => {
                 storedContract.value = res.data;
                 isLoadingVerification.value = false;
+                modalError.value = undefined;
             })
             .catch((err) => {
                 console.log(err);

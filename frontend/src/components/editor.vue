@@ -19,6 +19,7 @@
                         class="w-full pb-2"
                         @validInput="() => handleValidInput('name', false)"
                         @invalidInput="(error) => handleInvalidInput('name', error, false)"
+                        help="contractInformation"
                     />
                     <v-input
                         id="symbol"
@@ -31,6 +32,7 @@
                         class="w-full pt-2"
                         @validInput="() => handleValidInput('symbol', false)"
                         @invalidInput="(error) => handleInvalidInput('symbol', error, false)"
+                        help="contractInformation"
                     />
                 </div>
             </div>

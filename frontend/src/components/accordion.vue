@@ -1,8 +1,9 @@
 <template>
   <Disclosure v-slot="{ open }">
     <DisclosureButton
-      :class="[formats.button, 'flex justify-between w-full px-sm md:px-base py-sm text-left rounded-lg outline-none relative', props.class]"
+      :class="[formats.button, 'flex justify-between w-full px-sm md:px-base py-sm text-left rounded-lg outline-none relative', props.class, open ? 'disclosure--open' : 'disclosure--closed']"
       style="z-index: 2"
+      :id="props.customId"
     >
       <div class="flex flex-row items-center h-full w-full">
         <div class="flex flex-col mr-xs md:mr-sm">
@@ -41,6 +42,10 @@ const props = defineProps({
     default: 'light'
   },
   error: {
+    type: String,
+    default: undefined
+  },
+  customId: {
     type: String,
     default: undefined
   }

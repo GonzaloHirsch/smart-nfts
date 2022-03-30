@@ -178,8 +178,8 @@
             "aria": "See what technologies power this page"
         },
         "erc721": {
-            "text": "ERC-721",
-            "aria": "See what ERC-721 contracts are"
+            "text": "NFTs",
+            "aria": "See what ERC-721 (NFTs) contracts are"
         },
         "app": {
             "aria": "Go to the homepage"
@@ -342,7 +342,7 @@
             "title": "Fields Explained",
             "contractInformation": {
                 "title": "Contract Information",
-                "copy": "This section refers to the <pre class=\"code\"><code>name</code></pre> and <pre class=\"code\"><code>symbol</code></pre> properties of the Smart Contract. <pre class=\"code\"><code>name</code></pre> refers to the collection itself (e.g., the \"CustomTokens\" collection) and will be displayed on most external sites when referring to the Smart Contract. <pre class=\"code\"><code>symbol</code></pre> refers to a way to display the number of tokens in the set (e.g., the symbol for \"CustomTokens\" can be \"CTKN\" and that way, someone can have 3 CTKN)."
+                "copy": "This section refers to the <pre class=\"code\"><code>name</code></pre> and <pre class=\"code\"><code>symbol</code></pre> properties of the Smart Contract. <pre id=\"contract-name\" class=\"code\"><code>name</code></pre> refers to the collection itself (e.g., the \"CustomTokens\" collection) and will be displayed on most external sites when referring to the Smart Contract. <pre id=\"contract-symbol\" class=\"code\"><code>symbol</code></pre> refers to a way to display the number of tokens in the set (e.g., the symbol for \"CustomTokens\" can be \"CTKN\" and that way, someone can have 3 CTKN)."
             },
             "creation": {
                 "title": "Creation",
@@ -623,7 +623,7 @@
     },
     "inputs": {
         "placeholder": {
-            "address": "0xb794f5ea0ba39494ce839613fffba74279579268",
+            "address": "0xA3D9E7D1c697EDB3C37d73200149b01749853ab4",
             "uint256": "Number - 1234567890",
             "bytes4": "0x11AAFF44",
             "bytes": "0x11FFA4...",
@@ -651,8 +651,8 @@
             "contractId": "Contract ID",
             "contractName": "Contract Name",
             "contractSymbol": "Contract Symbol",
-            "name": "Name (text)",
-            "description": "Description (long text)",
+            "name": "Name (Text)",
+            "description": "Description (Long text)",
             "extensions": {
                 "mintable": "Mintable",
                 "pausable": "Pausable",
