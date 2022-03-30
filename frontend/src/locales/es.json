@@ -210,7 +210,7 @@
         },
         "erc721": {
             "title": "¿Qué es un ERC-721 Smart Contract (NFT)?",
-            "text": "Un Smart Contract es un programa que se ejecuta en la Blockchain de Ethereum. Es una colección de código (sus funciones) y datos (su estado) que reside en una dirección específica en la Blockchain de Ethereum. Específicamente, ERC-721 es un estándar de Smart Contract para representar la propiedad de tokens no fungibles o NFT, lo que significa que cada token es único. Un ejemplo de estos tokens son los famosos CryptoKitties, donde cada gato es único y 100% propiedad de 1 persona."
+            "text": "Un Smart Contract es un programa que se ejecuta en la Blockchain de Ethereum. Es una colección de código y datos que reside en una dirección específica en la Blockchain de Ethereum. Específicamente, ERC-721 es un estándar de Smart Contract para representar la propiedad de tokens no fungibles o NFT, lo cual significa que cada token es único. Un ejemplo de estos tokens son los famosos CryptoKitties, donde cada gato es único y 100% propiedad de 1 persona."
         },
         "technologies": {
             "title": "Tecnologías",
@@ -297,7 +297,7 @@
                 "compile": "Compilación del contrato...",
                 "deploy": "Publicación del contrato..."
             },
-            "message": "Tu contrato está publicado en la dirección <strong class=\"break-all\">{0}</strong>. Podés verlo en la Blockchain (el bloque puede tardar un par de minutos en minarse). Ahora podés verificarlo, pero esperá hasta que el contrato sea visible. Si editas el contrato, tendés que publicarlo nuevamente.",
+            "message": "Tu contrato está publicado en la dirección <strong class=\"break-all\">{0}</strong>. Podés verlo en la Blockchain (el bloque puede tardar un par de minutos en minarse). Ahora podés verificarlo, pero esperá hasta que el contrato sea visible. Si editas el contrato, tenés que publicarlo nuevamente.",
             "error": "Error al publicar el contrato. Si la dirección de Smart NFTs no tiene gas, comuníquese con los propietarios del sitio; de lo contrario, el hash de la transacción proporcionará más información si se usa en Etherscan."
         },
         "verify": {
@@ -349,7 +349,7 @@
                 "copy_2": "La vista previa del contrato antes y después de agregar una extensión puede ayudarte a comprender los cambios y cómo funciona el código de Solidity.",
                 "mintable": {
                     "title": "Mintable",
-                    "copy_1": "La extensión <pre class=\"code\"><code>mintable</code></pre> permite al propietario del contrato emitir nuevos NFT. Estos tokens son simples, solo un ID definido por el usuario, y se transfieren automáticamente a la dirección especificada durante la creación. Si se combina esta extensión con <pre class=\"code\"><code>URI Storage</code></pre>, los NFT pueden tener metadata, lo que los hace más valiosos.",
+                    "copy_1": "La extensión <pre class=\"code\"><code>mintable</code></pre> permite al propietario del contrato emitir nuevos tokens (NFTs). Estos tokens tienen un numero identificador (ID) definido por el usuario y se transfieren automáticamente a la dirección especificada durante la creación (to). Si se combina esta extensión con <pre class=\"code\"><code>URI Storage</code></pre>, los NFTs pueden tener atributos (conocido como metadata), lo que los hace más valiosos.",
                     "autoincrementIds": {
                         "title": "Auto Increment IDs",
                         "copy_1": "La extensión <pre class=\"code\"><code>Auto Increment IDs</code></pre> asigna automáticamente un ID incremental a los tokens, eliminando el parámetro <pre class=\"code\"><code>tokenId</code></pre> de la creación. Esta extensión requiere la extensión <pre class=\"code\"><code>Mintable</code></pre>."
@@ -365,7 +365,7 @@
                 },
                 "enumerable": {
                     "title": "Enumerable",
-                    "copy_1": "La extensión <pre class=\"code\"><code>enumerable</code></pre> ayuda a agregar más funciones al contrato NFT. Permite que el contrato publique su lista completa de tokens y los haga reconocibles a expensas de transferencias más costosas. Agrega los siguientes métodos:",
+                    "copy_1": "La extensión <pre class=\"code\"><code>enumerable</code></pre> permite que el contrato publique su lista completa de tokens y los haga reconocibles. Esto tiene, como consecuencia, costos mayores al publicar y transferir tokens. Le extension agrega los siguientes métodos:",
                     "copy_2": {
                         "bullet_1": "<pre class=\"code\"><code>totalSupply()</code></pre>: Devuelve la cantidad total de tokens almacenados en el contrato.",
                         "bullet_2": "<pre class=\"code\"><code>tokenByIndex()</code></pre>: Devuelve <pre class=\"code\"><code>tokenId</code></pre> de un NFT almacenado en el índice proporcionado.",
@@ -378,7 +378,7 @@
                 },
                 "uriStorage": {
                     "title": "URI Storage",
-                    "copy_1": "La extensión <pre class=\"code\"><code>URI storage</code></pre> permite configurar un URI que apunta al almacenamiento fuera de la Blockchain para cada NFT. Estos datos fuera de la cadena, también conocidos como <a href=\"#metadata\" class=\"link\">metadata</a>, pueden agregar muchos atributos adicionales a los tokens para enriquecerlos. Si se elige, se necesita un URI que apunte a la metadata al crear un nuevo NFT, aunque esto no es necesario al interactuar a través de Smart NFTs, ya que nos encargamos de cargar la metadata en un IPFS y establecer el URI correcto en el token.",
+                    "copy_1": "La extensión <pre class=\"code\"><code>URI storage</code></pre> permite configurar un URI que apunta al almacenamiento fuera de la Blockchain para cada NFT. Estos datos fuera de la cadena, también conocidos como <a href=\"#metadata\" class=\"link\">metadata</a>, pueden agregar muchos atributos adicionales a los tokens para enriquecerlos, como imagenes y atributos. Si se elige, se necesita un URI que apunte a la metadata al crear un nuevo NFT, aunque esto no es necesario al interactuar a través de Smart NFTs, ya que nos encargamos de cargar la metadata en un IPFS y establecer el URI correcto en el token.",
                     "uniqueStorage": {
                         "title": "Unique Storage",
                         "copy_1": "La extensión <pre class=\"code\"><code>unique storage</code></pre> evita que se creen tokens duplicados. Por duplicados, nos referimos a tokens con la misma metadata. La metadata se procesa antes de crear el NFT para verificar si el hash ya se utilizó. Tené en cuenta que aumenta el costo de crear un NFT ya que requiere más espacio de almacenamiento para guardar los hashes."
@@ -690,8 +690,8 @@
             "bytes4": "Bytes4 inválidos.",
             "uint256": "Numero uint256 inválido.",
             "bool": "Booleano inválido (true | false).",
-            "name": "Nombre solo puede contener caracteres alfanuméricos y guión bajo (_).",
-            "symbol": "Símbolo solo puede contener caracteres alfanuméricos y guión bajo (_).",
+            "name": "Nombre solo puede contener letras, numeros y guión bajo (_).",
+            "symbol": "Símbolo solo puede contener letras, numeros y guión bajo (_).",
             "metadataName": "Este campo solo puede contener letras, números y _.",
             "max20": "Este campo tiene un máximo de 20 caracteres.",
             "number": "No es un número válido.",
