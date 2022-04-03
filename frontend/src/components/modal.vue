@@ -15,20 +15,20 @@
                         <div
                             :class="[
                                 'relative mx-auto bg-white rounded-md overflow-y-auto modal--inner',
-                                !props.noPadding ? 'px-md py-base' : '',
-                                props.noScrollbar ? 'modal--hide-scrollbar' : '',
-                                props.maxWidth === '3xl' ? 'max-w-3xl' : '',
-                                props.maxWidth === '2xl' ? 'max-w-2xl' : '',
-                                props.maxWidth === 'xl' ? 'max-w-xl' : '',
-                                props.maxWidth === 'lg' ? 'max-w-lg' : '',
-                                props.maxWidth === 'md' ? 'max-w-md' : ''
+                                !noPadding ? 'px-md py-base' : '',
+                                noScrollbar ? 'modal--hide-scrollbar' : '',
+                                maxWidth === '3xl' ? 'max-w-3xl' : '',
+                                maxWidth === '2xl' ? 'max-w-2xl' : '',
+                                maxWidth === 'xl' ? 'max-w-xl' : '',
+                                maxWidth === 'lg' ? 'max-w-lg' : '',
+                                maxWidth === 'md' ? 'max-w-md' : ''
                             ]"
                         >
                             <DialogTitle><slot name="title" /></DialogTitle>
                             <DialogDescription v-if="$slots.description"><slot name="description" /></DialogDescription>
                             <slot />
                             <button
-                                :class="['absolute top-0 right-0', props.darkMode ? 'text-white' : '']"
+                                :class="['absolute top-0 right-0', darkMode ? 'text-white' : '']"
                                 :aria-label="$t('modal.aria')"
                                 @click="emitClose"
                             >
@@ -47,7 +47,7 @@ import { ref, watch } from 'vue';
 import { Dialog, DialogOverlay, DialogTitle, DialogDescription, TransitionRoot, TransitionChild } from '@headlessui/vue';
 import { XIcon } from '@heroicons/vue/solid';
 
-const props = defineProps({
+defineProps({
     showModal: {
         type: Boolean,
         default: false
@@ -81,7 +81,7 @@ const emitClose = () => {
 }
 
 .modal--outer {
-  max-width: 95vw;
+    max-width: 95vw;
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */

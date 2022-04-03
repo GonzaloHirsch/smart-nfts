@@ -4,20 +4,20 @@
         <div
             :class="[
                 'tooltip z-100',
-                props.positionY === 'top' ? 'tooltip--top' : '',
-                props.positionY === 'bottom' ? 'tooltip--bottom' : '',
-                props.positionX === 'left' ? 'tooltip--left' : '',
-                props.positionX === 'right' ? 'tooltip--right' : '',
-                props.positionX === 'center' ? 'tooltip--center' : ''
+                positionY === 'top' ? 'tooltip--top' : '',
+                positionY === 'bottom' ? 'tooltip--bottom' : '',
+                positionX === 'left' ? 'tooltip--left' : '',
+                positionX === 'right' ? 'tooltip--right' : '',
+                positionX === 'center' ? 'tooltip--center' : ''
             ]"
         >
-            <span class="text">{{ props.text }}</span>
+            <span class="text">{{ text }}</span>
         </div>
     </div>
 </template>
 
 <script setup>
-const props = defineProps({
+defineProps({
     text: {
         type: String,
         required: true

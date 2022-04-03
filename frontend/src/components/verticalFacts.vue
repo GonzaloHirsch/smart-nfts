@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-col">
-        <template v-for="(fact, index) in props.facts" :key="index">
+        <template v-for="(fact, index) in facts" :key="index">
             <div class="w-full my-sm md:my-base flex flex-row items-start justify-center">
                 <component class="vertical-fact--image mr-base" :is="fact.icon" />
                 <div>
@@ -13,7 +13,7 @@
 </template>
 
 <script setup>
-const props = defineProps({
+defineProps({
     facts: { type: Array, required: true }
 });
 </script>

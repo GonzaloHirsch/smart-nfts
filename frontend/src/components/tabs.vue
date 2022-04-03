@@ -1,7 +1,7 @@
 <template>
     <div class="w-full relative">
         <template v-for="(tab, index) in props.tabs" :key="index">
-            <v-hidden-anchor :anchor="tab" :distanceMultiplier="3"/>
+            <v-hidden-anchor :anchor="tab" :distanceMultiplier="3" />
         </template>
         <TabGroup @change="changedTab" :defaultIndex="customDefaultIndex" :key="customDefaultIndex">
             <TabList class="flex p-1 space-x-1 bg-brand_primary rounded-lg max-w-md mb-sm absolute top-0 left-0 w-full">
@@ -28,7 +28,7 @@
 
 <script setup>
 import { ref, watch } from 'vue';
-import {useRoute, useRouter} from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/vue';
 import vHiddenAnchor from '@/components/hiddenAnchor.vue';
 
@@ -51,17 +51,21 @@ const changedTab = (index) => {
     customDefaultIndex.value = index;
     router.replace({
         hash: `#${props.tabs[index]}`
-    })
-}
+    });
+};
 
-watch(() => route.hash, () => {
-    let _index = 0;
-    if (route.hash) {
-        let cleanHash = route.hash.replace('#', '');
-        props.tabs.forEach((tab, index) => {
-            if (tab === cleanHash) _index = index;
-        })
-    }
-    customDefaultIndex.value = _index;
-}, {immediate: true, deep: true})
+watch(
+    () => route.hash,
+    () => {
+        let _index = 0;
+        if (route.hash) {
+            let cleanHash = route.hash.replace('#', '');
+            props.tabs.forEach((tab, index) => {
+                if (tab === cleanHash) _index = index;
+            });
+        }
+        customDefaultIndex.value = _index;
+    },
+    { immediate: true, deep: true }
+);
 </script>

@@ -5,7 +5,7 @@
                 {{ $t(text) }} <RefreshIcon class="h-10 w-10 animate-spin-reverse transform rotate-180 inline" />
             </h4>
         </div>
-    </div> 
+    </div>
 </template>
 
 <script setup>

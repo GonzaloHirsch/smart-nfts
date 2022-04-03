@@ -3,13 +3,21 @@ import vue from '@vitejs/plugin-vue'
 import svgLoader from 'vite-svg-loader'
 import { resolve } from 'path'
 import { createHtmlPlugin } from 'vite-plugin-html'
+import vueI18n from '@intlify/vite-plugin-vue-i18n'
+import path from 'path'
 
 export default ({ mode }) => {
   // Load env, https://stackoverflow.com/questions/66389043/how-can-i-use-vite-env-variables-in-vite-config-js
-  process.env = {...process.env, ...loadEnv(mode, process.cwd())};
+  process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
 
   return defineConfig({
-    plugins: [vue(), svgLoader(), createHtmlPlugin({
+    plugins: [vue(), vueI18n({
+      // if you want to use Vue I18n Legacy API, you need to set `compositionOnly: false`
+      // compositionOnly: false,
+
+      // you need to set i18n resource including paths !
+      include: path.resolve(__dirname, './src/locales/**')
+    }), svgLoader(), createHtmlPlugin({
       minify: true,
       /**
        * If you want to store `index.html` in the specified folder, you can modify it, otherwise no configuration is required

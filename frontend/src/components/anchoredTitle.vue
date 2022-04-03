@@ -3,9 +3,13 @@
         :is="props.type"
         @mouseenter="visibleIcon = true"
         @mouseleave="visibleIcon = false"
-        :class="['flex flex-row items-center relative', classes.text, isFocused ? 'underline decoration-brand_secondary decoration-4 underline-offset-2' : '']"
+        :class="[
+            'flex flex-row items-center relative',
+            classes.text,
+            isFocused ? 'underline decoration-brand_secondary decoration-4 underline-offset-2' : ''
+        ]"
     >
-        <span :id="props.anchor" class="hidden-anchor" :style="anchorStyle"></span>
+        <span :id="props.anchor" class="absolute left-0" :style="anchorStyle"></span>
         {{ props.text }}
         <LinkIcon
             v-if="visibleIcon"
@@ -66,8 +70,8 @@ const iconClass = computed(() => {
 import { useRouter, useRoute } from 'vue-router';
 const router = useRouter();
 const routeToLink = () => {
-  router.push({
-    hash: `#${props.anchor}`
+    router.push({
+        hash: `#${props.anchor}`
     });
 };
 
@@ -90,9 +94,3 @@ const classes = computed(() => {
     }
 });
 </script>
-
-<style scoped>
-.hidden-anchor {
-    @apply absolute left-0;
-}
-</style>

@@ -2,44 +2,43 @@
     <button
         :class="{
             button: true,
-            'button--primary': !props.white && props.format === 'primary',
-            'button--primary-white': props.white && props.format === 'primary',
-            'button--secondary': !props.white && props.format === 'secondary',
-            'button--secondary-white': props.white && props.format === 'secondary',
-            'button--tertiary': !props.white && props.format === 'tertiary',
-            'button--tertiary-white': props.white && props.format === 'tertiary',
-            'button--danger': !props.white && props.format === 'danger',
-            'button--danger-white': props.white && props.format === 'danger',
-            'button--disabled': !props.white && props.format === 'disabled',
-            'button--disabled-white': props.white && props.format === 'disabled',
-            'button--size-large': props.size === 'large',
-            'button--size-medium': props.size === 'medium',
-            'button--size-small': props.size === 'small',
-            'button--size-xsmall': props.size === 'xsmall'
+            'button--primary': !white && format === 'primary',
+            'button--primary-white': white && format === 'primary',
+            'button--secondary': !white && format === 'secondary',
+            'button--secondary-white': white && format === 'secondary',
+            'button--tertiary': !white && format === 'tertiary',
+            'button--tertiary-white': white && format === 'tertiary',
+            'button--danger': !white && format === 'danger',
+            'button--danger-white': white && format === 'danger',
+            'button--disabled': !white && format === 'disabled',
+            'button--disabled-white': white && format === 'disabled',
+            'button--size-large': size === 'large',
+            'button--size-medium': size === 'medium',
+            'button--size-small': size === 'small',
+            'button--size-xsmall': size === 'xsmall'
         }"
         type="button"
-        :disabled="props.disabled"
+        :disabled="disabled"
     >
-        <span v-if="props.loading" class="no-inherit button-spinner--wrapper">
+        <span v-if="loading" class="no-inherit button-spinner--wrapper">
             <v-spinner class="animate-spin-reverse button-spinner" />
         </span>
-        <template v-if="props.external">
-            <a :href="props.href" :target="props.target" :aria-label="props.aria">{{ props.text }}</a>
+        <template v-if="external">
+            <a :href="href" :target="target" :aria-label="aria">{{ text }}</a>
         </template>
-        <template v-else-if="props.href">
-            <router-link :to="props.href" :target="props.target" :aria-label="props.aria">{{ props.text }}</router-link>
+        <template v-else-if="href">
+            <router-link :to="href" :target="target" :aria-label="aria">{{ text }}</router-link>
         </template>
         <template v-else>
-            <span>{{ props.text }}</span>
+            <span>{{ text }}</span>
         </template>
     </button>
 </template>
 
 <script setup>
-import { computed } from 'vue';
 import vSpinner from '@/components/icons/spinner.vue';
 
-const props = defineProps({
+defineProps({
     href: {
         type: String,
         default: undefined

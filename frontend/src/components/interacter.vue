@@ -1,8 +1,15 @@
 <template>
-    <div v-if="!props.isLoading" class="flex flex-col">
+    <div v-if="!isLoading" class="flex flex-col">
         <template v-if="validContract && hasContract && contractDeployed">
-            <template v-for="(method, index) in props.abi" :key="`${index}`">
-                <v-method-accordion :method="method" class="mb-xs" :isMint="props.isMint" :metadata="props.metadata" :network="props.network" :defaultAddress="props.defaultAddress"/>
+            <template v-for="(method, index) in abi" :key="`${index}`">
+                <v-method-accordion
+                    :method="method"
+                    class="mb-xs"
+                    :isMint="isMint"
+                    :metadata="metadata"
+                    :network="network"
+                    :defaultAddress="defaultAddress"
+                />
             </template>
         </template>
         <template v-else-if="!validContract">
@@ -36,9 +43,7 @@ import vMethodAccordion from '@/components/interaction/methodAccordion.vue';
 import vButton from '@/components/button.vue';
 import { RefreshIcon } from '@heroicons/vue/solid';
 
-import { computed } from 'vue';
-
-const props = defineProps({
+defineProps({
     abi: {
         type: Array,
         default: []

@@ -35,7 +35,8 @@
         "app": {
             "aria": "Ir a la página principal"
         },
-        "copyright": "© 2022 Smart NFTs"
+        "copyright": "© 2022 Smart NFTs",
+        "protected": "Este sitio está protegido por reCAPTCHA."
     },
     "home": {
         "title": "Página Principal",

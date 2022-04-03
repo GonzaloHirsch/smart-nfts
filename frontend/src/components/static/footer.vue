@@ -81,6 +81,7 @@
         >
             <div class="mb-sm lg:mb-0 flex flex-col">
                 <span class="text-body_xs">{{ $t('footer.copyright') }}</span>
+                <span class="text-body_xs">{{ $t('footer.protected') }}</span>
             </div>
             <a
                 class="footer--link-uni"

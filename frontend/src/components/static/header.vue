@@ -1,6 +1,6 @@
 <template>
     <header
-        :id="props.id"
+        :id="id"
         :class="[
             'sticky top-0 left-0 px-sm md:px-base lg:px-xl py-sm bg-white w-full z-50 transition duration-300',
             isScrolled ? 'header--shadow' : ''
@@ -14,12 +14,12 @@
 import { ref, onUnmounted } from 'vue';
 import { NAVBAR_SCROLL_LIMIT } from '@/js/constants.js';
 
-const props = defineProps({
+defineProps({
     id: {
         type: String,
         required: true
     }
-})
+});
 
 const isScrolled = ref(false);
 

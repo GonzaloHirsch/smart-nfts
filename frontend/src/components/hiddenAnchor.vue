@@ -1,6 +1,6 @@
 <template>
   <div class="relative">
-    <span :id="props.anchor" class="hidden-anchor" :style="anchorStyle"></span>
+    <span :id="props.anchor" class="absolute left-0" :style="anchorStyle"></span>
   </div>
 </template>
 
@@ -24,9 +24,3 @@ const anchorStyle = computed(() => {
   return navHeight.value ? { top: `-${navHeight.value * props.distanceMultiplier}px` } : { top: '0' };
 });
 </script>
-
-<style scoped>
-.hidden-anchor {
-  @apply absolute left-0;
-}
-</style>

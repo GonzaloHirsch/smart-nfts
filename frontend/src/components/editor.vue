@@ -216,11 +216,8 @@ import { QuestionMarkCircleIcon, ChevronUpIcon } from '@heroicons/vue/solid';
 import { ref, watch, computed } from 'vue';
 import { mapApiExtensionsToForm, mapExtensionInputsToForm, mapApiMetadataToForm } from '@/js/mapper.js';
 
-import { useRouter } from 'vue-router';
-const router = useRouter();
-
-import { useI18n } from 'vue-i18n';
-const { t } = useI18n();
+import { useHelp } from '@/plugins/getHelp';
+const { getHelp } = useHelp();
 
 const props = defineProps({
     name: {
@@ -409,12 +406,6 @@ watch(
         }
     }
 );
-
-const getHelp = (hash) => {
-    router.push({
-        hash: `#${hash}`
-    });
-};
 
 // Expandable section
 const isExpanded = ref(false);

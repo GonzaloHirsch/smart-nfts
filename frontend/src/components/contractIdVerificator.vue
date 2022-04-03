@@ -10,18 +10,18 @@
             :continuousInput="true"
             format="primary-white"
             class="mb-xs md:mr-sm md:mb-0"
-            :size="props.button.size"
+            :size="button.size"
             autocomplete="contractId"
         />
         <v-button
-            :format="editDisabled ? 'disabled' : props.button.format"
-            :aria="$t(props.button.aria)"
+            :format="editDisabled ? 'disabled' : button.format"
+            :aria="$t(button.aria)"
             :external="false"
             :white="false"
-            :text="$t(props.button.text)"
+            :text="$t(button.text)"
             :disabled="editDisabled"
             :loading="isLoading"
-            :size="props.button.size"
+            :size="button.size"
             @click="handleClick"
         />
     </div>
@@ -46,7 +46,7 @@ import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
 
 const emit = defineEmits(['validId']);
-const props = defineProps({
+defineProps({
     button: {
         type: Object,
         required: true
