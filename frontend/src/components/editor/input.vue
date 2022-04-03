@@ -56,8 +56,8 @@ import { applyValidations, sumarizeValidationResults } from '@/js/validations.js
 import { computed, ref, watch } from 'vue';
 import { PencilIcon, QuestionMarkCircleIcon } from '@heroicons/vue/solid';
 
-import { useRouter } from 'vue-router';
-const router = useRouter();
+import { useHelp } from '@/plugins/getHelp';
+const { getHelp } = useHelp();
 
 const emit = defineEmits(['update:modelValue', 'validInput', 'invalidInput']);
 
@@ -167,13 +167,6 @@ watch(
         else emit('invalidInput', error.value);
     }
 );
-
-// Handling getting help
-const getHelp = (hash) => {
-    router.push({
-        hash: `#${hash}`
-    });
-};
 </script>
 
 <style scoped>

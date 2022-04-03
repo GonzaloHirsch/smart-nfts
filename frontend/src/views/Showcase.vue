@@ -105,14 +105,7 @@
     </v-section>
 
     <v-section :noPadding="true" v-if="isLoading || isLoadingPage">
-        <div class="flex flex-row items-center justify-center p-xs md:p-md">
-            <div class="bg-brand_secondary w-full rounded-lg text-typography_primary">
-                <h4 class="flex items-center justify-center my-base py-xl">
-                    {{ $t(isLoadingPage ? 'showcase.preparePage' : 'showcase.prepare') }}
-                    <RefreshIcon class="h-10 w-10 animate-spin-reverse transform rotate-180" />
-                </h4>
-            </div>
-        </div>
+        <v-loading-block :text="isLoadingPage ? 'showcase.preparePage' : 'showcase.prepare'"/>
     </v-section>
 </template>
 
@@ -121,12 +114,13 @@
 import vButton from '@/components/button.vue';
 import vInput from '@/components/editor/input.vue';
 import vTokenCard from '@/components/visualize/tokenCard.vue';
+import vLoadingBlock from '@/components/loadingBlock.vue';
 import vSection from '@/components/section.vue';
 import vFloatingIcon from '@/components/floatingIcon.vue';
 import vPagination from '@/components/visualize/pagination.vue';
 
 import { EXTENSIONS, PAGINATION_PARAM } from '@/js/constants.js';
-import { RefreshIcon, InformationCircleIcon, ExclamationCircleIcon, CursorClickIcon, PencilAltIcon } from '@heroicons/vue/solid';
+import { InformationCircleIcon, ExclamationCircleIcon, CursorClickIcon, PencilAltIcon } from '@heroicons/vue/solid';
 
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();

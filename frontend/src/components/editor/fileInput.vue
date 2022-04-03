@@ -45,7 +45,7 @@ import { useNotifications } from '@/plugins/notifications';
 const { setSnackbar } = useNotifications();
 
 const fileInput = ref(null);
-const selectedFile = ref(undefined);
+const selectedFile = ref(props.modelValue);
 
 const handleChangeFile = () => {
     selectedFile.value = fileInput.value.files[0];

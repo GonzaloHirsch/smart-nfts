@@ -1,0 +1,123 @@
+{
+    "readMethods": [
+        {
+            "name": "balanceOf",
+            "type": "READ",
+            "contentCount": 1
+        },
+        {
+            "name": "getApproved",
+            "type": "READ",
+            "contentCount": 1
+        },
+        {
+            "name": "isApprovedForAll",
+            "type": "READ",
+            "contentCount": 1
+        },
+        {
+            "name": "name",
+            "type": "READ",
+            "contentCount": 1
+        },
+        {
+            "name": "owner",
+            "type": "READ",
+            "contentCount": 1
+        },
+        {
+            "name": "ownerOf",
+            "type": "READ",
+            "contentCount": 1
+        },
+        {
+            "name": "paused",
+            "type": "READ",
+            "contentCount": 1
+        },
+        {
+            "name": "supportsInterface",
+            "type": "READ",
+            "contentCount": 2
+        },
+        {
+            "name": "symbol",
+            "type": "READ",
+            "contentCount": 1
+        },
+        {
+            "name": "tokenByIndex",
+            "type": "READ",
+            "contentCount": 1
+        },
+        {
+            "name": "tokenOfOwnerByIndex",
+            "type": "READ",
+            "contentCount": 1
+        },
+        {
+            "name": "tokenURI",
+            "type": "READ",
+            "contentCount": 1
+        },
+        {
+            "name": "totalSupply",
+            "type": "READ",
+            "contentCount": 1
+        }
+    ],
+    "writeMethods": [
+        {
+            "name": "approve",
+            "type": "WRITE",
+            "contentCount": 1
+        },
+        {
+            "name": "burn",
+            "type": "WRITE",
+            "contentCount": 1
+        },
+        {
+            "name": "pause",
+            "type": "WRITE",
+            "contentCount": 1
+        },
+        {
+            "name": "renounceOwnership",
+            "type": "WRITE",
+            "contentCount": 1
+        },
+        {
+            "name": "safeTransferFrom",
+            "type": "WRITE",
+            "contentCount": 1
+        },
+        {
+            "name": "setApprovalForAll",
+            "type": "WRITE",
+            "contentCount": 1
+        },
+        {
+            "name": "transferFrom",
+            "type": "WRITE",
+            "contentCount": 1
+        },
+        {
+            "name": "transferOwnership",
+            "type": "WRITE",
+            "contentCount": 1
+        },
+        {
+            "name": "unpause",
+            "type": "WRITE",
+            "contentCount": 1
+        }
+    ],
+    "mintMethods": [
+        {
+            "name": "safeMint",
+            "type": "CREATE",
+            "contentCount": 2
+        }
+    ]
+}

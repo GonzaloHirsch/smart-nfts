@@ -48,6 +48,7 @@ const endpoint = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyRes
     }
 
     // Send email
+    console.log(`Sending email to ${email} for contract ${event.pathParameters!.contractId!}`);
     await sendReminderEmail(email, event.pathParameters!.contractId!, selectedLanguage);
 
     // Update internal status

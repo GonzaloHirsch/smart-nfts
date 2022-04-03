@@ -179,13 +179,7 @@
                 />
             </div>
         </div>
-        <div v-else class="flex flex-row items-center justify-center p-xs md:p-md">
-            <div class="bg-brand_secondary w-full rounded-lg text-typography_primary">
-                <h4 class="flex items-center justify-center my-base py-xl">
-                    {{ $t('editor.prepare') }} <RefreshIcon class="h-10 w-10 animate-spin-reverse transform rotate-180" />
-                </h4>
-            </div>
-        </div>
+        <v-loading-block v-else text="editor.prepare"/>
     </v-section>
 
     <v-section class="bg-typography_primary editor--content">
@@ -238,6 +232,7 @@ import vModal from '@/components/modal.vue';
 import vSection from '@/components/section.vue';
 import vAnchoredTitle from '@/components/anchoredTitle.vue';
 import vFloatingIcon from '@/components/floatingIcon.vue';
+import vLoadingBlock from '@/components/loadingBlock.vue';
 
 import vDeployContractModal from '@/components/modals/deployContractModal.vue';
 import vVerifyContractModal from '@/components/modals/verifyContractModal.vue';

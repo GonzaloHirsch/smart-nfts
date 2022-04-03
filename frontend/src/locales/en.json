@@ -505,6 +505,11 @@
                     "title": "Types of Methods",
                     "anchor": "method-types"
                 },
+                "creating": {
+                    "title": "Creating Tokens",
+                    "anchor": "creating-tokens",
+                    "text": "Token creation is called <strong>minting</strong>, which means that a new NFT is emitted in the blockchain and stored forever there. To mint a new token, the <pre class=\"code\"><code>safeMint</code></pre> method is used."
+                },
                 "read": {
                     "title": "Read Methods",
                     "anchor": "read-methods",
@@ -588,6 +593,34 @@
                 "unpause": {
                     "content_1": "Resumes minting and transfers after pausing the contract."
                 }
+            },
+            "parameters": {
+                "title": "Parameters",
+                "anchor": "parameters",
+                "text": "Contract methods can have parameters that are options you fill in when executing them. The contract method will perform operations based on those values. These options can have different types:",
+                "types": {
+                    "address": "An <pre class=\"code\"><code>address</code></pre> is a unique key that can identify one of two things. It can point to an Externally Owned Address (EOA), an account that can hold funds and NFTs. A wallet is an interface to interact with said account and address. It can also point to a contract address, which is the location of the contract code within the blockchain. An address looks like this <em class=\"break-all\">0xA3D9E7D1c697EDB3C37d73200149b01749853ab4</em>. You can view more information about addresses <a class=\"link\" href=\"https://info.etherscan.com/what-is-an-ethereum-address/\" target=\"_blank\" rel=\"noopener noreferer\">here</a>.",
+                    "uint256": "A <pre class=\"code\"><code>uint256</code></pre> is a non-negative, whole number that can store up to the number <em class=\"break-all\">115792089237316195423570985008687907853269984665640564039457584007913129639935</em>. You can view more information about uint256 <a class=\"link\" href=\"https://medium.com/coinmonks/eli5-uint256-in-solidity-a16f22942166\" target=\"_blank\" rel=\"noopener noreferer\">here</a>.",
+                    "bytes4": "<pre class=\"code\"><code>bytes4</code></pre> is a number written in <a class=\"link\" href=\"https://en.wikipedia.org/wiki/Hexadecimal\" target=\"_blank\" rel=\"noopener noreferer\">hexadecimal</a> format that gets translated into a number. It starts with <pre class=\"code\"><code>0x</code></pre> and contains eight (8) characters from the following list <pre class=\"code\"><code>0123456789ABCDEF</code></pre>.",
+                    "bytes": "<pre class=\"code\"><code>bytes</code></pre> is a number (or text) written in <a class=\"link\" href=\"https://en.wikipedia.org/wiki/Hexadecimal\" target=\"_blank\" rel=\"noopener noreferer\">hexadecimal</a> format that gets translated into a number. It's similar to <pre class=\"code\"><code>bytes4</code></pre>, but in this case, it can contain any number of characters after the initial <pre class=\"code\"><code>0x</code></pre>.",
+                    "bool": "A <pre class=\"code\"><code>bool</code></pre> is a value that represents true or false. The only possible values here are <pre class=\"code\"><code>true</code></pre> or <pre class=\"code\"><code>false</code></pre>."
+                }
+            },
+            "metadata": {
+                "title": "Metadata",
+                "anchor": "metadata",
+                "text": "Metadata are extra properties defined for each token, adding more information to the one stored in the blockchain. You, the user or creator of the contract, give meaning to the properties. It can have the following types:",
+                "types": {
+                    "string": "<pre class=\"code\"><code>String</code></pre> (or text) is just plain text (e.g., a color).",
+                    "boost_number": "<pre class=\"code\"><code>Boost Number</code></pre> is a number displayed as a booster (e.g., height).",
+                    "boost_percentage": "<pre class=\"code\"><code>Boost Percentage</code></pre> is a percentage also shown as a booster (e.g., strength).",
+                    "plain_number": "<pre class=\"code\"><code>Plain Number</code></pre> is just a number (e.g., generation)."
+                }
+            },
+            "result": {
+                "title": "Result",
+                "anchor": "result",
+                "text": "Executing a method can return either information retrieved from the blockchain or a transaction hash. That transaction hash is the receipt of the operation, and you can use that receipt to verify the result and read more information about the transaction."
             }
         },
         "loading": {

@@ -8,13 +8,7 @@
             </h1>
         </div>
         <template v-if="isLoading">
-            <div class="flex flex-row items-center justify-center p-xs md:p-md">
-                <div class="bg-brand_secondary w-full rounded-lg text-typography_primary">
-                    <h4 class="block my-base px-sm py-xl text-h5 md:text-h4 text-center">
-                        {{ $t('status.prepare') }} <RefreshIcon class="h-10 w-10 animate-spin-reverse transform rotate-180 inline" />
-                    </h4>
-                </div>
-            </div>
+            <v-loading-block text="status.prepare"/>
         </template>
         <template v-else>
             <div class="grid grid-cols-10 gap-sm mt-base">
@@ -72,9 +66,10 @@
 <script setup>
 // Components
 import vButton from '@/components/button.vue';
+import vLoadingBlock from '@/components/loadingBlock.vue';
 import vSection from '@/components/section.vue';
 
-import { DocumentDuplicateIcon, RefreshIcon, ExclamationCircleIcon } from '@heroicons/vue/solid';
+import { DocumentDuplicateIcon, ExclamationCircleIcon } from '@heroicons/vue/solid';
 
 import { useMeta } from 'vue-meta';
 import { ref, computed } from 'vue';

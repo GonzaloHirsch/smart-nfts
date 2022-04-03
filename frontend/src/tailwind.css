@@ -282,7 +282,11 @@ svg.contract-drawing {
 /* CODE */
 
 pre.code {
-    @apply underline decoration-brand_secondary inline-block text-brand_secondary bg-brand_tertiary/20 italic;
+    @apply underline decoration-brand_secondary inline-block text-brand_secondary bg-brand_tertiary/20 italic break-all;
+}
+
+pre.code > code {
+    @apply break-all;
 }
 
 /* RECAPTCHA HIDE BADGE */

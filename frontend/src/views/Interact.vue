@@ -13,6 +13,7 @@
                                     ? $t('interact.title.create')
                                     : $t('interact.title.default')
                             }}
+                            <QuestionMarkCircleIcon v-if="hasContract && contractIsDeployed && !isLoading && getAbiMint(contract?.deployment?.abi).length > 0" class="h-9 w-9 inline cursor-pointer text-brand_tertiary" @click="getHelp($t('interact.content.general.creating.anchor'))" />
                         </h2>
                     </div>
                     <div class="flex mt-xs sm:mt-0">
@@ -99,20 +100,90 @@
         </div>
     </v-section>
 
-    <v-section class="bg-typography_primary">
+    <v-section class="bg-typography_primary interact--content">
         <h2 class="text-center text-brand_secondary mb-base">{{ $t('interact.content.title') }}</h2>
-        <v-anchored-title type="h3" :text="$t('interact.content.general.read.title')" :anchor="$t('interact.content.general.read.anchor')" class="mt-sm" />
-        <p v-html="$t('interact.content.general.read.text')"/>
+        <v-anchored-title
+            type="h3"
+            :text="$t('interact.content.general.creating.title')"
+            :anchor="$t('interact.content.general.creating.anchor')"
+            class="mt-sm"
+        />
+        <p v-html="$t(`interact.content.general.creating.text`)" class="mt-0" />
+        <template v-for="(method, index) in mintMethods" :key="index">
+            <v-anchored-title type="h4" :text="method.name" :anchor="method.name" class="mt-sm" />
+            <p
+                v-for="content in method.contentCount"
+                :key="content"
+                v-html="$t(`interact.content.methods.${method.name}.content_${content}`)"
+                class="mt-xs first:mt-0"
+            />
+        </template>
+        <v-anchored-title
+            type="h3"
+            :text="$t('interact.content.parameters.title')"
+            :anchor="$t('interact.content.parameters.anchor')"
+            class="mt-sm"
+        />
+        <p v-html="$t(`interact.content.parameters.text`)" class="mt-0 mb-sm" />
+        <ul>
+            <li v-html="$t('interact.content.parameters.types.address')"></li>
+            <li v-html="$t('interact.content.parameters.types.uint256')"></li>
+            <li v-html="$t('interact.content.parameters.types.bytes4')"></li>
+            <li v-html="$t('interact.content.parameters.types.bytes')"></li>
+            <li v-html="$t('interact.content.parameters.types.bool')"></li>
+        </ul>
+        <v-anchored-title
+            type="h3"
+            :text="$t('interact.content.metadata.title')"
+            :anchor="$t('interact.content.metadata.anchor')"
+            class="mt-sm"
+        />
+        <p v-html="$t(`interact.content.metadata.text`)" class="mt-0 mb-sm" />
+        <ul>
+            <li v-html="$t('interact.content.metadata.types.string')"></li>
+            <li v-html="$t('interact.content.metadata.types.boost_number')"></li>
+            <li v-html="$t('interact.content.metadata.types.boost_percentage')"></li>
+            <li v-html="$t('interact.content.metadata.types.plain_number')"></li>
+        </ul>
+        <v-anchored-title
+            type="h3"
+            :text="$t('interact.content.general.read.title')"
+            :anchor="$t('interact.content.general.read.anchor')"
+            class="mt-sm"
+        />
+        <p v-html="$t('interact.content.general.read.text')" />
         <template v-for="(method, index) in readMethods" :key="index">
             <v-anchored-title type="h4" :text="method.name" :anchor="method.name" class="mt-sm" />
-            <p v-for="content in method.contentCount" :key="content" v-html="$t(`interact.content.methods.${method.name}.content_${content}`)" class="mt-xs first:mt-0"/>
+            <p
+                v-for="content in method.contentCount"
+                :key="content"
+                v-html="$t(`interact.content.methods.${method.name}.content_${content}`)"
+                class="mt-xs first:mt-0"
+            />
         </template>
-        <v-anchored-title type="h3" :text="$t('interact.content.general.write.title')" :anchor="$t('interact.content.general.write.anchor')" class="mt-sm" />
-        <p v-html="$t('interact.content.general.write.text')"/>
+        <v-anchored-title
+            type="h3"
+            :text="$t('interact.content.general.write.title')"
+            :anchor="$t('interact.content.general.write.anchor')"
+            class="mt-sm"
+        />
+        <p v-html="$t('interact.content.general.write.text')" />
         <template v-for="(method, index) in writeMethods" :key="index">
             <v-anchored-title type="h4" :text="method.name" :anchor="method.name" class="mt-sm" />
-            <p v-for="content in method.contentCount" :key="content" v-html="$t(`interact.content.methods.${method.name}.content_${content}`)" class="mt-xs first:mt-0"/>
+            <p
+                v-for="content in method.contentCount"
+                :key="content"
+                v-html="$t(`interact.content.methods.${method.name}.content_${content}`)"
+                class="mt-xs first:mt-0"
+            />
         </template>
+        <v-anchored-title
+            type="h3"
+            :text="$t('interact.content.result.title')"
+            :anchor="$t('interact.content.result.anchor')"
+            class="mt-sm"
+        />
+        <p v-html="$t(`interact.content.result.text`)" class="mt-0" />
     </v-section>
 </template>
 
@@ -124,7 +195,7 @@ import vInput from '@/components/editor/input.vue';
 import vInteracter from '@/components/interacter.vue';
 import vSection from '@/components/section.vue';
 import { EXTENSIONS } from '@/js/constants.js';
-import { PencilAltIcon, CollectionIcon } from '@heroicons/vue/solid';
+import { PencilAltIcon, CollectionIcon, QuestionMarkCircleIcon } from '@heroicons/vue/solid';
 
 // Router
 import { useRoute, useRouter } from 'vue-router';
@@ -144,6 +215,9 @@ const { t } = useI18n();
 
 import { useRecaptcha } from '@/plugins/recaptcha';
 const recaptcha = useRecaptcha();
+
+import { useHelp } from '@/plugins/getHelp';
+const { getHelp } = useHelp();
 
 const isLoading = ref(false);
 const validContract = ref(true);
@@ -185,7 +259,7 @@ watch(
                 // Get the contract
                 isLoading.value = true;
                 recaptcha.challengeInput('GET_CONTRACT', (token) => {
-                    Promise.all([ api.getContract(contractId.value, token), api.getStatus()])
+                    Promise.all([api.getContract(contractId.value, token), api.getStatus()])
                         .then(([res, resStatus]) => {
                             // Do with the contract info
                             contract.value = res.data;
@@ -195,7 +269,7 @@ watch(
                                 setSnackbar(t('errors.contract.notDeployed'), 'error', 2.5);
                             }
                             // Keep wallet address
-                            defaultAddress.value = resStatus.data.wallet.address
+                            defaultAddress.value = resStatus.data.wallet.address;
                         })
                         .catch((err) => {
                             validContract.value = false;
@@ -238,124 +312,10 @@ const getAbiMint = (abi) => {
 };
 
 // Content
-const readMethods = [{
-        name: 'balanceOf',
-        type: 'READ',
-        contentCount: 1
-    },
-    {
-        name: 'getApproved',
-        type: 'READ',
-        contentCount: 1
-    },
-    {
-        name: 'isApprovedForAll',
-        type: 'READ',
-        contentCount: 1
-    },
-    {
-        name: 'name',
-        type: 'READ',
-        contentCount: 1
-    },
-    {
-        name: 'owner',
-        type: 'READ',
-        contentCount: 1
-    },
-    {
-        name: 'ownerOf',
-        type: 'READ',
-        contentCount: 1
-    },
-    {
-        name: 'paused',
-        type: 'READ',
-        contentCount: 1
-    },
-    {
-        name: 'supportsInterface',
-        type: 'READ',
-        contentCount: 2
-    },
-    {
-        name: 'symbol',
-        type: 'READ',
-        contentCount: 1
-    },
-    {
-        name: 'tokenByIndex',
-        type: 'READ',
-        contentCount: 1
-    },
-    {
-        name: 'tokenOfOwnerByIndex',
-        type: 'READ',
-        contentCount: 1
-    },
-    {
-        name: 'tokenURI',
-        type: 'READ',
-        contentCount: 1
-    },
-    {
-        name: 'totalSupply',
-        type: 'READ',
-        contentCount: 1
-    }
-];
-const writeMethods = [
-    {
-        name: 'safeMint',
-        type: 'CREATE',
-        contentCount: 2
-    },
-    {
-        name: 'approve',
-        type: 'WRITE',
-        contentCount: 1
-    },
-    {
-        name: 'burn',
-        type: 'WRITE',
-        contentCount: 1
-    },
-    {
-        name: 'pause',
-        type: 'WRITE',
-        contentCount: 1
-    },
-    {
-        name: 'renounceOwnership',
-        type: 'WRITE',
-        contentCount: 1
-    },
-    {
-        name: 'safeTransferFrom',
-        type: 'WRITE',
-        contentCount: 1
-    },
-    {
-        name: 'setApprovalForAll',
-        type: 'WRITE',
-        contentCount: 1
-    },
-    {
-        name: 'transferFrom',
-        type: 'WRITE',
-        contentCount: 1
-    },
-    {
-        name: 'transferOwnership',
-        type: 'WRITE',
-        contentCount: 1
-    },
-    {
-        name: 'unpause',
-        type: 'WRITE',
-        contentCount: 1
-    }
-];
+import interactData from '@/content/interact.json';
+const readMethods = interactData.readMethods;
+const writeMethods = interactData.writeMethods;
+const mintMethods = interactData.mintMethods;
 
 // Meta
 import { useMeta } from 'vue-meta';
@@ -372,6 +332,10 @@ useMeta({
 
 .action--icon {
     @apply w-9 h-9 my-auto;
+}
+
+.interact--content ul {
+    @apply list-disc pl-sm mb-sm;
 }
 
 @screen md {

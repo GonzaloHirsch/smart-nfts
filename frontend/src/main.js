@@ -13,6 +13,7 @@ import { apiPlugin } from './plugins/api';
 import { notificationsPlugin } from './plugins/notifications';
 import { ipfsPlugin } from './plugins/ipfs';
 import { clickOutsidePlugin } from './plugins/clickOutside';
+import { helpPlugin } from './plugins/getHelp';
 
 import vTooltip from '@/components/tooltip.vue';
 
@@ -68,6 +69,8 @@ app.use(notificationsPlugin);
 app.use(recaptchaPlugin);
 app.use(ipfsPlugin);
 app.use(clickOutsidePlugin);
+// Pass the router as an option, we need it there
+app.use(helpPlugin, {router: router});
 
 app.component('v-tooltip', vTooltip);
 

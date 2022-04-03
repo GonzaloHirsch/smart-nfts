@@ -1,9 +1,9 @@
 <template>
     <div class="flex flex-col mt-xs" autocomplete="off">
-        <div class="grid grid-cols-7" v-if="props.modelValue.length > 0">
-            <span class="col-span-2 pl-xs font-bold">{{ $t('editor.metadata.titles.name') }}</span>
-            <span class="col-span-2 pl-xs font-bold">{{ $t('editor.metadata.titles.type') }}</span>
-            <span class="col-span-2 pl-xs font-bold">{{ $t('editor.metadata.titles.display') }}</span>
+        <div class="grid grid-cols-10" v-if="props.modelValue.length > 0">
+            <span class="col-span-3 pl-xs font-bold">{{ $t('editor.metadata.titles.name') }}</span>
+            <span class="col-span-3 pl-xs font-bold">{{ $t('editor.metadata.titles.type') }}</span>
+            <span class="col-span-3 pl-xs font-bold">{{ $t('editor.metadata.titles.display') }}</span>
         </div>
         <v-metadata-field
             v-for="(field, index) in props.modelValue"

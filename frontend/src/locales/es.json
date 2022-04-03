@@ -505,6 +505,11 @@
                     "title": "Tipos de métodos",
                     "anchor": "method-types"
                 },
+                "creating": {
+                    "title": "Creación de tokens",
+                    "anchor": "crear-tokens",
+                    "text": "La creación de tokens se llama <strong>minting</strong>, esto significa que un nuevo NFT se emite en la blockchain y se guarda por siempre ahí. Para emitir un nuevo token, se usa el método <pre class=\"code\"><code>safeMint</code></pre>."
+                },
                 "read": {
                     "title": "Métodos de lectura",
                     "anchor": "read-methods",
@@ -588,6 +593,34 @@
                 "unpause": {
                     "content_1": "Reanuda la creacion y las transferencias después de pausar el contrato."
                 }
+            },
+            "parameters": {
+                "title": "Parámetros",
+                "anchor": "parametros",
+                "text": "Los métodos de contrato pueden tener parámetros que son opciones que completas al ejecutarlos. El método va a realizar operaciones en base a esos valores. Estas opciones pueden ser de diferentes tipos:",
+                "types": {
+                    "address": "Un <pre class=\"code\"><code>address</code></pre> es una clave única que identifica una de dos cosas. Puede apuntar a un Externally Owned Address (EOA), una cuenta que puede contener dinero y NFTs. Una billetera es una interfaz para interactuar con esa cuenta y address. También puede apuntar al address de un contrato, que es el lugar donde se guarda el código del contrato en la blockchain. Un address tiene el siguiente formato <em class=\"break-all\">0xA3D9E7D1c697EDB3C37d73200149b01749853ab4</em>. Podés ver más información sobre los address <a class=\"link\" href=\"https://info.etherscan.com/what-is-an-ethereum-address/\" target=\"_blank\" rel=\"noopener noreferer\">acá</a>.",
+                    "uint256": "Un <pre class=\"code\"><code>uint256</code></pre> es un número entero, no negativo, que puede guardar cualquier valor hasta <em class=\"break-all\">115792089237316195423570985008687907853269984665640564039457584007913129639935</em>. Podés ver más información sobre uint256 <a class=\"link\" href=\"https://medium.com/coinmonks/eli5-uint256-in-solidity-a16f22942166\" target=\"_blank\" rel=\"noopener noreferer\">acá</a>.",
+                    "bytes4": "<pre class=\"code\"><code>bytes4</code></pre> es un número escrito en formato <a class=\"link\" href=\"https://en.wikipedia.org/wiki/Hexadecimal\" target=\"_blank\" rel=\"noopener noreferer\">hexadecimal</a> que se traduce a un número. Empieza con <pre class=\"code\"><code>0x</code></pre> y contiene hasta ocho (8) caracteres de la siguiente lista <pre class=\"code\"><code>0123456789ABCDEF</code></pre>.",
+                    "bytes": "<pre class=\"code\"><code>bytes</code></pre> es un número (o texto) escrito en formato <a class=\"link\" href=\"https://en.wikipedia.org/wiki/Hexadecimal\" target=\"_blank\" rel=\"noopener noreferer\">hexadecimal</a> que se traduce a un número (o texto). Es similar a <pre class=\"code\"><code>bytes4</code></pre>, pero en este caso puede contener cualquier cantidad caracteres luego del <pre class=\"code\"><code>0x</code></pre> inicial.",
+                    "bool": "Un <pre class=\"code\"><code>bool</code></pre> es un valor que representa verdadero o falso. Los únicos valores posibles para este son <pre class=\"code\"><code>true</code></pre> o <pre class=\"code\"><code>false</code></pre>."
+                }
+            },
+            "metadata": {
+                "title": "Metadata",
+                "anchor": "metadata",
+                "text": "La metadata son propiedades adicionales definidas para cada token que agregan más información a la almacenada en la blockchain. El usuario o creador del contrato le da sentido a las propiedades. Pueden ser de los siguientes tipos:",
+                "types": {
+                    "string": "<pre class=\"code\"><code>Texto</code></pre> es contenido simple (por ejemplo, un color).",
+                    "boost_number": "<pre class=\"code\"><code>Número de aumento</code></pre> es un número que se muestra como una aumento (por ejemplo, altura).",
+                    "boost_percentage": "<pre class=\"code\"><code>Porcentaje de aumento</code></pre> es un procentaje que también se muestra como un aumento (por ejemplo, fuerza).",
+                    "plain_number": "<pre class=\"code\"><code>Número simple</code></pre> es simplemente un número (por ejemplo, generación)."
+                }
+            },
+            "result": {
+                "title": "Resultado",
+                "anchor": "resultado",
+                "text": "La ejecución de un método puede devolver información recuperada de la blockchain o un hash de la transacción. Ese hash de la transacción es el recibo de la operación, y podés usar ese recibo para verificar el resultado y leer más información sobre la transacción en sí."
             }
         },
         "loading": {

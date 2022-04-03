@@ -2,7 +2,7 @@
     <v-accordion :title="props.method.name" :format="props.format" :error="errors" :customId="props.method._id">
         <template #header>
             <!-- Icon for help -->
-            <QuestionMarkCircleIcon class="w-6 h-6 md:w-7 md:h-7 text-brand_tertiary" @click.stop="getHelp" />
+            <QuestionMarkCircleIcon class="w-6 h-6 md:w-7 md:h-7 text-brand_tertiary" @click.stop="getHelp(props.method.name)" />
             <!-- Displaying the errors -->
             <v-button
                 :format="isLoading ? 'disabled' : 'primary'"
@@ -21,7 +21,10 @@
             <div class="divide-y divide-white">
                 <!-- Basic inputs -->
                 <div v-if="props.method.inputs && props.method.inputs.length > 0">
-                    <p class="text-lg md:text-h5">{{ $t('interact.methods.fields.parameters.title') }}</p>
+                    <div class="flex flex-row items-center mb-sm">
+                        <span class="text-lg md:text-h5">{{ $t('interact.methods.fields.parameters.title') }}</span>
+                        <QuestionMarkCircleIcon class="w-5 h-5 inline text-brand_tertiary ml-1 cursor-pointer" @click.stop="getHelp($t('interact.content.parameters.anchor'))" />
+                    </div>
                     <template v-for="(input, index) in props.method.inputs" :key="index">
                         <!-- Add the validations as the required one and the type check -->
                         <!-- Receive the events for input validity -->
@@ -48,7 +51,10 @@
                 </div>
                 <template v-if="props.metadata">
                     <div class="mt-sm pt-sm">
-                        <p class="text-lg md:text-h5">{{ $t('interact.methods.fields.metadata.title') }}</p>
+                        <div class="flex flex-row items-center mb-sm">
+                            <span class="text-lg md:text-h5">{{ $t('interact.methods.fields.metadata.title') }}</span>
+                            <QuestionMarkCircleIcon class="w-5 h-5 inline text-brand_tertiary ml-1 cursor-pointer" @click.stop="getHelp($t('interact.content.metadata.anchor'))" />
+                        </div>
                         <p v-if="props.metadata.hasImage" class="text-lg mt-sm">{{ $t('interact.methods.fields.metadata.image') }}</p>
                         <v-file-input v-if="props.metadata.hasImage" v-model="metadataImage"></v-file-input>
                         <p class="text-lg mt-sm">{{ $t('interact.methods.fields.metadata.details') }}</p>
@@ -80,7 +86,10 @@
                             format="primary-white"
                             class="mb-xs"
                         />
-                        <p v-if="props.metadata.attributes.length > 0" class="text-lg mt-sm">{{ $t('interact.methods.fields.title') }}</p>
+                        <div v-if="props.metadata.attributes.length > 0" class="flex flex-row items-center mt-sm">
+                            <span class="text-lg">{{ $t('interact.methods.fields.title') }}</span>
+                            <QuestionMarkCircleIcon class="w-4 h-4 inline text-brand_tertiary ml-1 cursor-pointer" @click.stop="getHelp($t('interact.content.metadata.anchor'))" />
+                        </div>
                         <template v-for="(metadataField, index) in props.metadata.attributes" :key="index">
                             <v-input
                                 :id="`${props.method.name}-metadata-${metadataField.traitType}`"
@@ -109,7 +118,10 @@
                 </template>
                 <template v-if="callResult || callResultType || callError">
                     <div :class="[props.metadata || (props.method.inputs && props.method.inputs.length > 0) ? 'mt-sm pt-sm' : '']">
-                        <p class="text-lg md:text-h5">{{ $t('interact.methods.result.title') }}</p>
+                        <div class="flex flex-row items-center mb-sm">
+                            <span class="text-lg md:text-h5">{{ $t('interact.methods.result.title') }}</span>
+                            <QuestionMarkCircleIcon class="w-5 h-5 inline text-brand_tertiary ml-1 cursor-pointer" @click.stop="getHelp($t('interact.content.result.anchor'))" />
+                        </div>
                         <div class="w-full bg-white rounded-md p-xs mt-xs md:mt-sm pr-base relative break-words">
                             <p v-if="(callResult || callResultType) && callHasSuccess" class="text-typography_secondary text-xs md:text-base">
                                 {{ callResultType === 'transactionHash' ? $t('interact.success.transactionDisplay', [callResult]) : callResult }}
@@ -213,15 +225,17 @@ const api = useApi();
 import { useNotifications } from '@/plugins/notifications';
 const { setSnackbar } = useNotifications();
 
-import { useRoute, useRouter } from 'vue-router';
+import { useRoute } from 'vue-router';
 const route = useRoute();
-const router = useRouter();
 
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
 
 import { useRecaptcha } from '@/plugins/recaptcha';
 const recaptcha = useRecaptcha();
+
+import { useHelp } from '@/plugins/getHelp';
+const { getHelp } = useHelp();
 
 const callMethod = () => {
     // Perform all validations before calling the method
@@ -455,12 +469,6 @@ const handleInvalidDetailsInput = (name, error) => {
 // Determine if the field must be restricted
 const isRestrictiveField = (field) => {
     return field.name === 'uri' || field.name === 'hash';
-};
-
-const getHelp = () => {
-    router.push({
-        hash: `#${props.method.name}`
-    });
 };
 
 const copyResponse = (response) => {
