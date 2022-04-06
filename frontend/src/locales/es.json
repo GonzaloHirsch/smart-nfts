@@ -342,10 +342,12 @@
         "content": {
             "title": "Campos explicados",
             "contractInformation": {
+                "anchor": "informacionDeContrato",
                 "title": "Información del contrato",
                 "copy": "Esta sección se refiere a las propiedades de <pre class=\"code\"><code>nombre</code></pre> y <pre class=\"code\"><code>símbolo</code></pre> del Smart Contract. El <pre id=\"contract-name\" class=\"code\"><code>nombre</code></pre> hace referencia a la colección en sí (por ejemplo, la colección \"CustomTokens\") y se va a mostrar en la mayoría de los sitios externos cuando se haga referencia al Smart Contract. El <pre id=\"contract-symbol\" class=\"code\"><code>símbolo</code></pre> se refiere a una forma de mostrar la cantidad de tokens en el conjunto (por ejemplo, el símbolo de \"CustomTokens\" puede ser \"CTKN\" y, de esa manera, alguien puede tener 3 CTKN)."
             },
             "creation": {
+                "anchor": "creacion",
                 "title": "Creación",
                 "copy_1": "Con cada extensión que elegís, agregás más funcionalidad a tu contrato. Algunas extensiones son variaciones de otras, por lo que al seleccionar algunas, agregaremos otras por vos (p. ej., si elegís \"Auto Increment IDs\" se activa \"Mintable\").",
                 "copy_2": "La vista previa del contrato antes y después de agregar una extensión puede ayudarte a comprender los cambios y cómo funciona el código de Solidity.",
@@ -380,7 +382,7 @@
                 },
                 "uriStorage": {
                     "title": "URI Storage",
-                    "copy_1": "La extensión <pre class=\"code\"><code>URI storage</code></pre> permite configurar un URI que apunta al almacenamiento fuera de la Blockchain para cada NFT. Estos datos fuera de la cadena, también conocidos como <a href=\"#metadata\" class=\"link\">metadata</a>, pueden agregar muchos atributos adicionales a los tokens para enriquecerlos, como imagenes y atributos. Si se elige, se necesita un URI que apunte a la metadata al crear un nuevo NFT, aunque esto no es necesario al interactuar a través de Smart NFTs, ya que nos encargamos de cargar la metadata en un IPFS y establecer el URI correcto en el token.",
+                    "copy_1": "La extensión <pre class=\"code\"><code>URI storage</code></pre> permite configurar un URI que apunta al almacenamiento fuera de la Blockchain para cada NFT. Estos datos fuera de la cadena, también conocidos como <a href=\"#metadata\" class=\"link\">metadata</a>, pueden agregar muchos atributos adicionales e imágenes a los tokens para enriquecerlos, como imagenes y atributos. Si se elige, se necesita un URI que apunte a la metadata al crear un nuevo NFT, aunque esto no es necesario al interactuar a través de Smart NFTs, ya que nos encargamos de cargar la metadata en un IPFS y establecer el URI correcto en el token.",
                     "uniqueStorage": {
                         "title": "Unique Storage",
                         "copy_1": "La extensión <pre class=\"code\"><code>unique storage</code></pre> evita que se creen tokens duplicados. Por duplicados, nos referimos a tokens con la misma metadata. La metadata se procesa antes de crear el NFT para verificar si el hash ya se utilizó. Tené en cuenta que aumenta el costo de crear un NFT ya que requiere más espacio de almacenamiento para guardar los hashes."
@@ -390,19 +392,26 @@
             "metadata": {
                 "title": "Metadata",
                 "copy_1": "La metadata se refiere a todas las demás propiedades que se pueden agregar al token. Las propiedades de <pre class=\"code\"><code>nombre</code></pre> y <pre class=\"code\"><code>descripción</code></pre> siempre son obligatorias y se establecen de forma predeterminada en el esquema de metadata. Se puede agregar cualquier otro atributo. Asegurate de seleccionar 'Tiene imagen' si querés incluir una imagen o un archivo en la metadata.",
-                "copy_2": "La metadata se almacena fuera de la Blockchain porque es costoso mantenerla en la Blockchain. Ahí es donde entra en juego el <a class=\"link\" href=\"https://ipfs.io/\" target=\"_blank\" rel=\"noopener noreferer\">InterPlanetary File System</a> (IPFS). IPFS es un protocolo y una red peer-to-peer para almacenar y compartir información en un sistema de archivos distribuido, básicamente donde guardamos nuestra metadata. Solo guardamos el URI a la metadata en la Blockchain, lo que reduce el tamaño del contrato. Dado esto, la metadata solo se permite cuando se activa la extensión URI Storage, lo que indica que se van a almacenar los URI. Podés actualizar el esquema de metadata después de publicar el contrato y vamos a usar el esquema más reciente que elijas.",
-                "copy_3": "Los atributos adicionales pueden ser de cuatro tipos. \"<em>Texto</em>\" es solo texto sin formato (por ejemplo, un color), mientras que \"<em>Número</em>\" puede venir en 3 formatos diferentes. \"<em>Número de aumento</em>\" es un número que se muestra como un aumento (por ejemplo, altura). El \"<em>Porcentaje de aumento</em>\" es un porcentaje que también se muestra como un aumento (por ejemplo, fuerza). \"<em>Número simple</em>\" es solo un número (por ejemplo, generación).",
+                "copy_2": "La metadata se almacena fuera de la Blockchain porque es costoso mantenerla en la Blockchain. Ahí es donde entra en juego el <a class=\"link\" href=\"https://ipfs.io/\" target=\"_blank\" rel=\"noopener noreferer\">InterPlanetary File System</a> (IPFS). IPFS es un protocolo y una red peer-to-peer para almacenar y compartir información en un sistema de archivos distribuido, básicamente donde guardamos nuestra metadata. Solo guardamos el URI a la metadata en la Blockchain, lo que reduce el tamaño del contrato. Dado esto, la metadata solo se permite cuando se activa la extensión <pre class=\"code\"><code>URI Storage</code></pre>, lo que indica que se van a almacenar los URI. Podés actualizar el esquema de metadata después de publicar el contrato y vamos a usar el esquema más reciente que elijas.",
+                "copy_3": "Usando la metadata, podés agregar <em>imágenes</em> y atributos a los tokens. Los atributos adicionales pueden ser de cuatro tipos. \"<em>Texto</em>\" es solo texto sin formato (por ejemplo, un color), mientras que \"<em>Número</em>\" puede venir en 3 formatos diferentes. \"<em>Número de aumento</em>\" es un número que se muestra como un aumento (por ejemplo, altura). El \"<em>Porcentaje de aumento</em>\" es un porcentaje que también se muestra como un aumento (por ejemplo, fuerza). \"<em>Número simple</em>\" es solo un número (por ejemplo, generación).",
                 "copy_4": "Podés definir el esquema que tendrá la metadata de cada NFT. Al crear tokens, los valores de cada atributo tendrán que completarse para que la creación del token sea exitosa."
             },
             "deploy": {
+                "anchor": "publicar",
                 "title": "Publicar",
                 "copy_1": "Cuando publicas tu contrato, lo estás publicando en el mundo. Las publicaciónes a través de Smart NFTs se realizarán en una red de prueba (una Blockchain creada para hacer pruebas), específicamente <a class=\"link\" href=\"https://www.rinkeby.io/#stats\" target=\"_blank\" rel=\"noopener noreferer\">Rinkeby</a> o <a class=\"link\" href=\"https://ropsten.etherscan.io/\" target=\"_blank\" rel=\"noopener noreferer\">Ropsten</a>. Los Smart NFTs siempre se publicarán en Rinkeby, con Ropsten como segunda opción en caso de error. Usando la dirección donde está publicado, que te permite encontrar tu Smart Contract en la Blockchain, podés ver más información en páginas como <a class=\"link\" href=\"https://rinkeby.etherscan.io/\" target=\"_blank\" rel=\"noopener noreferer\">Etherscan</a>.",
                 "copy_2": "Todos los contratos se implementan utilizando la dirección Smart NFTs para que puedas interactuar completamente con él. Si querés, también podés transferir la propiedad a tu dirección, pero ya no podremos interactuar con el contrato.",
                 "copy_3": "No es posible actualizar un Smart Contract publicado, por lo que le permitimos publicarlo varias veces. Al hacerlo, Smart NFTs ya no podrán ofrecer interacción con el contrato anterior, solo con el último que se publicó. Si aún deseas tener acceso a la versión anterior por tus propios medios, acordate de transferir la propiedad a tu billetera personal antes de publicarl la nueva versión."
             },
             "verify": {
+                "anchor": "verificar",
                 "title": "Verificar",
                 "copy": "Verificar el contrato se utiliza para la transparencia; hace coincidir el código de contrato compilado con el código real del contrato. Si los bytecodes coinciden, se verificará el contrato. Esto permitirá que todos vean el código que cargó e interactúen con él desde páginas como <a class=\"link\" href=\"https://rinkeby.etherscan.io/\" target=\"_blank\" rel=\"noopener noreferer\">Etherscan</a>. No es necesario verificar el contrato antes de interactuar con él, pero es una buena práctica ya que permite que terceros vean la validez del contrato."
+            },
+            "help": {
+                "deploy": "Publicar",
+                "verify": "Verificar",
+                "deploy_verify": "Publicar & Verificar"
             }
         },
         "prepare": "Preparando el editor, un minuto...",

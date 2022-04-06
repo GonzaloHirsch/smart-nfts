@@ -4,7 +4,7 @@
             <div class="pb-sm relative">
                 <div v-if="props.isLoading" class="editor--blocker-panel"></div>
                 <h5 class="form--title">
-                    {{ $t('editor.contract.information') }}<QuestionMarkCircleIcon class="form--title-icon" @click="getHelp('contractInformation')" />
+                    {{ $t('editor.contract.information') }}<QuestionMarkCircleIcon class="form--title-icon" @click="getHelp($t('editor.content.contractInformation.anchor'))" />
                 </h5>
                 <div class="flex flex-col justify-between">
                     <!-- Set validations for each field and the validation events -->
@@ -19,7 +19,7 @@
                         class="w-full pb-2"
                         @validInput="() => handleValidInput('name', false)"
                         @invalidInput="(error) => handleInvalidInput('name', error, false)"
-                        help="contractInformation"
+                        :help="$t('editor.content.contractInformation.anchor')"
                     />
                     <v-input
                         id="symbol"
@@ -32,14 +32,14 @@
                         class="w-full pt-2"
                         @validInput="() => handleValidInput('symbol', false)"
                         @invalidInput="(error) => handleInvalidInput('symbol', error, false)"
-                        help="contractInformation"
+                        :help="$t('editor.content.contractInformation.anchor')"
                     />
                 </div>
             </div>
             <div class="py-sm relative">
-                <div v-if="props.isLoading" class="editor--blocker-panel"></div>
+                <div v-if="props.isLoading || !contractData?.name || !contractData?.symbol" class="editor--blocker-panel"></div>
                 <h5 class="form--title">
-                    {{ $t('editor.contract.creation') }} <QuestionMarkCircleIcon class="form--title-icon" @click="getHelp('creation')" />
+                    {{ $t('editor.contract.creation') }} <QuestionMarkCircleIcon class="form--title-icon" @click="getHelp($t('editor.content.creation.anchor'))" />
                 </h5>
                 <div class="flex">
                     <v-checkbox
@@ -160,33 +160,38 @@
             </div>
         </div>
         <!-- ACTIONS -->
-        <div class="flex flex-row items-center justify-center py-xs px-sm mt-sm">
-            <v-button
-                v-if="props.canDeploy"
-                :format="isLoading ? 'disabled' : 'secondary'"
-                :aria="$t('editor.buttons.deploy.aria')"
-                :external="false"
-                :white="false"
-                size="medium"
-                :loading="isLoading"
-                :disabled="isLoading"
-                :text="$t('editor.buttons.deploy.text').toUpperCase()"
-                class="editor--button"
-                @click="isLoading ? undefined : deployContract()"
-            />
-            <v-button
-                v-if="!props.isVerified && props.canVerify"
-                :format="isLoading ? 'disabled' : 'secondary'"
-                :aria="$t('editor.buttons.verify.aria')"
-                :external="false"
-                :white="false"
-                size="medium"
-                :loading="isLoading"
-                :disabled="isLoading"
-                :text="$t('editor.buttons.verify.text').toUpperCase()"
-                class="editor--button"
-                @click="isLoading ? undefined : verifyContract()"
-            />
+        <div class="flex flex-col items-center justify-center">
+            <div v-if="props.canDeploy || (!props.isVerified && props.canVerify)" class="flex flex-row items-center justify-center py-xs px-sm mt-sm">
+                <v-button
+                    v-if="props.canDeploy"
+                    :format="props.isLoading ? 'disabled' : 'secondary'"
+                    :aria="$t('editor.buttons.deploy.aria')"
+                    :external="false"
+                    :white="false"
+                    size="medium"
+                    :loading="props.isLoading"
+                    :disabled="props.isLoading"
+                    :text="$t('editor.buttons.deploy.text').toUpperCase()"
+                    class="editor--button"
+                    @click="props.isLoading ? undefined : deployContract()"
+                />
+                <v-button
+                    v-if="!props.isVerified && props.canVerify"
+                    :format="props.isLoading ? 'disabled' : 'secondary'"
+                    :aria="$t('editor.buttons.verify.aria')"
+                    :external="false"
+                    :white="false"
+                    size="medium"
+                    :loading="props.isLoading"
+                    :disabled="props.isLoading"
+                    :text="$t('editor.buttons.verify.text').toUpperCase()"
+                    class="editor--button"
+                    @click="props.isLoading ? undefined : verifyContract()"
+                />
+            </div>
+            <span v-if="props.canDeploy && !(!props.isVerified && props.canVerify)" class="editor--deploy-verify-help--text" @click="getHelp($t('editor.content.deploy.anchor'))">{{$t('editor.content.help.deploy')}}<QuestionMarkCircleIcon class="editor--deploy-verify-help--icon" /></span>
+            <span v-else-if="!props.isVerified && props.canVerify && !(props.canDeploy)" class="editor--deploy-verify-help--text" @click="getHelp($t('editor.content.verify.anchor'))">{{$t('editor.content.help.verify')}}<QuestionMarkCircleIcon class="editor--deploy-verify-help--icon" /></span>
+            <span v-else class="editor--deploy-verify-help--text" @click="getHelp($t('editor.content.deploy.anchor'))">{{$t('editor.content.help.deploy_verify')}}<QuestionMarkCircleIcon class="editor--deploy-verify-help--icon"/></span>
         </div>
         <div :class="['flex flex-row items-center justify-center relative border-t py-xs mt-sm border-gray-600', isExpanded ? 'border-b' : '']">
             <div>
@@ -287,7 +292,6 @@ const metadataData = ref({
 });
 const inputsErrors = ref({});
 const extensionInputsErrors = ref({});
-const isLoading = ref(false);
 
 const emit = defineEmits(['contractChanged', 'metadataChanged', 'verifyContract', 'deployContract']);
 const deployContract = () => {
@@ -441,5 +445,17 @@ const toggleExpanded = () => {
 
 .editor--blocker-panel {
     @apply absolute top-0 left-0 bg-light/50 z-10 w-full h-full;
+}
+
+.editor--deploy-verify-help--icon {
+    @apply w-4 h-4 inline text-brand_tertiary ml-1;
+}
+
+.editor--deploy-verify-help--text {
+    @apply text-xs md:text-sm mt-xs flex items-center cursor-pointer;
+}
+
+.editor--deploy-verify-help--text:hover {
+    @apply underline;
 }
 </style>

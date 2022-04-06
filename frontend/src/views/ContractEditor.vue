@@ -184,9 +184,9 @@
 
     <v-section class="bg-typography_primary editor--content">
         <h2 class="text-center text-brand_secondary mb-base">{{ $t('editor.content.title') }}</h2>
-        <v-anchored-title type="h3" :text="$t('editor.content.contractInformation.title')" anchor="contractInformation" class="mb-xs" />
+        <v-anchored-title type="h3" :text="$t('editor.content.contractInformation.title')" :anchor="$t('editor.content.contractInformation.anchor')" class="mb-xs" />
         <p v-html="$t('editor.content.contractInformation.copy')"></p>
-        <v-anchored-title type="h3" :text="$t('editor.content.creation.title')" anchor="creation" class="mb-xs" />
+        <v-anchored-title type="h3" :text="$t('editor.content.creation.title')" :anchor="$t('editor.content.creation.anchor')" class="mb-xs" />
         <p v-html="$t('editor.content.creation.copy_1')"></p>
         <p v-html="$t('editor.content.creation.copy_2')"></p>
         <v-anchored-title type="h4" :text="$t('editor.content.creation.mintable.title')" anchor="mintable" class="mb-xs" />
@@ -215,11 +215,11 @@
         <p v-html="$t('editor.content.metadata.copy_2')"></p>
         <p v-html="$t('editor.content.metadata.copy_3')"></p>
         <p v-html="$t('editor.content.metadata.copy_4')"></p>
-        <v-anchored-title type="h3" :text="$t('editor.content.deploy.title')" anchor="deploy" class="mb-xs" />
+        <v-anchored-title type="h3" :text="$t('editor.content.deploy.title')" :anchor="$t('editor.content.deploy.anchor')" class="mb-xs" />
         <p v-html="$t('editor.content.deploy.copy_1')"></p>
         <p v-html="$t('editor.content.deploy.copy_2')"></p>
         <p v-html="$t('editor.content.deploy.copy_3')"></p>
-        <v-anchored-title type="h3" :text="$t('editor.content.verify.title')" anchor="verify" class="mb-xs" />
+        <v-anchored-title type="h3" :text="$t('editor.content.verify.title')" :anchor="$t('editor.content.verify.anchor')" class="mb-xs" />
         <p v-html="$t('editor.content.verify.copy')"></p>
     </v-section>
 </template>

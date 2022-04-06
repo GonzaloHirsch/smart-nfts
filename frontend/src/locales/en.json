@@ -342,10 +342,12 @@
         "content": {
             "title": "Fields Explained",
             "contractInformation": {
+                "anchor": "contractInformation",
                 "title": "Contract Information",
                 "copy": "This section refers to the <pre class=\"code\"><code>name</code></pre> and <pre class=\"code\"><code>symbol</code></pre> properties of the Smart Contract. <pre id=\"contract-name\" class=\"code\"><code>name</code></pre> refers to the collection itself (e.g., the \"CustomTokens\" collection) and will be displayed on most external sites when referring to the Smart Contract. <pre id=\"contract-symbol\" class=\"code\"><code>symbol</code></pre> refers to a way to display the number of tokens in the set (e.g., the symbol for \"CustomTokens\" can be \"CTKN\" and that way, someone can have 3 CTKN)."
             },
             "creation": {
+                "anchor": "creation",
                 "title": "Creation",
                 "copy_1": "With each extension you choose, you add more functionality to your contract. Some extensions are variations of others, so when selecting some, we'll add others for you (e.g., choosing \"Auto Increment IDs\" activates \"Mintable\").",
                 "copy_2": "Previewing the contract before and after adding an extension can help you understand the changes and how the Solidity code works.",
@@ -380,7 +382,7 @@
                 },
                 "uriStorage": {
                     "title": "URI Storage",
-                    "copy_1": "The <pre class=\"code\"><code>URI storage</code></pre> extension allows setting a URI pointing to off-chain storage for each NFT. This off-chain data, also known as <a href=\"#metadata\" class=\"link\">metadata</a>, can add many extra attributes to the tokens to make them richer. If selected, a URI pointing to the metadata is needed when minting a new NFT, although this won't be necessary when interacting via Smart NFTs since we take care of the uploading the metadata to an IPFS and setting the correct URI on the token.",
+                    "copy_1": "The <pre class=\"code\"><code>URI storage</code></pre> extension allows setting a URI pointing to off-chain storage for each NFT. This off-chain data, also known as <a href=\"#metadata\" class=\"link\">metadata</a>, can add many extra attributes and images to the tokens to make them richer. If selected, a URI pointing to the metadata is needed when minting a new NFT, although this won't be necessary when interacting via Smart NFTs since we take care of the uploading the metadata to an IPFS and setting the correct URI on the token.",
                     "uniqueStorage": {
                         "title": "Unique Storage",
                         "copy_1": "The <pre class=\"code\"><code>unique storage</code></pre> extension prevents duplicate tokens from being created. By duplicates, we mean tokens with the same metadata. Metadata gets hashed before minting the NFT to check if the hash has already been minted. Note that it increases the cost of minting an NFT since it requires more storage space to save the hashes."
@@ -390,19 +392,26 @@
             "metadata": {
                 "title": "Metadata",
                 "copy_1": "Metadata refers to all other properties that one can add to the token. The <pre class=\"code\"><code>name</code></pre> and <pre class=\"code\"><code>description</code></pre> properties are always required and are set by default to the metadata schema. Any other attribute can be added. Make sure to select 'Has Image' if you want to include an image or file to the metadata.",
-                "copy_2": "Metadata is stored off-chain because it's expensive to keep it in the chain. That's where the <a class=\"link\" href=\"https://ipfs.io/\" target=\"_blank\" rel=\"noopener noreferer\">InterPlanetary File System</a> (IPFS) comes into play. IPFS is a protocol and a peer-to-peer network for storing and sharing information in a distributed filesystem, basically where we save our metadata. We only keep the link to the metadata in the blockchain, thus reducing the footprint of the contract. Given this, metadata is only allowed when activating the URI Storage extension, indicating the URIs will be stored. You can update the metadata schema after deploying the contract, and we'll still follow the latest schema you choose.",
-                "copy_3": "Extra attributes can be of four types. \"<em>String</em>\" is just plain text (e.g., a color), while \"<em>Number</em>\" can come in 3 different formats. \"<em>Boost Number</em>\" is a number displayed as a booster (e.g., height). \"<em>Boost Percentage</em>\" is a percentage also shown as a booster (e.g., strength). \"<em>Plain Number</em>\" is just a number (e.g., generation).",
+                "copy_2": "Metadata is stored off-chain because it's expensive to keep it in the chain. That's where the <a class=\"link\" href=\"https://ipfs.io/\" target=\"_blank\" rel=\"noopener noreferer\">InterPlanetary File System</a> (IPFS) comes into play. IPFS is a protocol and a peer-to-peer network for storing and sharing information in a distributed filesystem, basically where we save our metadata. We only keep the link to the metadata in the blockchain, thus reducing the footprint of the contract. Given this, metadata is only allowed when activating the <pre class=\"code\"><code>URI Storage</code></pre> extension, indicating the URIs will be stored. You can update the metadata schema after deploying the contract, and we'll still follow the latest schema you choose.",
+                "copy_3": "Using metadata, you can add <em>images</em> and attributes to the tokens. Extra attributes can be of four types. \"<em>String</em>\" is just plain text (e.g., a color), while \"<em>Number</em>\" can come in 3 different formats. \"<em>Boost Number</em>\" is a number displayed as a booster (e.g., height). \"<em>Boost Percentage</em>\" is a percentage also shown as a booster (e.g., strength). \"<em>Plain Number</em>\" is just a number (e.g., generation).",
                 "copy_4": "You can define the schema that each NFT's metadata will have. When minting tokens, values for each attribute will need to be filled for token creation to succeed."
             },
             "deploy": {
+                "anchor": "deploy",
                 "title": "Deploy",
                 "copy_1": "When you deploy your contract, you are publishing it to the world. Deployments through Smart NFTs will happen in a testnet (a blockchain made for testing), specifically <a class=\"link\" href=\"https://www.rinkeby.io/#stats\" target=\"_blank\" rel=\"noopener noreferer\">Rinkeby</a> or <a class=\"link\" href=\"https://ropsten.etherscan.io/\" target=\"_blank\" rel=\"noopener noreferer\">Ropsten</a>. Smart NFTs will always deploy to Rinkeby, with Ropsten as a second option in case of an error. Using the deployment address, which allows you to find your smart contract in the blockchain, you can see more information on sites like <a class=\"link\" href=\"https://rinkeby.etherscan.io/\" target=\"_blank\" rel=\"noopener noreferer\">Etherscan</a>.",
                 "copy_2": "All contracts deploy using the Smart NFTs address so that you can fully interact with it. If you want to, you can also transfer ownership to your address, but we won't be capable of interacting with it anymore.",
                 "copy_3": "Updating a deployed smart contract is not possible, so intead we let you deploy multiple times. By doing so, Smart NFTs will no longer be able to provide interaction with the previous contract, only the last one to be deployed. If you still want to have access to the previous version by your own means, remember to transfer ownership of it to your personal wallet before deploying a new one."
             },
             "verify": {
+                "anchor": "verify",
                 "title": "Verify",
                 "copy": "Verifying the contract is used for transparency; you match the compiled contract code with the actual code of the contract. If the bytecodes match, then the contract will be verified. This will allow everyone to see the code you uploaded and interact with it from sites like <a class=\"link\" href=\"https://rinkeby.etherscan.io/\" target=\"_blank\" rel=\"noopener noreferer\">Etherscan</a>. It's not required to verify the contract before interacting with it, yet it is a good practice since it allows external parties to view the validity of the contract."
+            },
+            "help": {
+                "deploy": "Deploy",
+                "verify": "Verify",
+                "deploy_verify": "Deploy & Verify"
             }
         },
         "prepare": "Preparing the editor, hang tight...",
