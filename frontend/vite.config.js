@@ -1,6 +1,5 @@
 import { defineConfig, loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import svgLoader from 'vite-svg-loader'
 import { resolve } from 'path'
 import { createHtmlPlugin } from 'vite-plugin-html'
 import vueI18n from '@intlify/vite-plugin-vue-i18n'
