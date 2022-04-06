@@ -39,7 +39,7 @@
                 :value="modelValue"
                 :autocomplete="props.autocomplete"
             />
-            <v-tooltip v-if="props.hasAutofill" :text="props.autofillHelp" class="self-end" positionY="bottom">
+            <v-tooltip v-if="props.hasAutofill" :text="props.autofillHelp" class="self-end" positionY="top">
                 <PencilIcon
                     @click="emit('update:modelValue', props.autofillValue)"
                     class="w-10 h-10 ml-1 bg-white rounded-lg text-brand_secondary p-1 hover:bg-white/75 cursor-pointer duration-300 ar-1/1"

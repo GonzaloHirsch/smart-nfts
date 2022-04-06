@@ -1,22 +1,12 @@
 <template>
-    <div class="tooltip-container">
+    <Popper class="tooltip" :content="text" :hover="true" :placement="positionY" :arrow="true">
         <slot />
-        <div
-            :class="[
-                'tooltip z-100',
-                positionY === 'top' ? 'tooltip--top' : '',
-                positionY === 'bottom' ? 'tooltip--bottom' : '',
-                positionX === 'left' ? 'tooltip--left' : '',
-                positionX === 'right' ? 'tooltip--right' : '',
-                positionX === 'center' ? 'tooltip--center' : ''
-            ]"
-        >
-            <span class="text">{{ text }}</span>
-        </div>
-    </div>
+    </Popper>
 </template>
 
 <script setup>
+import Popper from 'vue3-popper';
+
 defineProps({
     text: {
         type: String,
@@ -25,84 +15,26 @@ defineProps({
     positionY: {
         type: String,
         default: 'top'
-    },
-    positionX: {
-        type: String,
-        default: 'center'
     }
 });
 </script>
 
 <style scoped>
-.tooltip-container {
-    @apply relative inline-block;
+:deep(.popper) {
+    @apply bg-gray-800 p-2 rounded text-white;
 }
 
-.tooltip-container .tooltip {
-    @apply hidden;
+:deep(.popper #arrow::before) {
+    @apply bg-gray-800;
 }
 
-.tooltip-container:hover .tooltip {
-    @apply block opacity-100 !important;
+:deep(.popper:hover),
+:deep(.popper:hover > #arrow::before) {
+    @apply bg-gray-800;
 }
 
-.tooltip {
-    @apply text-white text-center p-1 rounded w-32 -ml-16 opacity-0 duration-300 absolute bg-gray-800;
-}
-
-.tooltip--top {
-    bottom: 100%;
-}
-
-.tooltip--bottom {
-    top: 100%;
-}
-
-.tooltip--left {
-    right: 50%;
-}
-
-.tooltip--right {
-    left: 100%;
-}
-
-.tooltip--center {
-    left: 50%;
-}
-
-.text::after {
-    @apply absolute border-gray-800;
-    content: '  ';
-    border-style: solid;
-    border-color: #000000 transparent transparent transparent;
-}
-
-.text {
-    @apply text-sm;
-}
-
-.tooltip--top .text::after {
-    top: 100%;
-    margin-left: -5px;
-    border-width: 5px;
-}
-
-.tooltip--bottom .text::after {
-    transform: rotate(180deg);
-    bottom: 100%;
-    margin-left: -5px;
-    border-width: 5px;
-}
-
-.tooltip--left .text::after {
-    left: 80%;
-}
-
-.tooltip--right .text::after {
-    right: 80%;
-}
-
-.tooltip--center .text::after {
-    left: 50%;
-}
+/* .tooltip {
+    @apply border-2 !important;
+    margin: -2px !important;
+} */
 </style>
