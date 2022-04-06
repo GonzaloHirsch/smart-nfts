@@ -118,6 +118,7 @@
                 </template>
                 <template v-if="callResult || callResultType || callError">
                     <div :class="[props.metadata || (props.method.inputs && props.method.inputs.length > 0) ? 'mt-sm pt-sm' : '']">
+                        <v-invisible-id :anchor="`${props.method._id}-result`" :offset="50"/>
                         <div class="flex flex-row items-center mb-sm">
                             <span class="text-lg md:text-h5">{{ $t('interact.methods.result.title') }}</span>
                             <QuestionMarkCircleIcon class="w-5 h-5 inline text-brand_tertiary ml-1 cursor-pointer" @click.stop="getHelp($t('interact.content.result.anchor'))" />
@@ -171,6 +172,7 @@ import vAccordion from '@/components/accordion.vue';
 import vInput from '@/components/editor/input.vue';
 import vTextarea from '@/components/editor/textarea.vue';
 import vFileInput from '@/components/editor/fileInput.vue';
+import vInvisibleId from '@/components/invisibleId.vue';
 import vButton from '@/components/button.vue';
 import { QuestionMarkCircleIcon, DocumentDuplicateIcon } from '@heroicons/vue/solid';
 import { getParameterPlaceholder } from '@/js/utils.js';
@@ -202,7 +204,7 @@ const props = defineProps({
     }
 });
 
-import { ref } from 'vue';
+import { ref, nextTick } from 'vue';
 const inputs = ref({});
 const metadataInputs = ref({});
 const detailInputs = ref({});
@@ -315,6 +317,9 @@ const handleSuccessResults = (res) => {
     errorType.value = undefined;
     isLoading.value = false;
     handleElementAutoopen();
+    nextTick(() => {
+        getHelp(`${props.method._id}-result`);
+    });
 };
 
 const handleErrorResults = (err) => {
@@ -335,6 +340,9 @@ const handleErrorResults = (err) => {
     callResultType.value = undefined;
     isLoading.value = false;
     handleElementAutoopen();
+    nextTick(() => {
+        getHelp(`${props.method._id}-result`);
+    });
 };
 
 const handleElementAutoopen = () => {
