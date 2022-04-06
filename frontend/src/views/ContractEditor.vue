@@ -250,8 +250,8 @@ import {
     CloudUploadIcon,
     GlobeAltIcon
 } from '@heroicons/vue/solid';
-import vIdIcon from '@/assets/images/icons/IdIcon.svg?component';
-import vEtherscanLogo from '@/assets/images/icons/etherscan.svg?component';
+import vIdIcon from '@/assets/images/icons/IdIcon.vue';
+import vEtherscanLogo from '@/assets/images/icons/etherscan.vue';
 
 import { useNotifications } from '@/plugins/notifications';
 const { setSnackbar } = useNotifications();

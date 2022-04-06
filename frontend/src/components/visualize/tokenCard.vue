@@ -169,9 +169,9 @@
 </template>
 
 <script setup>
-import vEthereum from '@/assets/images/icons/ethereum.svg?component';
-import vOpenseaLogo from '@/assets/images/icons/opensea.svg?component';
-import vEtherscanLogo from '@/assets/images/icons/etherscan.svg?component';
+import vEthereum from '@/assets/images/icons/ethereum.vue';
+import vOpenseaLogo from '@/assets/images/icons/opensea.vue';
+import vEtherscanLogo from '@/assets/images/icons/etherscan.vue';
 import vTokenTrait from '@/components/visualize/tokenTrait.vue';
 import vTokenBoost from '@/components/visualize/tokenBoost.vue';
 import { CodeIcon, LinkIcon, UserCircleIcon } from '@heroicons/vue/solid';

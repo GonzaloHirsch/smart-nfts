@@ -19,9 +19,9 @@
 <script setup>
 import vSection from '@/components/section.vue';
 
-import vMainDrawing from '@/assets/images/Main-Drawing.svg?component';
-import vAboutUsDrawing from '@/assets/images/About-Us-Drawing.svg?component';
-import vCircleDrawing from '@/assets/images/Circle-Drawing.svg?component';
+import vMainDrawing from '@/assets/images/Main-Drawing.vue';
+import vAboutUsDrawing from '@/assets/images/About-Us-Drawing.vue';
+import vCircleDrawing from '@/assets/images/Circle-Drawing.vue';
 
 defineProps({
     fullHeight: {

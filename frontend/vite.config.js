@@ -17,7 +17,7 @@ export default ({ mode }) => {
 
       // you need to set i18n resource including paths !
       include: path.resolve(__dirname, './src/locales/**')
-    }), svgLoader(), createHtmlPlugin({
+    }), createHtmlPlugin({
       minify: true,
       /**
        * If you want to store `index.html` in the specified folder, you can modify it, otherwise no configuration is required

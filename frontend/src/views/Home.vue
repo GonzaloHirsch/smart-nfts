@@ -199,17 +199,17 @@ import { useMeta } from 'vue-meta';
 import { ref } from 'vue';
 
 // Images
-import vCreateDrawing from '@/assets/images/Create-Drawing.svg?component';
-import vEditDrawing from '@/assets/images/Edit-Drawing.svg?component';
-import vInteractDrawing from '@/assets/images/Interact-Drawing.svg?component';
-import vViewDrawing from '@/assets/images/View-Drawing.svg?component';
-import vContractDrawing from '@/assets/images/Contract-Drawing.svg?component';
-import vIconNoWallet from '@/assets/images/icons/Icon-No-Wallet.svg?component';
-import vIconNoGas from '@/assets/images/icons/Icon-No-Gas.svg?component';
-import vIconNoCoding from '@/assets/images/icons/Icon-No-Coding.svg?component';
-import vIconExplanation from '@/assets/images/icons/Icon-Explanation.svg?component';
-import vIconTime from '@/assets/images/icons/Icon-Time.svg?component';
-import vIconCentralized from '@/assets/images/icons/Icon-Centralized.svg?component';
+import vCreateDrawing from '@/assets/images/Create-Drawing.vue';
+import vEditDrawing from '@/assets/images/Edit-Drawing.vue';
+import vInteractDrawing from '@/assets/images/Interact-Drawing.vue';
+import vViewDrawing from '@/assets/images/View-Drawing.vue';
+import vContractDrawing from '@/assets/images/Contract-Drawing.vue';
+import vIconNoWallet from '@/assets/images/icons/Icon-No-Wallet.vue';
+import vIconNoGas from '@/assets/images/icons/Icon-No-Gas.vue';
+import vIconNoCoding from '@/assets/images/icons/Icon-No-Coding.vue';
+import vIconExplanation from '@/assets/images/icons/Icon-Explanation.vue';
+import vIconTime from '@/assets/images/icons/Icon-Time.vue';
+import vIconCentralized from '@/assets/images/icons/Icon-Centralized.vue';
 
 import { useRouter } from 'vue-router';
 const router = useRouter();

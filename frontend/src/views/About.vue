@@ -73,11 +73,11 @@ import { QuestionMarkCircleIcon } from '@heroicons/vue/solid';
 import { useMeta } from 'vue-meta';
 
 // Images
-import vFungibleDrawing from '@/assets/images/Fungible-Drawing.svg?component';
-import vDiagramDrawing from '@/assets/images/Diagram-Drawing.svg?component';
-import vIconOpenzeppelin from '@/assets/images/icons/Icon-Openzeppelin.svg?component';
-import vIconPinata from '@/assets/images/icons/Icon-Pinata.svg?component';
-import vIconInfura from '@/assets/images/icons/Icon-Infura.svg?component';
+import vFungibleDrawing from '@/assets/images/Fungible-Drawing.vue';
+import vDiagramDrawing from '@/assets/images/Diagram-Drawing.vue';
+import vIconOpenzeppelin from '@/assets/images/icons/Icon-Openzeppelin.vue';
+import vIconPinata from '@/assets/images/icons/Icon-Pinata.vue';
+import vIconInfura from '@/assets/images/icons/Icon-Infura.vue';
 
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
