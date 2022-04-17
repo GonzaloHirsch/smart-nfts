@@ -118,17 +118,17 @@
                 </template>
                 <template v-if="callResult || callResultType || callError">
                     <div :class="[props.metadata || (props.method.inputs && props.method.inputs.length > 0) ? 'mt-sm pt-sm' : '']">
-                        <v-invisible-id :anchor="`${props.method._id}-result`" :offset="50"/>
+                        <v-invisible-id :anchor="`${props.method._id}Result`" :offset="50"/>
                         <div class="flex flex-row items-center mb-sm">
                             <span class="text-lg md:text-h5">{{ $t('interact.methods.result.title') }}</span>
                             <QuestionMarkCircleIcon class="w-5 h-5 inline text-brand_tertiary ml-1 cursor-pointer" @click.stop="getHelp($t('interact.content.result.anchor'))" />
                         </div>
                         <div class="w-full bg-white rounded-md p-xs mt-xs md:mt-sm pr-base relative break-words">
                             <p v-if="(callResult || callResultType) && callHasSuccess" class="text-typography_secondary text-xs md:text-base">
-                                {{ callResultType === 'transactionHash' ? $t('interact.success.transactionDisplay', [callResult]) : callResult }}
+                                {{ callResultType === 'transactionHash' ? $t('interact.success.transactionDisplay', [callResult]) : (te(`interact.success.${callResult}`) ? $t(`interact.success.${callResult}`) : callResult) }}
                             </p>
                             <p v-if="!callHasSuccess" class="text-error text-xs md:text-base">
-                                {{ errorType === 'transaction' ? $t('interact.error.transactionDisplay', [callError]) : callError }}
+                                {{ errorType === 'transaction' ? $t('interact.error.transactionDisplay', [callError]) : (te(`interact.error.${callError}`) ? $t(`interact.error.${callError}`) : callError ) }}
                             </p>
                             <div
                                 class="absolute right-0 top-0 text-black hover:text-brand_secondary hover:bg-brand_primary cursor-pointer p-1 border border-black rounded-md transition duration-200"
@@ -138,7 +138,7 @@
                                 <DocumentDuplicateIcon class="h-5 w-5" />
                             </div>
                         </div>
-                        <p v-if="!callHasSuccess && callError && errorType === 'transaction'" class="mt-xs text-error text-sm">
+                        <p v-if="!callHasSuccess && callError && errorType === 'transaction'" class="mt-xs text-error text-sm break-words">
                             {{ $t('interact.error.transactionMoreInfo') }}
                             <a
                                 class="underline no-inherit text-sm"
@@ -149,7 +149,7 @@
                                 >{{ callError }}</a
                             >
                         </p>
-                        <p v-else-if="callHasSuccess && callResultType === 'transactionHash'" class="mt-xs text-white text-sm">
+                        <p v-else-if="callHasSuccess && callResultType === 'transactionHash'" class="mt-xs text-white text-sm break-words">
                             {{ $t('interact.error.transactionMoreInfo') }}
                             <a
                                 class="underline no-inherit text-sm"
@@ -231,7 +231,7 @@ import { useRoute } from 'vue-router';
 const route = useRoute();
 
 import { useI18n } from 'vue-i18n';
-const { t } = useI18n();
+const { t, te } = useI18n();
 
 import { useRecaptcha } from '@/plugins/recaptcha';
 const recaptcha = useRecaptcha();
@@ -318,7 +318,7 @@ const handleSuccessResults = (res) => {
     isLoading.value = false;
     handleElementAutoopen();
     nextTick(() => {
-        getHelp(`${props.method._id}-result`);
+        getHelp(`${props.method._id}Result`);
     });
 };
 
@@ -341,7 +341,7 @@ const handleErrorResults = (err) => {
     isLoading.value = false;
     handleElementAutoopen();
     nextTick(() => {
-        getHelp(`${props.method._id}-result`);
+        getHelp(`${props.method._id}Result`);
     });
 };
 

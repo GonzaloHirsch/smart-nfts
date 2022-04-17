@@ -641,7 +641,9 @@
             "initialMethods": "Los métodos aparecerán acá cuando carguen."
         },
         "success": {
-            "transactionDisplay": "Éxito - Hash de la transacción: {0}"
+            "transactionDisplay": "Éxito - Hash de la transacción: {0}",
+            "false": "falso",
+            "true": "verdadero"
         },
         "error": {
             "invalidContract": "ID de contrato inválido",
@@ -649,7 +651,13 @@
             "missingParameter": "Falta el parámetro {0} ({1})",
             "missingImage": "Falta la imagen del token",
             "transactionDisplay": "Error de Blockchain - Hash de transacción: {0}.",
-            "transactionMoreInfo": "Para más información, hacé click en el siguiente hash de transacción."
+            "transactionMoreInfo": "Para más información, hacé click en el siguiente hash de transacción.",
+            "Blockchain error when interacting: Returned error: execution reverted: ERC721: approved query for nonexistent token": "Error en la blockchain al interactuar: Error retornado: ejecución revertida: ERC721: id de token no existente",
+            "Blockchain error when interacting: Returned error: execution reverted: ERC721: owner query for nonexistent token": "Error en la blockchain al interactuar: Error retornado: ejecución revertida: ERC721: id de token no existente",
+            "Blockchain error when interacting: Returned error: execution reverted: ERC721Metadata: URI query for nonexistent token": "Error en la blockchain al interactuar: Error retornado: ejecución revertida: ERC721Metadata: id de token no existente",
+            "Blockchain error when interacting: Returned error: execution reverted: ERC721URIStorage: URI query for nonexistent token": "Error en la blockchain al interactuar: Error retornado: ejecución revertida: ERC721URIStorage: id de token no existente",
+            "Blockchain error when interacting: Returned error: execution reverted: ERC721Enumerable: global index out of bounds": "Error en la blockchain al interactuar: Error retornado: ejecución revertida: ERC721Enumerable: índice global fuera del límite",
+            "Blockchain error when interacting: Returned error: execution reverted: ERC721Enumerable: owner index out of bounds": "Error en la blockchain al interactuar: Error retornado: ejecución revertida: ERC721Enumerable: índice del dueño fuera del límite"
         },
         "buttons": {
             "execute": {

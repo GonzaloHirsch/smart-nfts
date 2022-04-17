@@ -321,3 +321,18 @@ pre.code > code {
 .diagram--pinata-logo > path:not(.diagram--pinata-logo--eye) {
     @apply duration-300 !important;
 }
+
+/* Tooltip CSS */
+
+.popper {
+    @apply bg-gray-800 p-2 rounded text-white !important;
+}
+
+.popper #arrow::before {
+    @apply bg-gray-800 !important;
+}
+
+.popper:hover,
+.popper:hover > #arrow::before {
+    @apply bg-gray-800 !important;
+}
