@@ -39,7 +39,7 @@ export abstract class LimitSupply {
                 name: 'safeMint',
                 params: [],
                 mandatory: false,
-                content: ["require(totalSupply() < _maxSupply, 'Exceeding max token supply');\n"],
+                content: ["require(totalSupply() <= _maxSupply, 'Exceeding max token supply');\n"],
                 visibility: VISIBILITY.PUBLIC,
                 options: ''
             }
