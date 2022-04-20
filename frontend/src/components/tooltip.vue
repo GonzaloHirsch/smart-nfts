@@ -18,23 +18,3 @@ defineProps({
     }
 });
 </script>
-
-<style scoped>
-:deep(.popper) {
-    @apply bg-gray-800 p-2 rounded text-white;
-}
-
-:deep(.popper #arrow::before) {
-    @apply bg-gray-800;
-}
-
-:deep(.popper:hover),
-:deep(.popper:hover > #arrow::before) {
-    @apply bg-gray-800;
-}
-
-/* .tooltip {
-    @apply border-2 !important;
-    margin: -2px !important;
-} */
-</style>
