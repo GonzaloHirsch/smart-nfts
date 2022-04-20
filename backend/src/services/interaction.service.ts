@@ -58,7 +58,7 @@ class InteractionService {
             : this._handleWriteMethod(storedContract.deployment.network, contract, address, method, orderedArgs);
     };
 
-    private _checkAndOrderValidInputs = (methodInputs: IAbiInput[], args: IArguments): IArguments => {
+    _checkAndOrderValidInputs = (methodInputs: IAbiInput[], args: IArguments): IArguments => {
         
         const finalArgs: IArguments = {};
 
