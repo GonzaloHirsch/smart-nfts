@@ -347,15 +347,15 @@ const getIpfsLink = (hash) => {
 }
 
 .token-enlarged--link-icon:first-of-type {
-    @apply mr-sm;
+    @apply mr-xs border-none !important;
 }
 
 .token-enlarged--link-icon:last-of-type {
-    @apply ml-sm;
+    @apply ml-xs border-none !important;
 }
 
 .token-enlarged--link-icon:not(:first-of-type):not(:last-of-type) {
-    @apply mx-sm;
+    @apply mx-xs border-none !important;
 }
 
 .token-enlarged--metadata-field {

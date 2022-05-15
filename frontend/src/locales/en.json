@@ -791,7 +791,7 @@
     },
     "pagination": {
         "results": "Showing {0} to {1} of {2} results",
-        "resultsSingle": "Showing 1 results",
+        "resultsSingle": "Showing 1 result",
         "aria": {
             "prev": "Go to previous page",
             "next": "Go to next page",
