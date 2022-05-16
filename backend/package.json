@@ -22,7 +22,7 @@
     "package": "serverless package"
   },
   "dependencies": {
-    "@openzeppelin/contracts": "^4.4.1",
+    "@openzeppelin/contracts": "4.4.1",
     "@pinata/sdk": "^1.1.23",
     "accept-language-parser": "^1.5.0",
     "adm-zip": "^0.5.9",
@@ -46,7 +46,7 @@
     "webpack-node-externals": "^3.0.0"
   },
   "devDependencies": {
-    "@openzeppelin/contracts": "^4.4.1",
+    "@openzeppelin/contracts": "4.4.1",
     "@types/accept-language-parser": "^1.5.3",
     "@types/adm-zip": "^0.4.34",
     "@types/aws-lambda": "^8.10.51",

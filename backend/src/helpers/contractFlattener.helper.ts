@@ -65,12 +65,12 @@ const processImports = async (file: string, content: string) => {
     regEx.import.exec(''); // Resetting state of RegEx
     while ((group = regEx.import.exec(content))) {
         let importFile = group[1];
-
+        
         // Get path to file to know where it is
         let filePath = path.join(path.dirname(file), importFile);
 
         if (!(filePath in processedFiles)) {
-            processedFiles[filePath] = true;
+            processedFiles[importFile] = true;
             // Instead of checking for the file to exist, we make sure that it does not have the entire path to it
             if (!filePath.includes(rootNodeModules)) {
                 const nodeModulesPath = await getNodeModulePath(path.dirname(importFile), { cwd: path.dirname(file) });
@@ -104,6 +104,7 @@ const getPragmaFromContent = (contents: string) => {
 // EXPORTS
 
 export const straighten = async (filePath: string) => {
+    processedFiles = {}
     const pragma = await getPragma(filePath);
     let contractSource = await processFile(filePath, true, false, undefined);
     contractSource = pragma + '\n\n' + contractSource;
@@ -111,6 +112,7 @@ export const straighten = async (filePath: string) => {
 };
 
 export const straightenContent = async (fileContent: string): Promise<string> => {
+    processedFiles = {}
     const pragma = getPragmaFromContent(fileContent);
     // Give it a fake name
     let contractSource = await processFile('./contract.sol', true, true, fileContent);
