@@ -66,37 +66,34 @@ const api = {
         });
     },
     downloadContract: async (contractId, recaptcha) => {
-        const headers = getSecurityHeaders(recaptcha);
-        headers['Content-Type'] = 'application/octet-stream';
-        return instance.get(`contracts/${contractId}/contents`, { responseType: 'blob', headers: headers }).then(res => {
+        return instance.get(`contracts/${contractId}/contents`, { responseType: 'blob', headers: getSecurityHeaders(recaptcha) }).then(async res => {
             const filename = res.headers['content-disposition'].split('filename=')[1];
-            // Convert to proper blob
-            // const byteCharacters = atob(res.data);
-            // const byteNumbers = new Array(byteCharacters.length);
-            // for (let i = 0; i < byteCharacters.length; i++) {
-            //     byteNumbers[i] = byteCharacters.charCodeAt(i);
-            // }
-            // const byteArray = new Uint8Array(byteNumbers);
-            // const blob = new Blob(
-            //     [res.data],
-            //     {
-            //         type: 'application/octet-stream'
-            //     }
-            // );
-            // fileDownload(res.data, filename);
-            const blob = new Blob([res.data]);
+            
+            // Get response text
+            let response = await new Response(res.data).text();
 
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = filename;
-            link.target = '_blank';
-            link.setAttribute("type", "hidden");
+            // Creating the a element
+            const element = document.createElement('a');
+            element.download = filename;
+            element.target = '_blank';
+            element.setAttribute("type", "hidden");
 
-            // This is needed for firefox
-            document.body.appendChild(link);
-
-            link.click();
-            link.remove();
+            // Attempt to decode from base64
+            try {
+                // Scenario when the content is base64, API production returns base64 string
+                window.atob(response);
+                element.href = 'data:application/zip;base64,' + response;
+            } catch {
+                // Scenario when the content is not base64, API locally returns not a base64 string
+                console.error("Content from response is not in base64")
+                console.error(res.data)
+                element.href = URL.createObjectURL(res.data);
+            }
+            
+            // Append, click and remove
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
             return res;
         });
     },
