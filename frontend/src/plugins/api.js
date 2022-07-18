@@ -66,8 +66,23 @@ const api = {
         });
     },
     downloadContract: async (contractId, recaptcha) => {
-        return instance.get(`contracts/${contractId}/contents`, { responseType: 'blob', headers: getSecurityHeaders(recaptcha) }).then(res => {
+        const headers = getSecurityHeaders(recaptcha);
+        headers['Content-Type'] = 'application/octet-stream';
+        return instance.get(`contracts/${contractId}/contents`, { responseType: 'blob', headers: headers }).then(res => {
             const filename = res.headers['content-disposition'].split('filename=')[1];
+            // Convert to proper blob
+            // const byteCharacters = atob(res.data);
+            // const byteNumbers = new Array(byteCharacters.length);
+            // for (let i = 0; i < byteCharacters.length; i++) {
+            //     byteNumbers[i] = byteCharacters.charCodeAt(i);
+            // }
+            // const byteArray = new Uint8Array(byteNumbers);
+            // const blob = new Blob(
+            //     [res.data],
+            //     {
+            //         type: 'application/octet-stream'
+            //     }
+            // );
             fileDownload(res.data, filename);
             return res;
         });
