@@ -59,7 +59,7 @@
                 <ul class="flex flex-col list-none">
                     <li class="mb-xs">
                         <a
-                            class="text-lg font-medium"
+                            class="text-lg font-medium hover:underline"
                             href="mailto:ghirsch@itba.edu.ar"
                             :aria-label="$t('footer.contact.aria', ['ghirsch@itba.edu.ar'])"
                             >ghirsch@itba.edu.ar</a
@@ -67,7 +67,7 @@
                     </li>
                     <li class="my-xs">
                         <a
-                            class="text-lg font-medium"
+                            class="text-lg font-medium hover:underline"
                             href="mailto:fpetrikovich@itba.edu.ar"
                             :aria-label="$t('footer.contact.aria', ['fpetrikovich@itba.edu.ar'])"
                             >fpetrikovich@itba.edu.ar</a

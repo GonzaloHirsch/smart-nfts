@@ -21,11 +21,11 @@
             />
             <ul class="flex flex-col list-none items-center justify-center mt-base">
                 <template v-for="(link, index) in links" :key="index">
-                    <li class="my-sm">
+                    <li class="my-sm rounded-md text-brand_secondary hover:bg-brand_secondary hover:text-white duration-200">
                         <router-link
                             :to="link.to"
                             @click="toggleMenu"
-                            class="text-body_xl text-brand_secondary font-medium"
+                            class="text-body_xl px-2 py-1 font-medium"
                             :aria-label="$t(link.aria)"
                             >{{ $t(link.text) }}</router-link
                         >

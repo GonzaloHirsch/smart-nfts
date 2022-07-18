@@ -6,8 +6,8 @@
             }}</router-link>
             <ul class="flex flex-row list-none">
                 <template v-for="(link, index) in links" :key="index">
-                    <li class="mr-base last:mr-0">
-                        <router-link :to="link.to" class="text-body_xl text-brand_secondary font-medium" :aria-label="$t(link.aria)">{{
+                    <li class="mr-4 last:mr-0 rounded-md text-brand_secondary hover:bg-brand_secondary hover:text-white duration-200">
+                        <router-link :to="link.to" class="text-body_xl font-medium px-2 py-1" :aria-label="$t(link.aria)">{{
                             $t(link.text)
                         }}</router-link>
                     </li>
