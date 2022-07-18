@@ -83,7 +83,20 @@ const api = {
             //         type: 'application/octet-stream'
             //     }
             // );
-            fileDownload(res.data, filename);
+            // fileDownload(res.data, filename);
+            const blob = new Blob([res.data]);
+
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = filename;
+            link.target = '_blank';
+            link.setAttribute("type", "hidden");
+
+            // This is needed for firefox
+            document.body.appendChild(link);
+
+            link.click();
+            link.remove();
             return res;
         });
     },
