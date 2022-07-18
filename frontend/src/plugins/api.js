@@ -1,6 +1,5 @@
 import { inject } from 'vue';
 import axios from 'axios';
-import fileDownload from 'js-file-download';
 import { PAGINATION_PER_PAGE } from '../js/constants';
 
 // Constant plugin key
